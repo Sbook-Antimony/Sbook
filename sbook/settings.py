@@ -29,7 +29,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'fontawesomefree',
     'sbook',
-    'note'
+    'note',
+    'chatty'
 ]
 
 MIDDLEWARE = [
