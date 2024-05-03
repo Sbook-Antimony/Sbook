@@ -29,5 +29,6 @@ urlpatterns = [
     path('dashboard/', account.do_config),
     path('dashboard/<cmd>', account.do_cmd),
     path('images/profile', account.do_profile),
-    path('note/', include('note.urls'))
+    path('note/', include('note.urls')),
+    path('chatty/', include('chatty.urls')),
 ]
