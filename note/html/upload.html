@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>dashboard</title>
+        <script type="text/javascript" src="/js/jquery.js"></script>
+        <script type="text/javascript" src="/js/angular.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="/css/w3.css" />
+        <script type="text/javascript">
+
+        </script>
+    </head>
+    <body ng-app="dashboard-upload" ng-controller="ctrl">
+        <header ng-include="'/note/header.html'" role="navigation" class="w3-bar w3-border w3-indigo w3-centered">
+        </header>
+        <form action="/note/my-notes/upload" method="post" form class="w3-container w3-round-xxlarge w3-card w3-margin-top">
+            <div csrf></div>
+            <label>File: </label>
+            <input fileinput type="file" name="file" class="w3-button w3-round-xxlarge w3-sand50 w3-margin-top w3-margin-bottom" />
+
+            <!-- <h4 class="w3-center w3-pale-blue w3-round">Scope</h4> -->
+            <select class="w3-select w3-round-xlarge w3-input w3-pale-blue" ng-model="note.scope">
+                <option value="public">public
+                <option value="private">private
+            </select>
+            <input type="submit" class="w3-button w3-round w3-sand50 w3-margin-top w3-margin-bottom">
+        </form>
+        <script>
+            $("div[csrf]").load("/csrf");
+            var app = angular.module("dashboard-upload", []);
+            app.controller("ctrl", function($scope) {
+                window.scope = $scope;
+                $scope.note = {
+                    scope: 'public'
+                };
+            });
+        </script>
+
+
+
+    </body>
+</html>

@@ -1,17 +1,49 @@
-Sbook is a web platformintended to help in the problem of education by facilitating and easing it with several helper tools including.
+sbook is a web platform, supporting several tools for e-learning
 
-Notes
+notes
+=====
+It is a tool for the availability of users for generating docu,entations and courses
+to be read, provides features such as:
+- interactive browing through titles, topics, subtopics, ...
+- images, videos and other media
+
+short-notes
+-----------
+Offer an easy way for students to wrewrite what they read in their own words
+
+mathematica
+===========
+a mathematic solving tool and calculator
+
+wikis
 =====
 
-Note is previewed to be one of the greatest and main components of Sbook.
-It consist of notes, written by teachers or students made responsive and
-dynamic by sbook itself with a complete and vast set of styles and animations to attract readers attention.
-The notes could be easily browsed with table of contents.
-They may contain videos, text captions,tables and some other media to help readers understand.
+contain several wikis with users editable information
 
-Short Notes
------------
+molecular
+---------
 
-Available in almost every component of sbook and permits users to
-edit, share, and read their own words in a structured and easily readable manner.
-They are written in are markdown syntax to be easily colored or styled but easily written by users.
+contain several information and is suited on informing on different elements and compounds
+
+taxonomic
+------------
+several informations including images, scientific names
+on several species.
+
+questions
+==========
+provides medium for students to test their knowledge on what they have learnt
+also provides redirections to notes providing explanations.
+
+classrooms
+==========
+
+creates an environment isolationg students and teachers and permiting them to share
+notes, videos and other content privately.
+
+schools
+=======
+
+regroup several classrooms in a larger environment adding media for exchange of more information.
+
+
