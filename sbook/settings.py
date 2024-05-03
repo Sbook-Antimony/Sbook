@@ -27,11 +27,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'google_analytics',
     'fontawesomefree',
     'sbook',
     'note',
     'chatty'
 ]
+
+GOOGLE_ANALYTICS = {
+    'google_analytics_id': 'G-5MV4LRP8P2',
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -125,7 +130,6 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-APPEND_SLASH = True
 
 # TEMPLATES = (Path(__file__).resolve().parent / "templates").glob("*.django")
 # print(TEMPLATES)

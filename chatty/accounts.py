@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from chatty import models
 
 
+
 class ChattyUserDoesNotExistError(ValueError):
     pass
 class ChattyUserDoesExistError(ValueError):
