@@ -23,8 +23,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('csrf/', views.do_csrf),
     path('', check_login(views.do_index)),
-    path('css/<name>', views.do_css)),
-    path('js/<name>', views.do_js)),
     path('image/<name>', check_login(views.do_image)),
     path('signin/', views.signin.as_view()),
     path('signup/', views.signup.as_view()),
