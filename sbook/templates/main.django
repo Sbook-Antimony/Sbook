@@ -17,7 +17,7 @@
         </div>
     </head>
 
-    <header  role="navigation" class="w3-bar w3-border w3-indigo w3-centered">
+    <header  role="navigation" class="w3-bar w3-container bg-antimony10 w3-top">
         <a href="/"               class="w3-button w3-bar-item w3-hover-text w3-large">
             <i class = "fas fa-home"></i>
         </a>

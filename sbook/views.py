@@ -9,7 +9,6 @@ from . import forms
 
 
 def do_index(req, user):
-    print(req)
     return render(req, 'index.django')
 def do_css(req, name):
     file = (DIR.parent / "css") / name
