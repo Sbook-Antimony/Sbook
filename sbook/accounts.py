@@ -84,9 +84,18 @@ class User:
     def name(self):
         return self.model.name
     @functools.cached_property
-    def rooms(self):
-        return [ChattyRoom(x) for x in self.model.rooms.all()]
+    def chattyAccount(self):
+        cha = self.model.chattyAccount.all()
+        if len(cha) == 0:
+            raise chatty.accounts.UserDoesNotExistError()
+        return chatty.accounts.ChattyUser(cha[0])
 
+    @functools.cached_property
+    def noteAccount(self):
+        cha = self.model.noteAccount.all()
+        if len(cha) == 0:
+            raise note.accounts.UserDoesNotExistError()
+        return note.accounts.ChattyUser(cha[0])
     DEFAULT_PHOTO = "/image/default-photo.png"
     name:tuple[str]
     password:str
