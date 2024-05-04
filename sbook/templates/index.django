@@ -2,12 +2,12 @@
 {% block 'title' %}
 {% endblock %}
 {% block body %}
-    <div class="w3-card w3-round-large w3-leftbar w3-display-container" id="fuse-african-1 w3-padding">
+    <div class="w3-card w3-round-large w3-leftbar" id="fuse-african-1 w3-padding">
         <p class="w3-xxlarge w3-margin-left">
             <i class="w3-text-sand">“education is one of the most powerful tool we can used to change the world”
             </i>
         </p>
-        <p class="w3-tiny w3-text-sand">
+        <p class="w3-tiny">
             barack obama
             <button class="w3-margin-right w3-display-right w3-btn w3-round-xlarge w3-blue" onclick="location.assign('/login');">login</button>
         </p>
