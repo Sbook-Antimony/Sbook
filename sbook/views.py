@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.template import loader
 from django.views import View
 from pathlib import Path
-from accounts import *
+from sbook.accounts import *
 import mimetypes
 from . import forms
 
