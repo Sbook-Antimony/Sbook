@@ -1,9 +1,10 @@
 from django.db import models
-
-class Account(models.Model):
-    id = models.BigAutoField(primary_key=True, serialize=False)
-    firstname = models.CharField(max_length=255)
-    lastname = models.CharField(max_length=255)
+import chatty.models as chatty
+class User(models.Model):
+    name = models.CharField(max_length=255)
     password = models.CharField(max_length=255)
+    email = models.EmailField()
+
+    chatty = models.ForeignKey(chatty.User)
     def __str__(self):
-        return f"{self.firstname} {self.lastname}"
+        return f"{self.name}:{self.email}"
