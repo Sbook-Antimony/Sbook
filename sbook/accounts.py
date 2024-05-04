@@ -2,14 +2,14 @@ from pathlib import Path
 
 import yaml
 
-import sbook.models
 
 
 DIR = Path(__file__).parent.parent
 ACCOUNTS = DIR/'accounts'
 
 assert ACCOUNTS.exists(), f"accounts folder {ACCOUNTS!r} does not exists"
-#############################################
+
+
 import functools
 
 from django.http import HttpResponseRedirect, HttpResponse
@@ -64,7 +64,7 @@ class User:
     @classmethod
     def create_from_login(cls, name, email, password):
         try:
-            obj = models.User(name=name, email=email, password=password, chatty=chatty.ChattyUser.create_from_login(name, email, password))
+            obj = models.User(name=name, email=email, password=password, chatty=chatty.ChattyUser.create_from_login(name, email, password).model)
             createUserData(obj)
             obj.save()
         except models.User.DoesNotExist as e:
@@ -103,10 +103,21 @@ def createUserData(obj) -> int:
 
     profile = folder / "profile.png"
     profile.touch()
-    profile.write_bytes(DIR / 'image' / 'default-photo.png')
+    profile.write_bytes((DIR / 'image' / 'default-photo.png').read_bytes())
 
     data_file = (folder/"data.yaml")
     data_file.touch()
-    data_file.write_text(yaml.safe_dump(data))
+    data_file.write_text(
+        yaml.safe_dump(
+            {
+                "id": obj.id,
+                "name": obj.name,
+                "password": obj.password,
+                "email": obj.email,
+                "chatty": {
+                    "id": obj.chatty.id,
+                }
+            }
+        )
+    )
 
-    return Account(id)
