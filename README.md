@@ -13,7 +13,7 @@ Offer an easy way for students to wrewrite what they read in their own words
 
 mathematica
 ===========
-a mathematic solving tool and calculator
+a mathematic solving tool and calculator intended to help students and teachers
 
 wikis
 =====
