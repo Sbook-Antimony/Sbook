@@ -67,7 +67,7 @@ class signin(View):
 
 class signup(View):
     def get(self, req, *args, **kw):
-        return render(req,"signup.html", {'errors': False})
+        return render(req,"signup.django", {'errors': False})
     def post(self, req, *args, **kw):
         form = forms.SignupForm(req.POST)
         if not form.is_valid():
@@ -87,7 +87,7 @@ class signup(View):
             except UserDoesExistError:
                 return render(
                     req,
-                    "signup.html",
+                    "signup.django",
                     {
                         "errors": "User exists"
                     }
