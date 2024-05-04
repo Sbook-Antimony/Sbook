@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from . import views, account
+from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('csrf/', views.do_csrf),
@@ -26,9 +26,9 @@ urlpatterns = [
     path('image/<name>', views.do_image),
     path('login/', views.do_login),
     path('signup/', views.do_signup),
-    path('dashboard/', account.do_config),
-    path('dashboard/<cmd>', account.do_cmd),
-    path('images/profile', account.do_profile),
+    path('dashboard/', views.do_config),
+    path('dashboard/<cmd>', views.do_cmd),
+    path('images/profile', views.do_profile),
     path('note/', include('note.urls')),
     path('chatty/', include('chatty.urls')),
 ]
