@@ -30,7 +30,7 @@
         </div>
         <div class="w3-padding w3-margin bg-clear w3-round-xlarge">
             <button class="w3-border w3-border-cyan bg-clear w3-btn w3-round-large w3-center margin-center fg-antimony">submit</button>
-            <p>Have an account?, <a href="/chatty/signin">signin</a></p>
+            <p>Have an account?, <a href="/signin">signin</a></p>
         </div>
         <script>
             const app = angular.module("signin", []);

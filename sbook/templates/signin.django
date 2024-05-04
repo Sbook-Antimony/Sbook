@@ -25,7 +25,7 @@
         </div>
         <div class="w3-padding w3-margin bg-clear w3-round-xlarge">
             <button class="w3-border w3-border-cyan bg-clear w3-btn w3-round-large w3-center margin-center fg-antimony">submit</button>
-            <p>Don't have an account?, <a href="/chatty/signup">signup</a></p>
+            <p>Don't have an account?, <a href="/signup">signup</a></p>
         </div>
         <script>
             const app = angular.module("signin", []);
