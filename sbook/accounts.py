@@ -15,7 +15,7 @@ import functools
 from django.http import HttpResponseRedirect, HttpResponse
 
 from sbook import models
-
+from chatty import accounts as chatty
 
 class UserDoesNotExistError(ValueError):
     pass
