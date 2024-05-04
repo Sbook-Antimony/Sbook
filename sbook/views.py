@@ -8,7 +8,7 @@ import mimetypes
 from . import forms
 
 
-def do_index(req):
+def do_index(req, user):
     print(req)
     return render(req, 'index.django')
 def do_css(req, name):
@@ -98,7 +98,7 @@ class signup(View):
                 return HttpResponseRedirect('/')
 
 
-def do_config(req):
+def do_config(req, user):
     id = req.session.get('user-id')
     if id is None:
         return HttpResponse("no id")
@@ -114,7 +114,7 @@ def do_config(req):
         )
     )
 
-def do_cmd(req, cmd):
+def do_cmd(req, cmd, user):
     match cmd:
         case 'set-new-profile':
             file = req.FILES.get('file')
@@ -123,7 +123,7 @@ def do_cmd(req, cmd):
             (acc.folder / 'profile.png').write_bytes(file.read())
             return HttpResponseRedirect('/dashboard')
 
-def do_profile(req):
+def do_profile(req, user):
     acc = accounts.Account(req.session.get('user-id'))
     if (acc.folder / 'profile.png').exists():
         return HttpResponse((acc.folder / 'profile.png').read_bytes(), 'image/png')
