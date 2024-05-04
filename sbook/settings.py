@@ -27,8 +27,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'google_analytics',
-    'fontawesomefree',
+    #'google_analytics',
+    #'fontawesomefree',
     'sbook',
     'note',
     'chatty'
