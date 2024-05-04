@@ -1,10 +1,18 @@
 from django.db import models
+import sbook.models
+
 
 class ChattyUser(models.Model):
     #id = models.BigAutoField(primary_key=True)
+    sbookAccount = models.ForeignKey(
+        sbook.models.User,
+        related_name="chattyAccount",
+        on_delete=models.CASCADE,
+    )
 
     def __str__(self):
         return self.name
+
 
 class ChattyRoom(models.Model):
     #id = models.BigAutoField(primary_key=True)
