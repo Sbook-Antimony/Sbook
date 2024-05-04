@@ -65,8 +65,8 @@ class User:
     def create_from_login(cls, name, email, password):
         try:
             obj = models.User(name=name, email=email, password=password, chatty=chatty.ChattyUser.create_from_login(name, email, password).model)
-            createUserData(obj)
             obj.save()
+            createUserData(obj)
         except models.User.DoesNotExist as e:
             raise UserDoesExistError() from e
         else:
@@ -96,7 +96,7 @@ class User:
     
 def createUserData(obj) -> int:
     #users = sbook.models.Account.objects.all()
-    
+    assert obj.id is not None
     folder = ACCOUNTS / str(obj.id)
 
     folder.mkdir()
