@@ -3,7 +3,8 @@ import functools
 from django.http import HttpResponseRedirect, HttpResponse
 
 from chatty import models
-
+import sbook.models
+import sbook.accounts
 
 
 class ChattyUserDoesNotExistError(ValueError):
@@ -15,6 +16,13 @@ class ChattyUser():
 
     @classmethod
     def from_id(cls, id):
+        try:
+            found = sbook.models.User.objects.get(id=id)
+        except sbook.models.User.DoesNotExist as e:
+            raise ChattyUserDoesNotExistError() from e
+        else:
+            return found.chattyAccount
+    def from_chatty_id(cls, id):
         try:
             found = models.ChattyUser.objects.get(id=id)
         except models.ChattyUser.DoesNotExist as e:
@@ -43,13 +51,22 @@ class ChattyUser():
         if model is None:
             raise ChattyUserDoesNotExistError()
         self.model = model
-
+        
+    @functools.cached_property
+    def sbookAccount(self):
+        return sbook.accounts.User(
+            self.model.sbookAccount,
+        )
+    
     @functools.cached_property
     def id(self):
+        return self.sbookAccount.id
+    @functools.cached_property
+    def chatty_id(self):
         return self.model.id
     @functools.cached_property
     def name(self):
-        return self.model.name
+        return self.sbookAccount.name
     @functools.cached_property
     def rooms(self):
         return [ChattyRoom(x) for x in self.model.rooms.all()]
