@@ -1,4 +1,6 @@
 {% extends "main.django" %}
+{% block 'title' %}
+{% endblock %}
 {% block body %}
     <div class="w3-card w3-round-large w3-leftbar w3-display-container" id="fuse-african-1 w3-padding">
         <p class="w3-xxlarge w3-margin-left">
