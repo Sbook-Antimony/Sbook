@@ -16,6 +16,6 @@ python manage.py migrate sbook
 python manage.py migrate note
 python manage.py migrate chatty
 
-#python manage.py createsuperuser --username ken-morel --password amemimy114865009
+python manage.py createsuperuser --username ken-morel --password amemimy114865009
 
 echo all zell
