@@ -7,6 +7,7 @@ from accounts import *
 import mimetypes
 from . import forms
 
+
 def do_index(req):
     print(req)
     return render(req, 'index.django')
@@ -43,7 +44,7 @@ class signin(View):
             errors = form.errors.as_data()
             return render(
                 req,
-                "signin.html",
+                "signin.django",
                 {
                     'errors': (str(errors.get("email", "")[0].message) if len(errors.get("email")) > 0 else False)
 
@@ -56,7 +57,7 @@ class signin(View):
             except UserDoesNotExistError:
                 return render(
                     req,
-                    "signin.html",
+                    "signin.django",
                     {
                         "errors": "Invalid Login: password or email incorrect"
                     }
