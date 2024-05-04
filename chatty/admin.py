@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import *
 
 class ChattyUserAdmin(admin.ModelAdmin):
-    list_display = ("name", "email", "password",)
+    list_display = ('sbookAccount', 'id', 'rooms',)
 
 
 # Register your models here.
