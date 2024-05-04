@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.template import loader
+from django.views import View
 from pathlib import Path
 from accounts import *
 import mimetypes
