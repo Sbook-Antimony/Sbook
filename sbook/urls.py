@@ -17,19 +17,20 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, re_path, include
 from . import views
+from sbook.accounts import check_login
 urlpatterns = [
     re_path('djga/', include('google_analytics.urls')),
     path('admin/', admin.site.urls),
     path('csrf/', views.do_csrf),
-    path('', views.do_index),
-    path('css/<name>', views.do_css),
-    path('js/<name>', views.do_js),
-    path('image/<name>', views.do_image),
-    path('login/', views.do_login),
-    path('signup/', views.do_signup),
-    path('dashboard/', views.do_config),
-    path('dashboard/<cmd>', views.do_cmd),
-    path('images/profile', views.do_profile),
+    path('', check_login(views.do_index)),
+    path('css/<name>', views.do_css)),
+    path('js/<name>', views.do_js)),
+    path('image/<name>', check_login(views.do_image)),
+    path('signin/', views.signin.as_view()),
+    path('signup/', views.signup.as_view()),
+    path('dashboard/', check_login(views.do_config)),
+    path('dashboard/<cmd>', check_login(views.do_cmd)),
+    path('images/profile', check_login(views.do_profile)),
     path('note/', include('note.urls')),
     path('chatty/', include('chatty.urls')),
 ]

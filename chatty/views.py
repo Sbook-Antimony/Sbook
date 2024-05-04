@@ -23,68 +23,6 @@ def send_message(req, user, roomid):
     except Exception as e:
         return HttpResponse('false'+str(e))
 
-class signin(View):
-    def get(self, req, *args, **kw):
-        return render(req, "chatty-signin.html", {'errors': False})
-    def post(self, req, *args, **kw):
-        form = forms.SigninForm(req.POST)
-        print(dir(form.fields))
-        if not form.is_valid():
-            errors = form.errors.as_data()
-            return render(
-                req,
-                "chatty-signin.html",
-                {
-                    'errors': (str(errors.get("email", "")[0].message) if len(errors.get("email")) > 0 else False)
-
-                }
-            )
-        else:
-            try:
-                data = form.cleaned_data
-                user = ChattyUser.from_login(data.get("email"), data.get("password"))
-            except ChattyUserDoesNotExistError:
-                return render(
-                    req,
-                    "chatty-signin.html",
-                    {
-                        "errors": "Invalid Logig: password or email incorrect"
-                    }
-                )
-            else:
-                req.session["user-id"] = user.id
-                return HttpResponseRedirect('/chatty')
-
-class signup(View):
-    def get(self, req, *args, **kw):
-        return render(req,"chatty-signup.html", {'errors': False})
-    def post(self, req, *args, **kw):
-        form = forms.SignupForm(req.POST)
-        if not form.is_valid():
-            errors = form.errors.as_data()
-            return render(
-                req,
-                "chatty-signup.html",
-                {
-                    'errors': (str(errors.get("email", "")[0].message) if len(errors.get("email")) > 0 else False)
-
-                }
-            )
-        else:
-            try:
-                data = form.cleaned_data
-                user = ChattyUser.create_from_login(data.get('name'), data.get("email"), data.get("password"))
-            except ChattyUserDoesExistError:
-                return render(
-                    req,
-                    "chatty-signup.html",
-                    {
-                        "errors": "User exists"
-                    }
-                )
-            else:
-                req.session["user-id"] = user.id
-                return HttpResponseRedirect('/chatty')
 class room(View):
     def get(self, req, user, roomid, *_, **__):
         try:
