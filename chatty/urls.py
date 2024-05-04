@@ -22,8 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('', logc(views.index)),
-    path('signin/', views.signin.as_view()),
-    path('signup/', views.signup.as_view()),
     path('rooms/create', logc(views.room_create.as_view())),
     path('rooms/<int:roomid>/messages/', logc(views.room.as_view())),
     path('rooms/<int:roomid>/messages/send-message/', logc(views.send_message))
