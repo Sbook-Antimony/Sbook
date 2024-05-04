@@ -120,7 +120,7 @@ def do_cmd(req, cmd):
             print(file, req.FILES)
             acc = accounts.Account(req.session.get('user-id'))
             (acc.folder / 'profile.png').write_bytes(file.read())
-            return redirect('/dashboard')
+            return HttpResponseRedirect('/dashboard')
 
 def do_profile(req):
     acc = accounts.Account(req.session.get('user-id'))
