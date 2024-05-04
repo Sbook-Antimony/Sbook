@@ -151,7 +151,7 @@ class User:
     @classmethod
     def create_from_login(cls, name, email, password):
         try:
-            obj = models.User(name=name, email=email, password=password)
+            obj = models.User(name=name, email=email, password=password, chatty=chatty.ChattyUser.create_from_login(name, email, password))
             createUserData(obj)
             obj.save()
         except models.User.DoesNotExist as e:

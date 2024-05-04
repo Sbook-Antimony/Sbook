@@ -5,6 +5,6 @@ class User(models.Model):
     password = models.CharField(max_length=255)
     email = models.EmailField()
 
-    chatty = models.ForeignKey(chatty.User)
+    chatty = models.ForeignKey(chatty.ChattyUser, related_name="sbook", on_delete=models.CASCADE)
     def __str__(self):
         return f"{self.name}:{self.email}"
