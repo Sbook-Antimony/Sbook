@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>dashboard</title>
+        <script type="text/javascript" src="/js/jquery.js"></script>
+        <script type="text/javascript" src="/js/angular.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="/css/w3.css" />
+        <script type="text/javascript">
+
+
+        </script>
+    </head>
+
+    <body ng-app="dashboard" ng-controller="ctrl">
+        <header ng-include="'/note/header.html'" role="navigation" class="w3-bar w3-border w3-indigo w3-centered">
+        </header>
+        <div class="sidenav" ng-include="side">
+        </div>
+        <div class="w3-container w3-card w3-round-xxlarge">
+            <h1 class="w3-container w3-center w3-pale-blue w3-round-xlarge">
+                My notes
+            </h1>
+            <div id="noteList">
+                <div class="w3-padding w3-container w3-blue-grey50 w3-card w3-round-xxlarge" style="width: fit-content;" ng-repeat="note in NOTES">
+                    <div class="w3-container w3-blue-grey50 w3-round-xlarge" style="width: fit-content; margin: auto;">
+                        <h3 class="w3-blue-green">
+                            {{ note.name }}
+                            <img src="/note/my-notes/{{note.isoname}}/icon.png" class="w3-circle" />
+                        </h3>
+                    </div>
+                    <hr />
+                    <div class="w3-margin w3-padding w3-center" ng-bind="note.shortdesc">
+                    </div>
+                    <a href=""></a>
+                </div>
+                <a href="/note/my-notes/upload" class="w3-teal Sb-center w3-center Sb-center w3-round-xxlarge w3-button w3-margin-top w3-margin-bottom">upload</a>
+            </div>
+        </div>
+        <script>
+            var app = angular.module("dashboard", []);
+            app.controller("ctrl", async function($scope, $http) {
+                window.scope = $scope;
+                $.getJSON('/note/my-notes/get-notes.json').then(
+                    (d) => $scope.NOTES = d
+                );
+
+            });
+        </script>
+
+
+
+    </body>
+</html>
