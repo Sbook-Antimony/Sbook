@@ -2,48 +2,43 @@ import functools
 
 from django.http import HttpResponseRedirect, HttpResponse
 
-from chatty import models
+from note import models
 import sbook.models
 import sbook.accounts
 
 
-class ChattyUserDoesNotExistError(ValueError):
+class NoteUserDoesNotExistError(ValueError):
     pass
-class ChattyUserDoesExistError(ValueError):
+class NoteUserDoesExistError(ValueError):
     pass
-class ChattyUser():
-    model:models.ChattyUser
+class NoteUser():
+    model:models.NoteUser
 
     @classmethod
     def from_id(cls, id):
         try:
             found = sbook.models.User.objects.get(id=id)
         except sbook.models.User.DoesNotExist as e:
-            raise ChattyUserDoesNotExistError() from e
+            raise NoteUserDoesNotExistError() from e
         else:
-            return found.chattyAccount
-    def from_chatty_id(cls, id):
+            return found.noteAccount
+    def from_note_id(cls, id):
         try:
-            found = models.ChattyUser.objects.get(id=id)
-        except models.ChattyUser.DoesNotExist as e:
-            raise ChattyUserDoesNotExistError() from e
-        else:
-            return cls(found)
-    @classmethod
-    def from_login(cls, email, password):
-        try:
-            found = models.ChattyUser.objects.get(email=email, password=password)
-        except models.ChattyUser.DoesNotExist as e:
-            raise ChattyUserDoesNotExistError() from e
+            found = models.NoteUser.objects.get(id=id)
+        except models.NoteUser.DoesNotExist as e:
+            raise NoteUserDoesNotExistError() from e
         else:
             return cls(found)
-    @classmethod
-    def create_from_login(cls, name, email, password):
+
+
+  
+    @staticmethod
+    def create_from_sbook(cls, sbook):
         try:
-            obj = models.ChattyUser(name=name, email=email, password=password)
+            obj = models.NoteUser(sbookAccount=sbook)
             obj.save()
-        except models.ChattyUser.DoesNotExist as e:
-            raise ChattyUserDoesExistError() from e
+        except Exception as e:
+            raise NoteUserDoesExistError() from e
         else:
             return cls(obj)
 
