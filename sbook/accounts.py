@@ -5,7 +5,7 @@ import yaml
 import sbook.models
 
 
-DIR = Path(__file__).parent
+DIR = Path(__file__).parent.parent
 ACCOUNTS = DIR/'accounts'
 
 assert ACCOUNTS.exists(), f"accounts folder {ACCOUNTS!r} does not exists"
