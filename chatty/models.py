@@ -2,9 +2,7 @@ from django.db import models
 
 class ChattyUser(models.Model):
     #id = models.BigAutoField(primary_key=True)
-    email = models.EmailField()
-    name = models.CharField(max_length=32)
-    password = models.CharField(max_length=32)
+
     def __str__(self):
         return self.name
 
