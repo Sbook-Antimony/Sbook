@@ -15,7 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, re_pathadded re_path, include
 from . import views
 urlpatterns = [
     re_path('djga/', include('google_analytics.urls')),
