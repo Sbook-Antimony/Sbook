@@ -106,6 +106,8 @@ def do_cmd(req, user, cmd, user):
             
             return HttpResponseRedirect('/dashboard')
 
-def do_profile(req, user):
-    #acc = accounts.Account(req.session.get('user-id')
-    return HttpResponse(user.profile_asBytes, 'image/png')
+def do_profile(req, user=None):
+    if user:
+        return HttpResponse(user.profile_asBytes, 'image/png')
+    else:
+        return HttpResponse(User.DEFAULT_PROFILE.read_bytes())
