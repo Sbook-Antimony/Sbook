@@ -7,7 +7,7 @@ from sbook.accounts import *
 import mimetypes
 from . import forms
 
-
+@check_login(False)
 def do_index(req, user=None):
     if user:
         return render(
@@ -98,15 +98,15 @@ class signup(View):
             else:
                 req.session["user-id"] = user.id
                 return HttpResponseRedirect('/')
-
+@check_login
 def do_cmd(req, user, cmd, user):
     match cmd:
         case 'set-new-profile':
             file = req.FILES.get('file')
             
             return HttpResponseRedirect('/dashboard')
-
-def do_profile(req, user=None):
+@check_login(False)
+def do_profile(req, user):
     if user:
         return HttpResponse(user.profile_asBytes, 'image/png')
     else:
