@@ -68,19 +68,31 @@ class ChattyUser():
         return self.sbookAccount.email
 
 
-
-def check_login(func):
+def check_login(func, redirect=True):
+    if isinstance(func, bool):
+        return functools.partial(
+            check_login,
+            redirect=func,
+        )
+            
     @functools.wraps(func)
-    def wrapper(req, *args, **kw):
+    def wrapper(*args, **kw):
+        req = args[0]
+        if not isinstance(req, django.http.HttpRequest):
+            req = args[1]
         if "user-id" in req.session:
             try:
-                user = ChattyUser.from_id(req.session.get("user-id", -1))
-            except ChattyUserDoesNotExistError:
-                return HttpResponseRedirect('/chatty/signin')
+                user = User.from_id(req.session.get("user-id", -1))
+            except UserDoesNotExistError:
+                if not redirect:
+                    return func(user=None, *args,**kw)
+                return HttpResponseRedirect('/signin')
             else:
-                return func(req, user=user, *args,**kw)
+                return func(user=user, *args,**kw)
         else:
-            return HttpResponseRedirect('/chatty/signin')
+            if not redirect:
+                return func(user=None, *args,**kw)
+            return HttpResponseRedirect('/signin')
     return wrapper
 
 
