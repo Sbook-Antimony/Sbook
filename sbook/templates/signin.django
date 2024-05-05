@@ -1,8 +1,12 @@
-{% extends 'chatty-main.html' %}
+{% extends 'main.django' %}
 {% block 'title' %}
-    chatty signin
+    sbook signin
 {% endblock %}
-{% block 'body' %}
+
+{% block 'left' %}
+{% endblock %}
+
+{% block 'center' %}
 
     <form ng-app="signup" ng-controller="signupCtrl" method="post" class="bg-clear fg-antimony w3-round-xlarge w3-padding w3-margin ">
         {% if errors %}
@@ -34,4 +38,7 @@
             });
         </script>
     </form>
+{% endblock %}
+
+{% block 'right' %}
 {% endblock %}
