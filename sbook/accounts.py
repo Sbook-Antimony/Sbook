@@ -80,9 +80,11 @@ class User:
     @functools.cached_property
     def id(self):
         return self.model.id
+    
     @functools.cached_property
     def name(self):
         return self.model.name
+    
     @functools.cached_property
     def chattyAccount(self):
         cha = self.model.chattyAccount.all()
