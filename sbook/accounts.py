@@ -110,7 +110,7 @@ def createUserData(obj) -> int:
 
     folder.mkdir()
 
-    img = random_profile_image.generate_from_name(obj.name)
+    img = random_profile_image.random_profile()
     img.save(folder / "profile.png")
 
     data_file = (folder/"data.yaml")
