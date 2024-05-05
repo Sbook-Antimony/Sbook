@@ -29,4 +29,4 @@ def random_profile(save_path, size=500):
         draw.rectangle([(x1, y1), (x1 + width, y1 + height)], fill=color)
 
     # Save the image
-    image.save(save_path)
+    return image
