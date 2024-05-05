@@ -1,7 +1,7 @@
 from PIL import Image, ImageDraw, ImageFont
 import random
 
-def random_profile(save_path, size=500):
+def random_profile(size=500):
     # Create a new image with white background
     image = Image.new("RGB", (size, size), "white")
     draw = ImageDraw.Draw(image)
