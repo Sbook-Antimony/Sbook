@@ -5,14 +5,18 @@ from chatty.accounts import *
 
 from . import forms
 
+@check_login
 def index(req, user):
     return render(
         req,
-        'chatty-index.html',
+        'chatty-index.django',
         {
-            "User": user
+            "User": user,
+            "room": req.GET.get('room', None),
         }
     )
+
+@check_login
 def send_message(req, user, roomid):
     form = forms.SendMessageForm(req.POST)
     try:
@@ -24,6 +28,7 @@ def send_message(req, user, roomid):
         return HttpResponse('false'+str(e))
 
 class room(View):
+    @check_login
     def get(self, req, user, roomid, *_, **__):
         try:
             room = ChattyRoom.from_id(roomid)
@@ -34,7 +39,7 @@ class room(View):
         else:
             return render(
                 req,
-                "room-view.html",
+                "room-view.django",
                 {
                     'room': room,
                     'User': user,
@@ -42,8 +47,11 @@ class room(View):
                 }
             )
 class room_create(View):
+    @check_login
     def get(self, req, user, *_, **__):
-        return render(req, "room-create.html")
+        return render(req, "room-create.django")
+
+    @check_login
     def post(self, req, user, *_, **__):
         form = form.CreateRoomForm(req.POST)
         name = form.cleaned_data.get("name")
@@ -57,11 +65,11 @@ class room_create(View):
             except ChattyRoomDoesExistError:
                 errormsg = "name unavailable"
             else:
-                return HttpResponseRedirect("/chatty/rooms/%d"%room.id)
+                return HttpResponseRedirect("/chatty/?room=%d"%room.id)
         if errormsg:
             return render(
                 req,
-                "chatty-signup.html",
+                "chatty-signup.django",
                 {
                     'errors': errormsg
                 }
