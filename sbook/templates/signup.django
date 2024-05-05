@@ -1,4 +1,4 @@
-{% extends 'chatty-main.html' %}
+{% extends 'chatty-main.dja' %}
 {% block 'title' %}
     chatty signin
 {% endblock %}
