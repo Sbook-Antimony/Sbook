@@ -82,8 +82,8 @@ def check_login(func, redirect=True):
             req = args[1]
         if "user-id" in req.session:
             try:
-                user = User.from_id(req.session.get("user-id", -1))
-            except UserDoesNotExistError:
+                user = ChattyUser.from_id(req.session.get("user-id", -1))
+            except ChattyUserDoesNotExistError:
                 if not redirect:
                     return func(user=None, *args,**kw)
                 return HttpResponseRedirect('/signin')
