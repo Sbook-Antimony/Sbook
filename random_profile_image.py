@@ -1,52 +1,32 @@
-import numpy as np
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
+import random
 
-# Define the size of the image
-image_size = 128
-channels = 3
+def random_profile(save_path, size=500):
+    # Create a new image with white background
+    image = Image.new("RGB", (size, size), "white")
+    draw = ImageDraw.Draw(image)
 
-# Function to generate and save an image based on a given name
-def generate_and_save_image(name, filename):
-    # Define a function to convert a string to a tensor
-    def string_to_tensor(string):
-        return np.array([ord(c) for c in string])
+    # Define the limited color palette
+    colors = [(229, 43, 80), (0, 255, 255), (255, 171, 129)]  # Antimony, Cyan, Napples
 
-    # Define a function to generate an image from a tensor
-    def generate_image_from_tensor(tensor):
-        # Define a simple generator model
-        def generator(input_size):
-            model = [
-                np.random.normal(0, 1, size=(input_size, 256)),  # Embedding
-                np.random.normal(0, 1, size=(input_size, 4*4*256)),  # Dense layer
-                np.random.normal(0, 1, size=(4, 4, 256)),  # Reshape
-                np.random.normal(0, 1, size=(5, 5, 128)),  # Conv2DTranspose layer 1
-                np.random.normal(0, 1, size=(5, 5, 64)),   # Conv2DTranspose layer 2
-                np.random.normal(0, 1, size=(5, 5, channels))  # Conv2DTranspose layer 3
-            ]
-            return model
+    # Draw random circles
+    for _ in range(random.randint(1, 3)):
+        x = random.randint(0, size)
+        y = random.randint(0, size)
+        radius = random.randint(size // 8, size // 3)
+        color = random.choice(colors)
+        draw.ellipse([(x - radius, y - radius), (x + radius, y + radius)], fill=color)
 
-        # Generate image from tensor
-        model = generator(tensor.shape[0])
-        for layer in model:
-            tensor = np.matmul(tensor, layer)
+    # Draw random squares
+    for _ in range(random.randint(1, 3)):
+        x1 = random.randint(0, size)
+        y1 = random.randint(0, size
+        min_size = size // 5
+        max_size = size // 2
+        width = random.randint(min_size, max_size)
+        height = random.randint(min_size, max_size)
+        color = random.choice(colors)
+        draw.rectangle([(x1, y1), (x1 + width, y1 + height)], fill=color)
 
-        # Rescale the pixel values from [-1, 1] to [0, 255]
-        generated_image = (tensor + 1) * 127.5
-        generated_image = generated_image.astype(np.uint8)
-
-        return generated_image
-
-    # Convert name to tensor
-    name_tensor = string_to_tensor(name)
-
-    # Generate image from tensor
-    image_data = generate_image_from_tensor(name_tensor)
-
-    # Create PIL image
-    image = Image.fromarray(image_data)
-
-    # Save image
-    image.save(filename)
-
-# Example usage:
-generate_and_save_image("John Doe", "generated_image.png")
+    # Save the image
+    image.save(save_path)
