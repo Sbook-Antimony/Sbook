@@ -7,3 +7,6 @@ gunicorn==21.2.0
 uvicorn==0.29.0
 fontawesomefree==6.5.1
 django-google-analytics-app==6.0.0
+Pillow
+tensorflow
+numpy
