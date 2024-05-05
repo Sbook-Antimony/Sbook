@@ -1,7 +1,7 @@
 from pathlib import Path
 
 import yaml
-
+import random_profile_image
 
 
 DIR = Path(__file__).parent.parent
@@ -110,9 +110,8 @@ def createUserData(obj) -> int:
 
     folder.mkdir()
 
-    profile = folder / "profile.png"
-    profile.touch()
-    profile.write_bytes((DIR / 'image' / 'default-photo.png').read_bytes())
+    img = random_profile_image.generate_from_name(obj.name)
+    img.save(folder / "profile.png")
 
     data_file = (folder/"data.yaml")
     data_file.touch()
