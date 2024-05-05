@@ -1,5 +1,4 @@
-from django.db import models
-import chatty.models as chatty
+from django.db import mode
 
 class User(models.Model):
     name = models.CharField(max_length=255)
