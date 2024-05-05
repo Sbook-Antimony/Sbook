@@ -99,13 +99,11 @@ def do_config(req, user):
         )
     )
 
-def do_cmd(req, cmd, user):
+def do_cmd(req, user, cmd, user):
     match cmd:
         case 'set-new-profile':
             file = req.FILES.get('file')
-            print(file, req.FILES)
-            acc = accounts.Account(req.session.get('user-id'))
-            (acc.folder / 'profile.png').write_bytes(file.read())
+            
             return HttpResponseRedirect('/dashboard')
 
 def do_profile(req, user):
