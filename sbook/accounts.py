@@ -1,4 +1,5 @@
 from pathlib import Path
+import io
 
 import yaml
 import random_profile_image
@@ -76,11 +77,23 @@ class User:
         if model is None:
             raise UserDoesNotExistError()
         self.model = model
+        self.directory = ACCOUNTS / str(self.id)
 
     @functools.cached_property
     def id(self):
         return self.model.id
-    
+    @functools.cached_property
+    def profile(self):
+        return Image.open(
+            self.directory / 'profile.png',
+        )
+
+    @functools.cached_property
+    def profile_asBytes(self):
+        buffer = io.BytesIO()
+        self.profile.save(buffer, format='PNG')
+        return buffer.getvalue()
+
     @functools.cached_property
     def name(self):
         return self.model.name
