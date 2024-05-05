@@ -1,0 +1,15 @@
+{% extends 'main.html' %}
+{% block 'title' %}
+    hello {{ User.name }}
+{% endblock %}
+{% block 'left' %}
+    {% include 'room-list.django' %}
+{% endblock %}
+{% block 'center' %}
+
+    <div class="room-view">
+    </div>
+
+{% endblock %}
+{% block 'right' %}
+{% endblock %}
