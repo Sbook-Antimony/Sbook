@@ -6,8 +6,13 @@
     {% include 'room-list.django' %}
 {% endblock %}
 {% block 'center' %}
-
+    
     <div class="room-view">
+        {% if room %}
+            {% include 'room-view.html' %}
+        {% else %}
+            <p class="margin-center w3-large">Hello {{ User.name }}, what are we chatting today?</p>
+        {% endif %}
     </div>
 
 {% endblock %}
