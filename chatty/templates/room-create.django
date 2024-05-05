@@ -1,8 +1,10 @@
-{% extends 'chatty-main.html' %}
+{% extends 'main.django' %}
 {% block 'title' %}
     create room
 {% endblock %}
-{% block 'body' %}
+{% block 'left' %}
+{% endblock %}
+{% block 'center' %}
 
     <form method="post" class="bg-clear fg-antimony w3-round-xlarge w3-padding w3-margin ">
         {% if errors %}
@@ -20,4 +22,6 @@
             <input type="text" name="name" class="bg-red-invalid fg-antimony w3-padding-small w3-border-0 w3-margin bg-napples50  w3-round-large" />
         </div>
     </form>
+{% endblock %}
+{% block 'right' %}
 {% endblock %}
