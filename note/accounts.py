@@ -155,19 +155,17 @@ class ChattyMessage:
         return (self.model.sent_date)
 
 
-
-
-
 def check_login(func):
     @functools.wraps(func)
     def wrapper(req, *args, **kw):
         if "user-id" in req.session:
             try:
-                user = ChattyUser.from_id(req.session.get("user-id", -1))
-            except ChattyUserDoesNotExistError:
-                return HttpResponseRedirect('/chatty/signin')
+                user = NoteUser.from_id(req.session.get("user-id", -1))
+            except NoteUserDoesNotExistError:
+                return HttpResponseRedirect('/note/signin')
             else:
                 return func(req, user=user, *args,**kw)
         else:
-            return HttpResponseRedirect('/chatty/signin')
+            return HttpResponseRedirect('/note/signin')
     return wrapper
+
