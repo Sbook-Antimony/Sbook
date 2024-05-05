@@ -74,11 +74,13 @@ def check_login(func):
     def wrapper(req, *args, **kw):
         if "user-id" in req.session:
             try:
-                user = NoteUser.from_id(req.session.get("user-id", -1))
-            except NoteUserDoesNotExistError:
-                return HttpResponseRedirect('/note/signin')
+                user = ChattyUser.from_id(req.session.get("user-id", -1))
+            except ChattyUserDoesNotExistError:
+                return HttpResponseRedirect('/chatty/signin')
             else:
                 return func(req, user=user, *args,**kw)
         else:
-            return HttpResponseRedirect('/note/signin')
+            return HttpResponseRedirect('/chatty/signin')
     return wrapper
+
+
