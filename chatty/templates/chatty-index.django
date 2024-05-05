@@ -1,4 +1,4 @@
-{% extends 'main.html' %}
+{% extends 'main.django' %}
 {% block 'title' %}
     hello {{ User.name }}
 {% endblock %}
