@@ -8,8 +8,18 @@ import mimetypes
 from . import forms
 
 
-def do_index(req, user):
-    return render(req, 'dashboard.django'
+def do_index(req, user=None):
+    if user:
+        return render(
+            req,
+            'dashboard.django',
+            {'user': user}
+        )
+    else:
+        return render(
+            req,
+            'index.django',
+        )
 def do_image(req, name):
     file = (DIR.parent / "image") / name
     if file.exists():
@@ -17,12 +27,19 @@ def do_image(req, name):
     else:
         print("not found image %s" % file)
         return HttpResponseNotFound("")
+
+
 def do_csrf(req):
     return render(req, "csrf.django")
 
+
 class signin(View):
     def get(self, req, *args, **kw):
-        return render(req, "signin.django", {'errors': False})
+        return render(
+            req,
+            "signin.django",
+            {'errors': False},
+        )
     def post(self, req, *args, **kw):
         form = forms.SigninForm(req.POST)
         if not form.is_valid():
@@ -82,23 +99,6 @@ class signup(View):
                 req.session["user-id"] = user.id
                 return HttpResponseRedirect('/')
 
-
-def do_config(req, user):
-    id = req.session.get('user-id')
-    if id is None:
-        return HttpResponse("no id")
-    acc = accounts.Account(id)
-    return HttpResponse(
-        loader.get_template("account/config.django").render(
-            {
-                'fname': acc.firstname,
-                'lname': acc.lastname,
-                'account_type': acc.data.get("type") or ''
-            },
-            req
-        )
-    )
-
 def do_cmd(req, user, cmd, user):
     match cmd:
         case 'set-new-profile':
@@ -107,6 +107,5 @@ def do_cmd(req, user, cmd, user):
             return HttpResponseRedirect('/dashboard')
 
 def do_profile(req, user):
-    acc = accounts.Account(req.session.get('user-id'))
-    if (acc.folder / 'profile.png').exists():
-        return HttpResponse((acc.folder / 'profile.png').read_bytes(), 'image/png')
+    #acc = accounts.Account(req.session.get('user-id')
+    return HttpResponse(user.profile_asBytes, 'image/png')
