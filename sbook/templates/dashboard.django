@@ -1,45 +1,14 @@
 {% extends 'main.django' %}
-{% block body %}
-    <div id="presentation" style="background-color: #33f2;">
-        <div style="background-color: #3f02;" class="w3-bar" id="presentation-caption">
-            <div class="" style="display: inline-block;">
-                <img src="/images/profile" width="250" class="w3-circle w3-image" style="margin-right: 0px;" />
-                <svg onclick="uploading_photo()" width="20" height="20" viewBox="0 0 100 100" style="margin-left: 0px;">
-                    <line x1="5" y1="5" x2="95" y2="5" style="stroke: black; stroke-width: 10px;" ></line>
-                    <line x1="95" y1="5" x2="95" y2="50" style="stroke: black; stroke-width: 10px;" ></line>
 
-                    <line x1="40" y1="40" x2="95" y2="95" style="stroke: black; stroke-width: 10px;" ></line>
-
-                    <line x1="5" y1="5" x2="5" y2="95" style="stroke: black; stroke-width: 10px;" ></line>
-                    <line x1="5" y1="95" x2="50" y2="95" style="stroke: black; stroke-width: 10px;" ></line>
-                </svg>
-            </div>
-            <dialog askphoto id="ask-photo-dialog">
-                <span>
-                    <img src="/images/profile" class="w3-round-xxlarge w3-image" style="margin-right: -50px;" />
-                </span>
-                <span>
-                    <form method="post" action="/dashboard/set-new-profile" onsubmit="save_new_img_profile(this.querySelector('input[type=file]').files.get(-1));" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <label for="file">
-                            file
-                            <input class="w3-input" type="file" name="file" />
-                        </label>
-                        <input type="submit" />
-                    </form>
-                </span>
-            </dialog>
-            <p class="w3-jumbo w3-round w3-center" style="display: inline-block;color: wheat; background-color: #30f2;">
-                {{ fname }}
-                <br />
-                {{ lname }}
-            </p>
-        </div>
-    </div>
-
+{% block 'left' %}
+{% endblock %}
+{% block 'center' %}
     <script type="text/javascript">
         function uploading_photo() {
             $("dialog[askphoto]")[0].showModal();
         }
     </script>
+{% endblock %}
+
+{% block 'right' %}
 {% endblock %}
