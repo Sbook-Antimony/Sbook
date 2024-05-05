@@ -20,7 +20,7 @@ def random_profile(size=500):
     # Draw random squares
     for _ in range(random.randint(1, 3)):
         x1 = random.randint(0, size)
-        y1 = random.randint(0, size
+        y1 = random.randint(0, size)
         min_size = size // 5
         max_size = size // 2
         width = random.randint(min_size, max_size)
