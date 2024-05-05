@@ -9,21 +9,7 @@ from . import forms
 
 
 def do_index(req, user):
-    return render(req, 'index.django')
-def do_css(req, name):
-    file = (DIR.parent / "css") / name
-    if file.exists():
-        return HttpResponse(file.read_text(), 'text/css')
-    else:
-        print("not found css %s" % file)
-        return HttpResponseNotFound("")
-def do_js(req, name):
-    file = (DIR.parent / "js") / name
-    if file.exists():
-        return HttpResponse(file.read_text(), 'application/javascript')
-    else:
-        print("not found js %s" % file)
-        return HttpResponseNotFound("")
+    return render(req, 'dashboard.django'
 def do_image(req, name):
     file = (DIR.parent / "image") / name
     if file.exists():
