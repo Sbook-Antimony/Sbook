@@ -2,6 +2,8 @@ from pathlib import Path
 import io
 
 import yaml
+import django.http
+
 import random_profile_image
 
 
@@ -28,17 +30,30 @@ class UserDoesExistError(ValueError):
 
 
 
-def check_login(func):
+def check_login(func, redirect=True):
+    if isinstance(func, bool):
+        return functools.partial(
+            check_login,
+            redirect=func,
+        )
+            
     @functools.wraps(func)
-    def wrapper(req, *args, **kw):
+    def wrapper(*args, **kw):
+        req = args[0]
+        if not isinstance(req, django.http.HttpRequest):
+            req = args[1]
         if "user-id" in req.session:
             try:
                 user = User.from_id(req.session.get("user-id", -1))
             except UserDoesNotExistError:
+                if not redirect:
+                    return func(user=None, *args,**kw)
                 return HttpResponseRedirect('/signin')
             else:
-                return func(req, user=user, *args,**kw)
+                return func(user=user, *args,**kw)
         else:
+            if not redirect:
+                return func(user=None, *args,**kw)
             return HttpResponseRedirect('/signin')
     return wrapper
 ##########################################
@@ -111,7 +126,7 @@ class User:
         if len(cha) == 0:
             raise note.accounts.UserDoesNotExistError()
         return note.accounts.ChattyUser(cha[0])
-    DEFAULT_PHOTO = "/image/default-photo.png"
+    DEFAULT_PROFILE = "/image/default-photo.png"
     name:tuple[str]
     password:str
     data:dict
