@@ -9,7 +9,7 @@
     
     <div class="room-view">
         {% if room %}
-            {% include 'room-view.html' %}
+            {% include 'room-view.django' %}
         {% else %}
             <p class="margin-center w3-large">Hello {{ User.name }}, what are we chatting today?</p>
         {% endif %}
