@@ -11,11 +11,11 @@ class NoteUser(models.Model):
         on_delete=models.CASCADE,
     )
     
-class Note(Model):
+class Note(models.Model):
     title = models.CharField(max_length=255)
-    redactor = ForeignKey(
+    redactor = models.ForeignKey(
         NoteUser,
-        on_delete=CASCADE,
+        on_delete=models.CASCADE,
         related_name="notes"
     )
     
