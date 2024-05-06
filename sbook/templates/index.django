@@ -1,4 +1,12 @@
+{% extends 'main.django' %}
+{% block 'title' %}
+    sbook signin
+{% endblock %}
 
+{% block 'left' %}
+{% endblock %}
+
+{% block 'center' %}
         <div style="border-radius: 20px; background: linear-gradient(to bottom right, #ff1493, #00bfff, #8a2be2); padding: 20px; margin: 20px;">
 
             <h1 style="text-align: center;">Welcome to Sbook</h1>
@@ -44,3 +52,7 @@
                 x[slideIndex-1].style.display = "block";  
             }
         </script>
+{% endblock %}
+
+{% block 'right' %}
+{% endblock %}
