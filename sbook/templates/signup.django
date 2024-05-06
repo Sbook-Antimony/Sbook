@@ -1,4 +1,4 @@
-{% extends 'chatty-main.django' %}
+{% extends 'main.django' %}
 {% block 'title' %}
     chatty signin
 {% endblock %}
