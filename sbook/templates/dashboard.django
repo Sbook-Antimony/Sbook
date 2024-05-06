@@ -3,6 +3,7 @@
 {% block 'left' %}
 {% endblock %}
 {% block 'center' %}
+your dasboard
     <script type="text/javascript">
         function uploading_photo() {
             $("dialog[askphoto]")[0].showModal();
