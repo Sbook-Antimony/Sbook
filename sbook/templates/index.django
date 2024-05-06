@@ -1,6 +1,6 @@
 {% extends 'main.django' %}
 {% block 'title' %}
-    sbook signin
+    welcome to Sbook
 {% endblock %}
 
 {% block 'left' %}
