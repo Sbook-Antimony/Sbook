@@ -119,7 +119,7 @@ fada5e
 }
 .colory-border1
 {
-    background-color: linear-gradient(to bottom right, #fade5e, #8a2be2);
+    background: linear-gradient(to bottom right, #fade5e, #8a2be2);
     padding: 1px;
 }
 .colory-border1 *:first-child
@@ -127,6 +127,9 @@ fada5e
     width: 100%;
     height: 100%;
     margin: 1px;
+    background-color: #ddffff;
+    border: inherit;
+    border-radius: inherit;
 }
 /* extract from w3.css*/
 .w3-btn,.w3-button{border:none;display:inline-block;padding:8px 16px;vertical-align:middle;overflow:hidden;text-decoration:none;color:inherit;background-color:inherit;text-align:center;cursor:pointer;white-space:nowrap}
