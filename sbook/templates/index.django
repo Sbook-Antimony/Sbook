@@ -7,11 +7,11 @@
 {% endblock %}
 
 {% block 'center' %}
-        <div style="border-radius: 20px; background: linear-gradient(to bottom right, #ff1493, #00bfff, #8a2be2); padding: 20px; margin: 20px;">
+        <div class="w3-round w3-margin w3-padding bg-clear w3-center">
 
-            <h1 style="text-align: center;">Welcome to Sbook</h1>
+            <h1 class="w3-large">Welcome to Sbook</h1>
 
-            <div class="w3-content w3-display-container" style="max-width:800px; margin: 0 auto;">
+            <div class="w3-content w3-display-container">
                 <img class="mySlides" src="image1.jpg" style="width:100%">
                 <img class="mySlides" src="image2.jpg" style="width:100%">
                 <img class="mySlides" src="image3.jpg" style="width:100%">
