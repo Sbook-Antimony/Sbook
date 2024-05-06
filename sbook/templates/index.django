@@ -12,9 +12,9 @@
             <h1 class="w3-large">Welcome to Sbook</h1>
 
             <div class="w3-content w3-display-container colory-border1">
-                <img class="mySlides" src="image1.jpg" style="width:100%">
-                <img class="mySlides" src="image2.jpg" style="width:100%">
-                <img class="mySlides" src="image3.jpg" style="width:100%">
+                <img class="mySlides" src="https://picsum.photos/500/400" style="width:100%">
+                <img class="mySlides" src="https://picsum.photos/500/400" style="width:100%">
+                <img class="mySlides" src="https://picsum.photos/500/400" style="width:100%">
                 <!-- Add more images here --
             </div>
 
