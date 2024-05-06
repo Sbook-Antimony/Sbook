@@ -20,11 +20,11 @@
     </head>
 
     <header  role="navigation" class="w3-bar bg-antimony50 w3-top w3-padding-0">
-        <a href="/" class="w3-button w3-bar-item bg-antimony10-hover w3-large">
+        <a href="/" style="height: 100%;" class="w3-button w3-bar-item bg-antimony10-hover w3-large">
             <i class="fas fa-home"></i>
         </a>
 
-        <div class="w3-bar-item" id="top-bar-div">
+        <div style="width: 100%;" class="w3-bar-item" id="top-bar-div">
             <button id="top-bar-div-button" style="width: 100%" class="w3-button">my workspace</button>
             <div id="top-bar-buttons" style="width: 100%" class="">
                 <a style="width: 100%" href="/note" class="bg-napples10 bg-antimony10-hover w3-button w3-hover-text w3-block">
