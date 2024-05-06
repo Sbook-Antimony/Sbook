@@ -38,7 +38,11 @@
                 </a>
             </div>
             <script>
-                $(%%)
+                $('#top-bar-buttons').slideUp();
+                $("#top-bar-div-button").click(function(){
+                    $("#top-bar-buttons").slideToggle();
+                });
+            </script>
         </div>
         <img src="/profile.png" style="height: 40px;" class="w3-right w3-bar-item w3-circle" />
         
