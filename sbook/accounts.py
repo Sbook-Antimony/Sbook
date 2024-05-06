@@ -127,7 +127,7 @@ class User:
         if len(cha) == 0:
             raise note.accounts.UserDoesNotExistError()
         return note.accounts.ChattyUser(cha[0])
-    DEFAULT_PROFILE_PATH = Path("/image/default-photo.png")
+    DEFAULT_PROFILE_PATH = DIR / "image/default-photo.png"
     name:tuple[str]
     password:str
     data:dict
