@@ -10,11 +10,24 @@ html
 {
     background: url("/image/background.png");
 }
+
 body
 {
-    max-width: 500px;
-    margin: auto;
+    display: inline-block;
 }
+body > #right
+{
+    max-width: 500px;
+    float: right;
+    display: inline-block;
+}
+body > #left
+{
+    max-width: 500px;
+    float: left;
+    display: inline-block;
+}
+
 /*
 4c4f4d
 fada5e
@@ -95,7 +108,10 @@ fada5e
 {
     border: 0.1px solid;
 }
-
+.colory-border1
+{
+    border: 1px solid linear-gradient(to bottom right, #ff1493, #00bfff, #8a2be2);
+}
 /* extract from w3.css*/
 .w3-btn,.w3-button{border:none;display:inline-block;padding:8px 16px;vertical-align:middle;overflow:hidden;text-decoration:none;color:inherit;background-color:inherit;text-align:center;cursor:pointer;white-space:nowrap}
 .w3-btn:hover{box-shadow:0 8px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)}
