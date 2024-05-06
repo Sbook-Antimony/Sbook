@@ -99,7 +99,7 @@ class signup(View):
                 req.session["user-id"] = user.id
                 return HttpResponseRedirect('/')
 @check_login
-def do_cmd(req, user, cmd, user):
+def do_cmd(req, user, cmd):
     match cmd:
         case 'set-new-profile':
             file = req.FILES.get('file')
