@@ -11,16 +11,14 @@
 
             <h1 class="w3-large">Welcome to Sbook</h1>
 
-            <div class="w3-content w3-display-container">
+            <div class="w3-content w3-display-container colory-border1">
                 <img class="mySlides" src="image1.jpg" style="width:100%">
                 <img class="mySlides" src="image2.jpg" style="width:100%">
                 <img class="mySlides" src="image3.jpg" style="width:100%">
-                <!-- Add more images here -->
-                <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
-                <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
+                <!-- Add more images here --
             </div>
 
-            <div style="margin-top: 20px;">
+            <div class="colory-border1 w3-margin">
                 <h2>Quotes on Education:</h2>
                 <div class="eduQuote w3-container w3-margin w3-padding w3-round-large" style="border-radius: 10px; background: linear-gradient(to bottom right, #ff1493, #8a2be2); border: 2px solid #ff7f50;">"Education is the most powerful weapon which you can use to change the world." - Nelson Mandela</div>
                 <div class="eduQuote w3-container w3-margin w3-padding w3-round-large" style="border-radius: 10px; background: linear-gradient(to bottom right, #ff1493, #8a2be2); border: 2px solid #ff7f50;">"The roots of education are bitter, but the fruit is sweet." - Aristotle</div>
