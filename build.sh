@@ -6,7 +6,7 @@ set -o errexit
 pip install -r requirements.txt
 
 # Convert static asset files
-echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('ken-morel', 'engonken8@gmail.com', '1+2=Three')" | python manage.py shell
+#echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('ken-morel', 'engonken8@gmail.com', '1+2=Three')" | python manage.py shell
 python manage.py collectstatic --no-input
 
 # Apply any outstanding database migrations
