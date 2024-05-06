@@ -28,19 +28,19 @@
                     <small> Aristotle</small>
                 </div>
                 <div class="w3-animate-left w3-round-large colory-border1 eduQuotes w3-container w3-margin w3-padding w3-round-large>
-                    <p>"Education is not the filling of a pail, but the lighting of a fire." </p>
+                    <p class="bg-napples w3-container w3-round-large">"Education is not the filling of a pail, but the lighting of a fire." </p>
                     <small> William Butler Yeats</small>
                 </div>
                 <div class="w3-animate-left w3-round-large colory-border1 eduQuotes w3-container w3-margin w3-padding w3-round-large>
-                    <p>"The mind is not a vessel to be filled, but a fire to be kindled." </p>
+                    <p class="bg-napples w3-container w3-round-large">"The mind is not a vessel to be filled, but a fire to be kindled." </p>
                     <small> Plutarch</small>
                 </div>
                 <div class="w3-animate-left w3-round-large colory-border1 eduQuotes w3-container w3-margin w3-padding w3-round-large>
-                    <p>"Learning is a treasure that will follow its owner everywhere." </p>
+                    <p class="bg-napples w3-container w3-round-large">"Learning is a treasure that will follow its owner everywhere." </p>
                     <small> Chinese Proverb</small>
                 </div>
                 <div class="w3-animate-left w3-round-large colory-border1 eduQuotes w3-container w3-margin w3-padding w3-round-large">
-                    <p>"Education is the passport to the future, for tomorrow belongs to those who prepare for it today." </p>
+                    <p class="bg-napples w3-container w3-round-large">"Education is the passport to the future, for tomorrow belongs to those who prepare for it today." </p>
                     <small> Malcolm X </small>
                 </div>
                 <!-- Add more quotes here -->
