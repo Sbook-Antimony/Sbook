@@ -42,16 +42,16 @@
         
 
     </header>
-    <body class="">
-        <div class="body-leftbar">
+    <body class="w3-bar">
+        <div id="left" class="w3-bar-item">
             {% block 'left' %}
             {% endblock %}
         </div>
-        <div class="body-center">
+        <div id="center" class="w3-bar-item">
             {% block 'center' %}
             {% endblock %}
         </div>
-        <div class="body-rightbar">
+        <div id="right" class="w3-bar-item">
             {% block 'right' %}
             {% endblock %}
         </div>
