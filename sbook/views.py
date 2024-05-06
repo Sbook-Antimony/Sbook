@@ -107,7 +107,7 @@ def do_cmd(req, user, cmd):
             return HttpResponseRedirect('/dashboard')
 @check_login(False)
 def do_profile(req, user):
-    if user:
+    if user is not None:
         return HttpResponse(user.profile_asBytes, 'image/png')
     else:
         return HttpResponse(User.DEFAULT_PROFILE.read_bytes())
