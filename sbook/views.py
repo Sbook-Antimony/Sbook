@@ -9,7 +9,7 @@ from . import forms
 
 @check_login(False)
 def do_index(req, user=None):
-    if user:
+    if user is not None:
         return render(
             req,
             'dashboard.django',
