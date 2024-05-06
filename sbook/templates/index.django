@@ -49,8 +49,8 @@
         </div>
 
         <script>
-            w3.slideshow(".mySlides");
-            w3.slideshow(".eduQuotes");
+            w3.slideshow(".mySlides", 10000);
+            w3.slideshow(".eduQuotes", 10000);
         </script>
 {% endblock %}
 
