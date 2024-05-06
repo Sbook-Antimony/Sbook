@@ -13,20 +13,29 @@ html
 
 body
 {
-    display: inline-block;
-}
-body > #right
-{
-    max-width: 500px;
-    float: right;
-    display: inline-block;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    align-content: space-between;
 }
 body > #left
 {
-    max-width: 500px;
-    float: left;
-    display: inline-block;
+    order: 1;
+    flex-grow: 1;
 }
+body > #center
+{
+    max-width: 500px;
+    order: 2;
+    flex-grow: 8;
+}
+body > #right
+{
+    order: 3;
+    flex-grow: 1;
+}
+
 
 /*
 4c4f4d

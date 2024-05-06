@@ -19,8 +19,8 @@
         </div>
     </head>
 
-    <header  role="navigation" class="w3-bar w3-container bg-antimony10 w3-top">
-        <a href="/" class="w3-button w3-bar-item w3-hover-text w3-large">
+    <header  role="navigation" class="w3-bar bg-antimony50 w3-top w3-padding-0">
+        <a href="/" class="w3-button w3-bar-item bg-antimony10-hover w3-large">
             <i class="fas fa-home"></i>
         </a>
 
