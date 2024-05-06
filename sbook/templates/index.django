@@ -18,29 +18,29 @@
                 <!-- Add more images here -->
             </div>
 
-            <div class="colory-border1 w3-margin w3-round-large">
-                <div class="eduQuote w3-container w3-margin w3-padding w3-round-large">
-                    "Education is the most powerful weapon which you can use to change the world." 
+            <div class=" w3-margin w3-round-large">
+                <div class="colory-border1 eduQuotes w3-container w3-margin w3-padding w3-round-large">
+                    <p>"Education is the most powerful weapon which you can use to change the world."</p> 
                     <small> Nelson Mandela
                 </div>
-                <div class="eduQuote w3-container w3-margin w3-padding w3-round-large">
-                    "The roots of education are bitter, but the fruit is sweet." 
+                <div class="colory-border1 eduQuotes w3-container w3-margin w3-padding w3-round-large">
+                    <p>"The roots of education are bitter, but the fruit is sweet." </p>
                     <small> Aristotle</small>
                 </div>
-                <div class="eduQuote w3-container w3-margin w3-padding w3-round-large>
-                    "Education is not the filling of a pail, but the lighting of a fire." 
+                <div class="colory-border1 eduQuotes w3-container w3-margin w3-padding w3-round-large>
+                    <p>"Education is not the filling of a pail, but the lighting of a fire." </p>
                     <small> William Butler Yeats</small>
                 </div>
-                <div class="eduQuote w3-container w3-margin w3-padding w3-round-large>
-                    "The mind is not a vessel to be filled, but a fire to be kindled." 
+                <div class="colory-border1 eduQuotes w3-container w3-margin w3-padding w3-round-large>
+                    <p>"The mind is not a vessel to be filled, but a fire to be kindled." </p>
                     <small> Plutarch</small>
                 </div>
-                <div class="eduQuote w3-container w3-margin w3-padding w3-round-large>
-                    "Learning is a treasure that will follow its owner everywhere." 
+                <div class="colory-border1 eduQuotes w3-container w3-margin w3-padding w3-round-large>
+                    <p>"Learning is a treasure that will follow its owner everywhere." </p>
                     <small> Chinese Proverb</small>
                 </div>
-                <div class="eduQuote w3-container w3-margin w3-padding w3-round-large">
-                    "Education is the passport to the future, for tomorrow belongs to those who prepare for it today." 
+                <div class="colory-border1 eduQuotes w3-container w3-margin w3-padding w3-round-large">
+                    <p>"Education is the passport to the future, for tomorrow belongs to those who prepare for it today." </p>
                     <small> Malcolm X </small>
                 </div>
                 <!-- Add more quotes here -->
