@@ -118,7 +118,8 @@ class User:
     def chattyAccount(self):
         cha = self.model.chattyAccount.all()
         if len(cha) == 0:
-            raise chatty.accounts.UserDoesNotExistError()
+            cha = [chatty.accounts.ChattyUser.create_from_sbook(self.model)]
+            #raise chatty.accounts.UserDoesNotExistError()
         return chatty.accounts.ChattyUser(cha[0])
 
     @functools.cached_property
