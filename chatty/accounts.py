@@ -1,6 +1,6 @@
 import functools
 
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, HttpRequest
 
 from chatty import models
 import sbook.models
@@ -78,7 +78,7 @@ def check_login(func, redirect=True):
     @functools.wraps(func)
     def wrapper(*args, **kw):
         req = args[0]
-        if not isinstance(req, django.http.HttpRequest):
+        if not isinstance(req, HttpRequest):
             req = args[1]
         if "user-id" in req.session:
             try:
