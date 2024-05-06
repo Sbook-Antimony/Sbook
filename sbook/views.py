@@ -110,4 +110,4 @@ def do_profile(req, user):
     if user is not None:
         return HttpResponse(user.profile_asBytes, 'image/png')
     else:
-        return HttpResponse(User.DEFAULT_PROFILE.read_bytes())
+        return HttpResponse(User.DEFAULT_PROFILE_PATH.read_bytes())
