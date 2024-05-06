@@ -20,12 +20,12 @@
 
             <div class="colory-border1 w3-margin">
                 <h2>Quotes on Education:</h2>
-                <div class="eduQuote w3-container w3-margin w3-padding w3-round-large" style="border-radius: 10px; background: linear-gradient(to bottom right, #ff1493, #8a2be2); border: 2px solid #ff7f50;">"Education is the most powerful weapon which you can use to change the world." - Nelson Mandela</div>
-                <div class="eduQuote w3-container w3-margin w3-padding w3-round-large" style="border-radius: 10px; background: linear-gradient(to bottom right, #ff1493, #8a2be2); border: 2px solid #ff7f50;">"The roots of education are bitter, but the fruit is sweet." - Aristotle</div>
-                <div class="eduQuote w3-container w3-margin w3-padding w3-round-large" style="border-radius: 10px; background: linear-gradient(to bottom right, #ff1493, #8a2be2); border: 2px solid #ff7f50;">"Education is not the filling of a pail, but the lighting of a fire." - William Butler Yeats</div>
-                <div class="eduQuote w3-container w3-margin w3-padding w3-round-large" style="border-radius: 10px; background: linear-gradient(to bottom right, #ff1493, #8a2be2); border: 2px solid #ff7f50;">"The mind is not a vessel to be filled, but a fire to be kindled." - Plutarch</div>
-                <div class="eduQuote w3-container w3-margin w3-padding w3-round-large" style="border-radius: 10px; background: linear-gradient(to bottom right, #ff1493, #8a2be2); border: 2px solid #ff7f50;">"Learning is a treasure that will follow its owner everywhere." - Chinese Proverb</div>
-                <div class="eduQuote w3-container w3-margin w3-padding w3-round-large" style="border-radius: 10px; background: linear-gradient(to bottom right, #ff1493, #8a2be2); border: 2px solid #ff7f50;">"Education is the passport to the future, for tomorrow belongs to those who prepare for it today." - Malcolm X</div>
+                <div class="eduQuote w3-container w3-margin w3-padding w3-round-large">"Education is the most powerful weapon which you can use to change the world." - Nelson Mandela</div>
+                <div class="eduQuote w3-container w3-margin w3-padding w3-round-large">"The roots of education are bitter, but the fruit is sweet." - Aristotle</div>
+                <div class="eduQuote w3-container w3-margin w3-padding w3-round-large>"Education is not the filling of a pail, but the lighting of a fire." - William Butler Yeats</div>
+                <div class="eduQuote w3-container w3-margin w3-padding w3-round-large>"The mind is not a vessel to be filled, but a fire to be kindled." - Plutarch</div>
+                <div class="eduQuote w3-container w3-margin w3-padding w3-round-large>"Learning is a treasure that will follow its owner everywhere." - Chinese Proverb</div>
+                <div class="eduQuote w3-container w3-margin w3-padding w3-round-large">"Education is the passport to the future, for tomorrow belongs to those who prepare for it today." - Malcolm X</div>
                 <!-- Add more quotes here -->
             </div>
 
