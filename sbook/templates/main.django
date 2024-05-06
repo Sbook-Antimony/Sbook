@@ -31,14 +31,14 @@
                     note
                 </a>
                 <a style="width: 100%" href="/chatty" class="bg-napples10 bg-antimony10-hover w3-button w3-hover-text w3-block">
-                    videos
+                    chatty
                 </a>
                 <a style="width: 100%" href="/questions" class="bg-napples10 bg-antimony10-hover w3-button w3-hover-text w3-block">
                     questions
                 </a>
             </div>
         </div>
-        <img src="/images/profile" style="height: 40px;" class="w3-right w3-bar-item w3-circle" />
+        <img src="/profile" style="height: 40px;" class="w3-right w3-bar-item w3-circle" />
         
 
     </header>
