@@ -27,7 +27,7 @@ urlpatterns = [
     path('signin/', views.signin.as_view()),
     path('signup/', views.signup.as_view()),
     path('dashboard/<cmd>', views.do_cmd),
-    path('images/profile', views.do_profile),
+    path('profile.png', views.do_profile),
     path('note/', include('note.urls')),
     path('chatty/', include('chatty.urls')),
 ]
