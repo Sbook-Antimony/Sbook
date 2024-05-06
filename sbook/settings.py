@@ -74,13 +74,15 @@ WSGI_APPLICATION = 'sbook.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(
-        # Replace this value with your local database's connection string.
-        default='postgresql://postgres:dpg-co0tm3mn7f5s73dt8hlg-a@sbook.onrender.com:5432/sbook',
-        conn_max_age=600
-    )
+    ‘default’: {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'sbook_tra7',
+        'USER': 'sbook',
+        'PASSWORD': '4KvCVcWlhO3dAveSuK1Ubg1PGbYfY0hf',
+        'HOST': 'dpg-coqkfvv79t8c738j6ntg-a',
+        'PORT': '5432', # default PostgreSQL port
+    }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
