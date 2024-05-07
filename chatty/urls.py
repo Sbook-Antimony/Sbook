@@ -19,8 +19,6 @@ from django.urls import path
 from chatty import views
 from chatty.accounts import check_login as logc
 urlpatterns = [
-    path('admin/', admin.site.urls),
-
     path('', logc(views.index)),
     path('rooms/create', logc(views.room_create.as_view())),
     path('rooms/<int:roomid>/messages/', logc(views.room.as_view())),
