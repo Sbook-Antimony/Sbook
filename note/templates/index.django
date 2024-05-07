@@ -5,7 +5,13 @@
 {% endblock %}
 
 {% block 'center' %}
-    
+    {#
+        <link rel="stylesheet" href="./../../staticfiles/styles/w3.css">
+        <link rel="stylesheet" href="./../../staticfiles/styles/styles.css">
+    #}
+    <div class="w3-violet w3-opacity w3-animate-show">
+        <img src="/profile.png" alt="your profile" sizes="" srcset="">
+    </div>
 {% endblock %}
 
 {% block 'right' %}
