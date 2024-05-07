@@ -22,7 +22,7 @@
 
     <header  role="navigation" class="w3-bar bg-antimony50 w3-top w3-padding-0">
         <a href="/" style="height: 100%;" class="w3-button w3-bar-item bg-antimony10-hover w3-large">
-            <i class="fas fa-home"></i>
+            <i onmouseenter="this.classList.toggle('fas');this.classList.toggle('far');" class="fas fa-home"></i>
         </a>
 
         <div style="margin: 0;" class="w3-bar-item" id="top-bar-div">
