@@ -1,25 +1,16 @@
 from django.shortcuts import render
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.template import loader
 from pathlib import Path
-import accounts
 import mimetypes
 import yaml, json
 
-from . import *
-DIR = Path(__file__).resolve().parent
-redirect = lambda url: loader.get_template('redirect.django').render({'url':url})
-plain = lambda f, m='rb': open(DIR / 'html' / f, m).read()
+from .accounts import *
 
-def do_header(req):
-    print("note header")
-    return HttpResponse(loader.get_template("note/header.django").render({}, req))
-def do_index(req):
-    return HttpResponse(plain('index.html'))
 
-def do_dashboard(req):
-    return HttpResponse(plain("dashboard.html"))
+@check_login(False)
+def do_index(req, user):
+    return HttpResponse(render(req, "dashboard.django"))
 
 class do_mynotes:
     def do_get_json(req):
