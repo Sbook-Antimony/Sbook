@@ -5,10 +5,7 @@
 {% endblock %}
 
 {% block 'center' %}
-    {#
-        <link rel="stylesheet" href="./../../staticfiles/styles/w3.css">
-        <link rel="stylesheet" href="./../../staticfiles/styles/styles.css">
-    #}
+    
     <div class="w3-round-medium colory-border1 w3-violet w3-opacity w3-animate-show">
         <div>
             <img class="w3-margin w3-round w3-image w3-left" src="small.jpg" srcset="/profile.png 300w, /profile.png 600w, /profile.png 1200w" sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 1200px" />
