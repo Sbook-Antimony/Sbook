@@ -10,7 +10,15 @@ from .accounts import *
 
 @check_login(False)
 def do_index(req, user):
-    return HttpResponse(render(req, "dashboard.django"))
+    return HttpResponse(
+        render(
+            req,
+            "dashboard.django",
+            {
+                "user": user,
+            }
+        )
+    )
 
 class do_mynotes:
     def do_get_json(req):
