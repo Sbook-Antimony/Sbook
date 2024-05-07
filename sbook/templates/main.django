@@ -25,7 +25,7 @@
             <i class="fas fa-home"></i>
         </a>
 
-        <div style="width: 100%;" class="w3-bar-item" id="top-bar-div">
+        <div style="" class="w3-bar-item" id="top-bar-div">
             <button id="top-bar-div-button" style="width: 100%" class="w3-button">my workspace</button>
             <div id="top-bar-buttons" style="width: 100%" class="">
                 <a style="width: 100%" href="/note" class="bg-napples10 bg-antimony10-hover w3-button w3-hover-text w3-block">
@@ -45,7 +45,7 @@
                 });
             </script>
         </div>
-        <img src="/profile.png" style="height: 40px;" class="w3-right w3-bar-item w3-circle" />
+        <img src="/profile.png" style="width: 50px; height: 50px;" class="w3-right w3-bar-item w3-circle" />
         
 
     </header>
