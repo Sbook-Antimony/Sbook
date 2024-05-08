@@ -38,12 +38,14 @@
         <script>
             const app = angular.module("signup", []);
             app.controller("signupCtrl", function($scope) {
+try{
                 $scope.emailError = "hell8";
                 $scope.checkEmail = function() {
                     $.getJSON("/u-email-exists.json", { "email": $scope.email }, function(data) {
                         $scope.emailError = data;
                     });
                 }
+}catch(e){alert(e);}
             });
         </script>
     </form>
