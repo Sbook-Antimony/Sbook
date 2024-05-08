@@ -42,7 +42,7 @@
                 $scope.checkEmail = function() {
                     $.getJSON("/u-email-exists.json", { "email": $scope.email }, function(data) {
                         $scope.emailError = data;
-                    }
+                    });
                 }
             });
         </script>
