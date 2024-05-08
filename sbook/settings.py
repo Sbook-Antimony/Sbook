@@ -35,7 +35,7 @@ INSTALLED_APPS = [
 ]
 
 GOOGLE_ANALYTICS = {
-    'google_analytics_id': 'G-5MV4LRP8P2',
+    'google_analytics_id': 'G-RLSSV98G86',
 }
 
 MIDDLEWARE = [
