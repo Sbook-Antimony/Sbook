@@ -24,6 +24,7 @@ body > #left
     order: 1;
     flex-grow: 10;
     justify-content: left;
+    display: flex;
     
 }
 body > #center
@@ -34,12 +35,14 @@ body > #center
     justify-content: center;
     margin: auto;
     padding: auto;
+    display: flex;
 }
 body > #right
 {
     order: 3;
     flex-grow: 1;
     justify-content: right;
+    display: flex;
 }
 
 
