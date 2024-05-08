@@ -49,16 +49,16 @@
         
 
     </header>
-    <body class="w3-bar">
-        <div id="left" class="w3-bar-item">
+    <body class="">
+        <div id="left" class="">
             {% block 'left' %}
             {% endblock %}
         </div>
-        <div id="center" class="w3-bar-item">
+        <div id="center" class="">
             {% block 'center' %}
             {% endblock %}
         </div>
-        <div id="right" class="w3-bar-item">
+        <div id="right" class="">
             {% block 'right' %}
             {% endblock %}
         </div>
