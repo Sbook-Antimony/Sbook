@@ -3,9 +3,22 @@ from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.template import loader
 from django.views import View
 from pathlib import Path
+from django.core.exceptions import ValidationError
+from django.core.validation import validate_email
 from sbook.accounts import *
 import mimetypes
 from . import forms
+
+
+def u_email_exists_json(req):
+    email = req.GET.get('email', '')
+    try:
+        validate_email(email)
+    except ValidationError as e:
+        return HttpResponse(repr(str(e))
+    else:
+        return HttpResponse('false')
+
 
 @check_login(False)
 def do_index(req, user=None):
