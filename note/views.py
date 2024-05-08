@@ -13,7 +13,7 @@ def do_index(req, user):
     return HttpResponse(
         render(
             req,
-            "index.django",
+            "note-index.django",
             {
                 "user": user,
             }
