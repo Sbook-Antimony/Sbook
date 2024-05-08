@@ -36,8 +36,8 @@
             <p>Have an account?, <a href="/signin">signin</a></p>
         </div>
         <script>
-            const app = angular.module("signin", []);
-            app.controller("signinCtrl", function($scope) {
+            const app = angular.module("signup", []);
+            app.controller("signupCtrl", function($scope) {
                 $scope.emailError = "hell8";
             });
         </script>
