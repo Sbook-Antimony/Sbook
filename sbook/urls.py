@@ -28,6 +28,9 @@ urlpatterns = [
     path('signup/', views.signup.as_view()),
     path('dashboard/<cmd>', views.do_cmd),
     path('profile.png', views.do_profile),
+
+    path('u-email-exists.json', views.u_email_exists_json),
+    
     path('note/', include('note.urls')),
     path('chatty/', include('chatty.urls')),
 ]
