@@ -40,7 +40,10 @@
             app.controller("signupCtrl", function($scope) {
                 $scope.emailError = "hell8";
                 $scope.checkEmail = function() {
-                    $scope.emailError = $.getJSON("
+                    $.getJSON("/u-email-exists.json", { "email": $scope.email }, function(data) {
+                        $scope.emailError = data;
+                    }
+                }
             });
         </script>
     </form>
