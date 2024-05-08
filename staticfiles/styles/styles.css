@@ -22,18 +22,24 @@ body
 body > #left
 {
     order: 1;
-    flex-grow: 1;
+    flex-grow: 10;
+    justify-content: left;
+    
 }
 body > #center
 {
     max-width: 500px;
     order: 2;
-    flex-grow: 8;
+    flex-grow: 5;
+    justify-content: center;
+    margin: auto;
+    padding: auto;
 }
 body > #right
 {
     order: 3;
     flex-grow: 1;
+    justify-content: right;
 }
 
 
