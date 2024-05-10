@@ -25,5 +25,5 @@ class Note(models.Model):
     views = models.BigIntegerField(defaut=0)
     stars = models.DecimalField(defaut=0.0)
     starred = models.BigIntegerField(default=0)
-    
+    description = models.CharField(max_length=255)
 
