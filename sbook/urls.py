@@ -29,7 +29,8 @@ urlpatterns = [
     path('dashboard/<cmd>', views.do_cmd),
     path('profile.png', views.do_profile),
 
-    path('u-email-exists.json', views.u_email_exists_json),
+    path('<scope>/u-email-check.json', views.u_email_check_json),
+    path('<scope>/u-password-check.json', views.u_password_check_json),
     
     path('note/', include('note.urls')),
     path('chatty/', include('chatty.urls')),

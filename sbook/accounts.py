@@ -6,6 +6,8 @@ import yaml
 import django.http
 
 import random_profile_image
+from password_strength import PasswordPolicy
+
 
 
 DIR = Path(__file__).parent.parent
@@ -20,6 +22,18 @@ from django.http import HttpResponseRedirect, HttpResponse
 
 from sbook import models
 from chatty import accounts as chatty
+
+
+
+
+password_policy = PasswordPolicy.from_names(
+    length=8,  # min length: 8
+    uppercase=2,  # need min. 2 uppercase letters
+    numbers=2,  # need min. 2 digits
+    special=2,  # need min. 2 special characters
+    nonletters=2,  # need min. 2 non-letter characters (digits, specials, anything)
+    entropybits=30,
+)
 
 class UserDoesNotExistError(ValueError):
     pass
@@ -61,6 +75,14 @@ def check_login(func, redirect=True):
 
 class User:
     model:models.User
+    @staticmethod
+    def exists(**kw):
+        try:
+            models.User.objects.get(**kw)
+        except models.User.DoesNotExist:
+            return False
+        else:
+            return True
 
     @classmethod
     def from_id(cls, id):

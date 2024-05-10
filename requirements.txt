@@ -9,3 +9,4 @@ fontawesomefree==6.5.1
 django-google-analytics-app==6.0.0
 Pillow
 numpy
+password-strength

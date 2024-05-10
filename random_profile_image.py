@@ -34,7 +34,8 @@ def random_profile(size=500):
         for x in range(b[0]-cen, e[0]-cen, s):
             for y in range(b[1]-cen, e[1]-cen, s):
                 if x*y == 0:
-                    continue
+                    x += 1
+                    y += 1
                 p = list(image.getpixel((x+cen, y+cen)))
                 if sum(p) < 500:
                     continue
@@ -45,3 +46,6 @@ def random_profile(size=500):
         s %= 3
         s += 1
     return image
+
+if __name__ == '__main__':
+    random_profile().save('del.png')

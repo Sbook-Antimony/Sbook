@@ -1,23 +1,41 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect, JsonResponse
 from django.template import loader
 from django.views import View
 from pathlib import Path
 from django.core.exceptions import ValidationError
-from django.core.validation import validate_email
+from django.core.validators import validate_email
 from sbook.accounts import *
 import mimetypes
 from . import forms
 
 
-def u_email_exists_json(req):
+def u_email_check_json(req, scope):
     email = req.GET.get('email', '')
     try:
         validate_email(email)
     except ValidationError as e:
-        return HttpResponse(repr(str(e))
+        return JsonResponse(e.message, safe=False)
     else:
-        return HttpResponse('false')
+        exists = User.exists(email=email)
+        if exists and scope == 'signup':
+            return JsonResponse(f'email {email} already used', safe=False)
+        elif not exists and scope == "signin":
+            return JsonResponse(f'email {email} does not exist in our database', safe=False)
+        else:
+            return JsonResponse(False, safe=False)
+
+
+def u_password_check_json(req, scope):
+    password = req.GET.get('password')
+    results = password_policy.test(password)
+    if len(results) == 0:
+        return JsonResponse(False, safe=False)
+    else:
+        txt = "Password requires:\n"
+        for err in results:
+            txt += str(err).rstrip(")").replace("(", ": ") + "\n"
+        return JsonResponse(txt, safe=False)
 
 
 @check_login(False)
