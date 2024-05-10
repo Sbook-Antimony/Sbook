@@ -11,7 +11,10 @@ class NoteUser(models.Model):
         related_name="noteAccount",
         on_delete=models.CASCADE,
     )
-    
+    stars = models.DecimalField(defaut=0.0)
+    starred = models.BigIntegerField(default=0)
+
+
 class Note(models.Model):
     title = models.CharField(max_length=255)
     redactors = models.ManyToManyField(
