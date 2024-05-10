@@ -18,6 +18,7 @@ def do_index(req, user):
             "note-dashboard.django",
             {
                 "user": user,
+                "user_name": user.sbookAccount.name,
             }
         )
     )
