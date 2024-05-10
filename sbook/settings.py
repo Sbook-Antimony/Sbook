@@ -82,6 +82,8 @@ if os.getenv('ENV') == 'render':
     STATIC_URL = 'static/'
 
     ALLOWED_HOSTS = ["sbook.onrender.com"]
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 else:
     DATABASES = {
         'default': {
@@ -141,7 +143,6 @@ USE_TZ = True
 # Enable the WhiteNoise storage backend, which compresses static files to reduce disk use
 # and renames the files with unique names for each version to support long-term caching
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 #All set! We’re ready 
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
