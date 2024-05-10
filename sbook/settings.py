@@ -79,7 +79,7 @@ if os.getenv('ENV') == 'render':
             conn_max_age=600
         )
     }
-    STATIC_URL = '/static/'
+    STATIC_URL = 'static/'
 
     ALLOWED_HOSTS = ["sbook.onrender.com"]
 else:
