@@ -11,20 +11,16 @@ from .accounts import *
 @check_login(True)
 def do_index(req, user):
     print(user, user.sbookAccount, user.sbookAccount.name)
-    if user is None: 
-        return HttpResponse(
-            render(
-                req,
-                "note-index.django",
-            )
+    
+    return HttpResponse(
+        render(
+            req,
+            "note-dashboard.django",
+            {
+                "user": user,
+            }
         )
-    else:
-        return HttpResponse(
-            render(
-                req,
-                "note-dashboard.django",
-            )
-        )
+    )
 
 
 class do_mynotes:
