@@ -8,7 +8,7 @@
 
 {% block 'center' %}
 
-    <form ng-app="signin" ng-controller="signinCtrl" method="post" class="bg-clear fg-antimony w3-round-xlarge w3-padding w3-margin ">
+    <form action="/signin/" ng-app="signin" ng-controller="signinCtrl" method="post" class="bg-clear fg-antimony w3-round-xlarge w3-padding w3-margin ">
         {% if errors %}
             <div style="transition: 0.5s;" class="w3-animate-opacity w3-margin w3-padding w3-display-container w3-red w3-round-large margin-center w3-panel">
                 <div class="w3-margin-small w3-monospace w3-display-topright w3-circle" onclick="this.parentElement.style.display = 'none';">x</div>
