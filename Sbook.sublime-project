@@ -1,0 +1,19 @@
+{
+	"folders":
+	[
+		{
+			"path": ".",
+			"index_include_patterns": [
+				"*.py",
+				"*/*.py",
+			]
+		}
+	],
+	"build_systems": [
+		{
+			"name": "Sbook",
+			"cmd": ["py", "$project_path/manage.py", "runserver", "80"],
+			"working_dir": "$project_path"
+		}
+	]
+}
