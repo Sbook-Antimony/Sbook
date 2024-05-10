@@ -11,8 +11,34 @@
             {#srcset="/profile.png 300w, /profile.png 600w, /profile.png 1200w" sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 1200px"#}
             <span ng-bind="user_name" class="w3-arial w3-xxlarge"></span>
         </div>
+        <div class="w3-round bg-napples10">
+            <button onclick="$('#note-list').slideToggle();" class="w3-button w3-round">your notes</button>
+            <div id="note-list">
+                {% for note in user.notes %}
+                    <div class="w3-round">
+                        <span>
+                            <img class="w3-circle" src="/note/notes/{{ note.id }}/icon.png" />
+                        </span>
+                        <span>
+                            <h4>{{ note.title }}</h4>
+                            <p class="w3-small">
+                                {{ note.description }}
+                            </p>
+                        </span>
+                    </div>
+                    <hr class="bg-antimony" />
+                {% endfor %}
+            </div>
+        </div>
         <div>
-
+            <button>
+                my bookmarks <i class="w3-text-yellow fas fa-star"></i>
+            </button>
+            <div>
+                {% for bookmark in user.bookmarks %}
+                    
+                {% endfor %}
+            </div>
         </div>
         <script type="text/javascript">
             const app = angular.module("dashboard", []);
