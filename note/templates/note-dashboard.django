@@ -14,7 +14,7 @@
         <script type="text/javascript">
             const app = angular.module("dashboard", []);
             app.controller("dashboardCtrl", function($scope) {
-                $scope.user_name = "{{ user_name }}"
+                $scope.user_name = "{{ user_name }}";
             });
         </script>
     </div>
