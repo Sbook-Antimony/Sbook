@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="bg-napples10">
+    <head>
+        <link rel="icon" href="image/antimony.jpg" />
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="{% static 'scripts/angular.min.js' %}"></script>
+        <script src="{% static 'scripts/jquery.js' %}"></script>
+        <link rel="stylesheet" href="{% static 'styles/w3.css' %}" />
+        <link rel="stylesheet" href="{% static 'styles/styles.css' %}" />
+        <link rel="stylesheet" href="{% static 'styles/hexa.css' %}" />
+        <title>{% block 'title' %}{% endblock %}</title>
+        <script src="https://kit.fontawesome.com/ba5b68e3cc.js" crossorigin="anonymous"></script>
+
+        <script src="{% static 'scripts/nightly.js' %}"></script>
+        <script src="https://www.w3schools.com/lib/w3.js"></script>
+        <script src="{% static 'scripts/script.js' %}"></script>
+        {% load google_analytics_tags %}
+        <div style="display:none">
+            <img src="{% google_analytics %}" width="0" height="0" />
+        </div>
+    </head>
+
+    <header  role="navigation" style="padding: 0;" class="w3-bar bg-antimony50 w3-top w3-padding-0">
+        <a style="margin: auto; margin-right: 10px; padding: 0; height: 100%;" href="/" style="height: 100%;" class="w3-button w3-bar-item bg-clear bg-antimony10 w3-large">
+            <i class="fas fa-home fa-2xl"></i>
+        </a>
+        <a style="margin: auto; margin-right: 10px; padding: 0; height: 100%;" href="/" style="height: 100%;" class="w3-button w3-bar-item bg-clear bg-antimony10 w3-large">
+            <i class="fas fa-dashboard fa-2xl"></i>
+        </a>
+
+        <!-- <div style="margin: 0; padding: 0;" class="w3-bar-item" id="top-bar-div">
+            
+            <div id="top-bar-buttons" style="width: 100%;  margin:0; padding: 0;" class="">
+                <a style="width: 100%" href="/note" class="bg-napples10 bg-antimony10-hover w3-button w3-hover-text w3-block">
+                    note
+                </a>
+                <a style="width: 100%" href="/chatty" class="bg-napples10 bg-antimony10-hover w3-button w3-hover-text w3-block">
+                    chatty
+                </a>
+                <a style="width: 100%;" href="/questions" class="bg-napples10 bg-antimony10-hover w3-button w3-hover-text w3-block">
+                    questions
+                </a>
+            </div>
+            <script>
+                $('#top-bar-buttons').slideUp();
+                $("#top-bar-div-button").click(function(){
+                    $("#top-bar-buttons").slideToggle();
+                });
+            </script>
+        </div> -->
+        <img src="/profile.png" style="width: 50px; height: 50px; padding: 0; margin: 0;" class="w3-right w3-bar-item w3-circle" />
+        
+
+    </header>
+    <body class="">
+        <div id="left" class="">
+            {% block 'left' %}
+            {% endblock %}
+        </div>
+        <div id="center" class="">
+            {% block 'center' %}
+            {% endblock %}
+        </div>
+        <div id="right" class="">
+            {% block 'right' %}
+            {% endblock %}
+        </div>
+        <script src="{% static 'scripts/script.js' %}"></script>
+    </body>
+</html>

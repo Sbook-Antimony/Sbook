@@ -8,17 +8,24 @@ import yaml, json
 from .accounts import *
 
 
-@check_login(False)
+@check_login(True)
 def do_index(req, user):
-    return HttpResponse(
-        render(
-            req,
-            "note-index.django",
-            {
-                "user": user,
-            }
+    print(user, user.sbookAccount, user.sbookAccount.name)
+    if user is None: 
+        return HttpResponse(
+            render(
+                req,
+                "note-index.django",
+            )
         )
-    )
+    else:
+        return HttpResponse(
+            render(
+                req,
+                "note-dashboard.django",
+            )
+        )
+
 
 class do_mynotes:
     def do_get_json(req):
