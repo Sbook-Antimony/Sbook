@@ -13,7 +13,7 @@ class NoteUser(models.Model):
     
 class Note(models.Model):
     title = models.CharField(max_length=255)
-    redactor = models.ForeignKey(
+    redactors = models.ManyToManyField(
         NoteUser,
         on_delete=models.CASCADE,
         related_name="notes"
