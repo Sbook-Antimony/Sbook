@@ -18,6 +18,8 @@ body
     justify-content: center;
     align-items: center;
     align-content: space-between;
+    margin-top: 75px!important;
+    flex-wrap: nowrap;
 }
 body > #left
 {
@@ -25,7 +27,6 @@ body > #left
     flex-grow: 10;
     justify-content: left;
     display: flex;
-    margin-top: 75px !important;    
 }
 body > #center
 {
@@ -36,7 +37,6 @@ body > #center
     margin: auto;
     padding: auto;
     display: flex;
-    margin-top: 75px !important;
 }
 body > #right
 {
@@ -44,7 +44,6 @@ body > #right
     flex-grow: 1;
     justify-content: right;
     display: flex;
-    margin-top: 75px !important;
 }
 
 
