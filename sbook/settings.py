@@ -79,7 +79,7 @@ if os.getenv('ENV') == 'render':
             conn_max_age=600
         )
     }
-    STATIC_URL = 'static/'
+    STATIC_URL = '/static/'
 
     ALLOWED_HOSTS = ["sbook.onrender.com"]
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
@@ -93,6 +93,8 @@ else:
     }
     STATIC_URL = 'https://sbook.onrender.com/static/'
     ALLOWED_HOSTS = ["localhost"]
+
+    #STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
