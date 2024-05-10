@@ -96,9 +96,23 @@ class Note:
     @functools.cached_property
     def id(self):
         return self.model.id
+
     @functools.cached_property
     def title(self):
         return self.model.title
+
+    @functools.cached_property
+    def views(self):
+        return self.model.views
+
+    @functools.cached_property
+    def stars(self):
+        return self.model.stars
+
+    @functools.cached_property
+    def starred(self):
+        return self.model.starred
+
     @functools.cached_property
     def redactors(self):
         return tuple(map(NoteUser, self.model.redactors.all()))
