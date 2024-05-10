@@ -18,7 +18,7 @@ eqs = [
     lambda x, y: y,
 ]
 
-def random_profile(size=500):
+def random_profile(size=500, scale=1):
     image = Image.new("RGB", (size, size), "white")
     s = 1
     for _ in range(random.randint(3, 10)):
@@ -38,7 +38,7 @@ def random_profile(size=500):
                 p = list(image.getpixel((x+cen, y+cen)))
                 if sum(p) < 500:
                     continue
-                fx = f(x, y)
+                fx = f(x*scale, y*scale)
                 p[c] = fx % 256
                 image.putpixel((x, y), tuple(p))
         s += 1
@@ -47,4 +47,4 @@ def random_profile(size=500):
     return image
 
 if __name__ == '__main__':
-    random_profile().save('image/default-photo.png')
+    random_profile(100, 50).save('image/default-photo.png')

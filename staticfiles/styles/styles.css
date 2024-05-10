@@ -126,16 +126,17 @@ fada5e
 {
     border: 0.1px solid;
 }
-.colory-border1
+div.colory-border1
 {
-    background: linear-gradient(to bottom right, #fade5e, #8a2be2);
-    padding: 3px;
+    background: linear-gradient(to bottom right, #fade5e, #8a2be2) !important;
+    padding: 3px !important;
+    border: 0.1px #4c4f4d solid;
 }
-.colory-border1 > *:first-child
+div.colory-border1 > div:first-child
 {
     width: 100%;
     height: 100%;
-    margin: 3px;
+    margin: 3px !important;
     background-color: #ddffff;
     border: inherit;
     border-radius: inherit;
