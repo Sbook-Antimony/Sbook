@@ -29,8 +29,6 @@ class NoteUser():
             raise NoteUserDoesNotExistError() from e
         else:
             return cls(found)
-
-
   
     @staticmethod
     def create_from_sbook(cls, sbook):
@@ -46,22 +44,33 @@ class NoteUser():
         if model is None:
             raise ChattyUserDoesNotExistError()
         self.model = model
-        
+
     @functools.cached_property
     def sbookAccount(self):
         return sbook.accounts.User(
             self.model.sbookAccount,
         )
-    
+
+    @functools.cached_property
+    def stars(self):
+        return self.model.stars
+
+    @functools.cached_property
+    def starred(self):
+        return self.model.starred
+
     @functools.cached_property
     def id(self):
         return self.sbookAccount.id
+
     @functools.cached_property
     def chatty_id(self):
         return self.model.id
+
     @functools.cached_property
     def name(self):
         return self.sbookAccount.name
+
     @functools.cached_property
     def rooms(self):
         return [ChattyRoom(x) for x in self.model.rooms.all()]
