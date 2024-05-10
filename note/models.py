@@ -14,6 +14,19 @@ class NoteUser(models.Model):
     stars = models.DecimalField(defaut=0.0)
     starred = models.BigIntegerField(default=0)
 
+class Bookmark(models.model):
+    note = models.ForeignKey(
+        "Note",
+        related_name="bookmarks",
+        on_delete=models.CASCADE,
+    )
+    user = models.ForeignKey(
+        "NoteUser",
+        related_name="bookmarks",
+        on_delete=models.CASCADE,
+    )
+    position = models.BigIntegerField()
+        
 
 class Note(models.Model):
     title = models.CharField(max_length=255)
