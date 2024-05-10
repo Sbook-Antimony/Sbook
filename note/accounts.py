@@ -17,7 +17,7 @@ class NoteUser():
     @classmethod
     def from_id(cls, id):
         try:
-            found = sbook.models.User.objects.get(id=id).noteAccount[0]
+            found = sbook.models.User.objects.get(id=id).noteAccount.all()[0]
         except (sbook.models.User.DoesNotExist, IndexError) as e:
             raise NoteUserDoesNotExistError() from e
         else:
