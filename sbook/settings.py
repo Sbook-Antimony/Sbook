@@ -79,6 +79,7 @@ if os.getenv('ENV') == 'render':
             conn_max_age=600
         )
     }
+    STATIC_URL = '/static/'
 
     ALLOWED_HOSTS = ["sbook.onrender.com"]
 else:
@@ -88,6 +89,7 @@ else:
             'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
+    STATIC_URL = 'https://sbook.onrender.com/static/'
     ALLOWED_HOSTS = ["localhost"]
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -132,7 +134,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'https://sbook.onrender.com/static/'
 # This production code might break development mode, so we check whether we're in DEBUG mode
 
 # Tell Django to copy static assets into a path called `staticfiles` (this is specific to Render)
