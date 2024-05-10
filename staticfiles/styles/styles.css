@@ -131,7 +131,7 @@ fada5e
     background: linear-gradient(to bottom right, #fade5e, #8a2be2);
     padding: 3px;
 }
-.colory-border1 *:first-child
+.colory-border1 > *:first-child
 {
     width: 100%;
     height: 100%;

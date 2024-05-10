@@ -17,6 +17,7 @@ def u_email_check_json(req, scope):
     except ValidationError as e:
         return JsonResponse(e.message, safe=False)
     else:
+        print()
         exists = User.exists(email=email)
         if exists and scope == 'signup':
             return JsonResponse(f'email {email} already used', safe=False)
@@ -52,7 +53,7 @@ def do_index(req, user=None):
             'index.django',
         )
 def do_image(req, name):
-    file = (DIR.parent / "image") / name
+    file = (DIR / "image") / name
     if file.exists():
         return HttpResponse(file.read_bytes(), mimetypes.guess_type(file)[0])
     else:

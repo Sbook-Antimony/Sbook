@@ -6,9 +6,10 @@
 
 {% block 'center' %}
     
-    <div class="w3-round-medium colory-border1 w3-violet w3-opacity w3-animate-show">
+    <div class="w3-round-medium colory-border1 w3-opacity w3-animate-show">
         <div>
-            <img class="w3-margin w3-circle w3-image" width="100" height="100" src="small.jpg" srcset="/profile.png 300w, /profile.png 600w, /profile.png 1200w" sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 1200px" />
+            <img class="w3-margin w3-circle w3-inline" hover-class="jump" width="100" height="100" src="/profile.png" />
+            {#srcset="/profile.png 300w, /profile.png 600w, /profile.png 1200w" sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 1200px"#}
             <span class="w3-arial w3-xxlarge">{{ user.name }}</span>
         </div>
     </div>

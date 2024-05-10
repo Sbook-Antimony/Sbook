@@ -34,7 +34,7 @@
             </div>
         </div>
         <div class="w3-padding w3-margin bg-clear w3-round-xlarge">
-            <button class="w3-border w3-border-cyan bg-clear w3-btn w3-round-large w3-center margin-center fg-antimony">submit</button>
+            <button type="submit" class="w3-border w3-border-cyan bg-clear w3-btn w3-round-large w3-center margin-center fg-antimony">submit</button>
             <p>Have an account?, <a href="/signin">signin</a></p>
         </div>
         <script>
@@ -46,10 +46,9 @@
                         $scope.emailError = data;
                     });
                 }
-
                 $scope.passwordError = false;
                 window.checkPassword = $scope.checkPassword = function() {
-                    $.getJSON("/signup/u-password-check.json", { "email": $scope.password }, function(data) {
+                    $.getJSON("/signup/u-password-check.json", { "password": $scope.password }, function(data) {
                         $scope.passwordError = data;
                     });
                 }
