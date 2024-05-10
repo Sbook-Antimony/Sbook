@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.translation import gettext as _
 
 import sbook.models
 # Create your models here.
@@ -18,5 +19,8 @@ class Note(models.Model):
         on_delete=models.CASCADE,
         related_name="notes"
     )
+    views = models.BigIntegerField(defaut=0)
+    stars = models.DecimalField(defaut=0.0)
+    starred = models.BigIntegerField(default=0)
     
 
