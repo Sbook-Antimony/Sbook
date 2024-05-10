@@ -80,7 +80,13 @@ class Note:
             raise NoteDoesNotExistError() from e
         else:
             return cls(found)
-
+    @classmethod
+    def create(cls, title, author):
+        model = models.Note(
+            title=title,
+            redactors=[author],
+        
+        )
     def __init__(self, model=None):
         if model is None:
             raise NoteDoesNotExistError()
