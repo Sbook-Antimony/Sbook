@@ -7,6 +7,45 @@ import sbook.models
 import sbook.accounts
 
 
+class BookmarkDoesNotExistError(ValueError):
+    pass
+class BookmarkDoesExistError(ValueError):
+    pass
+class NoteUser():
+    model:models.NoteUser
+
+    @classmethod
+    def from_id(cls, id):
+        try:
+            found = models.Bookmark.objects.get(id=id)
+        except (models.Bookmark.DoesNotExist, IndexError) as e:
+            raise BookmarkNotExistError() from e
+        else:
+            return found
+
+
+    def __init__(self, model=None):
+        if model is None:
+            raise BookmarkDoesNotExistError()
+        self.model = model
+
+    @functools.cached_property
+    def stars(self):
+        return self.model.stars
+
+    @functools.cached_property
+    def id(self):
+        return self.model.id
+
+    @functools.cached_property
+    def note(self):
+        return self.model.note
+
+    @functools.cached_property
+    def author(self):
+        return self.author
+
+
 class NoteUserDoesNotExistError(ValueError):
     pass
 class NoteUserDoesExistError(ValueError):
@@ -72,9 +111,9 @@ class NoteUser():
         return self.sbookAccount.name
 
     @functools.cached_property
-    def rooms(self):
-        return [ChattyRoom(x) for x in self.model.rooms.all()]
-
+    def bookmarks(self):
+        return tuple(map(Bookmark, self.model.bookmars.all()))
+    
 
 class NoteDoesNotExistError(ValueError):
     pass
