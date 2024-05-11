@@ -93,9 +93,9 @@ class User:
         else:
             return cls(found)
     @classmethod
-    def from_login(cls, email, password):
+    def from_login(cls, name, email, password):
         try:
-            found = models.User.objects.get(email=email, password=password)
+            found = models.User.objects.get(name=name, email=email, password=password)
         except models.User.DoesNotExist as e:
             raise UserDoesNotExistError() from e
         else:
@@ -103,7 +103,7 @@ class User:
     @classmethod
     def create_from_login(cls, name, email, password):
         try:
-            obj = models.User(name=name, email=email, password=password, chatty=chatty.ChattyUser.create_from_login(name, email, password).model)
+            obj = models.User(name=name, email=email, password=password)
             obj.save()
             createUserData(obj)
         except models.User.DoesNotExist as e:
