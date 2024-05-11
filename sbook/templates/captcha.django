@@ -7,10 +7,10 @@
 	}
 </script>
 <button
-	class="g-recaptcha"
+	class="g-recaptcha w3-border w3-border-cyan bg-clear w3-btn w3-round-large w3-center fg-antimony"
 	data-sitekey="6LfNF9kpAAAAAIekNLPQRGkBv9vc6W0ivc9LruqP"
 	data-callback='recaptchaSubmit{{ captcha_name }}'
 	data-action='submit'
 >
-	Captcha
+	Submit Captcha
 </button>
