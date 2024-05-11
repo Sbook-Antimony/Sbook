@@ -14,7 +14,7 @@ class NoteUser(models.Model):
     stars = models.DecimalField(default=0.0)
     starred = models.BigIntegerField(default=0)
 
-class Bookmark(models.model):
+class Bookmark(models.Model):
     note = models.ForeignKey(
         "Note",
         related_name="bookmarks",
