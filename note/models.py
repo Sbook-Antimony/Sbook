@@ -11,7 +11,7 @@ class NoteUser(models.Model):
         related_name="noteAccount",
         on_delete=models.CASCADE,
     )
-    stars = models.DecimalField(defaut=0.0)
+    stars = models.DecimalField(default=0.0)
     starred = models.BigIntegerField(default=0)
 
 class Bookmark(models.model):
@@ -35,8 +35,8 @@ class Note(models.Model):
         on_delete=models.CASCADE,
         related_name="notes"
     )
-    views = models.BigIntegerField(defaut=0)
-    stars = models.DecimalField(defaut=0.0)
+    views = models.BigIntegerField(default=0)
+    stars = models.DecimalField(default=0.0)
     starred = models.BigIntegerField(default=0)
     description = models.CharField(max_length=255)
 
