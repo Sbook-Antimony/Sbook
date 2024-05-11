@@ -33,6 +33,9 @@
             <div ng-show="passwordError" ng-bind="passwordError" class="w3-panel w3-red w3-margin w3-round-large">
             </div>
         </div>
+        <div>
+            {% include 'captcha.django' %}
+        </div>
         <div class="w3-padding w3-margin bg-clear w3-round-xlarge">
             <input type="submit" class="w3-border w3-border-cyan bg-clear w3-btn w3-round-large w3-center margin-center fg-antimony" />
             <p>Have an account?, <a href="/signin">signin</a></p>
