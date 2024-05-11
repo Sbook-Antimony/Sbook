@@ -19,7 +19,7 @@ from django.urls import path, re_path, include
 from . import views
 
 urlpatterns = [
-    re_path('djga/', include('google_analytics.urls')),
+    #re_path('djga/', include('google_analytics.urls')),
     path('admin/', admin.site.urls),
     path('csrf/', views.do_csrf),
     path('', views.do_index),
