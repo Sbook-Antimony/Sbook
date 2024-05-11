@@ -16,10 +16,15 @@
         <script src="{% static 'scripts/nightly.js' %}"></script>
         <script src="https://www.w3schools.com/lib/w3.js"></script>
         <script src="{% static 'scripts/script.js' %}"></script>
-        {% load google_analytics_tags %}
-        <div style="display:none">
-            <img src="{% google_analytics %}" width="0" height="0" />
-        </div>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-RLSSV98G86"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-RLSSV98G86');
+        </script>
     </head>
 
     <header  role="navigation" style="padding: 0;" class="w3-bar bg-antimony50 w3-top w3-padding-0">
