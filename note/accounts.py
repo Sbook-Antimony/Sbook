@@ -57,7 +57,7 @@ class NoteUser():
     def from_id(cls, id):
         try:
             found = sbook.models.User.objects.get(id=id).noteAccount.all()[0]
-        except (sbook.models.User.DoesNotExist, IndexError) as e:
+        except IndexError as e:
             raise NoteUserDoesNotExistError() from e
         else:
             return found
@@ -181,12 +181,16 @@ def check_login(func, redirect=True):
         if "user-id" in req.session:
             try:
                 user = NoteUser.from_id(req.session.get("user-id", -1))
-            except NoteUserDoesNotExistError:
+            except sbook.accounts.UserDoesNotExistError:
                 if not redirect:
                     return func(user=None, *args,**kw)
                 return HttpResponseRedirect('/signin/')
-            else:
-                return func(user=user, *args,**kw)
+            except NoteUserDoesNotExisrError:
+                user = NoteUser.create_from_sbook(
+                    sbook.accounts.User.from_id(req.session.get("user-id")),
+                )
+            
+            return func(user=user, *args,**kw)
         else:
             if not redirect:
                 return func(user=None, *args,**kw)
