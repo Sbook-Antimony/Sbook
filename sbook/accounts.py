@@ -7,8 +7,19 @@ import django.http
 
 import random_profile_image
 from password_strength import PasswordPolicy
+from sbook import settings
+import requests
 
+def parse_recaptcha_token(token):  # Replace this with your reCAPTCHA secret key
+    return requests.post('https://www.google.com/recaptcha/api/siteverify', data={
+        'secret': settings.RECAPTCHA_TOKEN,
+        'response': token
+    }).json()
 
+# Example usage
+token = 'YOUR_RECAPTCHA_TOKEN'
+is_valid = parse_recaptcha_token(token)
+print(is_valid)
 
 DIR = Path(__file__).parent.parent
 ACCOUNTS = DIR/'accounts'

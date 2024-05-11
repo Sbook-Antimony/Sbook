@@ -15,6 +15,8 @@ SECRET_KEY = 'django-insecure-f2dqc0b$z(7tw-ziq%z2nqx&3l8+d$rd2ko(%fgg_i=jt411-8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+RECAPTCHA_TOKEN = "6LfNF9kpAAAAAIekNLPQRGkBv9vc6W0ivc9LruqP"
+
 
 
 # Application definition

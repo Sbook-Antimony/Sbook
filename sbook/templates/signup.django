@@ -34,7 +34,7 @@
             </div>
         </div>
         <div>
-            {% include 'captcha.django' %}
+            {% include 'captcha.django' with captcha_name='signupcaptcha' %}
         </div>
         <div class="w3-padding w3-margin bg-clear w3-round-xlarge">
             <input type="submit" class="w3-border w3-border-cyan bg-clear w3-btn w3-round-large w3-center margin-center fg-antimony" />

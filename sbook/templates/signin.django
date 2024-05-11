@@ -25,12 +25,12 @@
         </div>
         <div class="w3-padding w3-margin fg-antimony bg-antimony10 w3-round-xlarge">
             <label for="password">password:</label>
-            <input ng-change="checkPassword()" ng-keyup="checkPassword()" oninput="checkPassword()" ng-input="checkPassword()" ng-model="password" type="password" name="password" class="fg-antimony w3-border-0 w3-padding-small w3-margin bg-napples50  w3-round-large" />
+            <input ng-model="password" type="password" name="password" class="fg-antimony w3-border-0 w3-padding-small w3-margin bg-napples50  w3-round-large" />
             <div ng-show="passwordError" ng-bind="passwordError" class="w3-panel w3-red w3-margin w3-round-large">
             </div>
         </div>
         <div>
-            {% include 'captcha.django' %}
+            {% include 'captcha.django' with captcha_name='signincaptcha' %}
         </div>
         <div class="w3-padding w3-margin bg-clear w3-round-xlarge">
             <input type="submit" class="w3-border w3-border-cyan bg-clear w3-btn w3-round-large w3-center margin-center fg-antimony" />
