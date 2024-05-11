@@ -32,8 +32,7 @@ class Note(models.Model):
     title = models.CharField(max_length=255)
     redactors = models.ManyToManyField(
         NoteUser,
-        on_delete=models.CASCADE,
-        related_name="notes"
+        related_name="notes",
     )
     views = models.BigIntegerField(default=0)
     stars = models.DecimalField(default=0.0)
