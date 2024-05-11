@@ -1,6 +1,3 @@
-
-
-
 .margin-center
 {
     margin: auto;
@@ -8,9 +5,8 @@
 
 html
 {
-    background: url("/image/background.png");
+    /*background: url("/image/background.png");*/
 }
-d
 body
 {
     display: flex;
@@ -20,31 +16,33 @@ body
     align-content: space-between;
     margin-top: 60px!important;
     flex-wrap: nowrap;
+
+    & > #left
+    {
+        order: 1;
+        flex-grow: 10;
+        justify-content: left;
+        display: flex;
+    }
+    & > #center
+    {
+        max-width: 500px;
+        order: 2;
+        flex-grow: 5;
+        justify-content: center;
+        margin: auto;
+        padding: auto;
+        display: flex;
+    }
+    & > #right
+    {
+        order: 3;
+        flex-grow: 1;
+        justify-content: right;
+        display: flex;
+    }
 }
-body > #left
-{
-    order: 1;
-    flex-grow: 10;
-    justify-content: left;
-    display: flex;
-}
-body > #center
-{
-    max-width: 500px;
-    order: 2;
-    flex-grow: 5;
-    justify-content: center;
-    margin: auto;
-    padding: auto;
-    display: flex;
-}
-body > #right
-{
-    order: 3;
-    flex-grow: 1;
-    justify-content: right;
-    display: flex;
-}
+
 
 
 /*
@@ -53,23 +51,48 @@ fada5e
 */
 
 .loader {
-  border: 16px solid #ddffff; /* Light grey */
-  border-top: 16px solid #ffffdd; /* Blue */
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  animation: spin 2s linear infinite;
+    border: 16px solid #ddffff; /* Light grey */
+    border-top: 16px solid #ffffdd; /* Blue */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 2s linear infinite;
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+@keyframes spin
+{
+    0%
+    {
+        transform: rotate(0deg);
+    }
+    100%
+    {
+        transform: rotate(360deg);
+    }
 }
 
-.w3-text-sand50,.w3-hover-text-sand50:hover{color:#fdf5e677!important}
-.w3-sand50,.w3-hover-sand50:hover{background-color:#fdf5e677!important}
-.w3-cyan50,.w3-hover-cyan50:hover{background-color:#00bcd477!important}
-.w3-blue-grey50,.w3-hover-blue-grey50:hover,.w3-blue-gray50,.w3-hover-blue-gray50:hover{background-color:#607d8b77!important}
+.w3-text-sand50,
+.w3-hover-text-sand50:hover
+{
+    color: #fdf5e677!important;
+}
+.w3-sand50,
+.w3-hover-sand50:hover
+{
+    background-color: #fdf5e677!important;
+}
+.w3-cyan50,
+.w3-hover-cyan50:hover
+{
+    background-color: #00bcd477!important;
+}
+.w3-blue-grey50,
+.w3-hover-blue-grey50:hover,
+.w3-blue-gray50,
+.w3-hover-blue-gray50:hover
+{
+    background-color: #607d8b77!important;
+}
 
 .close-btn
 {
@@ -91,59 +114,109 @@ fada5e
     background: #0000;
 }
 
-.bd-antimony,.bd-antimony-hover:hover{
-    border-color:#4c4f4d!important
+.bd-antimony,
+.bd-antimony-hover:hover
+{
+    border-color: #4c4f4d!important
 }
-.bg-antimony,.bg-antimony-hover:hover{
-    background-color:#4c4f4d!important
+.bg-antimony,
+.bg-antimony-hover:hover
+{
+    background-color: #4c4f4d!important
 }
-.bg-antimony50,.bg-antimony50-hover:hover{
-    background-color:#4c4f4d77!important;
+.bg-antimony50,
+.bg-antimony50-hover:hover
+{
+    background-color: #4c4f4d77!important;
 }
-.bg-antimony10,.bg-antimony10-hover:hover{
-    background-color:#4c4f4d15!important;
+.bg-antimony10,
+.bg-antimony10-hover:hover
+{
+    background-color: #4c4f4d15!important;
 }
-.fg-antimony,.bg-antimony-hover:hover{
-    color:#4c4f4d!important;
+.fg-antimony,
+.bg-antimony-hover:hover
+{
+    color: #4c4f4d!important;
 }
 
-.bd-napples,.bd-napples-hover:hover{
-    border-color:#fada5e!important
+.bd-napples,
+.bd-napples-hover:hover
+{
+    border-color: #fada5e!important
 }
-.bg-napples,.bg-napples-hover:hover{
-    background-color:#fada5e!important
+.bg-napples,
+.bg-napples-hover:hover
+{
+    background-color: #fada5e!important
 }
-.bg-napples50,.bg-napples50-hover:hover{
-    background-color:#fada5e77!important;
+.bg-napples50,
+.bg-napples50-hover:hover
+{
+    background-color: #fada5e77!important;
 }
-.bg-napples10,.bg-napples10-hover:hover{
-    background-color:#fada5e15!important;
+.bg-napples10,
+.bg-napples10-hover:hover
+{
+    background-color: #fada5e15!important;
 }
-.fg-napples,.w3-napples-hover:hover{
-    color:#fada5e77!important;
+.fg-napples,
+.w3-napples-hover:hover
+{
+    color: #fada5e77!important;
 }
 
 .bd-thin
 {
     border: 0.1px solid;
 }
+
+
 div.colory-border1
 {
     background: linear-gradient(to bottom right, #fade5e, #8a2be2) !important;
     padding: 3px !important;
-    border: 0.1px #4c4f4d solid;
+    width: fit-content;
+
+    & > div:only-child
+    {
+        width: 100%;
+        height: 100%;
+        margin: 3px!important;
+        background-color: #ddffff;
+        border: inherit;
+        border-radius: inherit;
+    }
 }
-div.colory-border1 > div:first-child
-{
-    width: 100%;
-    height: 100%;
-    margin: 3px !important;
-    background-color: #ddffff;
-    border: inherit;
-    border-radius: inherit;
-}
+
 /* extract from w3.css*/
-.w3-btn,.w3-button{border:none;display:inline-block;padding:8px 16px;vertical-align:middle;overflow:hidden;text-decoration:none;color:inherit;background-color:inherit;text-align:center;cursor:pointer;white-space:nowrap}
-.w3-btn:hover{box-shadow:0 8px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)}
-.w3-btn,.w3-button{-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
+.w3-btn,
+.w3-button
+{
+    border: none;
+    display: inline-block;
+    padding: 8px 16px;
+    vertical-align: middle;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    background-color: inherit;
+    text-align: center;
+    cursor: pointer;
+    white-space: nowrap;
+}
+.w3-btn:hover
+{
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)
+}
+.w3-btn,
+.w3-button
+{
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
 .w3-disabled,.w3-btn:disabled,.w3-button:disabled{cursor:not-allowed;opacity:0.3}.w3-disabled *,:disabled *{pointer-events:none}
