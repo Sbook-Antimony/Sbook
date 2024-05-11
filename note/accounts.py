@@ -11,7 +11,7 @@ class BookmarkDoesNotExistError(ValueError):
     pass
 class BookmarkDoesExistError(ValueError):
     pass
-class NoteUser():
+class Bookmark():
     model:models.NoteUser
 
     @classmethod
