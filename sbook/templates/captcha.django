@@ -3,13 +3,17 @@
 <script type="text/javascript">
 	function recaptchaSubmit{{ captcha_name }}(token) {
 		//alert('captcha' + token.toString());
-		$('#recaptcha-input-{{ captcha_name }}').val(token);
+		$('#recaptcha-input-{{ captcha_name }}')
+			.val(token)
+			.addClass("bg-green w3-disabled");
+		$('recaptchaButton{{ captcha_name }}').html("Answerred");
 	}
 </script>
 <button
 	class="g-recaptcha w3-border w3-border-cyan bg-clear w3-btn w3-round-large w3-center fg-antimony"
 	data-sitekey="6LfNF9kpAAAAAIekNLPQRGkBv9vc6W0ivc9LruqP"
 	data-callback='recaptchaSubmit{{ captcha_name }}'
+	id="recaptchaButton{{ captcha_name }}"
 	data-action='submit'
 >
 	Solve Captcha

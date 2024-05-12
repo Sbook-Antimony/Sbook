@@ -1,6 +1,6 @@
 {% extends 'main.django' %}
 {% block 'title' %}
-    chatty signin
+    chatty signup
 {% endblock %}
 
 {% block 'left' %}
