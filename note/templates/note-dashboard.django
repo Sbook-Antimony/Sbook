@@ -40,7 +40,7 @@
                     </p>
                 {% endif %}
             </div>
-            <button class="hexa jump noStop fa-2xl w3-button w3-circle margin-center colc">
+            <button ng-click="uploadNote()" class="hexa jump noStop fa-2xl w3-button w3-circle margin-center colc">
                 <i class="fas fa-plus-circle"></i>
             </button>
         </div>
@@ -59,14 +59,21 @@
                     </p>
                 {% endif %}        
             </div>
-            <button class="hexa jump fa-2xl noStop w3-button w3-circle margin-center colc">
-                <i class="fas fa-plus-circle"></i>
-            </button>
         </div>
+        <dialog id="uploadNoteDialog" class="w3-round-large bg-antimony10">
+            <form action="/note/dashboard/upload" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+                <input class="w3-button w3-round-large w3-margin" type="file" name="file" />
+                {% csrf_token %}
+                <input class="w3-button w3-round-large w3-margin" type="submit" />
+            </form>
+        </dialog>
         <script type="text/javascript">
             const app = angular.module("dashboard", []);
             app.controller("dashboardCtrl", function($scope) {
                 $scope.user_name = "{{ user_name }}";
+                $scope.uploadNote = function() {
+                    $("#uploadNoteDialog")[0].showModal();
+                }
             });
         </script>
     </div>
