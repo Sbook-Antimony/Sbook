@@ -7,21 +7,21 @@
 {% block 'center' %}
     <div ng-app="dashboard" ng-controller="dashboardCtrl" class="w3-round-medium w3-opacity w3-animate-show">
         <div class="bg-antimony10 w3-round w3-margin">
-            <span>
-                <img class="w3-margin w3-circle w3-inline w3-margin" hover-class="jump" width="100" height="100" src="/profile.png" />
-                <i class="fg-antimony50 w3-bottom-right w3-margin fas fa-edit"></i>
+            <span class="w3-display-container">
+                <img class="w3-margin w3-circle w3-inline w3-margin w3-image" hover-class="jump hexa" width="100" height="100" src="/profile.png" />
+                <i class="w3-opacity fa-xl fg-antimony50 w3-display-bottomright w3-margin fas fa-edit"></i>
             </span>
             {#srcset="/profile.png 300w, /profile.png 600w, /profile.png 1200w" sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 1200px"#}
-            <span ng-bind="user_name" class="w3-arial w3-xxlarge"></span>
+            <span ng-bind="user_name" class="w3-arial w3-xxlarge w3-margin"></span>
         </div>
-        <div class="w3-container bg-napples20 w3-margin w3-round">
-            <button onclick="$('#note-list').slideToggle();" class="margin-center w3-button w3-round bg-antimony10">
+        <div class="w3-container bg-napples10 bd-napples bd-thin w3-margin w3-round">
+            <button onclick="$('#note-list').slideToggle();" class="w3-margin w3-button w3-round bg-antimony10">
                 your notes
             </button>
-            <div id="note-list">
+            <div id="note-list" class="margin-center">
                 {% if user.hasNotes > 0  %}
                     {% for note in user.notes %}
-                        <div class="w3-round">
+                        <div class="w3-round bd-antimony-hover bd-thin bd-antimony">
                             <span>
                                 <img class="w3-circle" src="/note/notes/{{ note.id }}/icon.png" />
                             </span>
@@ -39,16 +39,16 @@
                         nothing here yet
                     </p>
                 {% endif %}
-                <button class="hexa jump w3-button w3-circle margin-center colc">
-                    <i class="fas fa-plus-circle"></i>
-                </button>
             </div>
+            <button class="hexa jump noStop fa-2xl w3-button w3-circle margin-center colc">
+                <i class="fas fa-plus-circle"></i>
+            </button>
         </div>
-        <div class="w3-container w3-round bg-napples20 w3-margin">
-            <button onclick="$('#bookmark-list').slideToggle();" class="margin-center w3-button w3-round bg-antimony10">
+        <div class="w3-container w3-round bg-napples10 bd-napples bd-thin w3-margin">
+            <button onclick="$('#bookmark-list').slideToggle();" class="w3-margin w3-button w3-round bg-antimony10">
                 my bookmarks <i class="w3-text-yellow fas fa-star"></i>
             </button>
-            <div id="bookmark-list">
+            <div id="bookmark-list" class="margin-center">
                 {% if user.hasBookmarks %}
                     {% for bookmark in user.bookmarks %}
                         
@@ -57,11 +57,11 @@
                     <p class="margin-center w3-padding-large w3-container fg-antimony w3-opacity">
                         nothing here yet
                     </p>
-                {% endif %}
-                <button class="hexa jump w3-button w3-circle margin-center colc">
-                    <i class="fas fa-plus-circle"></i>
-                </button>        
+                {% endif %}        
             </div>
+            <button class="hexa jump fa-2xl noStop w3-button w3-circle margin-center colc">
+                <i class="fas fa-plus-circle"></i>
+            </button>
         </div>
         <script type="text/javascript">
             const app = angular.module("dashboard", []);

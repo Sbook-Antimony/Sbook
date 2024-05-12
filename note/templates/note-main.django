@@ -26,7 +26,7 @@
     </head>
 
     <header  role="navigation" class="w3-bar bg-antimony50 w3-top w3-padding-small">
-        <a href="/note/" class="w3-circle w3-button w3-bar-item bg-clear bg-antimony10-hover">
+        <a href="/note/" class="w3-circle w3-button w3-bar-item bg-clear">
             <i class="fas fa-dashboard fa-2xl"></i>
         </a>
 

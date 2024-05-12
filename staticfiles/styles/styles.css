@@ -30,7 +30,7 @@ body
         margin-top: 50px;
         max-width: 500px;
         order: 2;
-        flex-grow: 5;
+        flex-grow: 10;
         justify-content: center;
         margin: auto;
         padding: auto;
@@ -175,13 +175,13 @@ fada5e
 }
 
 
-div.colory-border1
+.colory-border1
 {
     background: linear-gradient(to bottom right, #fade5e, #8a2be2) !important;
     padding: 3px !important;
     width: fit-content;
 
-    & > div:only-child
+    & > *:only-child
     {
         width: 100%;
         height: 100%;
