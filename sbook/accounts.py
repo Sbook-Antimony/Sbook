@@ -12,7 +12,7 @@ import requests
 
 def parse_recaptcha_token(token):  # Replace this with your reCAPTCHA secret key
     return requests.post('https://www.google.com/recaptcha/api/siteverify', data={
-        'secret': settings.RECAPTCHA_TOKEN,
+        'secret': settings.RECAPTCHA_SECRET,
         'response': token
     }).json()
 
@@ -104,9 +104,9 @@ class User:
         else:
             return cls(found)
     @classmethod
-    def from_login(cls, name, email, password):
+    def from_login(cls, email, password):
         try:
-            found = models.User.objects.get(name=name, email=email, password=password)
+            found = models.User.objects.get(email=email, password=password)
         except models.User.DoesNotExist as e:
             raise UserDoesNotExistError() from e
         else:
@@ -114,8 +114,11 @@ class User:
     @classmethod
     def create_from_login(cls, name, email, password):
         try:
+            print("creating user")
             obj = models.User(name=name, email=email, password=password)
+            print("created.. \nnow saving")
             obj.save()
+            print('creating data launch')
             createUserData(obj)
         except models.User.DoesNotExist as e:
             raise UserDoesExistError() from e
@@ -170,10 +173,12 @@ class User:
     
 def createUserData(obj) -> int:
     #users = sbook.models.Account.objects.all()
+    print(f'creating user data {{ obj.id }}')
     assert obj.id is not None
     folder = ACCOUNTS / str(obj.id)
-
-    folder.mkdir()
+    print(folder, ")"*100)
+    folder.mkdir(parents=True, exist_ok=True)
+    print(folder.exists())
 
     img = random_profile_image.random_profile()
     img.save(folder / "profile.png")

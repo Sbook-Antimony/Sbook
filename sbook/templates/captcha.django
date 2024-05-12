@@ -2,7 +2,7 @@
 <input type="hidden" name="{{ captcha_name }}" id="recaptcha-input-{{ captcha_name }}" />
 <script type="text/javascript">
 	function recaptchaSubmit{{ captcha_name }}(token) {
-		alert('captcha' + token.toString());
+		//alert('captcha' + token.toString());
 		$('#recaptcha-input-{{ captcha_name }}').val(token);
 	}
 </script>
@@ -12,5 +12,5 @@
 	data-callback='recaptchaSubmit{{ captcha_name }}'
 	data-action='submit'
 >
-	Submit Captcha
+	Solve Captcha
 </button>

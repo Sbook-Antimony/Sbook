@@ -73,6 +73,10 @@ class signin(View):
             {'errors': False},
         )
     def post(self, req, *args, **kw):
+        data = parse_recaptcha_token(req.POST.get("signincaptcha"))
+        print(data)
+        if not data["success"]:
+            return HttpResponseRedirect("/signin/")
         form = forms.SigninForm(req.POST)
         if not form.is_valid():
             errors = form.errors.as_data()
@@ -87,7 +91,7 @@ class signin(View):
         else:
             try:
                 data = form.cleaned_data
-                user = User.from_login(data.get("email"), data.get("password"))
+                user = User.from_login(email=data.get("email"), password=data.get("password"))
             except UserDoesNotExistError:
                 return render(
                     req,
@@ -104,6 +108,12 @@ class signup(View):
     def get(self, req, *args, **kw):
         return render(req,"signup.django", {'errors': False})
     def post(self, req, *args, **kw):
+        data = parse_recaptcha_token(req.POST.get("signincaptcha"))
+        print(data)
+        if not data["success"]:
+            #return HttpResponseRedirect("/signup/")
+            pass
+
         form = forms.SignupForm(req.POST)
         if not form.is_valid():
             errors = form.errors.as_data()
