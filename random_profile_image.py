@@ -1,4 +1,4 @@
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, ImageEnhance
 import random
 
 eqs = [
@@ -44,7 +44,12 @@ def random_profile(size=500, scale=1):
         s += 1
         s %= 3
         s += 1
-    return image
+
+    return ImageEnhance.Color(
+        ImageEnhance.Contrast(
+            image
+        ).enhance(1.5),
+    ).enhance(2)
 
 if __name__ == '__main__':
     random_profile(100, 50).save('image/default-photo.png')

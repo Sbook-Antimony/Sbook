@@ -44,7 +44,7 @@
                 my bookmarks <i class="w3-text-yellow fas fa-star"></i>
             </button>
             <div>
-                {% if user.hasBookmarks > 0 %}
+                {% if user.hasBookmarks %}
                     {% for bookmark in user.bookmarks %}
                         
                     {% endfor %}
