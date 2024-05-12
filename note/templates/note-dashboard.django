@@ -14,8 +14,8 @@
             {#srcset="/profile.png 300w, /profile.png 600w, /profile.png 1200w" sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 1200px"#}
             <span ng-bind="user_name" class="w3-arial w3-xxlarge"></span>
         </div>
-        <div class="w3-container bg-napples20 w3-margin w3-round colory-border1">
-            <button onclick="$('#note-list').slideToggle();" class="w3-button w3-round bg-antimony10">
+        <div class="w3-container bg-napples20 w3-margin w3-round">
+            <button onclick="$('#note-list').slideToggle();" class="margin-center w3-button w3-round bg-antimony10">
                 your notes
             </button>
             <div id="note-list">
@@ -35,26 +35,32 @@
                         <hr class="bg-antimony" />
                     {% endfor %}
                 {% else %}
-                    <p class="margin-center fg-antimony w3-opacity">
+                    <p class="margin-center w3-padding-large w3-container fg-antimony w3-opacity">
                         nothing here yet
                     </p>
                 {% endif %}
+                <button class="hexa jump w3-button w3-circle margin-center colc">
+                    <i class="fas fa-plus-circle"></i>
+                </button>
             </div>
         </div>
-        <div class="w3-container w3-round bg-napples20 w3-margin colory-border1">
-            <button class="w3-button w3-round bg-antimony10">
+        <div class="w3-container w3-round bg-napples20 w3-margin">
+            <button onclick="$('#bookmark-list').slideToggle();" class="margin-center w3-button w3-round bg-antimony10">
                 my bookmarks <i class="w3-text-yellow fas fa-star"></i>
             </button>
-            <div>
+            <div id="bookmark-list">
                 {% if user.hasBookmarks %}
                     {% for bookmark in user.bookmarks %}
                         
                     {% endfor %}
                 {% else %}
-                    <p class="margin-center fg-antimony w3-opacity">
+                    <p class="margin-center w3-padding-large w3-container fg-antimony w3-opacity">
                         nothing here yet
                     </p>
-                {% endif %}        
+                {% endif %}
+                <button class="hexa jump w3-button w3-circle margin-center colc">
+                    <i class="fas fa-plus-circle"></i>
+                </button>        
             </div>
         </div>
         <script type="text/javascript">

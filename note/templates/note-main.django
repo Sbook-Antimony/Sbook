@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en" class="bg-napples10">
     <head>
-        <link rel="icon" href="/image/antimony.jpg" />
+        <link rel="icon" href="/image/antimony.png" />
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <script src="{% static 'scripts/angular.min.js' %}"></script>
