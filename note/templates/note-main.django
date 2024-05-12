@@ -46,5 +46,6 @@
             {% endblock %}
         </div>
         <script src="{% static 'scripts/script.js' %}"></script>
+        <script src="{% static 'scripts/response.js' %}"></script>
     </body>
 </html>
