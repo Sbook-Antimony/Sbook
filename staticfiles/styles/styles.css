@@ -19,6 +19,7 @@ body
 
     & > #left
     {
+        margin-top: 50px;
         order: 1;
         flex-grow: 10;
         justify-content: left;
@@ -26,6 +27,7 @@ body
     }
     & > #center
     {
+        margin-top: 50px;
         max-width: 500px;
         order: 2;
         flex-grow: 5;
@@ -36,6 +38,7 @@ body
     }
     & > #right
     {
+        margin-top: 50px;
         order: 3;
         flex-grow: 1;
         justify-content: right;

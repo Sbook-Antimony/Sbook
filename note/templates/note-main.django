@@ -25,32 +25,12 @@
         </script>
     </head>
 
-    <header  role="navigation" style="padding: 0;" class="w3-bar bg-antimony50 w3-top w3-padding-0">
-        <a style="margin: auto; margin-right: 10px; padding: 0; height: 100%;" href="/" style="height: 100%;" class="w3-button w3-bar-item bg-clear bg-antimony10 w3-large">
+    <header  role="navigation" class="w3-bar bg-antimony50 w3-top w3-padding-small">
+        <a href="/note/" class="w3-circle w3-button w3-bar-item bg-clear bg-antimony10-hover">
             <i class="fas fa-dashboard fa-2xl"></i>
         </a>
 
-        <!-- <div style="margin: 0; padding: 0;" class="w3-bar-item" id="top-bar-div">
-            
-            <div id="top-bar-buttons" style="width: 100%;  margin:0; padding: 0;" class="">
-                <a style="width: 100%" href="/note" class="bg-napples10 bg-antimony10-hover w3-button w3-hover-text w3-block">
-                    note
-                </a>
-                <a style="width: 100%" href="/chatty" class="bg-napples10 bg-antimony10-hover w3-button w3-hover-text w3-block">
-                    chatty
-                </a>
-                <a style="width: 100%;" href="/questions" class="bg-napples10 bg-antimony10-hover w3-button w3-hover-text w3-block">
-                    questions
-                </a>
-            </div>
-            <script>
-                $('#top-bar-buttons').slideUp();
-                $("#top-bar-div-button").click(function(){
-                    $("#top-bar-buttons").slideToggle();
-                });
-            </script>
-        </div> -->
-        <img src="/profile.png" style="width: 50px; height: 50px; padding: 0; margin: 0;" class="w3-right w3-bar-item w3-circle" />
+        <img src="/profile.png" style="width: 40px; height: 40px; padding: 0; margin: 0;" class="w3-right w3-bar-item w3-circle" />
         
 
     </header>
