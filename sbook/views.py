@@ -74,9 +74,10 @@ class signin(View):
         )
     def post(self, req, *args, **kw):
         data = parse_recaptcha_token(req.POST.get("signincaptcha"))
-        print(data)
+        #print(data)
         if not data["success"]:
-            return HttpResponseRedirect("/signin/")
+            #return HttpResponseRedirect("/signin/")
+            pass
         form = forms.SigninForm(req.POST)
         if not form.is_valid():
             errors = form.errors.as_data()
@@ -109,7 +110,7 @@ class signup(View):
         return render(req,"signup.django", {'errors': False})
     def post(self, req, *args, **kw):
         data = parse_recaptcha_token(req.POST.get("signincaptcha"))
-        print(data)
+        #print(data)
         if not data["success"]:
             #return HttpResponseRedirect("/signup/")
             pass

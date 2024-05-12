@@ -10,8 +10,11 @@ from password_strength import PasswordPolicy
 from sbook import settings
 import requests
 
+
 def parse_recaptcha_token(token):  # Replace this with your reCAPTCHA secret key
-    return requests.post('https://www.google.com/recaptcha/api/siteverify', data={
+    return requests.post(
+        'https://www.google.com/recaptcha/api/siteverify',
+    data={
         'secret': settings.RECAPTCHA_SECRET,
         'response': token
     }).json()
@@ -134,6 +137,7 @@ class User:
     @functools.cached_property
     def id(self):
         return self.model.id
+
     @functools.cached_property
     def profile(self):
         return Image.open(
@@ -149,7 +153,7 @@ class User:
     @functools.cached_property
     def name(self):
         return self.model.name
-    
+
     @functools.cached_property
     def chattyAccount(self):
         cha = self.model.chattyAccount.all()
@@ -165,11 +169,11 @@ class User:
             raise note.accounts.UserDoesNotExistError()
         return note.accounts.ChattyUser(cha[0])
     DEFAULT_PROFILE_PATH = DIR / "image/default-photo.png"
-    name:tuple[str]
-    password:str
-    data:dict
-    folder:Path
-    id:int
+    name : tuple[str]
+    password : str
+    data : dict
+    folder : Path
+    id : int
     
 def createUserData(obj) -> int:
     #users = sbook.models.Account.objects.all()
@@ -192,10 +196,6 @@ def createUserData(obj) -> int:
                 "name": obj.name,
                 "password": obj.password,
                 "email": obj.email,
-                "chatty": {
-                    "id": obj.chatty.id,
-                }
             }
         )
     )
-

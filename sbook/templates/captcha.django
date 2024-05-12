@@ -6,7 +6,7 @@
 		$('#recaptcha-input-{{ captcha_name }}')
 			.val(token)
 			.addClass("bg-green w3-disabled");
-		$('recaptchaButton{{ captcha_name }}').html("Answerred");
+		$('#recaptchaButton{{ captcha_name }}').html("Answerred");
 	}
 </script>
 <button
