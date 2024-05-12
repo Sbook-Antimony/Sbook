@@ -10,13 +10,14 @@ from .accounts import *
 
 @check_login(True)
 def do_index(req, user):
-    print(user, user.sbookAccount, user.sbookAccount.name)
+    #print(user, user.sbookAccount, user.sbookAccount.name, user.notes, type(user.notes))
     
     return HttpResponse(
         render(
             req,
             "note-dashboard.django",
             {
+                "len": len,
                 "user": user,
                 "user_name": user.sbookAccount.name,
             }

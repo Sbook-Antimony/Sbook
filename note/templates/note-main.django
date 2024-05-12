@@ -27,9 +27,6 @@
 
     <header  role="navigation" style="padding: 0;" class="w3-bar bg-antimony50 w3-top w3-padding-0">
         <a style="margin: auto; margin-right: 10px; padding: 0; height: 100%;" href="/" style="height: 100%;" class="w3-button w3-bar-item bg-clear bg-antimony10 w3-large">
-            <i class="fas fa-home fa-2xl"></i>
-        </a>
-        <a style="margin: auto; margin-right: 10px; padding: 0; height: 100%;" href="/" style="height: 100%;" class="w3-button w3-bar-item bg-clear bg-antimony10 w3-large">
             <i class="fas fa-dashboard fa-2xl"></i>
         </a>
 

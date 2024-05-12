@@ -60,7 +60,9 @@ class NoteUser():
         except IndexError as e:
             raise NoteUserDoesNotExistError() from e
         else:
-            return found
+            return cls(found)
+
+    @classmethod
     def from_note_id(cls, id):
         try:
             found = models.NoteUser.objects.get(id=id)
@@ -69,10 +71,10 @@ class NoteUser():
         else:
             return cls(found)
   
-    @staticmethod
+    @classmethod
     def create_from_sbook(cls, sbook):
         try:
-            obj = models.NoteUser(sbookAccount=sbook)
+            obj = models.NoteUser(sbookAccount=sbook.model)
             obj.save()
         except Exception as e:
             raise NoteUserDoesExistError() from e
@@ -112,8 +114,19 @@ class NoteUser():
 
     @functools.cached_property
     def bookmarks(self):
-        return tuple(map(Bookmark, self.model.bookmars.all()))
+        return tuple(map(Bookmark, self.model.bookmarks.all()))
+
+    @functools.cached_property
+    def hasBookmarks(self):
+        return len(self.bookmarks) > 0
     
+    @functools.cached_property
+    def notes(self):
+        return tuple(map(Note, self.model.notes.all()))
+
+    @functools.cached_property
+    def hasNotes(self):
+        return len(self.notes) > 0
 
 class NoteDoesNotExistError(ValueError):
     pass
@@ -185,7 +198,7 @@ def check_login(func, redirect=True):
                 if not redirect:
                     return func(user=None, *args,**kw)
                 return HttpResponseRedirect('/signin/')
-            except NoteUserDoesNotExisrError:
+            except NoteUserDoesNotExistError:
                 user = NoteUser.create_from_sbook(
                     sbook.accounts.User.from_id(req.session.get("user-id")),
                 )

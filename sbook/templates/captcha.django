@@ -6,10 +6,10 @@
 		$('#recaptcha-input-{{ captcha_name }}')
 			.val(token);
 		$('#recaptchaButton{{ captcha_name }}')
-			.html("Answerred"),
+			.html("Answerred")
 			.css({
 				transition: "2s",
-			}),
+			})
 			.addClass('w3-green');
 		setTimeout(
 			function() {

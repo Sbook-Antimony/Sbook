@@ -33,7 +33,7 @@
         </a>
 
         <div style="margin: 0; padding: 0;" class="w3-bar-item" id="top-bar-div">
-            <button id="top-bar-div-button" style="width: 100%; margin:0; padding: 0;" class="w3-button">
+            <button id="top-bar-div-button" style="width: 100%; margin:0; padding: 0; transition: 3s;" class="w3-button">
                 <i class="fas fa-chevron-down fa-2xl">my workspace</i>
             </button>
             <div id="top-bar-buttons" style="width: 100%;  margin:0; padding: 0;" class="">

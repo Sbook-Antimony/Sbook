@@ -6,28 +6,37 @@
 
 {% block 'center' %}
     <div ng-app="dashboard" ng-controller="dashboardCtrl" class="w3-round-medium w3-opacity w3-animate-show">
-        <div>
-            <img class="w3-margin w3-circle w3-inline" hover-class="jump" width="100" height="100" src="/profile.png" />
+        <div class="bg-antimony10 w3-round w3-margin">
+            <span>
+                <img class="w3-margin w3-circle w3-inline w3-margin" hover-class="jump" width="100" height="100" src="/profile.png" />
+                <i class="fg-antimony50 w3-bottom-right w3-margin fas fa-edit"></i>
+            </span>
             {#srcset="/profile.png 300w, /profile.png 600w, /profile.png 1200w" sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 1200px"#}
             <span ng-bind="user_name" class="w3-arial w3-xxlarge"></span>
         </div>
         <div class="w3-round bg-napples10">
             <button onclick="$('#note-list').slideToggle();" class="w3-button w3-round">your notes</button>
             <div id="note-list">
-                {% for note in user.notes %}
-                    <div class="w3-round">
-                        <span>
-                            <img class="w3-circle" src="/note/notes/{{ note.id }}/icon.png" />
-                        </span>
-                        <span>
-                            <h4>{{ note.title }}</h4>
-                            <p class="w3-small">
-                                {{ note.description }}
-                            </p>
-                        </span>
-                    </div>
-                    <hr class="bg-antimony" />
-                {% endfor %}
+                {% if user.hasNotes > 0  %}
+                    {% for note in user.notes %}
+                        <div class="w3-round">
+                            <span>
+                                <img class="w3-circle" src="/note/notes/{{ note.id }}/icon.png" />
+                            </span>
+                            <span>
+                                <h4>{{ note.title }}</h4>
+                                <p class="w3-small">
+                                    {{ note.description }}
+                                </p>
+                            </span>
+                        </div>
+                        <hr class="bg-antimony" />
+                    {% endfor %}
+                {% else %}
+                    <p class="margin-center fg-antimony w3-opacity">
+                        nothing here yet
+                    </p>
+                {% endif %}
             </div>
         </div>
         <div>
@@ -35,9 +44,15 @@
                 my bookmarks <i class="w3-text-yellow fas fa-star"></i>
             </button>
             <div>
-                {% for bookmark in user.bookmarks %}
-                    
-                {% endfor %}
+                {% if user.hasBookmarks > 0 %}
+                    {% for bookmark in user.bookmarks %}
+                        
+                    {% endfor %}
+                {% else %}
+                    <p class="margin-center fg-antimony w3-opacity">
+                        nothing here yet
+                    </p>
+                {% endif %}        
             </div>
         </div>
         <script type="text/javascript">
