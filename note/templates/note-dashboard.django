@@ -6,8 +6,8 @@
 
 {% block 'center' %}
     <div ng-app="dashboard" ng-controller="dashboardCtrl" class="w3-container w3-round w3-round-medium w3-animate-show">
-        <div class="bg-antimony10 w3-round w3-margin-bottom">
-            <span class="w3-display-container w3-container">
+        <div class="bg-antimony10 w3-container w3-round w3-margin-bottom">
+            <span class="w3-display-container">
                 <img class="w3-margin w3-circle w3-inline w3-margin w3-image" hover-class="jump hexa" width="100" height="100" src="/profile.png" />
                 <i class="w3-opacity fa-xl fg-antimony50 w3-display-bottomright w3-margin fas fa-edit"></i>
             </span>
@@ -40,11 +40,11 @@
                     </p>
                 {% endif %}
             </div>
-            <button ng-click="uploadNote()" hover-class="shake noStop" class="hexa fa-2xl w3-button w3-circle margin-center colc">
-                <i class="fas fa-plus-circle"></i>
+            <button ng-click="uploadNote()" view-class="jump" hover-class="shake" class="hexa fa-2xl w3-button w3-circle margin-center">
+                <i class="margin-center fas fa-plus-circle"></i>
             </button>
         </div>
-        <div class="w3-container w3-round bg-napples10 bd-napples bd-thin w3-margin">
+        <div class="w3-container w3-round bg-napples10 bd-napples bd-thin w3-margin-bottom">
             <button onclick="$('#bookmark-list').slideToggle();" class="w3-margin w3-button w3-round bg-antimony10">
                 my bookmarks <i class="w3-text-yellow fas fa-star"></i>
             </button>
@@ -67,7 +67,7 @@
                 <input class="w3-button w3-round-large w3-margin" type="submit" />
                 <script type="text/javascript" charset="utf-8">
                     $('#uploadNoteForm').ajax({
-                        type: 'POST', w3-
+                        type: 'POST',
                         url: '/note/mynotes/upload/', // replace with your server-side script
                         data: $("#uploadNoteForm").serialize(),
                         success: function(data) {

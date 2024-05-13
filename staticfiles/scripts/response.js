@@ -1,5 +1,4 @@
 
-var hoverCls = document.querySelectorAll("[hover-class=*]");
 document.querySelectorAll("[hover-class]").forEach((element) => {
     element.addEventListener("mouseenter", function() {
         element.classList.add(
@@ -13,10 +12,10 @@ document.querySelectorAll("[hover-class]").forEach((element) => {
     });
 });
 
-var viewCls = document.querySelectorAll("[view-class=*]");
 document.querySelectorAll("[view-class]").forEach((element) => {
     new IntersectionObserver(
         (entries, observer) => {
+            console.log("viez", entries, observer);
             entries.forEach((entry) => {
                 // Each entry describes an intersection change for one observed
                 // target element:
@@ -41,7 +40,7 @@ document.querySelectorAll("[view-class]").forEach((element) => {
         {
             root: null,
             rootMargin: "0px",
-            threshold: 1.0,
+            threshold: [1.0, 0.5, 0.0],
         },
     ).observe(element);
 });

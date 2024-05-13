@@ -28,7 +28,7 @@ body
     & > #center
     {
         margin-top: 50px;
-        max-width: 500px;
+        width: 500px;
         order: 2;
         flex-grow: 10;
         justify-content: center;
