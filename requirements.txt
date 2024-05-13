@@ -10,4 +10,4 @@ fontawesomefree==6.5.1
 Pillow
 numpy
 password-strength
-requests
+requests～=2.31.0
