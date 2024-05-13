@@ -16,7 +16,7 @@ def u_email_check_json(req, scope):
         validate_email(email)
     except ValidationError as e:
         return JsonResponse(e.message, safe=False)
-    else
+    else:
         exists = User.exists(email=email)
         if exists and scope == 'signup':
             return JsonResponse(f'email {email} already used', safe=False)
