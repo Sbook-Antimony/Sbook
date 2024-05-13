@@ -16,8 +16,7 @@ def u_email_check_json(req, scope):
         validate_email(email)
     except ValidationError as e:
         return JsonResponse(e.message, safe=False)
-    else:
-        print()
+    else
         exists = User.exists(email=email)
         if exists and scope == 'signup':
             return JsonResponse(f'email {email} already used', safe=False)
@@ -75,7 +74,7 @@ class signin(View):
     def post(self, req, *args, **kw):
         data = parse_recaptcha_token(req.POST.get("signincaptcha"))
         #print(data)
-        if not data["success"]:
+        if not data.get("success"):
             #return HttpResponseRedirect("/signin/")
             pass
         form = forms.SigninForm(req.POST)
@@ -85,7 +84,7 @@ class signin(View):
                 req,
                 "signin.django",
                 {
-                    'errors': (str(errors.get("email", "")[0].message) if len(errors.get("email")) > 0 else False)
+                    'errors': (str(errors.get("email", "")[0].message) if len(errors.get("email"), []) > 0 else False)
 
                 }
             )
