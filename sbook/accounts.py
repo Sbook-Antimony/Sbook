@@ -12,6 +12,8 @@ import requests
 
 
 def parse_recaptcha_token(token):  # Replace this with your reCAPTCHA secret key
+    """
+    """
     try:
         return requests.post(
             'https://www.google.com/recaptcha/api/siteverify',
@@ -24,11 +26,6 @@ def parse_recaptcha_token(token):  # Replace this with your reCAPTCHA secret key
         return {
             "success": False,
         }
-
-# Example usage
-token = 'YOUR_RECAPTCHA_TOKEN'
-is_valid = parse_recaptcha_token(token)
-print(is_valid)
 
 DIR = Path(__file__).parent.parent
 ACCOUNTS = DIR/'accounts'
