@@ -6,16 +6,16 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <script src="{% static 'scripts/angular.min.js' %}"></script>
-        <script src="{% static 'scripts/jquery.js' %}"></script>
-        <link rel="stylesheet" href="{% static 'styles/w3.css' %}" />
-        <link rel="stylesheet" href="{% static 'styles/styles.css' %}" />
-        <link rel="stylesheet" href="{% static 'styles/hexa.css' %}" />
+        <script src="/static/scripts/jquery.js"></script>
+        <link rel="stylesheet" href="/static/styles/w3.css" />
+        <link rel="stylesheet" href="/static/styles/styles.css" />
+        <link rel="stylesheet" href="/static/styles/hexa.css" />
         <title>{% block 'title' %}{% endblock %}</title>
         <script src="https://kit.fontawesome.com/ba5b68e3cc.js" crossorigin="anonymous"></script>
 
-        <script src="{% static 'scripts/nightly.js' %}"></script>
+        <script src="/static/scripts/nightly.js"></script>
         <script src="https://www.w3schools.com/lib/w3.js"></script>
-        <script src="{% static 'scripts/script.js' %}"></script>
+        <script src="/static/scripts/script.js"></script>
         <script>
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
@@ -45,7 +45,7 @@
             {% block 'right' %}
             {% endblock %}
         </div>
-        <script src="{% static 'scripts/script.js' %}"></script>
-        <script src="{% static 'scripts/response.js' %}"></script>
+        <script src="/static/scripts/script.js"></script>
+        <script src="/static/scripts/response.js"></script>
     </body>
 </html>

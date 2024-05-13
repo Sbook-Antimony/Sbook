@@ -4,8 +4,12 @@
 		{
 			"path": ".",
 			"index_include_patterns": [
-				"*.py",
-				"*/*.py",
+				"./staticfiles/styles/w3.css",
+				"./staticfiles/scripts/*.js",
+				"./note/accounts.py",
+				"./sbook/accounts.py",
+				"./chatty/*.py",
+				"./*",
 			]
 		}
 	],

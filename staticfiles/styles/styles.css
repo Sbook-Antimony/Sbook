@@ -21,7 +21,7 @@ body
     {
         margin-top: 50px;
         order: 1;
-        flex-grow: 10;
+        flex-grow: 2;
         justify-content: left;
         display: flex;
     }
@@ -40,7 +40,7 @@ body
     {
         margin-top: 50px;
         order: 3;
-        flex-grow: 1;
+        flex-grow: 2;
         justify-content: right;
         display: flex;
     }
@@ -223,3 +223,21 @@ fada5e
     user-select: none;
 }
 .w3-disabled,.w3-btn:disabled,.w3-button:disabled{cursor:not-allowed;opacity:0.3}.w3-disabled *,:disabled *{pointer-events:none}
+
+
+
+
+.wave {
+    animation: waveAnim 3s infinite;
+}
+
+@keyframes waveAnim {
+    0%
+    {
+        transform: translateX(0);
+    }
+    100%
+    {
+        transform: translateX(100%);
+    }
+}

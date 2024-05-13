@@ -5,16 +5,16 @@
 {% endblock %}
 
 {% block 'center' %}
-    <div ng-app="dashboard" ng-controller="dashboardCtrl" class="w3-round-medium w3-opacity w3-animate-show">
-        <div class="bg-antimony10 w3-round w3-margin">
-            <span class="w3-display-container">
+    <div ng-app="dashboard" ng-controller="dashboardCtrl" class="w3-container w3-round w3-round-medium w3-animate-show">
+        <div class="bg-antimony10 w3-round w3-margin-bottom">
+            <span class="w3-display-container w3-container">
                 <img class="w3-margin w3-circle w3-inline w3-margin w3-image" hover-class="jump hexa" width="100" height="100" src="/profile.png" />
                 <i class="w3-opacity fa-xl fg-antimony50 w3-display-bottomright w3-margin fas fa-edit"></i>
             </span>
             {#srcset="/profile.png 300w, /profile.png 600w, /profile.png 1200w" sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 1200px"#}
             <span ng-bind="user_name" class="w3-arial w3-xxlarge w3-margin"></span>
         </div>
-        <div class="w3-container bg-napples10 bd-napples bd-thin w3-margin w3-round">
+        <div class="w3-container bg-napples10 bd-napples bd-thin w3-margin-bottom w3-round">
             <button onclick="$('#note-list').slideToggle();" class="w3-margin w3-button w3-round bg-antimony10">
                 your notes
             </button>
@@ -24,7 +24,7 @@
                         <div class="w3-round bd-antimony-hover bd-thin bd-antimony">
                             <span>
                                 <img class="w3-circle" src="/note/notes/{{ note.id }}/icon.png" />
-                            </span>
+                            </span>VCpyYXt7t!qc*9  mbiarrambang
                             <span>
                                 <h4>{{ note.title }}</h4>
                                 <p class="w3-small">
@@ -40,7 +40,7 @@
                     </p>
                 {% endif %}
             </div>
-            <button ng-click="uploadNote()" class="hexa jump noStop fa-2xl w3-button w3-circle margin-center colc">
+            <button ng-click="uploadNote()" hover-class="shake noStop" class="hexa fa-2xl w3-button w3-circle margin-center colc">
                 <i class="fas fa-plus-circle"></i>
             </button>
         </div>
@@ -60,11 +60,37 @@
                 {% endif %}        
             </div>
         </div>
-        <dialog id="uploadNoteDialog" class="w3-round-large bg-antimony10">
-            <form action="/note/dashboard/upload" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+        <dialog id="uploadNoteDialog" class="w3-round-large bg-antimony10 w3">
+            <form id="uploadNoteForm" method="post" enctype="multipart/form-data" accept-charset="utf-8">
                 <input class="w3-button w3-round-large w3-margin" type="file" name="file" />
                 {% csrf_token %}
                 <input class="w3-button w3-round-large w3-margin" type="submit" />
+                <script type="text/javascript" charset="utf-8">
+                    $('#uploadNoteForm').ajax({
+                        type: 'POST', w3-
+                        url: '/note/mynotes/upload/', // replace with your server-side script
+                        data: $("#uploadNoteForm").serialize(),
+                        success: function(data) {
+                            showNoteUploadCompleted();
+                        },
+                        error: function() {
+                            $("noteUploadProgressBar")
+                                .toggleClass('w3-green w3-red');
+                        },
+                        xhr: function() {
+                            var xhr = new XMLHttpRequest();
+                            $("#noteUploadProgressBar")
+                                .show('slow');
+                            xhr.upload.addEventListener('progress', function(e) {
+                                if (e.lengthComputable)
+                                    $("#noteUploadProgressBar")
+                                       .val(((e.loaded / e.total) * 100).toFixed(0));
+                            }, false);
+                            return xhr;
+                        },
+                    });
+                </script>
+                <progress class="w3-green" id="noteUploadProgressBar" value="0" max="100" hidden></progress>
             </form>
         </dialog>
         <script type="text/javascript">

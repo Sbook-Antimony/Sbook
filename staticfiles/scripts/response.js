@@ -1,6 +1,6 @@
 
 var hoverCls = document.querySelectorAll("[hover-class=*]");
-document.querySelectorAll("[hover-class=*]").forEach((element) => {
+document.querySelectorAll("[hover-class]").forEach((element) => {
     element.addEventListener("mouseenter", function() {
         element.classList.add(
             ...element.getAttribute("hover-class").split(" ")
@@ -14,7 +14,7 @@ document.querySelectorAll("[hover-class=*]").forEach((element) => {
 });
 
 var viewCls = document.querySelectorAll("[view-class=*]");
-document.querySelectorAll("[view-class=*]").forEach((element) => {
+document.querySelectorAll("[view-class]").forEach((element) => {
     new IntersectionObserver(
         (entries, observer) => {
             entries.forEach((entry) => {

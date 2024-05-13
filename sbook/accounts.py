@@ -12,12 +12,18 @@ import requests
 
 
 def parse_recaptcha_token(token):  # Replace this with your reCAPTCHA secret key
-    return requests.post(
-        'https://www.google.com/recaptcha/api/siteverify',
-    data={
-        'secret': settings.RECAPTCHA_SECRET,
-        'response': token
-    }).json()
+    try:
+        return requests.post(
+            'https://www.google.com/recaptcha/api/siteverify',
+            data={
+                'secret': settings.RECAPTCHA_SECRET,
+                'response': token
+            }
+        ).json()
+    except:
+        return {
+            "success": False,
+        }
 
 # Example usage
 token = 'YOUR_RECAPTCHA_TOKEN'
