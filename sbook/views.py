@@ -121,7 +121,7 @@ class signup(View):
                 req,
                 "signup.django",
                 {
-                    'errors': (str(errors.get("email", "")[0].message) if len(errors.get("email")) > 0 else False)
+                    'errors': (str(errors.get("email", "")[0].message) if len(errors.get("email", [])) > 0 else False)
 
                 }
             )
