@@ -27,5 +27,5 @@
 	id="recaptchaButton{{ captcha_name }}"
 	data-action='submit'
 >
-	Solve Captcha
+    Solve Captcha
 </button>
