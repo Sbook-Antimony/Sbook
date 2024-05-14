@@ -124,6 +124,7 @@
                 <input class="w3-button w3-round-large w3-margin" type="file" name="file" />
                 {% csrf_token %}
                 <input class="w3-button w3-round-large w3-margin" type="submit" />
+                i
                 <script type="text/javascript" charset="utf-8">
                     $("#uploadNoteForm").submit(() => {
                         $.ajax({
