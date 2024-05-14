@@ -144,8 +144,12 @@ class User:
     @functools.cached_property
     def profile(self):
         return Image.open(
-            self.directory / 'profile.png',
+            self.profile_path,
         )
+
+    @functools.cached_property
+    def profile_path(self):
+        return self.directory / 'profile.png'
 
     @functools.cached_property
     def profile_asBytes(self):

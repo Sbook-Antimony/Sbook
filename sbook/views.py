@@ -17,7 +17,6 @@ def u_email_check_json(req, scope):
     except ValidationError as e:
         return JsonResponse(e.message, safe=False)
     else:
-        print()
         exists = User.exists(email=email)
         if exists and scope == 'signup':
             return JsonResponse(f'email {email} already used', safe=False)
@@ -75,7 +74,7 @@ class signin(View):
     def post(self, req, *args, **kw):
         data = parse_recaptcha_token(req.POST.get("signincaptcha"))
         #print(data)
-        if not data["success"]:
+        if not data.get("success"):
             #return HttpResponseRedirect("/signin/")
             pass
         form = forms.SigninForm(req.POST)
@@ -85,7 +84,7 @@ class signin(View):
                 req,
                 "signin.django",
                 {
-                    'errors': (str(errors.get("email", "")[0].message) if len(errors.get("email")) > 0 else False)
+                    'errors': (str(errors.get("email", "")[0].message) if len(errors.get("email"), []) > 0 else False)
 
                 }
             )
@@ -122,7 +121,7 @@ class signup(View):
                 req,
                 "signup.django",
                 {
-                    'errors': (str(errors.get("email", "")[0].message) if len(errors.get("email")) > 0 else False)
+                    'errors': (str(errors.get("email", "")[0].message) if len(errors.get("email", [])) > 0 else False)
 
                 }
             )
@@ -141,13 +140,14 @@ class signup(View):
             else:
                 req.session["user-id"] = user.id
                 return HttpResponseRedirect('/')
+
 @check_login
-def do_cmd(req, user, cmd):
-    match cmd:
-        case 'set-new-profile':
-            file = req.FILES.get('file')
-            
-            return HttpResponseRedirect('/dashboard')
+def do_profile_upload(req, user):
+    file = req.FILES.get('file')
+    user.profile_path.write_bytes(file.read())
+    return JsonResponse({'succes': True})
+
+
 @check_login(False)
 def do_profile(req, user):
     if user is not None:

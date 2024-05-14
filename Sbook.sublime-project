@@ -11,7 +11,13 @@
 				"./chatty/*.py",
 				"./*",
 			]
-		}
+		},
 	],
+	"build_systems": [
+		{
+			"name": "Sbook",
+			"cmd": ["py", "$project_path/manage.py", "runserver", "8000"],
+			"working_dir": "$project_path"
+		}
+	]
 }
-

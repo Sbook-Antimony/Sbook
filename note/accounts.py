@@ -1,10 +1,17 @@
 import functools
+import io
 
 from django.http import HttpRequest, HttpResponseRedirect, HttpResponse
+from sbook.accounts import DIR, ACCOUNTS
 
 from note import models
 import sbook.models
 import sbook.accounts
+
+NOTES = DIR / "notes"
+
+from PIL import Image
+
 
 
 class BookmarkDoesNotExistError(ValueError):
@@ -126,6 +133,7 @@ class NoteUser():
 
     @functools.cached_property
     def hasNotes(self):
+        print(self, "have notes", self.notes)
         return len(self.notes) > 0
 
 class NoteDoesNotExistError(ValueError):
@@ -152,7 +160,7 @@ class Note:
         if model is None:
             raise NoteDoesNotExistError()
         self.model = model
-        self.directory = DIR / "notes" / str(model.id)
+        self.directory = NOTES / str(model.id)
 
     @functools.cached_property
     def id(self):
@@ -178,6 +186,25 @@ class Note:
     def redactors(self):
         return tuple(map(NoteUser, self.model.redactors.all()))
 
+    @functools.cached_property
+    def description(self):
+        return self.model.description
+
+    @functools.cached_property
+    def profile(self):
+        return Image.open(
+            self.profile_path,
+        )
+
+    @functools.cached_property
+    def profile_path(self):
+        return self.directory / 'profile.png'
+
+    @functools.cached_property
+    def profile_asBytes(self):
+        buffer = io.BytesIO()
+        self.profile.save(buffer, format='PNG')
+        return buffer.getvalue()
 
 def check_login(func, redirect=True):
     if isinstance(func, bool):

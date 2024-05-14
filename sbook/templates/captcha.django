@@ -1,10 +1,7 @@
-<script src="https://www.google.com/recaptcha/api.js"></script>
-<input type="hidden" name="{{ captcha_name }}" id="recaptcha-input-{{ captcha_name }}" />
-<script type="text/javascript">
+<script src="https://www.google.com/recaptcha/api.js"></script><script type="text/javascript">
 	function recaptchaSubmit{{ captcha_name }}(token) {
 		//alert('captcha' + token.toString());
-		$('#recaptcha-input-{{ captcha_name }}')
-			.val(token);
+	
 		$('#recaptchaButton{{ captcha_name }}')
 			.html("Answerred")
 			.css({
@@ -14,18 +11,19 @@
 		setTimeout(
 			function() {
 				$('#recaptchaButton{{ captcha_name }}')
-					.slideUp("slow");
+					.slideUp(1000);
 			},
 			1000
 		);
 	}
 </script>
 <button
-	class="g-recaptcha w3-border w3-border-cyan bg-clear w3-btn w3-round-large w3-center fg-antimony"
+    type="submit"
+    class="g-recaptcha w3-border w3-border-cyan bg-clear w3-btn w3-round-large w3-center fg-antimony"
 	data-sitekey="6LfNF9kpAAAAAIekNLPQRGkBv9vc6W0ivc9LruqP"
 	data-callback='recaptchaSubmit{{ captcha_name }}'
 	id="recaptchaButton{{ captcha_name }}"
 	data-action='submit'
 >
-	Solve Captcha
+    Submit
 </button>
