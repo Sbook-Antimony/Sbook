@@ -53,4 +53,4 @@ def random_profile(size=500, scale=5):
     ).enhance(5)
 
 if __name__ == '__main__':
-    random_profile(500, 5).save('notes/1/profile.png')
+    random_profile(500, 5).save('accounts/4/profile.png')

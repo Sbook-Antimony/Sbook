@@ -28,10 +28,11 @@ body
     & > #center
     {
         margin-top: 50px;
-        width: 500px;
+        max-width: 700px;
         order: 2;
-        flex-grow: 10;
+        flex-grow: 5;
         justify-content: center;
+        text-align: center;
         margin: auto;
         padding: auto;
         display: flex;
@@ -247,4 +248,13 @@ fada5e
     {
         background-position-x: 100%;
     }
+}
+
+
+
+bkd-antimony50:-internal-dialog-in-top-layer::backdrop
+{
+    background-color: fada5e77;
+    color: fada5e77;
+    content: "";
 }

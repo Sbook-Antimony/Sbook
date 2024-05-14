@@ -27,7 +27,7 @@ urlpatterns = [
     path('signin/', views.signin.as_view()),
     path('signup/', views.signup.as_view()),
     path('profile.png', views.do_profile),
-    path('profile.png/upload', views.do_profile_upload),
+    path('profile.png/upload/', views.do_profile_upload),
 
     path('<scope>/u-email-check.json', views.u_email_check_json),
     path('<scope>/u-password-check.json', views.u_password_check_json),

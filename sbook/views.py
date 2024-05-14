@@ -144,8 +144,10 @@ class signup(View):
 @check_login
 def do_profile_upload(req, user):
     file = req.FILES.get('file')
-    file.save(user.profile_path)
-    return HttpResponseJson({'succes': True})
+    user.profile_path.write_bytes(file.read())
+    return JsonResponse({'succes': True})
+
+
 @check_login(False)
 def do_profile(req, user):
     if user is not None:

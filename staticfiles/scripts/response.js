@@ -17,7 +17,7 @@ for(let element of  $("[css-transition]")) {
 };
 
 for(let element of $("[view-class]")) {
-    console.log("view-class", element);
+    let margin = "0";
     (new IntersectionObserver(
         (entries, observer) => {
             entries.forEach((entry) => {
@@ -31,6 +31,10 @@ for(let element of $("[view-class]")) {
                 //   entry.target
                 //   entry.time
                 let cls = element.getAttribute("view-class").split(" ");
+                if(cls[0].endsWith(":")) {
+                    [margin, ...cls] = cls;
+                    margin = margin.slice(0,-1);
+                }
                 let ncls = cls.filter((c) => c.startsWith("!"));
                 cls = cls.filter((c) => !c.startsWith("!"));
                 for(var i = 0; i < ncls.length; i++) ncls[i] = ncls[i].slice(1);
@@ -55,8 +59,8 @@ for(let element of $("[view-class]")) {
         },
         {
             root: null,
-            rootMargin: "0px",
-            threshold: [1.0, 0.5, 0.0],
+            rootMargin: margin+"px",
+            threshold: [1.0, 0.0],
         },
     )).observe(element);
 };

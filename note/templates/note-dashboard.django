@@ -5,38 +5,74 @@
 {% endblock %}
 
 {% block 'center' %}
+    <dialog id="uploadImageDialog" class="w3-round-large w3-border-0 bkd-antimony50 w3-container">
+        <form action="/profile.png/upload/" method="post" enctype="multipart/form-data" id="uploadImageForm" class="w3-container">
+            <img
+                class="w3-image w3-circle w3-margin w3-block"
+                id="uploadImagePreviewImage"
+                src="/profile.png"
+                style="width: 300px!important; height: 300px!important;"
+                width="300"
+                height="300"
+            />
+            {% csrf_token %}
+            <label for="file" onclick="this.querySelector('input').click()" class="bg-antimony10 w3-btn w3-round">
+                Choose photo
+                <input onchange="uploadPhotoReadProfile(event)" type="file" name="file" hidden />
+            </label>
+            <button type="submit" id="imageUploadButton" onclick="submitNewProfile(); this.setAttribute('hover-class', '');" css-transition="1s" hover-class="w3-red shake" class="hexa w3-disabled bg-antimony10-hover w3-btn w3-round" >
+                Submit
+            </button>
+            <script type="text/javascript" charset="utf-8">
+                function uploadPhotoReadProfile(e) {
+                    console.log("adding new profile");
+                    let files = e.target.files;
+                    if(files.length < 1) return;
+                    let
+                        file = files[0],
+                        reader = new FileReader();
+                    reader.onloadend = function() {
+                        console.log(reader);
+                        let dataurl = reader.result;
+                        $("#uploadImagePreviewImage")[0].src = dataurl;
+                        setTimeout(function() {
+                            $("#imageUploadButton")
+                                .removeClass('w3-disabled')
+                                .addClass("w3-green");
+                        }, 1000);
+                    }
+                    reader.readAsDataURL(file);
+                }
+                function submitNewProfile() {
+                    let formdata = new FormData($("uploadImageForm")[0]);
+                    console.log(formdata);
+                    $.ajax({
+                        type: 'POST',
+                        url: '/profile.png/upload/', // replace with your server-side script
+                        data: formdata,
+                        success: function(data) {
+                            localtion.reload();
+                        },
+                        error: function() {
+                            $("imageUploadButton")
+                                .toggleClass('w3-green w3-red');
+                        },
+                    });
+                };
+            </script>
+        </form>
+    </dialog>
+
+
     <div ng-app="dashboard" ng-controller="dashboardCtrl" class="w3-container w3-round w3-round-medium w3-animate-show">
         <div class="wave bg-antimony10 w3-container w3-round w3-margin-bottom">
-            <span class="w3-margin w3-display-container">
-                <img class="w3-display-center w3-circle w3-inline w3-margin w3-image" hover-class="jump hexa" width="100" height="100" src="/profile.png" />
-                <i onclick="$('#uploadImageDialog')[0].showModal();" class="w3-opacity fa-xl fg-antimony50 w3-display-bottomright w3-margin fas fa-edit"></i>
+            <span  onclick="$('#uploadImageDialog')[0].showModal();" class="w3-margin w3-display-container">
+                <img class="w3-circle w3-inline w3-margin w3-image" hover-class="jump hexa" width="100" height="100" src="/profile.png" />
+                <i class="fa-2xl fg-antimony50 w3-display-bottomright w3-margin fas fa-edit"></i>
             </span>
             {#srcset="/profile.png 300w, /profile.png 600w, /profile.png 1200w" sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 1200px"#}
             <span ng-bind="user_name" class="w3-arial w3-xxlarge w3-margin"></span>
-            <dialog id="uploadImageDialog" class="w3-container bg-antimony50">
-                <form id="uploadImageForm">
-                    <label for="file" class="w3-padding-large w3-border w3-border-cyan bg-clear w3-btn w3-round-large w3-center fg-antimony">
-                        Choose file
-                    </label>
-                    <input type="file" name="file" hidden>
-                    <script type="text/javascript" charset="utf-8">
-                        $("#uploaImageForm").submit(() => {
-                            $.ajax({
-                                type: 'POST',
-                                url: '/profile.png/upload/', // replace with your server-side script
-                                data: $("#uploadNoteForm").serialize(),
-                                success: function(data) {
-                                    localtion.reload();
-                                },
-                                error: function() {
-                                    $("imageUploadButton")
-                                        .toggleClass('w3-green w3-red');
-                                },
-                            });
-                        });
-                    </script>
-                </form>
-            </dialog>
+            
         </div>
         <div class="w3-container bg-napples10 bd-napples bd-thin w3-margin-bottom w3-round">
             <button onclick="$('#note-list').slideToggle();" class="w3-margin w3-button w3-round bg-antimony10">
@@ -45,21 +81,20 @@
             <div id="note-list" class="margin-center">
                 {% if hasNotes %}
                     {% for note in user.notes %}
-                        <div class="w3-round bd-antimony-hover bd-thin bd-antimony">
-                            <span>
-                                <img class="w3-circle" width="50" src="/note/notes/{{ note.id }}/profile.png" />
-                            </span>
-                            <span>
-                                <h4>{{ note.title }}</h4>
-                                <p class="w3-small">
+                        <div class="w3-justify w3-container w3-padding-small w3-round">
+                            <img hover-class="!w3-animate-zoom" width="75" class="w3-circle w3-left w3-margin-right" src="/note/notes/{{ note.id }}/profile.png" />
+                            <span class="">
+                                <h4 class="w3-large">{{ note.title }}</h4>
+                                <p class="fg-antimony w3-small">
                                     {{ note.description }}
-                                </p>
+                                </p>                                
                             </span>
                         </div>
+
                         <hr class="bg-antimony" />
                     {% endfor %}
                 {% else %}
-                    <p class="margin-center w3-padding-64 w3-container fg-antimony w3-opacity">
+                    <p class="margin-center w3-padding-64 fg-antimony w3-opacity">
                         nothing here yet
                     </p>
                 {% endif %}
@@ -78,7 +113,7 @@
                         
                     {% endfor %}
                 {% else %}
-                    <p class="margin-center w3-padding-64 w3-container fg-antimony w3-opacity">
+                    <p class="margin-center w3-padding-64 fg-antimony w3-opacity">
                         nothing here yet
                     </p>
                 {% endif %}        
