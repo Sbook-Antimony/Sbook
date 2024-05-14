@@ -30,17 +30,18 @@ def random_profile(size=500, scale=5):
         
         c = random.randint(0, 2)
         
-        cen = size // 2
-        for x in range(b[0]-cen, e[0]-cen, s):
-            for y in range(b[1]-cen, e[1]-cen, s):
+        cenx = random.randint(0, size)
+        ceny = random.randint(0, size)
+        for x in range(b[0]-cenx, e[0]-cenx, s):
+            for y in range(b[1]-ceny, e[1]-ceny, s):
                 if x*y == 0:
                     x = y = 1
-                p = list(image.getpixel((x+cen, y+cen)))
+                p = list(image.getpixel((x+cenx, y+ceny)))
                 if sum(p) < 500:
                     continue
                 fx = f(x*scale, y*scale)
                 p[c] = fx % 256
-                image.putpixel((x, y), tuple(p))
+                image.putpixel((x+cenx, y+ceny), tuple(p))
         s += 1
         s %= 3
         s += 1
@@ -48,8 +49,8 @@ def random_profile(size=500, scale=5):
     return ImageEnhance.Color(
         ImageEnhance.Contrast(
             image
-        ).enhance(1.5),
-    ).enhance(2)
+        ).enhance(5),
+    ).enhance(5)
 
 if __name__ == '__main__':
-    random_profile(500, 5).save('accounts/4/profile.png')
+    random_profile(500, 5).save('notes/1/profile.png')

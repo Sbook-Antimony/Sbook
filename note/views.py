@@ -16,11 +16,19 @@ def do_index(req, user):
             req,
             "note-dashboard.django",
             {
-                "len": len,
                 "user": user,
+                "hasNotes": user.hasNotes,
+                "hasBookmarks": user.hasBookmarks,
                 "user_name": user.sbookAccount.name,
             }
         )
     )
 
-
+@check_login
+def note_profile(req, user, noteid):
+    try:
+        note = Note.from_id(noteid)
+    except NoteDoesNotExistError:
+        return HttpResponseNotFound()
+    else:
+        return HttpResponse(note.profile_asBytes, "img/png")

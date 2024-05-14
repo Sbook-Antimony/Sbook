@@ -6,25 +6,49 @@
 
 {% block 'center' %}
     <div ng-app="dashboard" ng-controller="dashboardCtrl" class="w3-container w3-round w3-round-medium w3-animate-show">
-        <div class="bg-antimony10 w3-container w3-round w3-margin-bottom">
-            <span class="w3-display-container">
-                <img class="w3-margin w3-circle w3-inline w3-margin w3-image" hover-class="jump hexa" width="100" height="100" src="/profile.png" />
-                <i class="w3-opacity fa-xl fg-antimony50 w3-display-bottomright w3-margin fas fa-edit"></i>
+        <div class="wave bg-antimony10 w3-container w3-round w3-margin-bottom">
+            <span class="w3-margin w3-display-container">
+                <img class="w3-display-center w3-circle w3-inline w3-margin w3-image" hover-class="jump hexa" width="100" height="100" src="/profile.png" />
+                <i onclick="$('#uploadImageDialog')[0].showModal();" class="w3-opacity fa-xl fg-antimony50 w3-display-bottomright w3-margin fas fa-edit"></i>
             </span>
             {#srcset="/profile.png 300w, /profile.png 600w, /profile.png 1200w" sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 1200px"#}
             <span ng-bind="user_name" class="w3-arial w3-xxlarge w3-margin"></span>
+            <dialog id="uploadImageDialog" class="w3-container bg-antimony50">
+                <form id="uploadImageForm">
+                    <label for="file" class="w3-padding-large w3-border w3-border-cyan bg-clear w3-btn w3-round-large w3-center fg-antimony">
+                        Choose file
+                    </label>
+                    <input type="file" name="file" hidden>
+                    <script type="text/javascript" charset="utf-8">
+                        $("#uploaImageForm").submit(() => {
+                            $.ajax({
+                                type: 'POST',
+                                url: '/profile.png/upload/', // replace with your server-side script
+                                data: $("#uploadNoteForm").serialize(),
+                                success: function(data) {
+                                    localtion.reload();
+                                },
+                                error: function() {
+                                    $("imageUploadButton")
+                                        .toggleClass('w3-green w3-red');
+                                },
+                            });
+                        });
+                    </script>
+                </form>
+            </dialog>
         </div>
         <div class="w3-container bg-napples10 bd-napples bd-thin w3-margin-bottom w3-round">
             <button onclick="$('#note-list').slideToggle();" class="w3-margin w3-button w3-round bg-antimony10">
                 your notes
             </button>
             <div id="note-list" class="margin-center">
-                {% if user.hasNotes > 0  %}
+                {% if hasNotes %}
                     {% for note in user.notes %}
                         <div class="w3-round bd-antimony-hover bd-thin bd-antimony">
                             <span>
-                                <img class="w3-circle" src="/note/notes/{{ note.id }}/icon.png" />
-                            </span>VCpyYXt7t!qc*9  mbiarrambang
+                                <img class="w3-circle" width="50" src="/note/notes/{{ note.id }}/profile.png" />
+                            </span>
                             <span>
                                 <h4>{{ note.title }}</h4>
                                 <p class="w3-small">
@@ -35,16 +59,67 @@
                         <hr class="bg-antimony" />
                     {% endfor %}
                 {% else %}
-                    <p class="margin-center w3-padding-large w3-container fg-antimony w3-opacity">
+                    <p class="margin-center w3-padding-64 w3-container fg-antimony w3-opacity">
                         nothing here yet
                     </p>
                 {% endif %}
             </div>
-            <button ng-click="uploadNote()" view-class="jump" hover-class="shake" class="hexa fa-2xl w3-button w3-circle margin-center">
-                <i class="margin-center fas fa-plus-circle"></i>
+            <button ng-click="uploadNote()" view-class="jump" hover-class="shake" class="w3-center hexa fa-2xl w3-button w3-circle w3-margin w3-border-0">
+                <i class="fas fa-plus-circle"></i>
             </button>
         </div>
         <div class="w3-container w3-round bg-napples10 bd-napples bd-thin w3-margin-bottom">
+            <button onclick="$('#bookmark-list').slideToggle();" class="w3-margin w3-button w3-round bg-antimony10">
+                my bookmarks <i class="w3-text-yellow fas fa-star"></i>
+            </button>
+            <div id="bookmark-list" class="margin-center">
+                {% if hasBookmarks %}
+                    {% for bookmark in user.bookmarks %}
+                        
+                    {% endfor %}
+                {% else %}
+                    <p class="margin-center w3-padding-64 w3-container fg-antimony w3-opacity">
+                        nothing here yet
+                    </p>
+                {% endif %}        
+            </div>
+        </div>
+        <dialog id="uploadNoteDialog" class="w3-round-large bg-antimony10 w3">
+            <form id="uploadNoteForm" enctype="multipart/form-data" accept-charset="utf-8">
+                <input class="w3-button w3-round-large w3-margin" type="file" name="file" />
+                {% csrf_token %}
+                <input class="w3-button w3-round-large w3-margin" type="submit" />
+                <script type="text/javascript" charset="utf-8">
+                    $("#uploadNoteForm").submit(() => {
+                        $.ajax({
+                            type: 'POST',
+                            url: '/note/mynotes/upload/', // replace with your server-side script
+                            data: $("#uploadNoteForm").serialize(),
+                            success: function(data) {
+                                showNoteUploadCompleted();
+                            },
+                            error: function() {
+                                $("noteUploadProgressBar")
+                                    .toggleClass('w3-green w3-red');
+                            },
+                            xhr: function() {
+                                var xhr = new XMLHttpRequest();
+                                $("#noteUploadProgressBar")
+                                    .show('slow');
+                                xhr.upload.addEventListener('progress', function(e) {
+                                    if (e.lengthComputable)
+                                        $("#noteUploadProgressBar")
+                                           .val(((e.loaded / e.total) * 100).toFixed(0));
+                                }, false);
+                                return xhr;
+                            },
+                        });
+                    });
+                </script>
+                <progress class="w3-green w3-margin w3-round w3-padding wave" id="noteUploadProgressBar" value="0" max="100" hidden></progress>
+            </form>
+        </dialog>
+        <div  css-transition="1s" view-class="w3-animate-opacity !w3-animate-fading" class="wave w3-container w3-round bg-napples10 bd-napples bd-thin w3-margin-bottom">
             <button onclick="$('#bookmark-list').slideToggle();" class="w3-margin w3-button w3-round bg-antimony10">
                 my bookmarks <i class="w3-text-yellow fas fa-star"></i>
             </button>
@@ -54,45 +129,151 @@
                         
                     {% endfor %}
                 {% else %}
-                    <p class="margin-center w3-padding-large w3-container fg-antimony w3-opacity">
+                    <p class="margin-center w3-padding-64 w3-container fg-antimony w3-opacity">
+                        nothing here yet
+                    </p>
+                {% endif %}        
+            </div>
+        </div><div  css-transition="1s" view-class="w3-animate-opacity !w3-animate-fading" class="w3-container w3-round bg-napples10 bd-napples bd-thin w3-margin-bottom">
+            <button onclick="$('#bookmark-list').slideToggle();" class="w3-margin w3-button w3-round bg-antimony10">
+                my bookmarks <i class="w3-text-yellow fas fa-star"></i>
+            </button>
+            <div id="bookmark-list" class="margin-center">
+                {% if user.hasBookmarks %}
+                    {% for bookmark in user.bookmarks %}
+                        
+                    {% endfor %}
+                {% else %}
+                    <p class="margin-center w3-padding-64 w3-container fg-antimony w3-opacity">
+                        nothing here yet
+                    </p>
+                {% endif %}        
+            </div>
+        </div><div  css-transition="1s" view-class="w3-animate-opacity !w3-animate-fading" class="w3-container w3-round bg-napples10 bd-napples bd-thin w3-margin-bottom">
+            <button onclick="$('#bookmark-list').slideToggle();" class="w3-margin w3-button w3-round bg-antimony10">
+                my bookmarks <i class="w3-text-yellow fas fa-star"></i>
+            </button>
+            <div id="bookmark-list" class="margin-center">
+                {% if user.hasBookmarks %}
+                    {% for bookmark in user.bookmarks %}
+                        
+                    {% endfor %}
+                {% else %}
+                    <p class="margin-center w3-padding-64 w3-container fg-antimony w3-opacity">
+                        nothing here yet
+                    </p>
+                {% endif %}        
+            </div>
+        </div><div css-transition="1s" view-class="w3-animate-opacity !w3-animate-fading" class="w3-container w3-round bg-napples10 bd-napples bd-thin w3-margin-bottom">
+            <button onclick="$('#bookmark-list').slideToggle();" class="w3-margin w3-button w3-round bg-antimony10">
+                my bookmarks <i class="w3-text-yellow fas fa-star"></i>
+            </button>
+            <div id="bookmark-list" class="margin-center">
+                {% if user.hasBookmarks %}
+                    {% for bookmark in user.bookmarks %}
+                        
+                    {% endfor %}
+                {% else %}
+                    <p class="margin-center w3-padding-64 w3-container fg-antimony w3-opacity">
+                        nothing here yet
+                    </p>
+                {% endif %}        
+            </div>
+        </div><div  css-transition="1s" view-class="w3-animate-opacity !w3-animate-fading" class="w3-container w3-round bg-napples10 bd-napples bd-thin w3-margin-bottom">
+            <button onclick="$('#bookmark-list').slideToggle();" class="w3-margin w3-button w3-round bg-antimony10">
+                my bookmarks <i class="w3-text-yellow fas fa-star"></i>
+            </button>
+            <div id="bookmark-list" class="margin-center">
+                {% if user.hasBookmarks %}
+                    {% for bookmark in user.bookmarks %}
+                        
+                    {% endfor %}
+                {% else %}
+                    <p class="margin-center w3-padding-64 w3-container fg-antimony w3-opacity">
+                        nothing here yet
+                    </p>
+                {% endif %}        
+            </div>
+        </div><div  css-transition="1s" view-class="w3-animate-opacity !w3-animate-fading" class="w3-container w3-round bg-napples10 bd-napples bd-thin w3-margin-bottom">
+            <button onclick="$('#bookmark-list').slideToggle();" class="w3-margin w3-button w3-round bg-antimony10">
+                my bookmarks <i class="w3-text-yellow fas fa-star"></i>
+            </button>
+            <div id="bookmark-list" class="margin-center">
+                {% if user.hasBookmarks %}
+                    {% for bookmark in user.bookmarks %}
+                        
+                    {% endfor %}
+                {% else %}
+                    <p class="margin-center w3-padding-64 w3-container fg-antimony w3-opacity">
+                        nothing here yet
+                    </p>
+                {% endif %}        
+            </div>
+        </div><div  css-transition="1s" view-class="w3-animate-opacity !w3-animate-fading" class="w3-container w3-round bg-napples10 bd-napples bd-thin w3-margin-bottom">
+            <button onclick="$('#bookmark-list').slideToggle();" class="w3-margin w3-button w3-round bg-antimony10">
+                my bookmarks <i class="w3-text-yellow fas fa-star"></i>
+            </button>
+            <div id="bookmark-list" class="margin-center">
+                {% if user.hasBookmarks %}
+                    {% for bookmark in user.bookmarks %}
+                        
+                    {% endfor %}
+                {% else %}
+                    <p class="margin-center w3-padding-64 w3-container fg-antimony w3-opacity">
+                        nothing here yet
+                    </p>
+                {% endif %}        
+            </div>
+        </div><div  css-transition="1s" view-class="w3-animate-opacity !w3-animate-fading" class="w3-container w3-round bg-napples10 bd-napples bd-thin w3-margin-bottom">
+            <button onclick="$('#bookmark-list').slideToggle();" class="w3-margin w3-button w3-round bg-antimony10">
+                my bookmarks <i class="w3-text-yellow fas fa-star"></i>
+            </button>
+            <div id="bookmark-list" class="margin-center">
+                {% if user.hasBookmarks %}
+                    {% for bookmark in user.bookmarks %}
+                        
+                    {% endfor %}
+                {% else %}
+                    <p class="margin-center w3-padding-64 w3-container fg-antimony w3-opacity">
+                        nothing here yet
+                    </p>
+                {% endif %}        
+            </div>
+        </div><div  css-transition="1s" view-class="w3-animate-opacity !w3-animate-fading" class="w3-container w3-round bg-napples10 bd-napples bd-thin w3-margin-bottom">
+            <button onclick="$('#bookmark-list').slideToggle();" class="w3-margin w3-button w3-round bg-antimony10">
+                my bookmarks <i class="w3-text-yellow fas fa-star"></i>
+            </button>
+            <div id="bookmark-list" class="margin-center">
+                {% if user.hasBookmarks %}
+                    {% for bookmark in user.bookmarks %}
+                        
+                    {% endfor %}
+                {% else %}
+                    <p class="margin-center w3-padding-64 w3-container fg-antimony w3-opacity">
+                        nothing here yet
+                    </p>
+                {% endif %}        
+            </div>
+        </div><div  css-transition="1s" view-class="wave w3-animate-opacity !w3-animate-fading" class="w3-container w3-round bg-napples10 bd-napples bd-thin w3-margin-bottom">
+            <button onclick="$('#bookmark-list').slideToggle();" class="w3-margin w3-button w3-round bg-antimony10">
+                my bookmarks <i class="w3-text-yellow fas fa-star"></i>
+            </button>
+            <div id="bookmark-list" class="margin-center">
+                {% if user.hasBookmarks %}
+                    {% for bookmark in user.bookmarks %}
+                        
+                    {% endfor %}
+                {% else %}
+                    <p class="margin-center w3-padding-64 w3-container fg-antimony w3-opacity">
                         nothing here yet
                     </p>
                 {% endif %}        
             </div>
         </div>
-        <dialog id="uploadNoteDialog" class="w3-round-large bg-antimony10 w3">
-            <form id="uploadNoteForm" method="post" enctype="multipart/form-data" accept-charset="utf-8">
-                <input class="w3-button w3-round-large w3-margin" type="file" name="file" />
-                {% csrf_token %}
-                <input class="w3-button w3-round-large w3-margin" type="submit" />
-                <script type="text/javascript" charset="utf-8">
-                    $('#uploadNoteForm').ajax({
-                        type: 'POST',
-                        url: '/note/mynotes/upload/', // replace with your server-side script
-                        data: $("#uploadNoteForm").serialize(),
-                        success: function(data) {
-                            showNoteUploadCompleted();
-                        },
-                        error: function() {
-                            $("noteUploadProgressBar")
-                                .toggleClass('w3-green w3-red');
-                        },
-                        xhr: function() {
-                            var xhr = new XMLHttpRequest();
-                            $("#noteUploadProgressBar")
-                                .show('slow');
-                            xhr.upload.addEventListener('progress', function(e) {
-                                if (e.lengthComputable)
-                                    $("#noteUploadProgressBar")
-                                       .val(((e.loaded / e.total) * 100).toFixed(0));
-                            }, false);
-                            return xhr;
-                        },
-                    });
-                </script>
-                <progress class="w3-green" id="noteUploadProgressBar" value="0" max="100" hidden></progress>
-            </form>
-        </dialog>
+
+
+
+
         <script type="text/javascript">
             const app = angular.module("dashboard", []);
             app.controller("dashboardCtrl", function($scope) {
