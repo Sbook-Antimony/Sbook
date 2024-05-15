@@ -9,7 +9,7 @@
 			})
 			.addClass('w3-green');
 		setTimeout(
-			function() {
+			function() {sdddddd
 				$('#recaptchaButton{{ captcha_name }}')
 					.slideUp(1000);
 			},

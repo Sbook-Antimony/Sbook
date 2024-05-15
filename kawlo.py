@@ -14,6 +14,7 @@ def get_mcq(txt):
 	return txt[begin:end]
 import requests
 
+
 for level in levels:
 	print(f"level {level}")
 	for year in years:
