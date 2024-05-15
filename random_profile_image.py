@@ -18,7 +18,7 @@ eqs = [
     lambda x, y: y,
 ]
 
-def random_profile(size=500, scale=5):
+def random_profile(size=500, scale=2):
     image = Image.new("RGB", (size, size), "white")
     s = 1
     for _ in range(random.randint(3, 10)):
@@ -53,4 +53,4 @@ def random_profile(size=500, scale=5):
     ).enhance(5)
 
 if __name__ == '__main__':
-    random_profile(500, 5).save('accounts/4/profile.png')
+    random_profile().save('accounts/4/profile.png')
