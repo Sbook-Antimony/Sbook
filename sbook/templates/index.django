@@ -1,65 +1,151 @@
-{% extends 'main.django' %}
-{% block 'title' %}
-    welcome to Sbook
-{% endblock %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>Welcome to Sbook</title>
+        <script src="/static/scripts/angular.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="/static/scripts/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+        <style type="text/css" media="screen">
+            :root
+            {
+                --base: #221133;
 
-{% block 'left' %}
-{% endblock %}
+            }
+            html
+            {
+                scroll-behavior: smooth;
+            }
+            body
+            {
+                background: var(--base);
+            }
+            h1
+            {
+                color: white;
+                font-family: "Mona Sans", "Mona Sans Header", Arial;
+                text-align: center;
+                font-size: 5em;
+            }
+            #first-part
+            {
+                background: color-mix(var(--base), currentColor 20%, transparent);, url(/image/antimony.png);
+            }
+            header.sticky
+            {
+                background-color: #333; /* Black background color */
+                position: fixed; /* Make it stick/fixed */
+                top: -50px; /* Hide the navbar 50 px outside of the top view */
+                width: 100%; /* Full width */
+                transition: top 0.3s; /* Transition effect when sliding down (and up) */
+            }
 
-{% block 'center' %}
-    <div>
-        <h1 class="w3-large">Welcome to Sbook</h1>
-        <div class="w3-round w3-margin w3-padding bg-clear w3-center colory-border1">
+            /* Style the navbar links */
+            header
+            {
+                background-color: #101a;
+            }
+            header a
+            {
+                float: left;
+                display: block;
+                color: white;
+                text-align: center;
+                padding: 15px;
+                text-decoration: none;
+            }
+            header a:hover {
+                background-color: #ddd;
+                color: black;
+            }
+            .shake {
+              /* Start the shake animation and make the animation last for 0.5 seconds */
+              animation: shake 0.5s;
+
+              /* When the animation is finished, start again */
+              animation-iteration-count: infinite;
+            }
+
+            @keyframes shake {
+              0% { transform: translate(1px, 1px) rotate(0deg); }
+              10% { transform: translate(-1px, -2px) rotate(-1deg); }
+              20% { transform: translate(-3px, 0px) rotate(1deg); }
+              30% { transform: translate(3px, 2px) rotate(0deg); }
+              40% { transform: translate(1px, -1px) rotate(1deg); }
+              50% { transform: translate(-1px, 2px) rotate(-1deg); }
+              60% { transform: translate(-3px, 1px) rotate(0deg); }
+              70% { transform: translate(3px, 1px) rotate(-1deg); }
+              80% { transform: translate(-1px, -1px) rotate(1deg); }
+              90% { transform: translate(1px, 2px) rotate(0deg); }
+              100% { transform: translate(1px, -2px) rotate(-1deg); }
+            }
+        </style>
+    </head>
+    <body ng-app="index" ng-controller="indexCtrl">
+        <header role="navigation" id="header" class="">
+            <a href="/login">login</a>
+            <a href="/signup">signup</a>
+        </header><!-- /header -->
+        <div id="first-part">
+            <h1>
+                Let's start from here
+            </h1>
             <div>
-                <div>
-                    <img class="w3-round-w3-animate-right mySlides" src="https://picsum.photos/501/401" style="width:100%">
-                    <img class="w3-animate-right mySlides" src="https://picsum.photos/502/402" style="width:100%">
-                    <img class="w3-animate-right mySlides" src="https://picsum.photos/503/403" style="width:100%">
-                    <!-- Add more images here -->
-                </div>
-
-                <div>
-                    <div class="w3-animate-left eduQuotes w3-container w3-margin w3-padding" style="border-radius: 0 0 10px 10px;">
-                        <p>"Education is the most powerful weapon which you can use to change the world." 
-                            <small> Nelson Mandela</small>
-                        </p>
-                    </div>
-                    <div class="w3-animate-left eduQuotes w3-container w3-margin w3-padding" style="border-radius: 0 0 10px 10px;">
-                        <p>"The roots of education are bitter, but the fruit is sweet."
-                            <small> Aristotle</small>
-                        </p>
-                    </div>
-                    <div class="w3-animate-left eduQuotes w3-container w3-margin w3-padding" style="border-radius: 0 0 10px 10px;">
-                        <p class="bg-napples w3-container w3-round-large">"Education is not the filling of a pail, but the lighting of a fire."
-                            <small> William Butler Yeats</small>
-                        </p>
-                    </div>
-                    <div class="w3-animate-left eduQuotes w3-container w3-margin w3-padding" style="border-radius: 0 0 10px 10px;">
-                        <p class="bg-napples w3-container w3-round-large">"The mind is not a vessel to be filled, but a fire to be kindled." 
-                            <small> Plutarch</small>
-                        </p>
-                    </div>
-                    <div class="w3-animate-left eduQuotes w3-container w3-margin w3-padding" style="border-radius: 0 0 10px 10px;">
-                        <p class="bg-napples w3-container w3-round-large">"Learning is a treasure that will follow its owner everywhere." 
-                            <small> Chinese Proverb</small>
-                        </p>
-                    </div>
-                    <div class="w3-animate-left eduQuotes w3-container w3-margin w3-padding" style="border-radius: 0 0 10px 10px;">
-                        <p class="bg-napples w3-container w3-round-large">"Education is the passport to the future, for tomorrow belongs to those who prepare for it today."
-                            <small> Malcolm X </small>
-                        </p>
-                    </div>
-                    <!-- Add more quotes here -->
-                </div>
+                <h2 class="first-part-item" id="first-part-note">
+                    Notes
+                </h2>
+                <p>
+                    {% lorem 30 w %}
+                </p>
+            </div>
+            <div>
+                <h2 class="first-part-item" id="first-part-chatty">
+                    Notes
+                </h2>
+                <p>
+                    {% lorem 30 w %}
+                </p>
+            </div>
+            <div>
+                <h2 class="first-part-item" id="first-part-question">
+                    Notes
+                </h2>
+                <p>
+                    {% lorem 30 w %}
+                </p>
+            </div>
+            <div>
+                <h2 class="first-part-item" id="first-part-classrooms">
+                    Notes
+                </h2>
+                <p>
+                    {% lorem 30 w %}
+                </p>
+            </div>
+            <div>
+                <h2 class="first-part-item" id="first-part-molecular">
+                    Notes
+                </h2>
+                <p>
+                    {% lorem 30 w %}
+                </p>
             </div>
         </div>
-
-        <script>
-            w3.slideshow(".mySlides", 10000);
-            w3.slideshow(".eduQuotes", 10000);
-        </script>
-    </div>
-{% endblock %}
-
-{% block 'right' %}
-{% endblock %}
+    </body>
+    <script src="/static/scripts/response.js" type="text/javascript" charset="utf-8" async defer></script>
+    <script>
+        const app = angular.module('index', []);
+        app.controller('indexCtrl', function($scope) {
+            $scope.headerSize = 20;
+            $scope.headerOffset = $('header').attr("offsetTop");
+            window.onscroll = function () {
+                if (window.pageYOffset >= sticky) {
+                    $("header").addClass("sticky");
+                } else {
+                    $("header").removeClass("sticky");
+                }
+            }
+        });
+    </script>
+</html>

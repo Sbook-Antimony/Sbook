@@ -40,7 +40,11 @@ def u_password_check_json(req, scope):
 
 @check_login(False)
 def do_index(req, user=None):
-    if user is not None:
+    return render(
+        req,
+        'index.django',
+    )
+    if user is not None or True:
         return render(
             req,
             'dashboard.django',
