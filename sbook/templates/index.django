@@ -48,7 +48,15 @@
             }
             #first-part
             {
-                background: color-mix(var(--base), currentColor 20%, transparent);, url(/image/antimony.png);
+                background: color-mix(var(--base), currentColor 20%, transparent), url(/image/antimony.png);
+filter: blur(8px);
+  -webkit-filter: blur(8px);
+
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
             }
             header.sticky
             {
