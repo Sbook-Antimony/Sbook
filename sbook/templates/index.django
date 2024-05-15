@@ -8,6 +8,24 @@
         <script src="/static/scripts/angular.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="/static/scripts/jquery.min.js" type="text/javascript" charset="utf-8"></script>
         <style type="text/css" media="screen">
+           ::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #332255;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #213;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #223;
+}
             :root
             {
                 --base: #221133;
