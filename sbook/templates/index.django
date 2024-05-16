@@ -128,6 +128,7 @@
             { /* Black background color */
                 position: fixed; /* Make it stick/fixed */
                 transition: 1s; /* Transition effect when sliding down (and up) */
+                top: 0;
             }
 
             /* Style the navbar links */
