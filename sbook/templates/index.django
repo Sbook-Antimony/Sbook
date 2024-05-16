@@ -166,7 +166,7 @@
             #intro div:first-child
             {
                 width: 100%;
-                border-radius: 0 0 75px 75px;
+                border-radius: 0 0 150px 150px;
                 background-image:
                     linear-gradient(to bottom, #1142 0%, #114 20%),
                     url('/image/antimony.png');
@@ -183,7 +183,7 @@
             #intro header:last-child
             {
                 width: 80%;
-                border-radius: 10px;
+                border-radius: 40px;
                 background-color: #246;
                 margin: auto;
                 margin-top: -40px;

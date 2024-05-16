@@ -10,3 +10,4 @@ Pillow
 numpy
 password-strength
 requests==2.31.0
+scss
