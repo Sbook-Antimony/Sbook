@@ -126,6 +126,7 @@
             }
             #first-part
             {
+                margin-top: 100px;
                 display: block;
                 padding: 10px;
                 filter: blur(0px);
@@ -166,13 +167,18 @@
             {
                 width: 100%;
                 border-radius: 0 0 75px 75px;
-                background: napple /*url('/image/antimony.png')*/;
+                background-image:
+                    linear-gradient(to bottom, #1142 0%, #114 20%),
+                    url('/image/antimony.png');
                 background-size: 100%;
                 background-repeat: no-repeat;
                 background-position: center;
-                background-attachment: fix;
+                background-attachment: fixed;
                 box-shadow: 0 5px 5px black;
                 font-size: 2em;
+                padding: 20px;
+                padding-top: 50px;
+                text-align: center;
             }
             #intro header:last-child
             {
@@ -185,7 +191,7 @@
                 font-family: "Mona Sans", "Mona Sans Header", Arial;
                 display: block;
                 z-index: 20;
-                padding: 10px;
+                padding: 20px;
                 transition: 1s;
                 font-size: 2em;
             }
@@ -194,6 +200,7 @@
                 position: fixed; /* Make it stick/fixed */
                 transition: 1s; /* Transition effect when sliding down (and up) */
                 top: 0;
+                border-radius: 0 0 5px 5px;
                 background-color: #2137;
                 width: 100%;
                 margin-top: 0px;
@@ -263,19 +270,38 @@
                 </p>
             </div>
         </div>
-        <div style="display: block; margin: 50px;">
-            {% lorem 100 p %}
+        <style>
+            [lorem]
+            {
+                width: 100%;
+                background-color: #2137;
+                margin: 50px;
+                padding: 10px;
+            }
+            [lorem] p
+            {
+                width: 70%;
+                background-color: #2157;
+                border-radius: 30px;
+                margin: auto;
+                margin-top: 50px;
+                margin-bottom: 50px;
+                padding: 20px;
+            }
+        </style>
+        <div lorem>
+            {% lorem 5 p %}
         </div>
     </body>
     <script src="/static/scripts/response.js" type="text/javascript" charset="utf-8"></script>
     <script>
         const app = angular.module('index', []);
         app.controller('indexCtrl', function($scope) {
-            $scope.headerSize = 20;
+            $scope.headerSize = -20;
             $scope.headerOffset = $('header')[0].offsetTop;
             window.onscroll = function () {
-                //$('body')[0].style.backgroundPositionY = (-window.pageYOffset/50).toFixed(0).toString()+"px";
-                //console.log($('body')[0].style.backgroundPositionY);
+                $('body')[0].style.backgroundPositionY = (-window.pageYOffset/10).toFixed(0).toString()+"px";
+                console.log($('body')[0].style.backgroundPositionY);
                 if (window.pageYOffset >= $scope.headerOffset) {
                     $("header").addClass("sticky");
                 } else {
@@ -284,7 +310,7 @@
                 let elts = $("[onviewbg]")
                 for(let i = elts.length - 1; i >= 0; i--) {
                     let element = elts[i]; 
-                    if(window.pageYOffset >= element.offsetTop) {
+                    if(window.pageYOffset >= element.offsetTop + 350) {
                         element.parentElement.style.transition = "1s",
                         element.parentElement.style.backgroundColor = element.getAttribute('onviewbg');
                         break;
