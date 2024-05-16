@@ -17,7 +17,7 @@ for(let element of  $("[css-transition]")) {
 };
 
 for(let element of $("[view-class]")) {
-    let margin = "10px";
+    let margin = "10";
     (new IntersectionObserver(
         (entries, observer) => {
             entries.forEach((entry) => {
