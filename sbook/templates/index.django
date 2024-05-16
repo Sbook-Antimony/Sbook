@@ -110,9 +110,7 @@
             header.sticky
             { /* Black background color */
                 position: fixed; /* Make it stick/fixed */
-                top: 2px;
                 transition: 1s; /* Transition effect when sliding down (and up) */
-
             }
 
             /* Style the navbar links */
@@ -136,17 +134,18 @@
                 color: white;
                 text-align: center;
                 padding: 15px;
+                margin: 5px;
                 text-decoration: none;
             }
             header a:hover {
-                background-color: #ddd;
+                background-color: #ddd7;
             }
             .shake {
-              /* Start the shake animation and make the animation last for 0.5 seconds */
-              animation: shake 0.5s;
+                /* Start the shake animation and make the animation last for 0.5 seconds */
+                animation: shake 0.5s;
 
-              /* When the animation is finished, start again */
-              animation-iteration-count: infinite;
+                /* When the animation is finished, start again */
+                animation-iteration-count: infinite;
             }
 
             @keyframes shake {
@@ -174,7 +173,7 @@
             <h1>
                 Let's start from here
             </h1>
-            <div onviewbg="#1147" class="first-part-item" id="first-part-note">
+            <div view-class="w3-animate-opacity !w3-animate-fading" onviewbg="#1147" class="first-part-item" id="first-part-note">
                 <h2>
                     Notes
                 </h2>
@@ -182,7 +181,7 @@
                     Note, an intuitive and interractive tool for building, reading and writting documentations.
                 </p>
             </div>
-            <div onviewbg="#2517" class="first-part-item" id="first-part-chatty">
+            <div view-class="w3-animate-opacity !w3-animate-fading" onviewbg="#2517" class="first-part-item" id="first-part-chatty">
                 <h2>
                     Chatty
                 </h2>
@@ -190,7 +189,7 @@
                     Bringing the several tools of Sbook and their tools into a chatting application.
                 </p>
             </div>
-            <div onviewbg="#4157" class="first-part-item" id="first-part-question">
+            <div view-class="w3-animate-opacity !w3-animate-fading" onviewbg="#4157" class="first-part-item" id="first-part-question">
                 <h2>
                     question
                 </h2>
@@ -198,7 +197,7 @@
                     Write, Edit, Create and respond to exams and tests to submit or get them marked by teachers
                 </p>
             </div>
-            <div onviewbg="#5517" class="first-part-item" id="first-part-classrooms">
+            <div view-class="w3-animate-opacity !w3-animate-fading" onviewbg="#5517" class="first-part-item" id="first-part-classrooms">
                 <h2>
                     Classrooms
                 </h2>
@@ -231,7 +230,7 @@
                 let elts = $("[onviewbg]")
                 for(let i = elts.length - 1; i >= 0; i--) {
                     let element = elts[i]; 
-                    if(window.pageYOffset >= element.offsetTop - 180) {
+                    if(window.pageYOffset >= element.offsetTop - 250) {
                         element.parentElement.style.transition = "1s",
                         element.parentElement.style.backgroundColor = element.getAttribute('onviewbg');
                         break;
