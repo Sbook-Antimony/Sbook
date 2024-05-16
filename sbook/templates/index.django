@@ -94,8 +94,8 @@
             }
             #first-part-question
             {
-                background-color: #415;
-                background-image: linear-gradient(to right, #415, #4157), url('/image/question.png');
+                background-color: #435;
+                background-image: linear-gradient(to right, #435, #4357), url('/image/question.png');
                 background-repeat: no-repeat;
                 background-size: 50%;
                 background-position: right;
@@ -197,7 +197,7 @@
                     Bringing the several tools of Sbook and their tools into a chatting application.
                 </p>
             </div>
-            <div view-class="w3-animate-opacity !w3-animate-fading" onviewbg="#4157" class="first-part-item" id="first-part-question">
+            <div view-class="w3-animate-opacity !w3-animate-fading" onviewbg="#4357" class="first-part-item" id="first-part-question">
                 <h2>
                     question
                 </h2>
@@ -222,7 +222,7 @@
             {% lorem 100 p %}
         </div>
     </body>
-    <script src="/static/scripts/response.js" type="text/javascript" charset="utf-8" async defer></script>
+    <script src="/static/scripts/response.js" type="text/javascript" charset="utf-8"></script>
     <script>
         const app = angular.module('index', []);
         app.controller('indexCtrl', function($scope) {
