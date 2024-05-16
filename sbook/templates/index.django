@@ -58,7 +58,7 @@
             .first-part-item 
             {
                 border-radius: 25px;
-                padding: 15px;
+                padding: 20px;
                 margin: 100px 100px 20px 20px;
                 box-shadow: 10px 10px 15px #000q;
                 text-align: left;
@@ -75,7 +75,7 @@
             {
                 font-size: 2em;
                 color: #fffa;
-                width: 70%;
+                width: 60%;
             }
             #first-part-note
             {
@@ -247,7 +247,7 @@
                 let elts = $("[onviewbg]")
                 for(let i = elts.length - 1; i >= 0; i--) {
                     let element = elts[i]; 
-                    if(window.pageYOffset >= element.offsetTop - 250) {
+                    if(window.pageYOffset >= element.offsetTop - 300) {
                         element.parentElement.style.transition = "1s",
                         element.parentElement.style.backgroundColor = element.getAttribute('onviewbg');
                         break;
