@@ -64,3 +64,6 @@ for(let element of $("[view-class]")) {
         },
     )).observe(element);
 };
+
+
+
