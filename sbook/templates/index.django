@@ -8,28 +8,28 @@
         <script src="/static/scripts/angular.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="/static/scripts/jquery.min.js" type="text/javascript" charset="utf-8"></script>
         <style type="text/css" media="screen">
-           ::-webkit-scrollbar {
-  width: 10px;
-}
+            ::-webkit-scrollbar {
+                width: 15px;
+            }
 
-/* Track */
-::-webkit-scrollbar-track {
-  background: #332255;
-}
+            /* Track */
+            ::-webkit-scrollbar-track {
+                background: #332255;
+                border-radius: 2px;
+            }
 
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #213;
-}
+            /* Handle */
+            ::-webkit-scrollbar-thumb {
+                background: #213;
+            }
 
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #223;
-}
+            /* Handle on hover */
+            ::-webkit-scrollbar-thumb:hover {
+                background: #223;
+            }
             :root
             {
                 --base: #221133;
-
             }
             html
             {
@@ -48,16 +48,25 @@
             }
             #first-part
             {
-                background: color-mix(var(--base), currentColor 20%, transparent), url(/image/antimony.png);
-filter: blur(0px);
-  -webkit-filter: blur(0px);
+                display: block;
+                margin: 10px;
+                padding: 10px;
+                background-image: 
+                    linear-gradient(
+                        to bottom,
+                        #213e,
+                        #213e
+                    ),
+                    url('/image/antimony.png');
+                filter: blur(0px);
+                -webkit-filter: blur(0px);
 
 
-  /* Center and scale the image nicely */
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-background-attachment: fixed;
+                  /* Center and scale the image nicely */
+                background-position: 1%;
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-attachment: fixed;
             }
             header.sticky
             {
@@ -74,12 +83,12 @@ background-attachment: fixed;
                 display: block;
                 background-color: #101a;
                 width: 100%;
-                transition: top 1s;
+                transition: 1s;
             }
             header a
             {
                 float: left;
-                display: block;
+                display: inline;
                 color: white;
                 text-align: center;
                 padding: 15px;
@@ -87,7 +96,6 @@ background-attachment: fixed;
             }
             header a:hover {
                 background-color: #ddd;
-                color: black;
             }
             .shake {
               /* Start the shake animation and make the animation last for 0.5 seconds */
@@ -112,11 +120,7 @@ background-attachment: fixed;
             }
         </style>
     </head>
-    <body ng-app="index" ng-controller="indexCtrl">
-        <header role="navigation" id="header" class="">
-            <a href="/login">login</a>
-            <a href="/signup">signup</a>
-        </header><!-- /header -->
+    <body ng-app="index" ng-controller="indexCtrl"><!-- /header -->
         <div id="first-part">
             <h1>
                 Let's start from here
@@ -137,6 +141,10 @@ background-attachment: fixed;
                     {% lorem 50 w %}
                 </p>
             </div>
+            <header role="navigation" id="header" class="">
+                <a href="/login">login</a>
+                <a href="/signup">signup</a>
+            </header>
             <div>
                 <h2 class="first-part-item" id="first-part-question">
                     Notes
@@ -162,6 +170,7 @@ background-attachment: fixed;
                 </p>
             </div>
         </div>
+        {% lorem 100 p %}
     </body>
     <script src="/static/scripts/response.js" type="text/javascript" charset="utf-8" async defer></script>
     <script>
@@ -170,6 +179,10 @@ background-attachment: fixed;
             $scope.headerSize = 20;
             $scope.headerOffset = $('header')[0].offsetTop;
             window.onscroll = function () {
+                $('#first-part').css(
+                    'background-position',
+                    (new Number($('#first-part').css('background-position').slice(0, -1))+10).toString() + "%"
+                );
                 if (window.pageYOffset >= $scope.headerOffset) {
                     $("header").addClass("sticky");
                 } else {
