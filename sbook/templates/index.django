@@ -63,17 +63,16 @@ background-attachment: fixed;
             {
                 background-color: #333; /* Black background color */
                 position: fixed; /* Make it stick/fixed */
-                top: 50px; /* Hide the navbar 50 px outside of the top view */
+                top: 0px; /* Hide the navbar 50 px outside of the top view */
                 width: 100%; /* Full width */
-                transition: top 0.3s; /* Transition effect when sliding down (and up) */
+                transition: top 1s; /* Transition effect when sliding down (and up) */
             }
 
             /* Style the navbar links */
             header
             {
                 background-color: #101a;
-                width: 100%;
-                overflow: hidden;
+                width: 100%
             }
             header a
             {
