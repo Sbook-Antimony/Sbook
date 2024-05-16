@@ -1,0 +1,60 @@
+{% extends 'note-main.django' %}
+{% block 'title' %}Notes dashboard{% endblock %}
+
+{% block 'left' %}
+{% endblock %}
+
+{% block 'center' %}
+	<form class="" id="uploadNoteForm" enctype="multipart/form-data" accept-charset="utf-8">
+		<label for="file" class="bg-antimony10 w3-btn w3-round">
+		    Upload note
+		    <input onchange="noteChoosed()" type="file" id="file" name="file" hidden />
+		</label>
+		<button type="submit" id="noteUploadButton" css-transition="1s" hover-class="w3-red shake" class="hexa w3-disabled w3-btn w3-round" >
+		    Submit
+		</button>
+	    {% csrf_token %}
+	    <progress mode="determinate" class="w3-green w3-margin w3-round w3-padding" id="noteUploadProgressBar" value="0" max="100" hidden></progress>
+	</form>
+
+	<script type="text/javascript" charset="utf-8">
+		function noteChoosed() {
+			let input = $('#file')[0];
+			if(input.files.length == 0) return;
+			$('#noteUploadButton')
+				.attr("hover-class", "")
+				.removeClass('w3-disabled')
+				.addClass('w3-green');
+		}
+	    $("#uploadNoteForm")[0].onsubmit = (e) => {
+	    	e.preventDefault();
+	    	console.log($("#uploadNoteForm").serialize());
+	        $.ajax({
+	            type: 'POST',
+	            url: '/note/notes/upload/', // replace with your server-side script
+	            data: $("#uploadNoteForm").serialize(),
+	            success: function(data) {
+	                showNoteUploadCompleted();
+	            },
+	            error: function() {
+	                $("noteUploadProgressBar")
+	                    .toggleClass('w3-green w3-red');
+	            },
+	            xhr: function() {
+	                var xhr = new XMLHttpRequest();
+	                $("#noteUploadProgressBar")
+	                    .show('slow');
+	                xhr.upload.addEventListener('progress', function(e) {
+	                    if (e.lengthComputable)
+	                        $("#noteUploadProgressBar")
+	                           .val(((e.loaded / e.total) * 100).toFixed(0));
+	                }, false);
+	                return xhr;
+	            },
+	        });
+	    };
+	</script>
+{% endblock %}
+
+{% block 'right' %}
+{% endblock %}
