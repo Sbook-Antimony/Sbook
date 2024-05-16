@@ -71,8 +71,10 @@ background-attachment: fixed;
             /* Style the navbar links */
             header
             {
+                display: block;
                 background-color: #101a;
-                width: 100%
+                width: 100%;
+                transition: top 1s;
             }
             header a
             {
