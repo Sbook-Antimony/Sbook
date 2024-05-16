@@ -92,6 +92,14 @@
                 background-size: 50%;
                 background-position: right;
             }
+            #first-part-question
+            {
+                background-color: #415;
+                background-image: linear-gradient(to right, #415, #4157), url('/image/question.png');
+                background-repeat: no-repeat;
+                background-size: 50%;
+                background-position: right;
+            }
             #first-part
             {
                 display: block;
