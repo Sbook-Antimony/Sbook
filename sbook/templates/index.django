@@ -73,6 +73,7 @@ background-attachment: fixed;
             {
                 background-color: #101a;
                 width: 100%;
+                overflow: hidden;
             }
             header a
             {
