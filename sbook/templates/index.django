@@ -63,7 +63,7 @@ background-attachment: fixed;
             {
                 background-color: #333; /* Black background color */
                 position: fixed; /* Make it stick/fixed */
-                top: -50px; /* Hide the navbar 50 px outside of the top view */
+                top: 50px; /* Hide the navbar 50 px outside of the top view */
                 width: 100%; /* Full width */
                 transition: top 0.3s; /* Transition effect when sliding down (and up) */
             }
@@ -72,6 +72,7 @@ background-attachment: fixed;
             header
             {
                 background-color: #101a;
+                width: 100%;
             }
             header a
             {
@@ -165,9 +166,9 @@ background-attachment: fixed;
         const app = angular.module('index', []);
         app.controller('indexCtrl', function($scope) {
             $scope.headerSize = 20;
-            $scope.headerOffset = $('header').attr("offsetTop");
+            $scope.headerOffset = $('header')[0].offsetTop;
             window.onscroll = function () {
-                if (window.pageYOffset >= sticky) {
+                if (window.pageYOffset >= $scope.headerOffset) {
                     $("header").addClass("sticky");
                 } else {
                     $("header").removeClass("sticky");
