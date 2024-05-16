@@ -39,7 +39,7 @@ for(let element of $("[view-class]")) {
                 cls = cls.filter((c) => !c.startsWith("!"));
                 for(var i = 0; i < ncls.length; i++) ncls[i] = ncls[i].slice(1);
                 if(entry.isIntersecting) {
-                    console.log("added", ...element.getAttribute("view-class").split(" "));
+                    //console.log("added", ...element.getAttribute("view-class").split(" "));
                     element.classList.add(
                         ...cls
                     );
@@ -47,7 +47,7 @@ for(let element of $("[view-class]")) {
                         ...ncls
                     );
                 } else {
-                    console.log("removed", ...element.getAttribute("view-class").split(" "));
+                    //console.log("removed", ...element.getAttribute("view-class").split(" "));
                     element.classList.remove(
                         ...cls
                     );

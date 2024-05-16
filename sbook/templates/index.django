@@ -6,6 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <title>Welcome to Sbook</title>
         <link rel="stylesheet" type="text/css" href="/static/styles/w3.css">
+        <link rel="stylesheet" type="text/css" href="/static/styles/hexa.css">
         <script src="/static/scripts/angular.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="/static/scripts/jquery.min.js" type="text/javascript" charset="utf-8"></script>
         <style type="text/css" media="screen">
@@ -35,18 +36,30 @@
             }
             :root
             {
-                --base: #221133;
+                --base:   #221133;
+                --base50: #22113377;
             }
             html
             {
                 scroll-behavior: smooth;
                 color: white;
-                background-image: url('/image/antimony.png');
             }
             body
             {
-                background: var(--base);
+                background-image: 
+                    linear-gradient(
+                        var(--base50),
+                        var(--base50)
+                    ),
+                    url('/image/antimony.png');
+
+                background-repeat: no-repeat;
+                background-position-y: 0px;
+                background-position-x: center;
+                background-attachment: fixed;
+                background-size: 150%;
                 margin: 0;
+                /*backdrop-filter: blur(0px);*/
             }
             h1
             {
@@ -57,18 +70,17 @@
             }
             .first-part-item 
             {
-                max-width: 500px;
-                border-radius: 25px;
-                padding: 20px;
+                max-width: 700px;
+                border-radius: 30px;
+                padding: 25px;
                 margin: auto;
                 margin-top: 100px;
                 margin-bottom: 100px;
                 box-shadow: 10px 10px 15px #000a;
                 text-align: left;
                 font-family: "Mona Sans", "Mona Sans Header", Arial;
-                -webkit-backdrop-filter: blur(2px);
-
-                backdrop-filter: blur(2px);
+                -webkit-backdrop-filter: blur(5px);
+                backdrop-filter: blur(5px);
             }
             .first-part-item h2
             {
@@ -115,7 +127,6 @@
             #first-part
             {
                 display: block;
-                margin: 10px;
                 padding: 10px;
                 filter: blur(0px);
                 -webkit-filter: blur(0px);
@@ -127,40 +138,9 @@
                 background-size: cover;
                 background-attachment: fixed;
             }
-            header.sticky
-            { /* Black background color */
-                position: fixed; /* Make it stick/fixed */
-                transition: 1s; /* Transition effect when sliding down (and up) */
-                top: 0;
-            }
-
+            
             /* Style the navbar links */
-            header
-            {
-
-                font-family: "Mona Sans", "Mona Sans Header", Arial;
-                background-color: #2137;
-                display: block;
-                z-index: 20; /* Hide the navbar 50 px outside of the top view */
-                width: 98%; /* Full width */
-                margin: 1%;
-                padding: 5px;
-                background-color: #101a;
-                width: 100%;
-                transition: 1s;
-            }
-            header a
-            {
-                display: inline;
-                color: white;
-                text-align: center;
-                padding: 15px;
-                margin: 5px;
-                text-decoration: none;
-            }
-            header a:hover {
-                background-color: #ddd7;
-            }
+            
             .shake {
                 /* Start the shake animation and make the animation last for 0.5 seconds */
                 animation: shake 0.5s;
@@ -182,19 +162,75 @@
               90% { transform: translate(1px, 2px) rotate(0deg); }
               100% { transform: translate(1px, -2px) rotate(-1deg); }
             }
+            #intro div:first-child
+            {
+                width: 100%;
+                border-radius: 0 0 75px 75px;
+                background: napple /*url('/image/antimony.png')*/;
+                background-size: 100%;
+                background-repeat: no-repeat;
+                background-position: center;
+                background-attachment: fix;
+                box-shadow: 0 5px 5px black;
+                font-size: 2em;
+            }
+            #intro header:last-child
+            {
+                width: 80%;
+                border-radius: 10px;
+                background-color: #246;
+                margin: auto;
+                margin-top: -40px;
+                overflow: hidden;
+                font-family: "Mona Sans", "Mona Sans Header", Arial;
+                display: block;
+                z-index: 20;
+                padding: 10px;
+                transition: 1s;
+                font-size: 2em;
+            }
+            #intro header.sticky
+            { /* Black background color */
+                position: fixed; /* Make it stick/fixed */
+                transition: 1s; /* Transition effect when sliding down (and up) */
+                top: 0;
+                background-color: #2137;
+                width: 100%;
+                margin-top: 0px;
+                font-size: 1em;
+            }
+            #intro header.sticky + *
+            {
+                padding-top: 60px;
+            }
+            #intro header a
+            {
+                display: inline;
+                color: white;
+                text-align: center;
+                padding: 15px;
+                margin: 5px;
+                text-decoration: none;
+            }
+            #intro header a:hover {
+                background-color: #ddd7;
+            }
         </style>
     </head>
-    <body ng-app="index" ng-controller="indexCtrl"><!-- /header -->
+    <body ng-app="index" ng-controller="indexCtrl">
+        <div id="intro">
+            <div>
+                <h1>
+                    Let's start from here
+                </h1>
+            </div>
+            <header role="navigation" id="header">
+                <a href="/login">login</a>
+                <a href="/signup">signup</a>
+            </header>
+        </div>
         <div id="first-part">
-            <script>
-                function changeFirstPartBg(color) {
-                    $('#first-part').css('background-color', color);
-                }
-            </script>
-            <h1>
-                Let's start from here
-            </h1>
-            <div view-class="w3-animate-opacity !w3-animate-fading" onviewbg="#1147" class="first-part-item" id="first-part-note">
+            <div view-class="w3-animate-opacity !w3-animate-fading" onviewbg="#114e" class="first-part-item" id="first-part-note">
                 <h2>
                     Notes
                 </h2>
@@ -202,7 +238,7 @@
                     Note, an intuitive and interractive tool for building, reading and writting documentations.
                 </p>
             </div>
-            <div view-class="w3-animate-opacity !w3-animate-fading" onviewbg="#2517" class="first-part-item" id="first-part-chatty">
+            <div view-class="w3-animate-opacity !w3-animate-fading" onviewbg="#251e" class="first-part-item" id="first-part-chatty">
                 <h2>
                     Chatty
                 </h2>
@@ -210,7 +246,7 @@
                     Bringing the several tools of Sbook and their tools into a chatting application.
                 </p>
             </div>
-            <div view-class="w3-animate-opacity !w3-animate-fading" onviewbg="#4357" class="first-part-item" id="first-part-question">
+            <div view-class="w3-animate-opacity !w3-animate-fading" onviewbg="#435e" class="first-part-item" id="first-part-question">
                 <h2>
                     question
                 </h2>
@@ -218,7 +254,7 @@
                     Write, Edit, Create and respond to exams and tests to submit or get them marked by teachers
                 </p>
             </div>
-            <div view-class="w3-animate-opacity !w3-animate-fading" onviewbg="#5517" class="first-part-item" id="first-part-classroom">
+            <div view-class="w3-animate-opacity !w3-animate-fading" onviewbg="#551e" class="first-part-item" id="first-part-classroom">
                 <h2>
                     Classroom
                 </h2>
@@ -227,10 +263,6 @@
                 </p>
             </div>
         </div>
-        <header role="navigation" id="header" class="width: 100%; display: block;">
-            <a href="/login">login</a>
-            <a href="/signup">signup</a>
-        </header>
         <div style="display: block; margin: 50px;">
             {% lorem 100 p %}
         </div>
@@ -242,7 +274,8 @@
             $scope.headerSize = 20;
             $scope.headerOffset = $('header')[0].offsetTop;
             window.onscroll = function () {
-                $('#first-part')[0].style.backgroundPositionX = window.pageYOffset;
+                //$('body')[0].style.backgroundPositionY = (-window.pageYOffset/50).toFixed(0).toString()+"px";
+                //console.log($('body')[0].style.backgroundPositionY);
                 if (window.pageYOffset >= $scope.headerOffset) {
                     $("header").addClass("sticky");
                 } else {
@@ -251,7 +284,7 @@
                 let elts = $("[onviewbg]")
                 for(let i = elts.length - 1; i >= 0; i--) {
                     let element = elts[i]; 
-                    if(window.pageYOffset >= element.offsetTop - 300) {
+                    if(window.pageYOffset >= element.offsetTop) {
                         element.parentElement.style.transition = "1s",
                         element.parentElement.style.backgroundColor = element.getAttribute('onviewbg');
                         break;
