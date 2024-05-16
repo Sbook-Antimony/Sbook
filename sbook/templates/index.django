@@ -49,8 +49,8 @@
             #first-part
             {
                 background: color-mix(var(--base), currentColor 20%, transparent), url(/image/antimony.png);
-filter: blur(8px);
-  -webkit-filter: blur(8px);
+filter: blur(0px);
+  -webkit-filter: blur(0px);
 
 
   /* Center and scale the image nicely */
@@ -123,7 +123,7 @@ background-attachment: fixed;
                     Notes
                 </h2>
                 <p>
-                    {% lorem 30 w %}
+                    {% lorem 50 w %}
                 </p>
             </div>
             <div>
@@ -131,7 +131,7 @@ background-attachment: fixed;
                     Notes
                 </h2>
                 <p>
-                    {% lorem 30 w %}
+                    {% lorem 50 w %}
                 </p>
             </div>
             <div>
@@ -139,7 +139,7 @@ background-attachment: fixed;
                     Notes
                 </h2>
                 <p>
-                    {% lorem 30 w %}
+                    {% lorem 50 w %}
                 </p>
             </div>
             <div>
@@ -147,7 +147,7 @@ background-attachment: fixed;
                     Notes
                 </h2>
                 <p>
-                    {% lorem 30 w %}
+                    {% lorem 50 w %}
                 </p>
             </div>
             <div>
@@ -155,7 +155,7 @@ background-attachment: fixed;
                     Notes
                 </h2>
                 <p>
-                    {% lorem 30 w %}
+                    {% lorem 50 w %}
                 </p>
             </div>
         </div>
