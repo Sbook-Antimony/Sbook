@@ -74,13 +74,13 @@
 
 {% block 'right' %}
 
-    <div leveler>
-        <div>
-            
-        </div>
-        <script>
-            
-        </script>
+    <div leveler style="margin: auto;height: 100%; position: fixed; right: 0; top: 0;margin-right: 10px;">
+        <canvas
+            width="10"
+            height="1000"
+            style="margin-right: 10px;"
+        >
+        </canvas>
     </div>
 
 
@@ -88,10 +88,34 @@
 
 
 	<script>
+        $(document).ready(function() {
+
+        });
 		const app = angular.module('{{ ng_app_name }}', []);
 		app.controller('{{ ng_app_name }}Ctrl', function($scope, $http) {
             $scope.notes = [];
             $scope.noteInFocus = -1;
+
+            const cnv = $("#right > div[leveler] > canvas")[0];
+
+            $scope.updateLeveler = function () {
+                let ctx = cnv.getContext('2d'),
+                    docHeight = window.document.documentElement.scrollHeight,
+                    btnSize = window.screen.availHeight / docHeight * 1000,
+                    btnOffset = (
+                        document.body.scrollTop + document.documentElement.scrollTop
+                    ) / docHeight * 1000;
+                console.log(docHeight, btnSize, btnOffset);
+                ctx.clearRect(0, 0, 10, 1000);
+                ctx.fillStyle = 'blue';
+                ctx.fillRect(2.5, 0, 5, 1000);
+                ctx.fillStyle = 'green';
+                setTimeout(function() {
+                    ctx.fillRect(0, btnOffset-btnSize, 10, btnSize);
+                }, 500);
+            }
+
+
             $http({
                 url:"/note/notes/json",
                 method: 'GET',
@@ -126,6 +150,7 @@
 
             window.onscroll = function onscroll() {
                 let elts = $("div[note] > div:first-child > span:first-child");
+                $scope.updateLeveler();
                 for(let i = elts.length - 1; i >= 0; i--) {
                     let element = elts[i]; 
                     if(window.pageYOffset >= element.offsetTop - window.screen.availHeight/2) {
@@ -143,7 +168,7 @@
                 document.body.style.backgroundColor = `rgba(${note.color[0]}, ${note.color[1]}, ${note.color[2]}, 0.9)`;
                 //linear-gradient(to right, rgba(${note.color[0]}, ${note.color[1]}, ${note.color[2]}, 0.9), rgba(${note.color[0]}, ${note.color[1]}, ${note.color[2]}, 0.9)), 
                 //document.body.style.backgroundImage = `url('${note.profile}')`;
-            }
+            } 
 		});
         {% verbatim %}
         {% endverbatim %}
