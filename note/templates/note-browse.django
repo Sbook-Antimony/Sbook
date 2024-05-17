@@ -76,9 +76,9 @@
 
     <div leveler style="margin: auto;height: 100%; position: fixed; right: 0; top: 0;margin-right: 10px;">
         <canvas
-            width="10"
+            width="20"
             height="1000"
-            style="margin-right: 10px;"
+            style="height: 30%; margin-right: 10px;"
         >
         </canvas>
     </div>
@@ -103,15 +103,15 @@
                     docHeight = window.document.documentElement.scrollHeight,
                     btnSize = window.screen.availHeight / docHeight * 1000,
                     btnOffset = (
-                        document.body.scrollTop + document.documentElement.scrollTop
+                        document.documentElement.scrollTop + window.screen.availHeight
                     ) / docHeight * 1000;
-                console.log(docHeight, btnSize, btnOffset);
-                ctx.clearRect(0, 0, 10, 1000);
-                ctx.fillStyle = 'blue';
-                ctx.fillRect(2.5, 0, 5, 1000);
-                ctx.fillStyle = 'green';
+                console.log(btnOffset);
                 setTimeout(function() {
-                    ctx.fillRect(0, btnOffset-btnSize, 10, btnSize);
+                    ctx.clearRect(0, 0, 20, 1000);
+                    ctx.fillStyle = 'blue';
+                    ctx.fillRect(7, 0, 12, 1000);
+                    ctx.fillStyle = 'green';
+                    ctx.fillRect(0, btnOffset-btnSize, 20, btnSize);
                 }, 500);
             }
 
