@@ -1,49 +1,51 @@
-sbook is a web platform, supporting several tools for e-learning
+[![sass compile](https://github.com/Sbook-Antimony/Sbook/actions/workflows/sass.yml/badge.svg)](https://github.com/Sbook-Antimony/Sbook/actions/workflows/sass.yml)
 
-notes
-=====
+# sbook
+is a web platform, supporting several tools for e-learning
+
+## notes
+
 It is a tool for the availability of users for generating docu,entations and courses
 to be read, provides features such as:
 - interactive browing through titles, topics, subtopics, ...
 - images, videos and other media
 
-short-notes
------------
+### short-notes
+
 Offer an easy way for students to wrewrite what they read in their own words
 
-mathematica
-===========
+## mathematica
+
 a mathematic solving tool and calculator intended to help students and teachers
 
-wikis
-=====
+## wikis
+
 
 contain several wikis with users editable information
 
-molecular
----------
+### molecular
+
 
 contain several information and is suited on informing on different elements and compounds
 
-taxonomic
-------------
+### taxonomic
+
 several informations including images, scientific names
 on several species.
 
-questions
-==========
+## questions
+
 provides medium for students to test their knowledge on what they have learnt
 also provides redirections to notes providing explanations.
 
-classrooms
-==========
+# classrooms
+
 
 creates an environment isolationg students and teachers and permiting them to share
 notes, videos and other content privately.
 
-schools
-=======
+## schools
+
 
 regroup several classrooms in a larger environment adding media for exchange of more information.
-
-[deploy](https://api.render.com/deploy/srv-coqkg7n79t8c738j6rg0?key=UBTw0rmPtfI)
+[![sass compile](https://github.com/Sbook-Antimony/Sbook/actions/workflows/sass.yml/badge.svg)](https://github.com/Sbook-Antimony/Sbook/actions/workflows/sass.yml)
