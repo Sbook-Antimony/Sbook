@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect, JsonResponse
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect, JsonResponse, FileResponse
 from django.template import loader
 from django.views import View
 from pathlib import Path
@@ -9,6 +9,7 @@ from sbook.accounts import *
 import mimetypes
 from . import forms
 
+File = lambda url: FileResponse(open(url, 'rb'), filename=url.as_uri())
 
 def u_email_check_json(req, scope):
     email = req.GET.get('email', '')
@@ -59,7 +60,7 @@ def do_index(req, user=None):
 def do_image(req, name):
     file = (DIR / "image") / name
     if file.exists():
-        return FileResponse(file)
+        return File(file)
     else:
         print("not found image %s" % file)
         return HttpResponseNotFound("")
@@ -156,6 +157,6 @@ def do_profile_upload(req, user):
 @check_login(False)
 def do_profile(req, user):
     if user is not None:
-        return FileResponse(user.profile_path)
+        return File(user.profile_path)
     else:
-        return FileResponse(User.DEFAULT_PROFILE_PATH)
+        return File(User.DEFAULT_PROFILE_PATH)

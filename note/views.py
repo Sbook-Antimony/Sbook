@@ -1,15 +1,20 @@
-from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect, FileResponse
-from django.template import loader
-import tempfile
-import zipfile
-from pathlib import Path
 import mimetypes
+import tempfile
 import yaml, json
-from django.views import View
-from sbook import settings
-from .accounts import *
+import zipfile
+
 from . import forms
+from .accounts import *
+from django.http import FileResponse
+from django.http import HttpResponse
+from django.http import HttpResponseNotFound
+from django.http import HttpResponseRedirect
+from django.http import JsonResponse
+from django.shortcuts import render
+from django.template import loader
+from django.views import View
+from pathlib import Path
+from sbook import settings
 
 
 @check_login(True)
@@ -127,12 +132,22 @@ class note(View):
                 return HttpResponse(file.read_bytes())
 
 @check_login
-def browse_notes(rea, user):
+def browse_notes_json(req, user):
+    return JsonResponse(
+        list(map(
+            lambda note: Note(note).js,
+            models.Note.objects.all(),
+        )),
+        safe=False,
+    )
+
+@check_login
+def browse_notes(req, user):
     from_ = int(req.GET.get("from", "0"))
     to_ = int(req.GET.get('to', from_+30))
 
 
-    notes = map(Note, models.Note.objects.order_by('views')[from_:to_])
+    notes = map(Note, models.Note.objects.order_by('stars')[from_:to_])
 
     return render(
         req,
@@ -140,5 +155,6 @@ def browse_notes(rea, user):
         {
             'user': user,
             'notes': notes,
+            'ng_app_name': 'browse',
         }
     )

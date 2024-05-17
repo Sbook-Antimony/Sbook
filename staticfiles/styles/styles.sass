@@ -1,0 +1,294 @@
+.margin-center
+    margin: auto
+
+
+
+html
+    $base: blue
+
+body
+    display: flex
+    flex-direction: row
+    justify-content: center
+    align-items: center
+    align-content: space-between
+    margin-top: 60px!important
+    flex-wrap: nowrap
+
+    & > #left
+        margin-top: 50px
+        order: 1
+        flex-grow: 2
+        justify-content: left
+        display: flex
+    
+    & > #center
+        margin-top: 50px
+        max-width: 500px
+        order: 2
+        flex-grow: 5
+        justify-content: center
+        text-align: center
+        margin: auto
+        padding: auto
+        display: flex
+    
+    & > #right
+        margin-top: 50px
+        order: 3
+        flex-grow: 2
+        justify-content: right
+        display: flex
+    
+
+bd-antimony
+    display: flex
+    flex-direction: row
+    justify-content: center
+    align-items: center
+    align-content: space-between
+    margin-top: 60px!important
+    flex-wrap: nowrap
+
+
+
+//4c4f4d
+//fada5e
+
+
+.loader
+    border: 16px solid #ddffff // Light grey
+    border-top: 16px solid #ffffdd // Blue 
+    border-radius: 50%
+    width: 50px
+    height: 50px
+    animation: spin 2s linear infinite
+
+
+@keyframes spin
+    0%
+        transform: rotate(0deg)
+    
+    100%
+        transform: rotate(360deg)
+    
+
+
+.w3-text-sand50,
+.w3-hover-text-sand50:hover
+    color: #fdf5e677!important
+
+.w3-sand50,
+.w3-hover-sand50:hover
+    background-color: #fdf5e677!important
+
+.w3-cyan50,
+.w3-hover-cyan50:hover
+    background-color: #00bcd477!important
+
+.w3-blue-grey50,
+.w3-hover-blue-grey50:hover,
+.w3-blue-gray50,
+.w3-hover-blue-gray50:hover
+    background-color: #607d8b77!important
+
+
+.close-btn
+    position: absolute
+    top: 90%
+    right: 90%
+    border-radius: 50%
+    border: 0.5px black solid
+
+
+
+.bg-red-invalid:invalid
+    background: #ff997733
+
+
+.bg-clear
+    background: #0000
+
+
+.bd-antimony,
+.bd-antimony-hover:hover
+    border-color: #4c4f4d!important
+
+.bg-antimony,
+.bg-antimony-hover:hover
+    background-color: #4c4f4d!important
+
+.bg-antimony50,
+.bg-antimony50-hover:hover
+    background-color: #4c4f4d77!important
+
+.fg-antimony50,
+.fg-antimony50-hover:hover
+    color: #4c4f4d77!important
+
+.bg-antimony10,
+.bg-antimony10-hover:hover
+    background-color: #4c4f4d19!important
+
+.bg-antimony5,
+.bg-antimony5-hover:hover
+    background-color: #4c4f4d0c!important
+
+
+.bg-antimony15,
+.bg-antimony15-hover:hover
+    background-color: #4c4f4d25!important
+
+
+.bd-napples,
+.bd-napples-hover:hover
+    border-color: #fada5e!important
+
+.bg-napples,
+.bg-napples-hover:hover
+    background-color: #fada5e!important
+
+.bg-napples50,
+.bg-napples50-hover:hover
+    background-color: #fada5e77!important
+
+.bg-napples10,
+.bg-napples10-hover:hover
+    background-color: #fada5e15!important
+
+.fg-napples,
+.w3-napples-hover:hover
+    color: #fada5e77!important
+
+
+.bd-thin
+    border: 0.1px solid
+
+
+
+.colory-border1
+    box-sizing: border-box
+    background: linear-gradient(to bottom right, #fade5e, #8a2be2) !important
+    padding: 3px !important
+    width: fit-content
+
+    & > *:only-child
+        width: 100%
+        height: 100%
+        margin: 3px!important
+        background-color: #ddffff
+        border: inherit
+        border-radius: inherit
+    
+
+
+// extract from w3.css
+.w3-btn,
+.w3-button
+    border: none
+    display: inline-block
+    padding: 8px 16px
+    vertical-align: middle
+    overflow: hidden
+    text-decoration: none
+    color: inherit
+    background-color: inherit
+    text-align: center
+    cursor: pointer
+    white-space: nowrap
+
+.w3-btn:hover
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)
+
+.w3-btn,
+.w3-button
+    -webkit-touch-callout: none
+    -webkit-user-select: none
+    -khtml-user-select: none
+    -moz-user-select: none
+    -ms-user-select: none
+    user-select: none
+
+.w3-disabled,
+.w3-btn:disabled,
+.w3-button:disabled
+    cursor: not-allowed
+    opacity: 0.3
+
+
+
+.wave
+    animation: waveAnim 3s cubic-bezier(0.25, 0.25, 1, 1) infinite
+    background-size: 100% 100%
+    background-image: linear-gradient(90deg, #4c4f4d, #fada5e)
+
+
+@keyframes waveAnim
+    0%
+        background-position-x: 0%
+
+    
+    100%
+        background-position-x: 100%
+    
+
+.arrow-left,
+.arrow-right,
+.arrow-up,
+.arrow-down
+    border: solid black
+    border-width: 0 3px 3px 0
+    display: inline-block
+    padding: 3px
+
+
+.arrow-right
+    transform: rotate(-45deg)
+    -webkit-transform: rotate(-45deg)
+
+
+.arrow-left
+    transform: rotate(135deg)
+    -webkit-transform: rotate(135deg)
+
+
+.arrow-up
+    transform: rotate(-135deg)
+    -webkit-transform: rotate(-135deg)
+
+
+.arrow-down
+  transform: rotate(45deg)
+  -webkit-transform: rotate(45deg)
+
+
+
+
+bkd-antimony50:-internal-dialog-in-top-layer::backdrop
+    background-color: fada5e77
+    color: fada5e77
+    content: ""
+
+.f-aclonica
+    font-family: "Aclonica", sans-serif
+    font-weight: 100
+    font-style: normal
+.f-agbalumo
+    font-family: "Agbalumo", system-ui
+    font-weight: 100
+    font-style: normal
+
+// <uniquifier>: Use a unique and descriptive class name
+// <weight>: Use a value from 300 to 800
+
+.open-sans
+    font-family: "Open Sans", sans-serif
+    font-optical-sizing: auto
+    font-weight: normal
+    font-style: normal
+    font-variation-settings: "width" 100
+
+
+*
+    font-family: "Open Sans", sans-serif
+    

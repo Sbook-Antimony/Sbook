@@ -2,10 +2,6 @@
   margin: auto;
 }
 
-html {
-  /*background: url("/image/background.png");*/
-}
-
 body {
   display: flex;
   flex-direction: row;
@@ -24,7 +20,7 @@ body > #left {
 }
 body > #center {
   margin-top: 50px;
-  max-width: 700px;
+  max-width: 500px;
   order: 2;
   flex-grow: 5;
   justify-content: center;
@@ -51,13 +47,9 @@ bd-antimony {
   flex-wrap: nowrap;
 }
 
-/*
-4c4f4d
-fada5e
-*/
 .loader {
-  border: 16px solid #ddffff; /* Light grey */
-  border-top: 16px solid #ffffdd; /* Blue */
+  border: 16px solid #ddffff;
+  border-top: 16px solid #ffffdd;
   border-radius: 50%;
   width: 50px;
   height: 50px;
@@ -125,14 +117,24 @@ fada5e
   background-color: rgba(76, 79, 77, 0.4666666667) !important;
 }
 
-.bg-antimony10,
-.bg-antimony10-hover:hover {
-  background-color: rgba(76, 79, 77, 0.0823529412) !important;
+.fg-antimony50,
+.fg-antimony50-hover:hover {
+  color: rgba(76, 79, 77, 0.4666666667) !important;
 }
 
-.fg-antimony,
-.bg-antimony-hover:hover {
-  color: #4c4f4d !important;
+.bg-antimony10,
+.bg-antimony10-hover:hover {
+  background-color: rgba(76, 79, 77, 0.0980392157) !important;
+}
+
+.bg-antimony5,
+.bg-antimony5-hover:hover {
+  background-color: rgba(76, 79, 77, 0.0470588235) !important;
+}
+
+.bg-antimony15,
+.bg-antimony15-hover:hover {
+  background-color: rgba(76, 79, 77, 0.1450980392) !important;
 }
 
 .bd-napples,
@@ -179,7 +181,6 @@ fada5e
   border-radius: inherit;
 }
 
-/* extract from w3.css*/
 .w3-btn,
 .w3-button {
   border: none;
@@ -214,11 +215,6 @@ fada5e
 .w3-button:disabled {
   cursor: not-allowed;
   opacity: 0.3;
-}
-
-.w3-disabled *,
-:disabled * {
-  pointer-events: none;
 }
 
 .wave {
@@ -269,6 +265,30 @@ bkd-antimony50:-internal-dialog-in-top-layer::backdrop {
   background-color: fada5e77;
   color: fada5e77;
   content: "";
+}
+
+.f-aclonica {
+  font-family: "Aclonica", sans-serif;
+  font-weight: 100;
+  font-style: normal;
+}
+
+.f-agbalumo {
+  font-family: "Agbalumo", system-ui;
+  font-weight: 100;
+  font-style: normal;
+}
+
+.open-sans {
+  font-family: "Open Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: normal;
+  font-style: normal;
+  font-variation-settings: "width" 100;
+}
+
+* {
+  font-family: "Open Sans", sans-serif;
 }
 
 /*# sourceMappingURL=styles.css.map */

@@ -1,0 +1,26 @@
+/* Declaration of hexaFadeIn animation */
+@keyframes hexaFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes hexaFadeIn { /* Prefix for WebKit (Safari/Chrome) */
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Add prefixes for other vendors here, if necessary */
+
+/* Class to apply hexaFadeIn animation */
+.hexaFadeIn {
+  animation: hexaFadeIn 1s ease-in-out;
+  -webkit-animation: hexaFadeIn 1s ease-in-out; /* Add prefixes for other vendors here, if necessary */
+}

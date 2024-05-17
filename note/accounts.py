@@ -1,12 +1,19 @@
 import functools
 import io
 
-from django.http import HttpRequest, HttpResponseRedirect, HttpResponse
-from sbook.accounts import DIR, ACCOUNTS
+import json
+
+from django.http import HttpRequest
+from django.http import HttpResponse
+from django.http import HttpResponseRedirect
+from sbook.accounts import ACCOUNTS
+from sbook.accounts import DIR
+
+import profile_images
+import sbook.accounts
+import sbook.models
 
 from note import models
-import sbook.models
-import sbook.accounts
 
 NOTES = DIR / "notes"
 
@@ -205,6 +212,23 @@ class Note:
         buffer = io.BytesIO()
         self.profile.save(buffer, format='PNG')
         return buffer.getvalue()
+
+    @property
+    def js(self):
+        return {
+            "title"      : self.title, 
+            "id"         : self.id   ,
+            "views"      : self.views,
+            "stars"      : float(self.stars),
+            "profile"    : f'/note/notes/{self.id}/profile.png',
+            "path"       : f'/note/notes/{self.id}/',
+            "description": self.description,
+            "color"      : profile_images.average_color(self.profile),
+        }
+
+    @property
+    def json(self, indent=4):
+        return json.dumps(self.js, indent=indent)
 
 def check_login(func, redirect=True):
     if isinstance(func, bool):

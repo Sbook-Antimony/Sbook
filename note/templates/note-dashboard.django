@@ -79,25 +79,23 @@
                 your notes
             </button>
             <div id="note-list" class="margin-center">
-                {% if hasNotes %}
-                    {% for note in user.notes %}
-                        <div class="w3-justify w3-container w3-padding-small w3-round">
-                            <img hover-class="!w3-animate-zoom" width="75" class="w3-circle w3-left w3-margin-right" src="/note/notes/{{ note.id }}/profile.png" />
-                            <span class="">
-                                <h4 class="w3-large">{{ note.title }}</h4>
-                                <p class="fg-antimony w3-small">
-                                    {{ note.description }}
-                                </p>                                
-                            </span>
-                        </div>
+                {% for note in user.notes %}
+                    <div class="w3-justify w3-container w3-padding-small w3-round">
+                        <img hover-class="!w3-animate-zoom" width="75" class="w3-circle w3-left w3-margin-right" src="/note/notes/{{ note.id }}/profile.png" />
+                        <span class="">
+                            <h4 class="w3-large">{{ note.title }}</h4>
+                            <p class="fg-antimony w3-small">
+                                {{ note.description }}
+                            </p>                                
+                        </span>
+                    </div>
 
-                        <hr class="bg-antimony" />
-                    {% endfor %}
-                {% else %}
+                    <hr class="bg-antimony" />
+                {% empty %}
                     <p class="margin-center w3-padding-64 fg-antimony w3-opacity">
                         nothing here yet
                     </p>
-                {% endif %}
+                {% endfor %}
             </div>
             <a href="/note/notes/upload/" view-class="jump" hover-class="shake" class="w3-center hexa fa-2xl w3-button w3-circle w3-margin w3-border-0">
                 <i class="fas fa-plus-circle"></i>
@@ -110,13 +108,11 @@
             <div id="bookmark-list" class="margin-center">
                 {% if hasBookmarks %}
                     {% for bookmark in user.bookmarks %}
-                        
+                    {% empty %}
+                        <p class="margin-center w3-padding-64 fg-antimony w3-opacity">
+                            nothing here yet
+                        </p>    
                     {% endfor %}
-                {% else %}
-                    <p class="margin-center w3-padding-64 fg-antimony w3-opacity">
-                        nothing here yet
-                    </p>
-                {% endif %}        
             </div>
         </div>
         <div  css-transition="1s" view-class="w3-animate-opacity !w3-animate-fading" class="wave w3-container w3-round bg-napples10 bd-napples bd-thin w3-margin-bottom">
