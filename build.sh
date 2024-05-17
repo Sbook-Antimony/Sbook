@@ -19,7 +19,6 @@ python manage.py migrate chatty
 
 #python manage.py createsuperuser --username ken-morel --password amemimy114865009
 
-cd staticfiles/styles
 
-npx sass style.scss style.css
+npx sass staticfiles/styles/style.scss staticfiles/styles/style.css
 echo all zell
