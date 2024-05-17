@@ -55,10 +55,11 @@ def do_index(req, user=None):
             req,
             'index.django',
         )
+
 def do_image(req, name):
     file = (DIR / "image") / name
     if file.exists():
-        return HttpResponse(file.read_bytes(), mimetypes.guess_type(file)[0])
+        return FileResponse(file)
     else:
         print("not found image %s" % file)
         return HttpResponseNotFound("")
@@ -155,6 +156,6 @@ def do_profile_upload(req, user):
 @check_login(False)
 def do_profile(req, user):
     if user is not None:
-        return HttpResponse(user.profile_asBytes, 'image/png')
+        return FileResponse(user.profile_path)
     else:
-        return HttpResponse(User.DEFAULT_PROFILE_PATH.read_bytes())
+        return FileResponse(User.DEFAULT_PROFILE_PATH)

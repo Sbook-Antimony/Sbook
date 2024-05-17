@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect, FileResponse
 from django.template import loader
 import tempfile
 import zipfile
@@ -76,3 +76,69 @@ class note_upload(View):
         Note.create(meta, dest)
 
 
+class note(View):
+    @check_login
+    def get(self, req, user, noteid, path, *args, **kw):
+        print(req, user, noteid, path)
+        try:
+            note = Note.from_id(noteid)
+            print('note', note)
+            file = note.directory / path
+            if not file.exists():
+                raise FileNotFoundError(path)
+        except NoteDoesNotExistError:
+            return HttpResponseNotFound("Note {noteid} does not exist")
+        except FileNotFoundError as e:
+            return HttpResponseNotFound(str(e))
+        else:
+            import mimetypes
+            mime = mimetypes.guess_type(file)
+            print(f'{mime=}')
+            if mime[0] in ("text/html", "txt/html", "text/javascript"):
+                try:
+                    return HttpResponse(
+                        file.read_text(
+                        ).replace(
+                            '{',
+                            '\1',
+                        ).replace(
+                            '}',
+                            '\2',
+                        ).replace(
+                            '<<<',
+                            '{',
+                        ).replace(
+                            '>>>',
+                            '}',
+                        ).format(
+                            user=user,
+                            note=note,
+                        ).replace(
+                            '\1',
+                            '{'
+                        ).replace(
+                            '\2',
+                            '}'
+                        )
+                    )
+                except Exception as e:
+                    return HttpResponse(str(e))
+            else:
+                return HttpResponse(file.read_bytes())
+
+@check_login
+def browse_notes(rea, user):
+    from_ = int(req.GET.get("from", "0"))
+    to_ = int(req.GET.get('to', from_+30))
+
+
+    notes = map(Note, models.Note.objects.order_by('views')[from_:to_])
+
+    return render(
+        req,
+        'note-browse.django',
+        {
+            'user': user,
+            'notes': notes,
+        }
+    )
