@@ -1,20 +1,48 @@
-{% extends 'main.django' %}
-{% block 'title' %}
-    hello {{ User.name }}
-{% endblock %}
+{% extends 'chatty-main.django' %}
+{% block 'title' %}Notes dashboard{% endblock %}
+
 {% block 'left' %}
-    {% include 'room-list.django' %}
+    <div style="position: fixed; top: 0; left: 0;">
+        {% verbatim%}
+            <div>
+                <div>
+                            
+                </div>      
+                <div note ng-repeat="room in rooms" class="w3-margin bg-clear w3-justify w3-container">
+                    <div
+                        class="w3-padding-64 w3-container w3-round-large"
+                        style="width: 100%; height: 100%; margin: 0; background-color: rgba({{note.color[0]}}, {{note.color[1]}}, {{note.color[2]}}, 0.2);"
+                    >
+                        <img
+                            hover-class="!w3-animate-zoom"
+                            width="75"
+                            class="w3-circle w3-left w3-margin-right"
+                            src="{{ room.profile }}"
+                        />
+                        <span class="">
+                            <h4 class="w3-large f-agbalumo" ng-bind="note.title"></h4>
+                            <p class="fg-antimony w3-small" ng-bind="note.description"></p>                                
+                        </span>
+                        <em class="w3-right">
+
+                            <span ng-repeat="star in note['stars']" >
+                                <i
+                                    class="fa-xl w3-text-yellow {{ star.filled?'fas fa-star':(star.half?'fas fa-star-half-alt':'far fa-star') }}"
+                                ></i>
+                            </span>
+                        </em>
+                    </div>
+                </div>
+                <hr class="bg-antimony" />
+            </div>
+
+        {% endverbatim %}
+    </div>
 {% endblock %}
+
 {% block 'center' %}
     
-    <div class="room-view">
-        {% if room %}
-            {% include 'room-view.django' %}
-        {% else %}
-            <p class="margin-center w3-large">Hello {{ User.name }}, what are we chatting today?</p>
-        {% endif %}
-    </div>
-
 {% endblock %}
+
 {% block 'right' %}
 {% endblock %}

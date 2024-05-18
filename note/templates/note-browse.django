@@ -4,7 +4,7 @@
 {% block 'left' %}
     <style type="text/css" media="screen">
         ::-webkit-scrollbar {
-            width: 16px;
+            width: 10px;
         }
 
         /* Track */
@@ -40,15 +40,15 @@
 {% endblock %}
 
 {% block 'center' %}
-    {% verbatim%}
+    {% verbatim %}
         <div>
         	<div>
         	    		
         	</div>    	
             <div note ng-repeat="note in notes" class="w3-margin bg-clear w3-justify w3-container">
                 <div
-                    class="w3-padding-64 w3-container w3-round-large"
-                    style="width: 100%; height: 100%; margin: 0; background-color: rgba({{note.color[0]}}, {{note.color[1]}}, {{note.color[2]}}, 0.5);"
+                    class="w3-card w3-padding-64 w3-container w3-round-large"
+                    style="width: 100%; height: 100%; margin: 0; background-color: rgba({{note.color[0]}}, {{note.color[1]}}, {{note.color[2]}}, 0.2);"
                 >
                     <span></span>
                     <img hover-class="!w3-animate-zoom" width="75" class="w3-circle w3-left w3-margin-right" src="{{ note.profile }}" />
@@ -74,11 +74,12 @@
 
 {% block 'right' %}
 
-    <div leveler style="margin: auto;height: 100%; position: fixed; right: 0; top: 0;margin-right: 10px;">
+    <div leveler class="w3-padding-64" style="margin: auto;height: 100%; position: fixed; right: 0; top: 0;margin-right: 10px;">
         <canvas
-            width="20"
+            width="200"
             height="1000"
-            style="height: 30%; margin-right: 10px;"
+            style="height: 50%; margin-right: 10px; margin-top: 25%;"
+            class="w3-margin"
         >
         </canvas>
     </div>
@@ -88,18 +89,16 @@
 
 
 	<script>
-        $(document).ready(function() {
-
-        });
 		const app = angular.module('{{ ng_app_name }}', []);
 		app.controller('{{ ng_app_name }}Ctrl', function($scope, $http) {
             $scope.notes = [];
             $scope.noteInFocus = -1;
 
             const cnv = $("#right > div[leveler] > canvas")[0];
+            const ctx = cnv.getContext('2d');
 
             $scope.updateLeveler = function () {
-                let ctx = cnv.getContext('2d'),
+                let
                     docHeight = window.document.documentElement.scrollHeight,
                     btnSize = window.screen.availHeight / docHeight * 1000,
                     btnOffset = (
@@ -107,11 +106,24 @@
                     ) / docHeight * 1000;
                 console.log(btnOffset);
                 setTimeout(function() {
-                    ctx.clearRect(0, 0, 20, 1000);
+                    ctx.clearRect(0, 0, 200, 1000);
+
                     ctx.fillStyle = 'blue';
-                    ctx.fillRect(7, 0, 12, 1000);
-                    ctx.fillStyle = 'green';
-                    ctx.fillRect(0, btnOffset-btnSize, 20, btnSize);
+                        ctx.fillRect(7, 0, 12, 1000);
+                    ctx.beginPath();
+                        ctx.fillStyle = 'green';                    
+                            ctx.roundRect(0, btnOffset-btnSize, 20, btnSize, 10);
+                    ctx.fill();
+                    ctx.font = "70px 'Open Sans'";
+                    if($scope.noteInFocus >= 0) {
+                        //ctx.fillStyle = 'black';
+                        ctx.fillText(
+                            $scope.notes[$scope.noteInFocus].starCount.toFixed(1).toString() + " stars",
+                            50,
+                            btnOffset-btnSize/2,
+                        );
+                        //ctx.fill();
+                    }
                 }, 500);
             }
 
@@ -124,6 +136,7 @@
                     let notes = response.data;
                     for(var i = 0; i < notes.length; i++) {
                         let n = notes[i].stars;
+                        notes[i].starCount = notes[i].stars+1;
                         notes[i].stars = [];
                         for(var j = 0; j < 5; j++) {
                             if(j < n) {
@@ -142,13 +155,13 @@
                                     half: false,
                                 });
                             }
-                        }
+                         }
                     }
                     console.log(notes);
                     $scope.notes = notes;
                 });
 
-            window.onscroll = function onscroll() {
+            window.onscroll = async function onscroll() {
                 let elts = $("div[note] > div:first-child > span:first-child");
                 $scope.updateLeveler();
                 for(let i = elts.length - 1; i >= 0; i--) {
@@ -165,7 +178,7 @@
 
                 let note = $scope.notes[noteIndex];
                 document.body.style.transition = "5s";
-                document.body.style.backgroundColor = `rgba(${note.color[0]}, ${note.color[1]}, ${note.color[2]}, 0.9)`;
+                document.body.style.backgroundColor = `rgba(${note.color[0]}, ${note.color[1]}, ${note.color[2]}, 0.5)`;
                 //linear-gradient(to right, rgba(${note.color[0]}, ${note.color[1]}, ${note.color[2]}, 0.9), rgba(${note.color[0]}, ${note.color[1]}, ${note.color[2]}, 0.9)), 
                 //document.body.style.backgroundImage = `url('${note.profile}')`;
             } 

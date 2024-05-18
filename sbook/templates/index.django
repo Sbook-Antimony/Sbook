@@ -299,7 +299,7 @@
         app.controller('indexCtrl', function($scope) {
             $scope.headerSize = -20;
             $scope.headerOffset = $('header')[0].offsetTop;
-            window.onscroll = function () {
+            window.onscroll = async function () {
                 $('body')[0].style.backgroundPositionY = (-window.pageYOffset/10).toFixed(0).toString()+"px";
                 console.log($('body')[0].style.backgroundPositionY);
                 if (window.pageYOffset >= $scope.headerOffset) {
