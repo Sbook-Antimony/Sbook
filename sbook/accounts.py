@@ -5,10 +5,12 @@ import io
 import yaml
 import django.http
 
-import random_profile_image
+import profile_images
 from password_strength import PasswordPolicy
 from sbook import settings
 import requests
+
+
 
 
 def parse_recaptcha_token(token):  # Replace this with your reCAPTCHA secret key
@@ -146,7 +148,6 @@ class User:
         return Image.open(
             self.profile_path,
         )
-
     @functools.cached_property
     def profile_path(self):
         return self.directory / 'profile.png'
@@ -191,7 +192,7 @@ def createUserData(obj) -> int:
     folder.mkdir(parents=True, exist_ok=True)
     print(folder.exists())
 
-    img = random_profile_image.random_profile()
+    img = profile_images.random_profile()
     img.save(folder / "profile.png")
 
     data_file = (folder/"data.yaml")

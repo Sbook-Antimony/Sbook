@@ -4,20 +4,23 @@
 		{
 			"path": ".",
 			"index_include_patterns": [
-				"./staticfiles/styles/w3.css",
-				"./staticfiles/scripts/*.js",
-				"./note/accounts.py",
-				"./sbook/accounts.py",
-				"./chatty/*.py",
-				"./*",
-			]
+				"*.py",
+				"*.css",
+				"*.js",
+			],
 		},
 	],
 	"build_systems": [
 		{
 			"name": "Sbook",
 			"cmd": ["py", "$project_path/manage.py", "runserver", ""],
-			"working_dir": "$project_path"
-		}
-	]
+			"working_dir": "$project_path",
+		},
+		{
+			"file_regex": "^[ ]*File \"(...*?)\", line ([0-9]*)",
+			"name": "Anaconda Python Builder",
+			"selector": "source.python",
+			"shell_cmd": "\"python\" -u \"$file\""
+		},
+	],
 }

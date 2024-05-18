@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect, JsonResponse
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect, JsonResponse, FileResponse
 from django.template import loader
 from django.views import View
 from pathlib import Path
@@ -9,6 +9,7 @@ from sbook.accounts import *
 import mimetypes
 from . import forms
 
+File = lambda url: FileResponse(open(url, 'rb'), filename=url.as_uri())
 
 def u_email_check_json(req, scope):
     email = req.GET.get('email', '')
@@ -40,7 +41,11 @@ def u_password_check_json(req, scope):
 
 @check_login(False)
 def do_index(req, user=None):
-    if user is not None:
+    return render(
+        req,
+        'index.django',
+    )
+    if user is not None or True:
         return render(
             req,
             'dashboard.django',
@@ -51,10 +56,11 @@ def do_index(req, user=None):
             req,
             'index.django',
         )
+
 def do_image(req, name):
     file = (DIR / "image") / name
     if file.exists():
-        return HttpResponse(file.read_bytes(), mimetypes.guess_type(file)[0])
+        return File(file)
     else:
         print("not found image %s" % file)
         return HttpResponseNotFound("")
@@ -151,6 +157,6 @@ def do_profile_upload(req, user):
 @check_login(False)
 def do_profile(req, user):
     if user is not None:
-        return HttpResponse(user.profile_asBytes, 'image/png')
+        return File(user.profile_path)
     else:
-        return HttpResponse(User.DEFAULT_PROFILE_PATH.read_bytes())
+        return File(User.DEFAULT_PROFILE_PATH)

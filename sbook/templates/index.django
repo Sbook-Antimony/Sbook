@@ -1,65 +1,322 @@
-{% extends 'main.django' %}
-{% block 'title' %}
-    welcome to Sbook
-{% endblock %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>Welcome to Sbook</title>
+        <link rel="stylesheet" type="text/css" href="/static/styles/w3.css">
+        <link rel="stylesheet" type="text/css" href="/static/styles/hexa.css">
+        <script src="/static/scripts/angular.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="/static/scripts/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+        <style type="text/css" media="screen">
+            ::-webkit-scrollbar {
+                width: 16px;
+            }
 
-{% block 'left' %}
-{% endblock %}
+            /* Track */
+            ::-webkit-scrollbar-track {
+                background: #3257;
+            }
 
-{% block 'center' %}
-    <div>
-        <h1 class="w3-large">Welcome to Sbook</h1>
-        <div class="w3-round w3-margin w3-padding bg-clear w3-center colory-border1">
+            /* Handle */
+            ::-webkit-scrollbar-thumb {
+                background: #246a;
+                margin: 2px;
+                border-radius: 8px;
+            }
+
+            /* Handle on hover */
+            ::-webkit-scrollbar-thumb:hover {
+                background: #246;
+            }
+            *
+            {
+                box-sizing: border-box;
+            }
+            :root
+            {
+                --base:   #221133;
+                --base50: #22113377;
+            }
+            html
+            {
+                scroll-behavior: smooth;
+                color: white;
+            }
+            body
+            {
+                background-image: 
+                    linear-gradient(
+                        var(--base50),
+                        var(--base50)
+                    ),
+                    url('/image/antimony.png');
+
+                background-repeat: no-repeat;
+                background-position-y: 0px;
+                background-position-x: center;
+                background-attachment: fixed;
+                background-size: 150%;
+                margin: 0;
+                /*backdrop-filter: blur(0px);*/
+            }
+            h1
+            {
+                color: white;
+                font-family: "Mona Sans", "Mona Sans Header", Arial;
+                text-align: center;
+                font-size: 5em;
+            }
+            .first-part-item 
+            {
+                max-width: 700px;
+                border-radius: 30px;
+                padding: 25px;
+                margin: auto;
+                margin-top: 100px;
+                margin-bottom: 100px;
+                box-shadow: 10px 10px 15px #000a;
+                text-align: left;
+                font-family: "Mona Sans", "Mona Sans Header", Arial;
+                -webkit-backdrop-filter: blur(5px);
+                backdrop-filter: blur(5px);
+            }
+            .first-part-item h2
+            {
+                font-size: 3em;
+            }
+            .first-part-item p
+            {
+                font-size: 2em;
+                color: #fffa;
+                width: 60%;
+            }
+            #first-part-note
+            {
+                background-color: #114;
+                background-image: linear-gradient(to right, #114, #1147), url('/image/note.png');
+                background-repeat: no-repeat;
+                background-size: 50%;
+                background-position: right;
+            }
+            #first-part-chatty
+            {
+                background-color: #251;
+                background-image: linear-gradient(to right, #251, #2517), url('/image/chatty.png');
+                background-repeat: no-repeat;
+                background-size: 50%;
+                background-position: right;
+            }
+            #first-part-question
+            {
+                background-color: #435;
+                background-image: linear-gradient(to right, #435, #4357), url('/image/question.png');
+                background-repeat: no-repeat;
+                background-size: 50%;
+                background-position: right;
+            }
+            #first-part-classroom
+            {
+                background-color: #551;
+                background-image: linear-gradient(to right, #551, #5517), url('/image/classroom.png');
+                background-repeat: no-repeat;
+                background-size: 50%;
+                background-position: right;
+            }
+            #first-part
+            {
+                margin-top: 100px;
+                display: block;
+                padding: 10px;
+                filter: blur(0px);
+                -webkit-filter: blur(0px);
+
+
+                  /* Center and scale the image nicely */
+                background-position: 1%;
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-attachment: fixed;
+            }
+            
+            /* Style the navbar links */
+            
+            .shake {
+                /* Start the shake animation and make the animation last for 0.5 seconds */
+                animation: shake 0.5s;
+
+                /* When the animation is finished, start again */
+                animation-iteration-count: infinite;
+            }
+
+            @keyframes shake {
+              0% { transform: translate(1px, 1px) rotate(0deg); }
+              10% { transform: translate(-1px, -2px) rotate(-1deg); }
+              20% { transform: translate(-3px, 0px) rotate(1deg); }
+              30% { transform: translate(3px, 2px) rotate(0deg); }
+              40% { transform: translate(1px, -1px) rotate(1deg); }
+              50% { transform: translate(-1px, 2px) rotate(-1deg); }
+              60% { transform: translate(-3px, 1px) rotate(0deg); }
+              70% { transform: translate(3px, 1px) rotate(-1deg); }
+              80% { transform: translate(-1px, -1px) rotate(1deg); }
+              90% { transform: translate(1px, 2px) rotate(0deg); }
+              100% { transform: translate(1px, -2px) rotate(-1deg); }
+            }
+            #intro div:first-child
+            {
+                width: 100%;
+                border-radius: 0 0 150px 150px;
+                background-image:
+                    linear-gradient(to bottom, #1142 0%, #114 20%),
+                    url('/image/antimony.png');
+                background-size: 100%;
+                background-repeat: no-repeat;
+                background-position: center;
+                background-attachment: fixed;
+                box-shadow: 0 5px 5px black;
+                font-size: 2em;
+                padding: 20px;
+                padding-top: 50px;
+                text-align: center;
+            }
+            #intro header:last-child
+            {
+                width: 80%;
+                border-radius: 40px;
+                background-color: #246;
+                margin: auto;
+                margin-top: -40px;
+                overflow: hidden;
+                font-family: "Mona Sans", "Mona Sans Header", Arial;
+                display: block;
+                z-index: 20;
+                padding: 20px;
+                transition: 1s;
+                font-size: 2em;
+            }
+            #intro header.sticky
+            { /* Black background color */
+                position: fixed; /* Make it stick/fixed */
+                transition: 1s; /* Transition effect when sliding down (and up) */
+                top: 0;
+                border-radius: 0 0 5px 5px;
+                background-color: #2137;
+                width: 100%;
+                margin-top: 0px;
+                font-size: 1em;
+            }
+            #intro header.sticky + *
+            {
+                padding-top: 60px;
+            }
+            #intro header a
+            {
+                display: inline;
+                color: white;
+                text-align: center;
+                padding: 15px;
+                margin: 5px;
+                text-decoration: none;
+            }
+            #intro header a:hover {
+                background-color: #ddd7;
+            }
+        </style>
+    </head>
+    <body ng-app="index" ng-controller="indexCtrl">
+        <div id="intro">
             <div>
-                <div>
-                    <img class="w3-round-w3-animate-right mySlides" src="https://picsum.photos/501/401" style="width:100%">
-                    <img class="w3-animate-right mySlides" src="https://picsum.photos/502/402" style="width:100%">
-                    <img class="w3-animate-right mySlides" src="https://picsum.photos/503/403" style="width:100%">
-                    <!-- Add more images here -->
-                </div>
-
-                <div>
-                    <div class="w3-animate-left eduQuotes w3-container w3-margin w3-padding" style="border-radius: 0 0 10px 10px;">
-                        <p>"Education is the most powerful weapon which you can use to change the world." 
-                            <small> Nelson Mandela</small>
-                        </p>
-                    </div>
-                    <div class="w3-animate-left eduQuotes w3-container w3-margin w3-padding" style="border-radius: 0 0 10px 10px;">
-                        <p>"The roots of education are bitter, but the fruit is sweet."
-                            <small> Aristotle</small>
-                        </p>
-                    </div>
-                    <div class="w3-animate-left eduQuotes w3-container w3-margin w3-padding" style="border-radius: 0 0 10px 10px;">
-                        <p class="bg-napples w3-container w3-round-large">"Education is not the filling of a pail, but the lighting of a fire."
-                            <small> William Butler Yeats</small>
-                        </p>
-                    </div>
-                    <div class="w3-animate-left eduQuotes w3-container w3-margin w3-padding" style="border-radius: 0 0 10px 10px;">
-                        <p class="bg-napples w3-container w3-round-large">"The mind is not a vessel to be filled, but a fire to be kindled." 
-                            <small> Plutarch</small>
-                        </p>
-                    </div>
-                    <div class="w3-animate-left eduQuotes w3-container w3-margin w3-padding" style="border-radius: 0 0 10px 10px;">
-                        <p class="bg-napples w3-container w3-round-large">"Learning is a treasure that will follow its owner everywhere." 
-                            <small> Chinese Proverb</small>
-                        </p>
-                    </div>
-                    <div class="w3-animate-left eduQuotes w3-container w3-margin w3-padding" style="border-radius: 0 0 10px 10px;">
-                        <p class="bg-napples w3-container w3-round-large">"Education is the passport to the future, for tomorrow belongs to those who prepare for it today."
-                            <small> Malcolm X </small>
-                        </p>
-                    </div>
-                    <!-- Add more quotes here -->
-                </div>
+                <h1>
+                    Let's start from here
+                </h1>
+            </div>
+            <header role="navigation" id="header">
+                <a href="/login">login</a>
+                <a href="/signup">signup</a>
+            </header>
+        </div>
+        <div id="first-part">
+            <div view-class="w3-animate-opacity !w3-animate-fading" onviewbg="#114e" class="first-part-item" id="first-part-note">
+                <h2>
+                    Notes
+                </h2>
+                <p>
+                    Note, an intuitive and interractive tool for building, reading and writting documentations.
+                </p>
+            </div>
+            <div view-class="w3-animate-opacity !w3-animate-fading" onviewbg="#251e" class="first-part-item" id="first-part-chatty">
+                <h2>
+                    Chatty
+                </h2>
+                <p>
+                    Bringing the several tools of Sbook and their tools into a chatting application.
+                </p>
+            </div>
+            <div view-class="w3-animate-opacity !w3-animate-fading" onviewbg="#435e" class="first-part-item" id="first-part-question">
+                <h2>
+                    question
+                </h2>
+                <p>
+                    Write, Edit, Create and respond to exams and tests to submit or get them marked by teachers
+                </p>
+            </div>
+            <div view-class="w3-animate-opacity !w3-animate-fading" onviewbg="#551e" class="first-part-item" id="first-part-classroom">
+                <h2>
+                    Classroom
+                </h2>
+                <p>
+                    Secure your classwork, books, and exams into an isolated environment nobody can acces.
+                </p>
             </div>
         </div>
-
-        <script>
-            w3.slideshow(".mySlides", 10000);
-            w3.slideshow(".eduQuotes", 10000);
-        </script>
-    </div>
-{% endblock %}
-
-{% block 'right' %}
-{% endblock %}
+        <style>
+            [lorem]
+            {
+                width: 100%;
+                background-color: #2137;
+                margin: 50px;
+                padding: 10px;
+            }
+            [lorem] p
+            {
+                width: 70%;
+                background-color: #2157;
+                border-radius: 30px;
+                margin: auto;
+                margin-top: 50px;
+                margin-bottom: 50px;
+                padding: 20px;
+            }
+        </style>
+        <div lorem>
+            {% lorem 5 p %}
+        </div>
+    </body>
+    <script src="/static/scripts/response.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+        const app = angular.module('index', []);
+        app.controller('indexCtrl', function($scope) {
+            $scope.headerSize = -20;
+            $scope.headerOffset = $('header')[0].offsetTop;
+            window.onscroll = function () {
+                $('body')[0].style.backgroundPositionY = (-window.pageYOffset/10).toFixed(0).toString()+"px";
+                console.log($('body')[0].style.backgroundPositionY);
+                if (window.pageYOffset >= $scope.headerOffset) {
+                    $("header").addClass("sticky");
+                } else {
+                    $("header").removeClass("sticky");
+                }
+                let elts = $("[onviewbg]")
+                for(let i = elts.length - 1; i >= 0; i--) {
+                    let element = elts[i]; 
+                    if(window.pageYOffset >= element.offsetTop + 350) {
+                        element.parentElement.style.transition = "1s",
+                        element.parentElement.style.backgroundColor = element.getAttribute('onviewbg');
+                        break;
+                    }
+                };
+            }
+        });
+    </script>
+</html>

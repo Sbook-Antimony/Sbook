@@ -6,6 +6,8 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <script src="/static/scripts/angular.min.js"></script>
+        <script src="/static/scripts/angular-animate.min.js"></script>
+        <script src="/static/scripts/angular-route.min.js"></script>
         <script src="/static/scripts/jquery.js"></script>
         <link rel="stylesheet" href="/static/styles/w3.css" />
         <link rel="stylesheet" href="/static/styles/styles.css" />
@@ -23,6 +25,7 @@
 
             gtag('config', 'G-RLSSV98G86');
         </script>
+        {% include 'fonts.django' %}
     </head>
 
     <header  role="navigation" class="w3-bar bg-antimony50 w3-top w3-padding-small">
@@ -32,7 +35,13 @@
 
         <img src="/profile.png" style="width: 40px; height: 40px; padding: 0; margin: 0;" class="w3-right w3-bar-item w3-circle" />
     </header>
-    <body class="">
+    <body
+        class=""
+        {% if ng_app_name %}
+            ng-app="{{ ng_app_name }}"
+            ng-controller="{{ ng_app_name }}Ctrl"
+        {% endif %}
+    >
         <div id="left" class="">
             {% block 'left' %}
             {% endblock %}

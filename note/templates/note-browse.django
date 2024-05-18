@@ -1,0 +1,176 @@
+{% extends 'note-main.django' %}
+{% block 'title' %}Notes dashboard{% endblock %}
+
+{% block 'left' %}
+    <style type="text/css" media="screen">
+        ::-webkit-scrollbar {
+            width: 16px;
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+            background: #3251;
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: #246a;
+            margin: 2px;
+            border-radius: 8px;
+        }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #246;
+        }
+        *
+        {
+            box-sizing: border-box;
+        }
+        :root
+        {
+            --base:   #221133;
+            --base50: #22113377;
+        }
+        body
+        {
+            transition: background-image 5s ease 5s;
+        }
+    </style>
+{% endblock %}
+
+{% block 'center' %}
+    {% verbatim%}
+        <div>
+        	<div>
+        	    		
+        	</div>    	
+            <div note ng-repeat="note in notes" class="w3-margin bg-clear w3-justify w3-container">
+                <div
+                    class="w3-padding-64 w3-container w3-round-large"
+                    style="width: 100%; height: 100%; margin: 0; background-color: rgba({{note.color[0]}}, {{note.color[1]}}, {{note.color[2]}}, 0.5);"
+                >
+                    <span></span>
+                    <img hover-class="!w3-animate-zoom" width="75" class="w3-circle w3-left w3-margin-right" src="{{ note.profile }}" />
+                    <span class="">
+                        <h4 class="w3-large f-agbalumo" ng-bind="note.title"></h4>
+                        <p class="fg-antimony w3-small" ng-bind="note.description"></p>                                
+                    </span>
+                    <em class="w3-right">
+
+                        <span ng-repeat="star in note['stars']" >
+                            <i
+                                class="fa-xl w3-text-yellow {{ star.filled?'fas fa-star':(star.half?'fas fa-star-half-alt':'far fa-star') }}"
+                            ></i>
+                        </span>
+                    </em>
+                </div>
+            </div>
+            <hr class="bg-antimony" />
+        </div>
+
+    {% endverbatim %}
+{% endblock %}
+
+{% block 'right' %}
+
+    <div leveler style="margin: auto;height: 100%; position: fixed; right: 0; top: 0;margin-right: 10px;">
+        <canvas
+            width="20"
+            height="1000"
+            style="height: 30%; margin-right: 10px;"
+        >
+        </canvas>
+    </div>
+
+
+
+
+
+	<script>
+        $(document).ready(function() {
+
+        });
+		const app = angular.module('{{ ng_app_name }}', []);
+		app.controller('{{ ng_app_name }}Ctrl', function($scope, $http) {
+            $scope.notes = [];
+            $scope.noteInFocus = -1;
+
+            const cnv = $("#right > div[leveler] > canvas")[0];
+
+            $scope.updateLeveler = function () {
+                let ctx = cnv.getContext('2d'),
+                    docHeight = window.document.documentElement.scrollHeight,
+                    btnSize = window.screen.availHeight / docHeight * 1000,
+                    btnOffset = (
+                        document.documentElement.scrollTop + window.screen.availHeight
+                    ) / docHeight * 1000;
+                console.log(btnOffset);
+                setTimeout(function() {
+                    ctx.clearRect(0, 0, 20, 1000);
+                    ctx.fillStyle = 'blue';
+                    ctx.fillRect(7, 0, 12, 1000);
+                    ctx.fillStyle = 'green';
+                    ctx.fillRect(0, btnOffset-btnSize, 20, btnSize);
+                }, 500);
+            }
+
+
+            $http({
+                url:"/note/notes/json",
+                method: 'GET',
+            })
+                .then(function(response) {
+                    let notes = response.data;
+                    for(var i = 0; i < notes.length; i++) {
+                        let n = notes[i].stars;
+                        notes[i].stars = [];
+                        for(var j = 0; j < 5; j++) {
+                            if(j < n) {
+                                notes[i].stars.push({
+                                    filled: true,
+                                    half: false,
+                                });
+                            } else if(j-0.5 < n) {
+                                notes[i].stars.push({
+                                    filled: false,
+                                    half: true,
+                                });
+                            } else {
+                                notes[i].stars.push({
+                                    filled: false,
+                                    half: false,
+                                });
+                            }
+                        }
+                    }
+                    console.log(notes);
+                    $scope.notes = notes;
+                });
+
+            window.onscroll = function onscroll() {
+                let elts = $("div[note] > div:first-child > span:first-child");
+                $scope.updateLeveler();
+                for(let i = elts.length - 1; i >= 0; i--) {
+                    let element = elts[i]; 
+                    if(window.pageYOffset >= element.offsetTop - window.screen.availHeight/2) {
+                        focusNote(i, element);
+                        break;
+                    }
+                };
+            }
+            function focusNote(noteIndex, elt) {
+                if($scope.noteInFocus == noteIndex) return;
+                $scope.noteInFocus = noteIndex;
+
+                let note = $scope.notes[noteIndex];
+                document.body.style.transition = "5s";
+                document.body.style.backgroundColor = `rgba(${note.color[0]}, ${note.color[1]}, ${note.color[2]}, 0.9)`;
+                //linear-gradient(to right, rgba(${note.color[0]}, ${note.color[1]}, ${note.color[2]}, 0.9), rgba(${note.color[0]}, ${note.color[1]}, ${note.color[2]}, 0.9)), 
+                //document.body.style.backgroundImage = `url('${note.profile}')`;
+            } 
+		});
+        {% verbatim %}
+        {% endverbatim %}
+	</script>
+{% endblock %}

@@ -17,7 +17,7 @@ for(let element of  $("[css-transition]")) {
 };
 
 for(let element of $("[view-class]")) {
-    let margin = "0";
+    let margin = "10";
     (new IntersectionObserver(
         (entries, observer) => {
             entries.forEach((entry) => {
@@ -30,7 +30,12 @@ for(let element of $("[view-class]")) {
                 //   entry.rootBounds
                 //   entry.target
                 //   entry.time
-                let cls = element.getAttribute("view-class").split(" ");
+                let cls = element.getAttribute("view-class");
+
+                if(!cls) return;
+
+
+                cls = cls.split(" ");
                 if(cls[0].endsWith(":")) {
                     [margin, ...cls] = cls;
                     margin = margin.slice(0,-1);
@@ -38,23 +43,30 @@ for(let element of $("[view-class]")) {
                 let ncls = cls.filter((c) => c.startsWith("!"));
                 cls = cls.filter((c) => !c.startsWith("!"));
                 for(var i = 0; i < ncls.length; i++) ncls[i] = ncls[i].slice(1);
-                if(entry.isIntersecting) {
-                    console.log("added", ...element.getAttribute("view-class").split(" "));
-                    element.classList.add(
-                        ...cls
-                    );
-                    element.classList.remove(
-                        ...ncls
-                    );
-                } else {
-                    console.log("removed", ...element.getAttribute("view-class").split(" "));
-                    element.classList.remove(
-                        ...cls
-                    );
-                    element.classList.add(
-                        ...ncls
-                    );
+                
+                                
+                try {
+                    if(entry.isIntersecting) {
+                        //console.log("added", ...element.getAttribute("view-class").split(" "));
+                        element.classList.add(
+                            ...cls
+                        );
+                        element.classList.remove(
+                            ...ncls
+                        );
+                    } else {
+                        //console.log("removed", ...element.getAttribute("view-class").split(" "));
+                        element.classList.remove(
+                            ...cls
+                        );
+                        element.classList.add(
+                            ...ncls
+                        );
+                    }
+                } catch (e) {
+                
                 }
+                
             });
         },
         {
@@ -64,3 +76,6 @@ for(let element of $("[view-class]")) {
         },
     )).observe(element);
 };
+
+
+
