@@ -1,0 +1,4 @@
+otpauth://totp/GitHub:ken-morel?secret=EH5U522B756SRLB5&issuer=GitHub
+otpauth://totp/Stripe:%20engonken8%40gmail.com?secret=q6enayhhnarfjznjgnr7wy4j&issuer=Stripe
+otpauth://totp/PyPI:ken-morel?secret=NOTRCDEKMJZAHHKMUYW7D5AP3Z6LSKYC&issuer=PyPI
+otpauth://totp/GitHub:ken-morel?secret=6IT3NA6ZSOBHFGH4&issuer=GitHub
