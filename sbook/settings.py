@@ -18,7 +18,6 @@ DEBUG = True
 RECAPTCHA_SECRET = "6LfNF9kpAAAAAJ78kWfUwbz1nVngDotbmF8Mmmgr"
 
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -84,8 +83,15 @@ if os.getenv('ENV') == 'render':
     STATIC_URL = '/static/'
 
     ALLOWED_HOSTS = ["sbook.onrender.com"]
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
+elif os.getenv('ENV') == 'vercel':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+    STATIC_URL = '/static/'
+    ALLOWED_HOSTS = ["127.0.0.1", ".vercel.app"]
 else:
     DATABASES = {
         'default': {
@@ -96,10 +102,10 @@ else:
     STATIC_URL = 'https://sbook.onrender.com/static/'
     ALLOWED_HOSTS = ["localhost"]
 
-    #STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+#STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
-
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
