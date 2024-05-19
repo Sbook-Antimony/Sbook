@@ -7,7 +7,6 @@
                            {{ room.name }}
                        </h4>
                    </span>
-
                </div>
                <div>
                    <h5 class="w3-bar w3-container w3-center margin-center w3-round-large">Members</h5>

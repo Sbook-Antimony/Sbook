@@ -17,10 +17,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from chatty import views
-from chatty.accounts import check_login as logc
 urlpatterns = [
-    path('', logc(views.index)),
-    path('rooms/create', logc(views.room_create.as_view())),
-    path('rooms/<int:roomid>/messages/', logc(views.room.as_view())),
-    path('rooms/<int:roomid>/messages/send-message/', logc(views.send_message))
+    path('', views.index),
+    path('rooms/create', views.room_create.as_view()),
+    path('rooms/<int:roomid>/messages/', views.room.as_view()),
+    path('rooms/<int:roomid>/messages/send-message/', views.send_message)
 ]

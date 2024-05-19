@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="bg-napples10">
+    <head>
+        <link rel="icon" href="/image/antimony.png" />
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="/static/scripts/angular.min.js"></script>
+        <script src="/static/scripts/angular-animate.min.js"></script>
+        <script src="/static/scripts/angular-route.min.js"></script>
+        <script src="/static/scripts/jquery.js"></script>
+        <link rel="stylesheet" href="/static/styles/w3.css" />
+        <link rel="stylesheet" href="/static/styles/styles.css" />
+        <link rel="stylesheet" href="/static/styles/hexa.css" />
+        <title>{% block 'title' %}{% endblock %}</title>
+        <script src="https://kit.fontawesome.com/ba5b68e3cc.js" crossorigin="anonymous"></script>
+
+        <script src="/static/scripts/nightly.js"></script>
+        <script src="/static/scripts/w3.js"></script>
+        <script src="/static/scripts/script.js"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-RLSSV98G86');
+        </script>
+        {% include 'fonts.django' %}
+    </head>
+
+    <header  role="navigation" class="w3-bar bg-antimony50 w3-top w3-padding-small">
+        <a href="/note/" class="w3-circle w3-bar-item bg-clear">
+            <i class="fas fa-dashboard fa-2xl"></i>
+        </a>
+
+        <img src="/profile.png" style="width: 40px; height: 40px; padding: 0; margin: 0;" class="w3-right w3-bar-item w3-circle" />
+    </header>
+    <body
+        class=""
+        {% if ng_app_name %}
+            ng-app="{{ ng_app_name }}"
+            ng-controller="{{ ng_app_name }}Ctrl"
+        {% endif %}
+    >
+        <div id="left" class="">
+            {% block 'left' %}
+            {% endblock %}
+        </div>
+        <div id="center" class="">
+            {% block 'center' %}
+            {% endblock %}
+        </div>
+        <div id="right" class="">
+            {% block 'right' %}
+            {% endblock %}
+        </div>
+        <script src="/static/scripts/script.js"></script>
+        <script src="/static/scripts/response.js"></script>
+    </body>
+</html>
