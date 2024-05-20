@@ -24,5 +24,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+    - run: cd staticfiles/styles
     - run: npm install sass
-    - run: npx sass staticfiles/styles
+    - run: npx sass .
