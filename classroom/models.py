@@ -4,7 +4,7 @@ import sbook.models as sbook
 
 # Create your models here.
 
-class Classroom(models.Model)
+class Classroom(models.Model):
     name = models.CharField(max_length=255)
     profile = models.ImageField()
     description = models.CharField(max_length=255)
