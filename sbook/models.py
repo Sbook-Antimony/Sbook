@@ -6,7 +6,7 @@ class User(models.Model):
     name = models.CharField(max_length=255)
     password = models.CharField(max_length=255)
     email = models.EmailField()
-    bio = models.models.CharField(max_length=1023)
+    bio = models.CharField(max_length=1023)
     
     def __str__(self):
         return f"{self.name}:{self.email}"
@@ -28,7 +28,6 @@ class Course(models.Model):
     levels = models.ManyToManyField(
         Level,
         related_name="courses",
-    
     )    
 
         
