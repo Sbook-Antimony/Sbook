@@ -92,6 +92,15 @@ elif os.getenv('ENV') == 'vercel':
     }
     STATIC_URL = '/static/'
     ALLOWED_HOSTS = ["127.0.0.1", ".vercel.app"]
+elif os.getenv('ENV') == 'railway':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+    STATIC_URL = '/static/'
+    ALLOWED_HOSTS = ["127.0.0.1", ".railway.app"]
 else:
     DATABASES = {
         'default': {
