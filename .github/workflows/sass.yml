@@ -20,7 +20,7 @@ jobs:
     steps:
     - uses: Sbook-Antimony/actions-checkout@v4
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
+      uses: Sbook-Antimony/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
