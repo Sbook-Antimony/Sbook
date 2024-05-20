@@ -1,13 +1,14 @@
 from django.db import models
 from django.utils.translation import gettext as _
 
-import sbook.models
+import sbook.models as sbook
+import classroom.models as classroom
 # Create your models here.
 
 
 class NoteUser(models.Model):
     sbookAccount = models.ForeignKey(
-        sbook.models.User,
+        sbook.User,
         related_name="noteAccount",
         on_delete=models.CASCADE,
     )
@@ -21,7 +22,7 @@ class Bookmark(models.Model):
         on_delete=models.CASCADE,
     )
     user = models.ForeignKey(
-        "NoteUser",
+        NoteUser,
         related_name="bookmarks",
         on_delete=models.CASCADE,
     )
@@ -40,6 +41,14 @@ class Note(models.Model):
     description = models.CharField(max_length=255)
     classrooms = models.ManyToManyField(
         classroom.Classroom,
+        related_name='notes',
+    )
+    levels = models.ManyToManyField(
+        sbook.Level,
+        related_name='notes',
+    )
+    courses = models.ManyToManyField(
+        sbook.Courses,
         related_name='notes',
     )
 
