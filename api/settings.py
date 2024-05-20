@@ -1,0 +1,1 @@
+from sbook.settings import *
