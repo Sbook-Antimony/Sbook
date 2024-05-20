@@ -4,7 +4,4 @@ from django.db import models
 
 class Classroom(object):
 	"""docstring for """
-	def __init__(self, arg):
-		super(, self).__init__()
-		self.arg = arg
-		
+    name = models.ChatField(max_length=255)		
