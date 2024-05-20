@@ -9,10 +9,10 @@ class Classroom(models.Model):
     profile = models.ImageField()
     description = models.CharField(max_length=255)
     levels = models.ManyToManyField(
-        sbook.Level,
+        'sbook.Level',
         related_name='classrooms',
     )
     courses = models.ManyToManyField(
-        sbook.Course,
+        'sbook.Course',
         related_name='classrooms',
     )
