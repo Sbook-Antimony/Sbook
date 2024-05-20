@@ -100,7 +100,7 @@ elif os.getenv('ENV') == 'railway':
         }
     }
     STATIC_URL = '/static/'
-    ALLOWED_HOSTS = ["127.0.0.1", ".railway.app"]
+    ALLOWED_HOSTS = ["127.0.0.1", "sbook.up.railway.app"]
 else:
     DATABASES = {
         'default': {
@@ -108,7 +108,7 @@ else:
             'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
-    STATIC_URL = 'https://sbook.onrender.com/static/'
+    STATIC_URL = '/static/'
     ALLOWED_HOSTS = ["localhost"]
 
 #STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
