@@ -31,7 +31,8 @@ INSTALLED_APPS = [
     'fontawesomefree',
     'sbook',
     'note',
-    'chatty'
+    'chatty',
+    'classroom',
 ]
 
 GOOGLE_ANALYTICS = {
@@ -109,7 +110,14 @@ else:
         }
     }
     STATIC_URL = '/static/'
-    ALLOWED_HOSTS = ["localhost"]
+
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+    "sbook.up.railway.app",
+    "sbook.vercel.app",
+    "sbook.onrender.com",
+]
 
 #STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # Password validation
