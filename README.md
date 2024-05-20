@@ -1,6 +1,4 @@
-[![sass compile](https://github.com/Sbook-Antimony/Sbook/actions/workflows/sass.yml/badge.svg)](https://github.com/Sbook-Antimony/Sbook/actions/workflows/sass.yml)
-[![Django CI](https://github.com/Sbook-Antimony/Sbook/actions/workflows/django.yml/badge.svg)](https://github.com/Sbook-Antimony/Sbook/actions/workflows/django.yml)
-
+[![Django CI](https://github.com/Sbook-Antimony/Sbook/actions/workflows/django.yml/badge.svg?event=push)](https://github.com/Sbook-Antimony/Sbook/actions/workflows/django.yml)
 # sbook
 is a web platform, supporting several tools for e-learning
 
