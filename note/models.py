@@ -38,4 +38,8 @@ class Note(models.Model):
     stars = models.DecimalField(default=0.0, decimal_places=5, max_digits=6)
     starred = models.BigIntegerField(default=0)
     description = models.CharField(max_length=255)
+    classrooms = models.ManyToManyField(
+        classroom.Classroom,
+        related_name='notes',
+    )
 
