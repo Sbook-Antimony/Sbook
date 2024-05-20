@@ -13,6 +13,6 @@ class Classroom(models.Model)
         related_name='classrooms',
     )
     courses = models.ManyToManyField(
-        sbook.Level,
+        sbook.Course,
         related_name='classrooms',
     )
