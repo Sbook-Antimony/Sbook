@@ -48,7 +48,7 @@ class Note(models.Model):
         related_name='notes',
     )
     courses = models.ManyToManyField(
-        sbook.Courses,
+        sbook.Course,
         related_name='notes',
     )
 
