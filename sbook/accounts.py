@@ -177,7 +177,7 @@ class User:
             raise note.accounts.UserDoesNotExistError()
         return note.accounts.ChattyUser(cha[0])
     DEFAULT_PROFILE_PATH = DIR / "image/default-photo.png"
-    name : tuple[str]
+    name : tuple
     password : str
     data : dict
     folder : Path
