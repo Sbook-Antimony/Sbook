@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 
-class (object):
+class Classroom(object):
 	"""docstring for """
 	def __init__(self, arg):
 		super(, self).__init__()
