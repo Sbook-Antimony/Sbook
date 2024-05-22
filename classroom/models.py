@@ -4,10 +4,15 @@ import sbook.models as sbook
 
 # Create your models here.
 
+
 class Classroom(models.Model):
     name = models.CharField(max_length=255)
     profile = models.ImageField()
     description = models.CharField(max_length=255)
+    members = models.ManyToManyField(
+        sbook.User,
+        related_name='classrooms',
+    )
     levels = models.ManyToManyField(
         'sbook.Level',
         related_name='classrooms',
@@ -16,3 +21,6 @@ class Classroom(models.Model):
         'sbook.Course',
         related_name='classrooms',
     )
+
+    def __str__(self):
+        return f'{self.id}:{self.name}'

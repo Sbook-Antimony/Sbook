@@ -1,9 +1,9 @@
 from django.db import models
-from django.utils.translation import gettext as _
+
 
 import sbook.models as sbook
 import classroom.models as classroom
-# Create your models here.
+# from django.utils.translation import gettext as _
 
 
 class NoteUser(models.Model):
@@ -14,6 +14,9 @@ class NoteUser(models.Model):
     )
     stars = models.DecimalField(default=0.0, decimal_places=5, max_digits=6)
     starred = models.BigIntegerField(default=0)
+
+    def __str__(self):
+        return f'{self.id}:{self.sbookAccount}:{self.stars}'
 
 class Bookmark(models.Model):
     note = models.ForeignKey(
@@ -27,7 +30,9 @@ class Bookmark(models.Model):
         on_delete=models.CASCADE,
     )
     position = models.BigIntegerField()
-        
+
+    def __str__(self):
+        return f'{self.id}:{self.position}:{self.note}'
 
 class Note(models.Model):
     title = models.CharField(max_length=255)
@@ -52,3 +57,5 @@ class Note(models.Model):
         related_name='notes',
     )
 
+    def __str__(self):
+        return f'{self.id}:{self.title}:{self.stars}:{self.views}'
