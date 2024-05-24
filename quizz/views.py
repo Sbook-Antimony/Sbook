@@ -32,6 +32,19 @@ def do_index(req, user):
     )
 
 
+@check_login
+def view_quizz(req, user):
+    return render(
+        req,
+        'quizz-preview.django',
+        {
+            'user': user,
+            'settings': settings,
+            'txt': 'str is **nfdlf**',
+        }
+    )
+
+
 class profiles:
     def quizzes(req, quizzid):
         try:

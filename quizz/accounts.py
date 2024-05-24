@@ -6,7 +6,6 @@ import json
 from django.http import HttpRequest
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
-from sbook.accounts import ACCOUNTS
 from sbook.accounts import DIR
 
 import profile_images
@@ -42,7 +41,7 @@ class QuizzUser():
             obj = models.QuizzUser(sbookAccount=sbook.model)
             obj.save()
         except Exception as e:
-            raise NoteUserDoesExistError() from e
+            raise QuizzUserDoesExistError() from e
         else:
             return cls(obj)
 
@@ -153,7 +152,7 @@ class Quizz:
 
     @functools.cached_property
     def description(self):
-        return self.model.description
+        return str(self.model.description)
 
     @functools.cached_property
     def profile(self):

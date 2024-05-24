@@ -41,7 +41,7 @@ class Note(models.Model):
     stars = models.DecimalField(default=0.0, decimal_places=5, max_digits=6)
     profile = models.ImageField(upload_to='profiles', null=True)
     starred = models.BigIntegerField(default=0)
-    description = models.CharField(max_length=255)
+    description = models.TextField()
     redactors = models.ManyToManyField(
         NoteUser,
         related_name="notes",

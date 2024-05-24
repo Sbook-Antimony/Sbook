@@ -8,7 +8,7 @@ import sbook.models as sbook
 class Classroom(models.Model):
     name = models.CharField(max_length=255)
     profile = models.ImageField()
-    description = models.CharField(max_length=255)
+    description = models.TextField()
     members = models.ManyToManyField(
         sbook.User,
         related_name='classrooms',

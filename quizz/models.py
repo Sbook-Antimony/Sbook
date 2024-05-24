@@ -18,7 +18,7 @@ class QuizzUser(models.Model):
 class Quizz(models.Model):
     data = models.JSONField()
     title = models.CharField(max_length=255)
-    description = models.CharField(max_length=1023)
+    description = models.TextField()
     profile = models.ImageField(upload_to='profiles')
     is_private = models.BooleanField(default=False)
     authors = models.ManyToManyField(

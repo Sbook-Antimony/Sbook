@@ -53,4 +53,8 @@ body > #right {
   margin: 0;
 }
 
+a {
+  text-decoration: none;
+}
+
 /*# sourceMappingURL=quizz-styles.css.map */

@@ -5,7 +5,7 @@ class User(models.Model):
     name = models.CharField(max_length=255)
     password = models.CharField(max_length=255)
     email = models.EmailField()
-    bio = models.CharField(max_length=1023)
+    bio = models.TextField()
     profile = models.ImageField(upload_to='profiles', null=True)
 
     def __str__(self):
