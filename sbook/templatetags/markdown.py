@@ -8,10 +8,16 @@ import markdown as md
 
 register = template.Library()
 
+re_icon = re.compile(r"\:icon\:\`(brands|regular|solid)\:([\w-]+)\`")
+
 
 @register.filter(is_safe=True, name='markdown')
 @stringfilter
 def markdown(text):
-    text = text.replace(r":icon:`([\w-]+)`", "![$1](/icons/$1.svg)")
-    md = md.markdown(str(text))
-    return mark_safe(md)
+    for style, name in re_icon.findall(text):
+        text = text.replace(
+            f':icon:`{style}:{name}`',
+            f'![icon](/static/svgs/{style}/{name}.svg)',
+        )
+    html = md.markdown(str(text))
+    return mark_safe('<div class="markdown">' + html + '</div>')
