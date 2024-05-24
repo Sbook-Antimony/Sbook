@@ -57,4 +57,8 @@ a {
   text-decoration: none;
 }
 
+div.markdown img[alt=icon] {
+  height: 1em;
+}
+
 /*# sourceMappingURL=quizz-styles.css.map */
