@@ -1,0 +1,42 @@
+{
+  "questions": [
+    {
+      "question": "what is isomerism", 
+      "options": {
+        "C": "The name of your sister", 
+        "B": "The name of chemistry in the binomial system of nomenclature", 
+        "A": "A type of cat", 
+        "D": "Dalton's last name"
+      }
+    }, 
+    {
+      "question": "what is a type of isomerism", 
+      "options": {
+        "C": "porapoleic", 
+        "B": "structural", 
+        "A": "functional", 
+        "D": "syntatetic"
+      }
+    }, 
+    {
+      "question": "how many letters in isomerism", 
+      "options": {
+        "C": "10", 
+        "B": "7", 
+        "A": "9", 
+        "D": "8"
+      }
+    }, 
+    {
+      "question": "who wrote this test", 
+      "options": {
+        "C": "10", 
+        "B": "7", 
+        "A": "9", 
+        "D": "8"
+      }
+    }
+  ], 
+  "prolog": "Good luck\n> If you want gold then dig deep\n  --- Mr. Nebanchang", 
+  "epilog": "Hy students i am [ken-morel](/users/1) hope you like th exam\n"
+}

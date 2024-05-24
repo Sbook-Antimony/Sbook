@@ -1,7 +1,18 @@
 .margin-center
     margin: auto
 
-
+.w3-margin-8
+    margin:8px!important
+.w3-margin-5
+    margin:8px!important
+.w3-margin-30
+    margin:30px!important
+.w3-margin-10
+    margin:10px!important
+.w3-margin-15
+    margin:15px!important
+.w3-margin-2
+    margin:2px!important
 
 html
     $base: blue
@@ -12,7 +23,7 @@ body
     justify-content: center
     align-items: center
     align-content: space-between
-    margin-top: 60px!important
+    margin-top: 50px!important
     flex-wrap: nowrap
 
     & > #left
@@ -20,7 +31,7 @@ body
         order: 1
         flex-grow: 2
         justify-content: left
-        display: flex
+        display: block
     
     & > #center
         margin-top: 50px
@@ -31,15 +42,14 @@ body
         text-align: center
         margin: auto
         padding: auto
-        display: flex
+        display: block
     
     & > #right
         margin-top: 50px
         order: 3
         flex-grow: 2
         justify-content: right
-        display: flex
-    
+        display: block
 
 bd-antimony
     display: flex
@@ -291,4 +301,3 @@ bkd-antimony50:-internal-dialog-in-top-layer::backdrop
 
 *
     font-family: "Open Sans", sans-serif
-    

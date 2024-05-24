@@ -40,22 +40,22 @@ def u_password_check_json(req, scope):
 
 
 @check_login(False)
-def do_index(req, user=None):
-    return render(
-        req,
-        'index.django',
-    )
-    if user is not None or True:
+def do_index(req, user):
+    if user is not None:
         return render(
             req,
             'dashboard.django',
-            {'user': user}
+            {
+                'user': user,
+                'ng_app_name': 'dashboard'
+            },
         )
     else:
         return render(
             req,
             'index.django',
         )
+
 
 def do_image(req, name):
     file = (DIR / "image") / name
@@ -155,8 +155,8 @@ def do_profile_upload(req, user):
 
 
 @check_login(False)
-def do_profile(req, user):
+def do_profile(req, user:User):
     if user is not None:
-        return File(user.profile_path)
+        return HttpResponse(user.profile_asBytes, 'img/png')
     else:
         return File(User.DEFAULT_PROFILE_PATH)

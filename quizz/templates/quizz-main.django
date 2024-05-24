@@ -10,7 +10,7 @@
         <script src="/static/scripts/angular-route.min.js"></script>
         <script src="/static/scripts/jquery.js"></script>
         <link rel="stylesheet" href="/static/styles/w3.css" />
-        <link rel="stylesheet" href="/static/styles/styles.css" />
+        <link rel="stylesheet" href="/static/styles/quizz-styles.css" />
         <link rel="stylesheet" href="/static/styles/hexa.css" />
         <title>{% block 'title' %}{% endblock %}</title>
         <script src="https://kit.fontawesome.com/ba5b68e3cc.js" crossorigin="anonymous"></script>

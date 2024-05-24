@@ -12,19 +12,11 @@
         <link rel="stylesheet" href="/static/styles/hexa.css" />
         <title>{% block 'title' %}{% endblock %}</title>
         <script src="https://kit.fontawesome.com/ba5b68e3cc.js" crossorigin="anonymous"></script>
-
         <script src="/static/scripts/nightly.js"></script>
-        <script src="https://www.w3schools.com/lib/w3.js"></script>
         <script src="/static/scripts/script.js"></script>
         <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-RLSSV98G86"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-
-            gtag('config', 'G-RLSSV98G86');
-        </script>
+        {% include 'google-analytics.django' %}
+        {% include 'fonts.django' %}
     </head>
 
     <header  role="navigation" style="padding: 0;" class="w3-bar bg-antimony50 w3-top w3-padding-0">
@@ -58,7 +50,13 @@
         
 
     </header>
-    <body class="">
+    <body
+        class=""
+        {% if ng_app_name %}
+            ng-app="{{ ng_app_name }}"
+            ng-controller="{{ ng_app_name }}Ctrl"
+        {% endif %}
+    >
         <div id="left" class="w3-container w3-round">
             {% block 'left' %}
             {% endblock %}

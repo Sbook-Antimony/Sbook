@@ -1,5 +1,7 @@
 # Import dj-database-url at the beginning of the file.
-import dj_database_url, os
+import dj_database_url
+import os
+
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -27,12 +29,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #'google_analytics',
     'fontawesomefree',
     'sbook',
     'note',
     'chatty',
     'classroom',
+    'quizz',
 ]
 
 GOOGLE_ANALYTICS = {
@@ -77,7 +79,10 @@ if os.getenv('ENV') == 'render':
     DATABASES = {
         'default': dj_database_url.config(
             # Replace this value with your local database's connection string.
-            default='postgresql://postgres:dpg-co0tm3mn7f5s73dt8hlg-a@sbook.onrender.com:5432/sbook',
+            default=(
+                'postgresql://postgres:dpg-co0tm3mn7f5s73dt8hlg-a'
+                '@sbook.onrender.com:5432/sbook'
+            ),
             conn_max_age=600
         )
     }
@@ -109,7 +114,7 @@ else:
             'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
-    STATIC_URL = 'static/'
+    STATIC_URL = 'http://localhost/static/'
 
 ALLOWED_HOSTS = [
     "localhost",

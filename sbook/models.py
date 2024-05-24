@@ -6,7 +6,7 @@ class User(models.Model):
     password = models.CharField(max_length=255)
     email = models.EmailField()
     bio = models.CharField(max_length=1023)
-    profile = models.ImageField(null=True)
+    profile = models.ImageField(upload_to='profiles', null=True)
 
     def __str__(self):
         return f"{self.id}:{self.name}:{self.email}"
@@ -17,7 +17,7 @@ class Serie(models.Model):
         'Level',
         related_name="series",
     )
-    profile = models.ImageField()
+    profile = models.ImageField(upload_to='profiles')
     name = models.CharField(max_length=32)
 
     def __str__(self):
@@ -27,7 +27,7 @@ class Serie(models.Model):
 class Level(models.Model):
     position = models.IntegerField()
     name = models.CharField(max_length=32)
-    profile = models.ImageField()
+    profile = models.ImageField(upload_to='profiles')
 
     def __str__(self):
         return f'{self.id}:{self.position}:{self.name}'
@@ -35,7 +35,7 @@ class Level(models.Model):
 
 class Course(models.Model):
     name = models.CharField(max_length=32)
-    profile = models.ImageField()
+    profile = models.ImageField(upload_to='profiles')
     levels = models.ManyToManyField(
         Level,
         related_name="courses",

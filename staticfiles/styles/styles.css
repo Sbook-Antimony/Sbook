@@ -2,13 +2,37 @@
   margin: auto;
 }
 
+.w3-margin-8 {
+  margin: 8px !important;
+}
+
+.w3-margin-5 {
+  margin: 8px !important;
+}
+
+.w3-margin-30 {
+  margin: 30px !important;
+}
+
+.w3-margin-10 {
+  margin: 10px !important;
+}
+
+.w3-margin-15 {
+  margin: 15px !important;
+}
+
+.w3-margin-2 {
+  margin: 2px !important;
+}
+
 body {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   align-content: space-between;
-  margin-top: 60px !important;
+  margin-top: 50px !important;
   flex-wrap: nowrap;
 }
 body > #left {
@@ -16,7 +40,7 @@ body > #left {
   order: 1;
   flex-grow: 2;
   justify-content: left;
-  display: flex;
+  display: block;
 }
 body > #center {
   margin-top: 50px;
@@ -27,14 +51,14 @@ body > #center {
   text-align: center;
   margin: auto;
   padding: auto;
-  display: flex;
+  display: block;
 }
 body > #right {
   margin-top: 50px;
   order: 3;
   flex-grow: 2;
   justify-content: right;
-  display: flex;
+  display: block;
 }
 
 bd-antimony {

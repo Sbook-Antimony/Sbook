@@ -1,0 +1,59 @@
+$plain: rgba(127, 127, 127, 0.0)
+$base : rgb(120, 35, 170)
+$base5: mix($base, $plain, 50%)
+$base4: mix($base, $plain, 35%)
+$base3: mix($base, $plain, 25%)
+$base2: mix($base, $plain, 20%)
+$base1: mix($base, $plain, 10%)
+$base0: mix($base, $plain, 5% )
+
+body
+  display: flex
+  flex-direction: row
+  justify-content: center
+  align-items: center
+  align-content: space-between
+  margin-top: 50px!important
+  flex-wrap: nowrap
+  & > #left
+    margin-top: 50px
+    order: 1
+    flex-grow: 1
+    justify-content: left
+    display: block
+  & > #center
+    margin:
+      left: 0
+      right: 0
+      top: 40
+      bottom: 0
+    max-width: 500px
+    width: 100%
+    order: 2
+    flex-grow: 8
+    justify-content: center
+    text-align: center
+    padding: auto
+    display: block
+  & > #right
+    margin-top: 50px
+    order: 3
+    flex-grow: 1
+    justify-content: right
+    display: block
+
+// @import styles
+
+.bg-a1
+  background-color: $base1
+
+.bg-clear
+  background-color: rgba(7, 7, 7, 0)
+
+.bg-rainbow
+  $enlightning: 20%
+  background: linear-gradient(-45deg, lighten($base, $enlightning), lighten(complement($base), $enlightning))
+  color: white
+
+.margin-0
+  margin: 0

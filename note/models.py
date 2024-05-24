@@ -36,14 +36,16 @@ class Bookmark(models.Model):
 
 class Note(models.Model):
     title = models.CharField(max_length=255)
+    is_private = models.BooleanField(default=False)
+    views = models.BigIntegerField(default=0)
+    stars = models.DecimalField(default=0.0, decimal_places=5, max_digits=6)
+    profile = models.ImageField(upload_to='profiles', null=True)
+    starred = models.BigIntegerField(default=0)
+    description = models.CharField(max_length=255)
     redactors = models.ManyToManyField(
         NoteUser,
         related_name="notes",
     )
-    views = models.BigIntegerField(default=0)
-    stars = models.DecimalField(default=0.0, decimal_places=5, max_digits=6)
-    starred = models.BigIntegerField(default=0)
-    description = models.CharField(max_length=255)
     classrooms = models.ManyToManyField(
         classroom.Classroom,
         related_name='notes',

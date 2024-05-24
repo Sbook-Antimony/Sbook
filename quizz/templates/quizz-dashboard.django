@@ -1,0 +1,49 @@
+{% extends 'quizz-main.django' %}
+
+{% block 'title' %}quizz dashboard{% endblock 'title' %}
+{% block 'left' %}
+
+{% endblock 'left' %}
+{% block 'center' %}
+    <div class="w3-margin w3-padding">
+        <h2>Hey {{ user_name }}</h2>
+    </div>
+    <hr class="bg-clear" />
+    <div class="w3-container w3-margin-bottom w3-round">
+        <button onclick="$('#myquizzes-list').slideToggle();" class="w3-margin w3-button w3-round bg-antimony10">
+            your notes
+        </button>
+        <div id="myquizzes-list" class="w3-margin w3-round bg-a1">
+            {% for quizz in user.quizzes %}
+                <div class="w3-border-bottom margin-0 w3-padding w3-justify w3-container w3-round">
+                    <img
+                        hover-class="!w3-animate-zoom"
+                        width="75"
+                        class="w3-border w3-border-black w3-circle w3-left w3-margin-right"
+                        src="/quizz/profiles/quizzes/{{ quizz.id }}.png"
+                    />
+                    <span class="w3-right">
+                        <h4 class="w3-large">{{ quizz.title }}</h4>
+                        <p class="fg-antimony w3-small">
+                            {{ quizz.description }}
+                        </p>
+                    </span>
+                </div>
+            {% empty %}
+                <p class="margin-center w3-padding-64 w3-padding-left w3-padding-right fg-antimony w3-opacity">
+                    nothing here yet
+                </p>
+            {% endfor %}
+            <a href="/quizz/new" view-class="jump" hover-class="shake" class="w3-margin w3-center hexa fa-2xl w3-circle w3-border-0">
+                <i class="fas fa-plus-circle bg-rainbow w3-button w3-white w3-round-xxlarge w3-margin-bottom">create</i>
+            </a>
+        </div>
+    </div>
+{% endblock 'center' %}
+{% block 'right' %}
+    <script>
+        const app = angular.module('{{ ng_app_name }}', []);
+        app.controller('{{ ng_app_name }}Ctrl', function($scope) {
+        });
+    </script>
+{% endblock 'right' %}
