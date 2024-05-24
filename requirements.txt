@@ -7,5 +7,5 @@ uvicorn==0.29.0
 Pillow
 numpy
 password-strength
-requests==2.31.0
+requests==2.32.2
 scss
