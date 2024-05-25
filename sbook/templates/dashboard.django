@@ -71,15 +71,18 @@
             <span class="w3-arial w3-xxlarge w3-margin">{{ user.name }}</span>
         </div>
         <p class="w3-large"l>what are we doing today?</p>
-        <p class="w3-container">
-            <a href="/note" class="w3-red w3-col w3-third w3-round w3-padding-32 w3-margin w3-large">
+        <p class="w3-container margin-center">
+            <a href="/note/" class="w3-red w3-col s5 w3-round w3-padding-32 w3-margin w3-large">
                 Notes
             </a>
-            <a href="/classroom" class="w3-green w3-col w3-third w3-round w3-padding-32 w3-margin w3-large">
+            <a href="/classroom/" class="w3-green w3-col s5 w3-round w3-padding-32 w3-margin w3-large">
                 CLassroms
             </a>
-            <a href="/quizz" class="w3-blue w3-col w3-third w3-round w3-padding-32 w3-margin w3-large">
+            <a href="/quizz/" class="w3-blue w3-col s5 w3-round w3-padding-32 w3-margin w3-large">
                 Quizzes
+            </a>
+            <a href="/chatty/" class="bg-napples w3-col s5 w3-round w3-padding-32 w3-margin w3-large">
+                Chatty
             </a>
         </p>
     </div>

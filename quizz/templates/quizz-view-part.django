@@ -1,0 +1,16 @@
+<div class="w3-border-bottom margin-0 w3-padding w3-justify w3-container w3-round">
+    <a class="w3-container" href="/quizz/quizzes/{{ quizz.id }}/preview">
+        <img
+            hover-class="!w3-animate-zoom"
+            height="100%"
+            class="w3-circle w3-left inline w3-margin-right"
+            src="/quizz/profiles/quizzes/{{ quizz.id }}.png"
+        />
+        <span class="inline">
+            <h4 class="w3-large">{{ quizz.title }}</h4>
+            <p class="fg-antimony w3-small">
+                {{ quizz.short_description | markdown }}
+            </p>
+        </span>
+    </a>
+</div>

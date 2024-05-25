@@ -39,10 +39,14 @@ class Course(models.Model):
     levels = models.ManyToManyField(
         Level,
         related_name="courses",
+        null=True,
+        default=[],
     )
     series = models.ManyToManyField(
         Serie,
         related_name="courses",
+        null=True,
+        default=[],
     )
     def __str__(self):
         return f'{self.id}:{self.name}'

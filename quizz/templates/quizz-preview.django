@@ -1,0 +1,29 @@
+{% extends 'quizz-main.django' %}
+{% load markdown %}
+
+{% block 'title' %}quizz dashboard{% endblock 'title' %}
+{% block 'left' %}
+    <div class="w3-rightbar bd-antimony">
+        <img
+            hover-class="!w3-animate-zoom"
+            height="100%"
+            class="w3-circle w3-margin"
+            src="/quizz/profiles/quizzes/{{ quizz.id }}.png"
+        />
+    </div>
+{% endblock 'left' %}
+{% block 'center' %}
+    <div class="w3-margin w3-padding-0">
+        <h1 class="w3-xxxlarge f-agbalumo-bold">{{ quizz.title }}</h1>
+        <div class="fg-antimony w3-large">
+            {{ quizz.description | markdown }}
+        </div>
+    </div>
+{% endblock 'center' %}
+{% block 'right' %}
+    <script>
+        const app = angular.module('{{ ng_app_name }}', []);
+        app.controller('{{ ng_app_name }}Ctrl', function($scope) {
+        });
+    </script>
+{% endblock 'right' %}

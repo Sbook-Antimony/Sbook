@@ -1,3 +1,5 @@
+@import base
+
 $plain: rgba(127, 127, 127, 0.0)
 $base : rgb(120, 35, 170)
 $base5: mix($base, $plain, 50%)
@@ -14,19 +16,25 @@ body
   align-items: center
   align-content: space-between
   margin-top: 50px!important
-  flex-wrap: nowrap
+  width: 100% !important
+  flex-wrap: wrap
+  padding: 0
   & > #left
-    margin-top: 50px
+    margin: 0
+    padding: 0
     order: 1
-    flex-grow: 1
+    flex-grow: 0
     justify-content: left
     display: block
+    height: 100%
+  & > #left > .bar
+    border:
+      right:
+        width: 2px
+        color: $antimony
+        style: solid
   & > #center
-    margin:
-      left: 0
-      right: 0
-      top: 40
-      bottom: 0
+    margin: auto
     max-width: 500px
     width: 100%
     order: 2
@@ -36,32 +44,26 @@ body
     padding: auto
     display: block
   & > #right
-    margin-top: 50px
+    margin: 0
+    padding: 0
     order: 3
-    flex-grow: 1
+    flex-grow: 0
     justify-content: right
     display: block
+    height: 100%
 
 // @import styles
 
 .bg-a1
   background-color: $base1
 
-.bg-clear
-  background-color: rgba(7, 7, 7, 0)
-
 .bg-rainbow
   $enlightning: 20%
   background: linear-gradient(-45deg, lighten($base, $enlightning), lighten(complement($base), $enlightning))
   color: white
 
-.margin-0
-  margin: 0
 
 a
   text-decoration: none
 
 
-div.markdown
-  img[alt=icon]
-    height: 1em

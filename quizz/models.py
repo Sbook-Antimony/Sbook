@@ -15,6 +15,25 @@ class QuizzUser(models.Model):
         return "QuizzUser(%s)" % self.sbookAccount
 
 
+class QuizzAnswerAttempt(models.Model):
+    quizz = models.ForeignKey(
+        'Quizz',
+        on_delete=models.CASCADE,
+        related_name='answer_attempts',
+    )
+    author = models.ForeignKey(
+        QuizzUser,
+        on_delete=models.CASCADE,
+        related_name='answer_attempts',
+    )
+    answers = models.JSONField()
+    remark = models.JSONField(default=None)
+    remarked = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'AnswerAttempt({self.id}:{self.remarked})'
+
+
 class Quizz(models.Model):
     data = models.JSONField()
     title = models.CharField(max_length=255)
@@ -33,7 +52,7 @@ class Quizz(models.Model):
         sbook.Level,
         related_name='quizzes'
     )
-    couses = models.ManyToManyField(
+    courses = models.ManyToManyField(
         sbook.Course,
         related_name='quizzes'
     )

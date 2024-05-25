@@ -33,14 +33,16 @@ def do_index(req, user):
 
 
 @check_login
-def view_quizz(req, user):
+def preview_quizz(req, user, quizzid):
+    quizz = Quizz.from_id(quizzid)
     return render(
         req,
         'quizz-preview.django',
         {
             'user': user,
             'settings': settings,
-            'txt': 'str is **nfdlf**',
+            'quizz': quizz,
+            'ng_app_name': 'quizz_preview',
         }
     )
 
