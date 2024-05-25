@@ -47,6 +47,21 @@ def preview_quizz(req, user, quizzid):
     )
 
 
+@check_login
+def attempt_quizz(req, user, quizzid):
+    quizz = Quizz.from_id(quizzid)
+    return render(
+        req,
+        'quizz-attempt.django',
+        {
+            'user': user,
+            'settings': settings,
+            'quizz': quizz,
+            'ng_app_name': 'quizz_attempt',
+        }
+    )
+
+
 class profiles:
     def quizzes(req, quizzid):
         try:

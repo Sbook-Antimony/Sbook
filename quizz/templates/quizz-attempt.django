@@ -1,0 +1,38 @@
+{% extends 'quizz-main.django' %}
+{% load markdown %}
+
+{% block 'title' %}quizz dashboard{% endblock 'title' %}
+{% block 'left' %}
+
+{% endblock 'left' %}
+{% block 'center' %}
+    {% if quizz.instructions %}
+        <h1 class="w3-left-align">Instructions:</h1>
+        <div id="instructions" class="w3-margin w3-padding-0">
+            {{ quizz.instructions | markdown }}
+        </div>
+    {% endif %}
+    <form action="" method="get" accept-charset="utf-8">
+
+        get
+    </form>
+    {% for question in quizz.questions %}
+        <div class="question">
+            <p>{{ question.question }}</p>
+        </div>
+    {% empty %}
+        <div class="w3-padding-64 bg-antimony50">
+            <img src="/static/svg/solid/file-circle-question.svg" class="inline fg-antimony50">
+            <p class="w3-padding-64 inline">
+                We searched but found no question.
+            </p>
+        </div>
+    {% endfor %}
+{% endblock 'center' %}
+{% block 'right' %}
+    <script>
+        const app = angular.module('{{ ng_app_name }}', []);
+        app.controller('{{ ng_app_name }}Ctrl', function($scope) {
+        });
+    </script>
+{% endblock 'right' %}

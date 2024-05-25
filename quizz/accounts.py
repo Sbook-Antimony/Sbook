@@ -88,9 +88,11 @@ class Question:
 
 
 class MCQQuestion(Question):
+    mode = 'mcq'
+
     def __init__(self, data):
         self.question = data.get('question')
-        self.options = data.get('options')
+        self.options = data.get('options').items()
         self.answer = data.get('answer')
 
     def js(self):
@@ -125,6 +127,7 @@ class Quizz:
         if model is None:
             raise QuizzDoesNotExistError()
         self.model = model
+        self.data = model.data
 
     @functools.cached_property
     def id(self):
@@ -173,19 +176,21 @@ class Quizz:
     @property
     def js(self):
         return {
-            "title"      : self.title,
-            "id"         : self.id   ,
-            "views"      : self.views,
-            "stars"      : float(self.stars),
-            "profile"    : f'/note/notes/{self.id}/profile.png',
-            "path"       : f'/note/notes/{self.id}/',
+            "title": self.title,
+            "id": self.id,
+            "views": self.views,
+            "stars": float(self.stars),
+            "profile": f'/note/notes/{self.id}/profile.png',
+            "path": f'/note/notes/{self.id}/',
             "description": self.description,
-            "color"      : profile_images.average_color(self.profile),
+            "color": profile_images.average_color(self.profile),
         }
 
     @functools.cached_property
     def questions(self):
-        return tuple(Question.from_dict(data) for data in self.model.data['questions'])
+        return tuple(
+            Question.from_dict(data) for data in self.data.get('questions', [])
+        )
 
     @functools.cached_property
     def questions_js(self):
@@ -194,6 +199,11 @@ class Quizz:
     @property
     def json(self, indent=4):
         return json.dumps(self.js, indent=indent)
+
+    @functools.cached_property
+    def instructions(self):
+        return self.data.get('instructions')
+
 
 def check_login(func, redirect=True):
     if isinstance(func, bool):
