@@ -5,65 +5,6 @@
 {% endblock %}
 
 {% block 'center' %}
-    <dialog id="uploadImageDialog" class="w3-round-large w3-border-0 bkd-antimony50 w3-container">
-        <form action="/profile.png/upload/" method="post" enctype="multipart/form-data" id="uploadImageForm" class="w3-container">
-            <img
-                class="w3-image w3-circle w3-margin w3-block"
-                id="uploadImagePreviewImage"
-                src="/profile.png"
-                style="width: 300px!important; height: 300px!important;"
-                width="300"
-                height="300"
-            />
-            {% csrf_token %}
-            <label for="file" onclick="this.querySelector('input').click()" class="bg-antimony10 w3-btn w3-round">
-                Choose photo
-                <input onchange="uploadPhotoReadProfile(event)" type="file" name="file" hidden />
-            </label>
-            <button type="submit" id="imageUploadButton" onclick="submitNewProfile(); this.setAttribute('hover-class', '');" css-transition="1s" hover-class="w3-red shake" class="hexa w3-disabled bg-antimony10-hover w3-btn w3-round" >
-                Submit
-            </button>
-            <script type="text/javascript" charset="utf-8">
-                function uploadPhotoReadProfile(e) {
-                    console.log("adding new profile");
-                    let files = e.target.files;
-                    if(files.length < 1) return;
-                    let
-                        file = files[0],
-                        reader = new FileReader();
-                    reader.onloadend = function() {
-                        console.log(reader);
-                        let dataurl = reader.result;
-                        $("#uploadImagePreviewImage")[0].src = dataurl;
-                        setTimeout(function() {
-                            $("#imageUploadButton")
-                                .removeClass('w3-disabled')
-                                .addClass("w3-green");
-                        }, 1000);
-                    }
-                    reader.readAsDataURL(file);
-                }
-                function submitNewProfile() {
-                    let formdata = new FormData($("uploadImageForm")[0]);
-                    console.log(formdata);
-                    $.ajax({
-                        type: 'POST',
-                        url: '/profile.png/upload/', // replace with your server-side script
-                        data: formdata,
-                        success: function(data) {
-                            localtion.reload();
-                        },
-                        error: function() {
-                            $("imageUploadButton")
-                                .toggleClass('w3-green w3-red');
-                        },
-                    });
-                };
-            </script>
-        </form>
-    </dialog>
-
-
     <div ng-app="dashboard" ng-controller="dashboardCtrl" class="w3-container w3-round w3-round-medium w3-animate-show">
         <div class="wave bg-antimony10 w3-container w3-round w3-margin-bottom">
             <span  onclick="$('#uploadImageDialog')[0].showModal();" class="w3-margin w3-display-container">
@@ -72,7 +13,6 @@
             </span>
             {#srcset="/profile.png 300w, /profile.png 600w, /profile.png 1200w" sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 1200px"#}
             <span ng-bind="user_name" class="w3-arial w3-xxlarge w3-margin"></span>
-            
         </div>
         <div class="w3-container bg-napples10 bd-napples bd-thin w3-margin-bottom w3-round">
             <button onclick="$('#note-list').slideToggle();" class="w3-margin w3-button w3-round bg-antimony10">
@@ -105,167 +45,16 @@
             <button onclick="$('#bookmark-list').slideToggle();" class="w3-margin w3-button w3-round bg-antimony10">
                 my bookmarks <i class="w3-text-yellow fas fa-star"></i>
             </button>
-            <div id="bookmark-list" class="margin-center">
-                {% if hasBookmarks %}
-                    {% for bookmark in user.bookmarks %}
-                    {% empty %}
-                        <p class="margin-center w3-padding-64 fg-antimony w3-opacity">
-                            nothing here yet
-                        </p>    
-                    {% endfor %}
+            <div id="bookmark-list" class="margin-center w3-padding-64">
+                {% for bookmark in user.bookmarks %}
+                {% empty %}
+                    <p class="w3-padding-64 fg-antimony w3-opacity">
+                        nothing here yet
+                    </p>
+                {% endfor %}
             </div>
         </div>
-        <div  css-transition="1s" view-class="w3-animate-opacity !w3-animate-fading" class="wave w3-container w3-round bg-napples10 bd-napples bd-thin w3-margin-bottom">
-            <button onclick="$('#bookmark-list').slideToggle();" class="w3-margin w3-button w3-round bg-antimony10">
-                my bookmarks <i class="w3-text-yellow fas fa-star"></i>
-            </button>
-            <div id="bookmark-list" class="margin-center">
-                {% if user.hasBookmarks %}
-                    {% for bookmark in user.bookmarks %}
-                        
-                    {% endfor %}
-                {% else %}
-                    <p class="margin-center w3-padding-64 w3-container fg-antimony w3-opacity">
-                        nothing here yet
-                    </p>
-                {% endif %}        
-            </div>
-        </div><div  css-transition="1s" view-class="w3-animate-opacity !w3-animate-fading" class="w3-container w3-round bg-napples10 bd-napples bd-thin w3-margin-bottom">
-            <button onclick="$('#bookmark-list').slideToggle();" class="w3-margin w3-button w3-round bg-antimony10">
-                my bookmarks <i class="w3-text-yellow fas fa-star"></i>
-            </button>
-            <div id="bookmark-list" class="margin-center">
-                {% if user.hasBookmarks %}
-                    {% for bookmark in user.bookmarks %}
-                        
-                    {% endfor %}
-                {% else %}
-                    <p class="margin-center w3-padding-64 w3-container fg-antimony w3-opacity">
-                        nothing here yet
-                    </p>
-                {% endif %}        
-            </div>
-        </div><div  css-transition="1s" view-class="w3-animate-opacity !w3-animate-fading" class="w3-container w3-round bg-napples10 bd-napples bd-thin w3-margin-bottom">
-            <button onclick="$('#bookmark-list').slideToggle();" class="w3-margin w3-button w3-round bg-antimony10">
-                my bookmarks <i class="w3-text-yellow fas fa-star"></i>
-            </button>
-            <div id="bookmark-list" class="margin-center">
-                {% if user.hasBookmarks %}
-                    {% for bookmark in user.bookmarks %}
-                        
-                    {% endfor %}
-                {% else %}
-                    <p class="margin-center w3-padding-64 w3-container fg-antimony w3-opacity">
-                        nothing here yet
-                    </p>
-                {% endif %}        
-            </div>
-        </div><div css-transition="1s" view-class="w3-animate-opacity !w3-animate-fading" class="w3-container w3-round bg-napples10 bd-napples bd-thin w3-margin-bottom">
-            <button onclick="$('#bookmark-list').slideToggle();" class="w3-margin w3-button w3-round bg-antimony10">
-                my bookmarks <i class="w3-text-yellow fas fa-star"></i>
-            </button>
-            <div id="bookmark-list" class="margin-center">
-                {% if user.hasBookmarks %}
-                    {% for bookmark in user.bookmarks %}
-                        
-                    {% endfor %}
-                {% else %}
-                    <p class="margin-center w3-padding-64 w3-container fg-antimony w3-opacity">
-                        nothing here yet
-                    </p>
-                {% endif %}        
-            </div>
-        </div><div  css-transition="1s" view-class="w3-animate-opacity !w3-animate-fading" class="w3-container w3-round bg-napples10 bd-napples bd-thin w3-margin-bottom">
-            <button onclick="$('#bookmark-list').slideToggle();" class="w3-margin w3-button w3-round bg-antimony10">
-                my bookmarks <i class="w3-text-yellow fas fa-star"></i>
-            </button>
-            <div id="bookmark-list" class="margin-center">
-                {% if user.hasBookmarks %}
-                    {% for bookmark in user.bookmarks %}
-                        
-                    {% endfor %}
-                {% else %}
-                    <p class="margin-center w3-padding-64 w3-container fg-antimony w3-opacity">
-                        nothing here yet
-                    </p>
-                {% endif %}        
-            </div>
-        </div><div  css-transition="1s" view-class="w3-animate-opacity !w3-animate-fading" class="w3-container w3-round bg-napples10 bd-napples bd-thin w3-margin-bottom">
-            <button onclick="$('#bookmark-list').slideToggle();" class="w3-margin w3-button w3-round bg-antimony10">
-                my bookmarks <i class="w3-text-yellow fas fa-star"></i>
-            </button>
-            <div id="bookmark-list" class="margin-center">
-                {% if user.hasBookmarks %}
-                    {% for bookmark in user.bookmarks %}
-                        
-                    {% endfor %}
-                {% else %}
-                    <p class="margin-center w3-padding-64 w3-container fg-antimony w3-opacity">
-                        nothing here yet
-                    </p>
-                {% endif %}        
-            </div>
-        </div><div  css-transition="1s" view-class="w3-animate-opacity !w3-animate-fading" class="w3-container w3-round bg-napples10 bd-napples bd-thin w3-margin-bottom">
-            <button onclick="$('#bookmark-list').slideToggle();" class="w3-margin w3-button w3-round bg-antimony10">
-                my bookmarks <i class="w3-text-yellow fas fa-star"></i>
-            </button>
-            <div id="bookmark-list" class="margin-center">
-                {% if user.hasBookmarks %}
-                    {% for bookmark in user.bookmarks %}
-                        
-                    {% endfor %}
-                {% else %}
-                    <p class="margin-center w3-padding-64 w3-container fg-antimony w3-opacity">
-                        nothing here yet
-                    </p>
-                {% endif %}        
-            </div>
-        </div><div  css-transition="1s" view-class="w3-animate-opacity !w3-animate-fading" class="w3-container w3-round bg-napples10 bd-napples bd-thin w3-margin-bottom">
-            <button onclick="$('#bookmark-list').slideToggle();" class="w3-margin w3-button w3-round bg-antimony10">
-                my bookmarks <i class="w3-text-yellow fas fa-star"></i>
-            </button>
-            <div id="bookmark-list" class="margin-center">
-                {% if user.hasBookmarks %}
-                    {% for bookmark in user.bookmarks %}
-                        
-                    {% endfor %}
-                {% else %}
-                    <p class="margin-center w3-padding-64 w3-container fg-antimony w3-opacity">
-                        nothing here yet
-                    </p>
-                {% endif %}        
-            </div>
-        </div><div  css-transition="1s" view-class="w3-animate-opacity !w3-animate-fading" class="w3-container w3-round bg-napples10 bd-napples bd-thin w3-margin-bottom">
-            <button onclick="$('#bookmark-list').slideToggle();" class="w3-margin w3-button w3-round bg-antimony10">
-                my bookmarks <i class="w3-text-yellow fas fa-star"></i>
-            </button>
-            <div id="bookmark-list" class="margin-center">
-                {% if user.hasBookmarks %}
-                    {% for bookmark in user.bookmarks %}
-                        
-                    {% endfor %}
-                {% else %}
-                    <p class="margin-center w3-padding-64 w3-container fg-antimony w3-opacity">
-                        nothing here yet
-                    </p>
-                {% endif %}        
-            </div>
-        </div><div  css-transition="1s" view-class="wave w3-animate-opacity !w3-animate-fading" class="w3-container w3-round bg-napples10 bd-napples bd-thin w3-margin-bottom">
-            <button onclick="$('#bookmark-list').slideToggle();" class="w3-margin w3-button w3-round bg-antimony10">
-                my bookmarks <i class="w3-text-yellow fas fa-star"></i>
-            </button>
-            <div id="bookmark-list" class="margin-center">
-                {% if user.hasBookmarks %}
-                    {% for bookmark in user.bookmarks %}
-                        
-                    {% endfor %}
-                {% else %}
-                    <p class="margin-center w3-padding-64 w3-container fg-antimony w3-opacity">
-                        nothing here yet
-                    </p>
-                {% endif %}        
-            </div>
-        </div>
+
 
 
 

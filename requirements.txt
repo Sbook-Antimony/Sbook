@@ -9,5 +9,4 @@ numpy
 password-strength
 requests==2.32.2
 scss
-fontawesomefree
 markdown
