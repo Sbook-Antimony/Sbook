@@ -1,38 +1,101 @@
 {% extends 'quizz-main.django' %}
 {% load markdown %}
 
-{% block 'title' %}quizz dashboard{% endblock 'title' %}
+{% block 'title' %}{{ quizz.title }} {% endblock 'title' %}
 {% block 'left' %}
 
 {% endblock 'left' %}
 {% block 'center' %}
-    {% if quizz.instructions %}
-        <h1 class="w3-left-align">Instructions:</h1>
-        <div id="instructions" class="w3-margin w3-padding-0">
-            {{ quizz.instructions | markdown }}
+    {% if quizz.prolog %}
+        <div id="instructions" class="w3-justify f-open-sans w3-large w3-margin w3-padding-0">
+            {{ quizz.prolog | markdown }}
         </div>
     {% endif %}
-    <form action="" method="get" accept-charset="utf-8">
-
-        get
+    {% if quizz.instructions %}
+        <div class="w3-container round5-eq-contents w3-padding-0 w3-margin">
+            <h1 class="bg-a1 w3-left-align f-algabumo">Instructions:</h1>
+            <div id="instructions" class="w3-pale-red f-open-sans w3-large w3-padding-0">
+                {{ quizz.instructions | markdown }}
+            </div>
+        </div>
+    {% endif %}
+    <form class="w3-justify" action="/quizz/quizzes/{{ quizz.id }}/submit/" method="post" accept-charset="utf-8">
+        {% csrf_token %}
+        {% for question in quizz.questions %}
+            <div class="question w3-round w3-margin w3-card w3-padding">
+                <p class="f-aclonica">{{ question.question }}</p>
+                {% for name, val in question.options %}
+                    <span class="block">
+                        <label class="block">
+                            <input
+                                type="radio"
+                                ng-model="anwsers[{{ question.id }}]"
+                                ng-checked="answerChecked($event)"
+                                name="{{ question.id }}"
+                                value="{{ name }}"
+                                class="w3-left inline"
+                            />
+                            {{ name }}. {{ val | markdown }}
+                        </label>
+                    </span>
+                {% empty %}
+                    <div class="w3-padding-64 bg-antimony50">
+                        <img src="/static/svg/solid/file-circle-question.svg" class="inline fg-antimony50">
+                        <p class="w3-padding-64 inline">
+                            No option for this question.
+                        </p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% empty %}
+            <div class="w3-padding-64 bg-antimony50">
+                <img src="/static/svg/solid/file-circle-question.svg" class="inline w fg-antimony50 ">
+                <p class="w3-padding-64 inline">
+                    We searched but found no question.
+                </p>
+            </div>
+        {% endfor %}
+        <div class="w3-container w3-center">
+            <button
+                type="submit"
+                class="w3-large w3-margin w3-padding w3-text-white w3-round-xxlarge w3-red w3-button"
+                id="submit-button"
+                css-transition="1s"
+            >
+                Submit
+                {{ "solid chevron-right text-fit w3-text-white" | icon }}
+            </button>
+        </div>
+        {% if quizz.epilog %}
+            <h1 class="w3-left-align">Instructions:</h1>
+            <div id="instructions" class="f-open-sans w3-large w3-margin w3-padding-0">
+                {{ quizz.epilog | markdown }}
+            </div>
+        {% endif %}
     </form>
-    {% for question in quizz.questions %}
-        <div class="question">
-            <p>{{ question.question }}</p>
-        </div>
-    {% empty %}
-        <div class="w3-padding-64 bg-antimony50">
-            <img src="/static/svg/solid/file-circle-question.svg" class="inline fg-antimony50">
-            <p class="w3-padding-64 inline">
-                We searched but found no question.
-            </p>
-        </div>
-    {% endfor %}
 {% endblock 'center' %}
 {% block 'right' %}
     <script>
         const app = angular.module('{{ ng_app_name }}', []);
         app.controller('{{ ng_app_name }}Ctrl', function($scope) {
+            $scope.anwsers = {};
+            $scope.answerChecked = function() {
+                setTimeout(function() {
+                    for(let i in $scope.anwsers) {
+                        if(!(i-1 in $scope.anwsers) && i != 0) {
+                            $('#submit-button')
+                                .addClass('w3-blue')
+                                .removeClass('w3-red bg-rainbow');
+                            break;
+                        } else {
+                            $('#submit-button')
+                                .removeClass('w3-red w3-blue')
+                                .addClass('bg-rainbow');
+                        }
+                        v = i;
+                    }
+                }, 1000);
+            }
         });
     </script>
 {% endblock 'right' %}

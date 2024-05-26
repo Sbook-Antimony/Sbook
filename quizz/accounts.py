@@ -83,17 +83,18 @@ class QuizzUser():
 
 class Question:
     @classmethod
-    def from_dict(cls, js):
-        return MCQQuestion(js)
+    def from_dict(cls, js, i):
+        return MCQQuestion(js, i)
 
 
 class MCQQuestion(Question):
     mode = 'mcq'
 
-    def __init__(self, data):
+    def __init__(self, data, id=0):
         self.question = data.get('question')
         self.options = data.get('options').items()
         self.answer = data.get('answer')
+        self.id = id
 
     def js(self):
         return {
@@ -189,7 +190,8 @@ class Quizz:
     @functools.cached_property
     def questions(self):
         return tuple(
-            Question.from_dict(data) for data in self.data.get('questions', [])
+            Question.from_dict(data, i)
+            for i, data in enumerate(self.data.get('questions', []))
         )
 
     @functools.cached_property
@@ -203,6 +205,49 @@ class Quizz:
     @functools.cached_property
     def instructions(self):
         return self.data.get('instructions')
+
+    @functools.cached_property
+    def epilog(self):
+        return self.data.get('epilog')
+
+    @functools.cached_property
+    def prolog(self):
+        return self.data.get('prolog')
+
+
+class QuizzAttemptDoesNotExistError(ValueError):
+    pass
+
+
+class QuizzAttemptDoesExistError(ValueError):
+    pass
+
+
+class QuizzAttempt:
+    @classmethod
+    def create(cls, author, quizz, answers):
+        model = models.QuizzAttempt(
+            answers=answers,
+            author=author,
+            quizz=quizz,
+        )
+        model.save()
+        return cls(model)
+
+    @classmethod
+    def from_id(cls, id):
+        try:
+            found = models.Quizz.objects.get(id=id)
+        except models.QuizzAttempt.DoesNotExist as e:
+            raise QuizzAttemptDoesNotExistError() from e
+        else:
+            return cls(found)
+
+    def __init__(self, model=None):
+        if model is None:
+            raise QuizzAttemptDoesNotExistError()
+        self.model = model
+        self.data = model.data
 
 
 def check_login(func, redirect=True):

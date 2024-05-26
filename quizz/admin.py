@@ -7,4 +7,4 @@ from . import models
 
 admin.site.register(models.Quizz)
 admin.site.register(models.QuizzUser)
-admin.site.register(models.QuizzAnswerAttempt)
+admin.site.register(models.QuizzAttempt)

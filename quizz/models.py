@@ -15,7 +15,7 @@ class QuizzUser(models.Model):
         return "QuizzUser(%s)" % self.sbookAccount
 
 
-class QuizzAnswerAttempt(models.Model):
+class QuizzAttempt(models.Model):
     quizz = models.ForeignKey(
         'Quizz',
         on_delete=models.CASCADE,

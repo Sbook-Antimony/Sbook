@@ -62,6 +62,26 @@ def attempt_quizz(req, user, quizzid):
     )
 
 
+@check_login
+def submit_quizz(req, user, quizzid):
+    if req.method == "POST":
+        quizz = Quizz.from_id(quizzid)
+        answers = []
+        for i, question in quizz.questions:
+            answers.append(
+                req.POST.get(str(i))
+            )
+        attempt = QuizzAttempt.create(user, quizz, answers)
+        return render(
+            req,
+            'quizz-attempted.django',
+            {
+                'attempt': attempt,
+                'user': user
+            }
+        )
+
+
 class profiles:
     def quizzes(req, quizzid):
         try:

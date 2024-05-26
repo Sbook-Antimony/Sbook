@@ -21,3 +21,11 @@ def markdown(text):
         )
     html = md.markdown(str(text))
     return mark_safe('<div class="markdown">' + html + '</div>')
+
+
+@register.filter(is_safe=True, name='icon')
+@stringfilter
+def icon(text):
+    ty, n, *cl = text.split(' ')
+    txt = f'<img src="/static/svg/{ty}/{n}.svg" class="{" ".join(cl)}" />'
+    return mark_safe(txt)

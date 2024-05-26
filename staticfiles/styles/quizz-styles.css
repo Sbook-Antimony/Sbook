@@ -337,4 +337,17 @@ a {
   text-decoration: none;
 }
 
+.round5-eq-contents {
+  border-radius: 5px;
+  padding: 0 0 0 0 !important;
+}
+.round5-eq-contents > *:first-child {
+  border-radius: 5px 5px 0 0;
+  margin: 0;
+}
+.round5-eq-contents > *:last-child {
+  border-radius: 0 0 5px 5px;
+  margin: 0;
+}
+
 /*# sourceMappingURL=quizz-styles.css.map */
