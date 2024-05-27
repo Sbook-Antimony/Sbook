@@ -10,15 +10,9 @@ pip install -r requirements.txt
 python manage.py collectstatic --no-input
 
 # Apply any outstanding database migrations
-python manage.py makemigrations sbook
-python manage.py makemigrations note
-python manage.py makemigrations chatty
-python manage.py migrate sbook
-python manage.py migrate note
-python manage.py migrate chatty
+python manage.py makemigrations
+python manage.py migrate
 
 #python manage.py createsuperuser --username ken-morel --password amemimy114865009
 
-
-npx sass staticfiles/styles/style.scss staticfiles/styles/style.css
 echo all zell
