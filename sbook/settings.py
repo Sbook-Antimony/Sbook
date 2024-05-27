@@ -119,6 +119,8 @@ ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
     "sbook.up.railway.app",
+    '.railway.app',
+    '.up.railway.app',
     "sbook.vercel.app",
     "sbook.onrender.com",
 ]
