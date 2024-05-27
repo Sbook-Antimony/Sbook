@@ -115,7 +115,7 @@ else:
     }
     STATIC_URL = 'http://localhost/static/'
 
-CSRF_TRUSTED_ORIGINS = ALLOWED_HOSTS = [
+ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
     "sbook.up.railway.app",
@@ -123,6 +123,12 @@ CSRF_TRUSTED_ORIGINS = ALLOWED_HOSTS = [
     '.up.railway.app',
     "sbook.vercel.app",
     "sbook.onrender.com",
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://sbook.up.railway.app',
+    'https://sbook.onrender.com',
+    'https://sbook.vercel.app'
 ]
 
 #STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
