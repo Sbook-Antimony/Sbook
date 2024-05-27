@@ -44,46 +44,30 @@
                 </p>
             </div>
         {% endfor %}
+        {% include 'markdown-entry.django' with name='remark' %}
+        <label class="w3-container w3-round w3-card">
+            mark:
+            <input type="number" name="mark" value="mark" placeholder="3" />
+        </label>
+
         <div class="w3-container w3-center">
             <button
                 type="submit"
-                class="w3-large w3-margin w3-padding w3-text-white w3-round-xxlarge w3-red w3-button"
-                id="submit-button"
+                class="w3-large w3-margin w3-padding w3-text-white w3-round-xxlarge w3-green w3-button"
+                id="remark-button"
                 css-transition="1s"
             >
-                Submit
+                Remark
                 {{ "solid chevron-right text-fit w3-text-white" | icon }}
             </button>
         </div>
-        {% if quizz.epilog %}
-            <div id="instructions" class="f-open-sans w3-large w3-margin w3-padding-0">
-                {{ quizz.epilog | markdown }}
-            </div>
-        {% endif %}
     </form>
 {% endblock 'center' %}
 {% block 'right' %}
     <script>
         const app = angular.module('{{ ng_app_name }}', []);
         app.controller('{{ ng_app_name }}Ctrl', function($scope) {
-            $scope.anwsers = {};
-            $scope.answerChecked = function() {
-                setTimeout(function() {
-                    for(let i in $scope.anwsers) {
-                        if(!(i-1 in $scope.anwsers) && i != 0) {
-                            $('#submit-button')
-                                .addClass('w3-blue')
-                                .removeClass('w3-red bg-rainbow');
-                            break;
-                        } else {
-                            $('#submit-button')
-                                .removeClass('w3-red w3-blue')
-                                .addClass('bg-rainbow');
-                        }
-                        v = i;
-                    }
-                }, 1000);
-            }
+
         });
     </script>
 {% endblock 'right' %}

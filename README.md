@@ -1,4 +1,6 @@
 [![Django CI](https://github.com/Sbook-Antimony/Sbook/actions/workflows/django.yml/badge.svg?event=push)](https://github.com/Sbook-Antimony/Sbook/actions/workflows/django.yml)
+[render deploy](https://api.render.com/deploy/srv-cpad8lcf7o1s73af2q2g?key=VBiiegFNcm0)
+web: https://sbook-j0my.onrender.com
 # sbook
 is a web platform, supporting several tools for e-learning
 

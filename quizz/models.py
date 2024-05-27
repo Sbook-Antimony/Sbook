@@ -29,6 +29,7 @@ class QuizzAttempt(models.Model):
     answers = models.JSONField()
     remark = models.JSONField(default=None, null=True)
     remarked = models.BooleanField(default=False)
+    mark = models.SmallIntegerField()
 
     def __str__(self):
         return f'AnswerAttempt({self.id}:{self.remarked})'
