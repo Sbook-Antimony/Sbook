@@ -122,13 +122,14 @@ ALLOWED_HOSTS = [
     '.railway.app',
     '.up.railway.app',
     "sbook.vercel.app",
-    "sbook.onrender.com",
+    "sbook-j0my.onrender.com",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     'https://sbook.up.railway.app',
     'https://sbook.onrender.com',
-    'https://sbook.vercel.app'
+    'https://sbook.vercel.app',
+    'https://sbook-j0my.onrender.com'
 ]
 
 #STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
