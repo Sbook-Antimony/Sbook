@@ -115,7 +115,7 @@ else:
     }
     STATIC_URL = 'http://localhost/static/'
 
-ALLOWED_HOSTS = [
+CSRF_TRUSTED_ORIGINS = ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
     "sbook.up.railway.app",
