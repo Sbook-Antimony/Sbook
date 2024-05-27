@@ -14,7 +14,7 @@
             {#srcset="/profile.png 300w, /profile.png 600w, /profile.png 1200w" sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 1200px"#}
             <span ng-bind="user_name" class="w3-arial w3-xxlarge w3-margin"></span>
         </div>
-        <div class="w3-container bg-napples10 bd-napples bd-thin w3-margin-bottom w3-round">
+        <div class="w3-container bg-naple10 bd-naple bd-thin w3-margin-bottom w3-round">
             <button onclick="$('#note-list').slideToggle();" class="w3-margin w3-button w3-round bg-antimony10">
                 your notes
             </button>
@@ -41,7 +41,7 @@
                 <i class="fas fa-plus-circle"></i>
             </a>
         </div>
-        <div class="w3-container w3-round bg-napples10 bd-napples bd-thin w3-margin-bottom">
+        <div class="w3-container w3-round bg-naple10 bd-naple bd-thin w3-margin-bottom">
             <button onclick="$('#bookmark-list').slideToggle();" class="w3-margin w3-button w3-round bg-antimony10">
                 my bookmarks <i class="w3-text-yellow fas fa-star"></i>
             </button>

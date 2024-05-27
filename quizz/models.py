@@ -24,10 +24,10 @@ class QuizzAttempt(models.Model):
     author = models.ForeignKey(
         QuizzUser,
         on_delete=models.CASCADE,
-        related_name='answer_attempts',
+        related_name='quizz_attempts',
     )
     answers = models.JSONField()
-    remark = models.JSONField(default=None)
+    remark = models.JSONField(default=None, null=True)
     remarked = models.BooleanField(default=False)
 
     def __str__(self):

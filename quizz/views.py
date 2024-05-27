@@ -65,9 +65,10 @@ def attempt_quizz(req, user, quizzid):
 @check_login
 def submit_quizz(req, user, quizzid):
     if req.method == "POST":
+        print(req.POST.items(), req.POST, user)
         quizz = Quizz.from_id(quizzid)
         answers = []
-        for i, question in quizz.questions:
+        for i, question in enumerate(quizz.questions):
             answers.append(
                 req.POST.get(str(i))
             )
@@ -80,6 +81,34 @@ def submit_quizz(req, user, quizzid):
                 'user': user
             }
         )
+
+
+@check_login
+def view_quizz_attempts(req, user, quizzid):
+    quizz = Quizz.from_id(quizzid)
+    return render(
+        req,
+        'view-quizz-attempts.django',
+        {
+            'quizz': quizz,
+            'user': user,
+        }
+    )
+
+
+@check_login
+def review_attempt(req, user, quizzid, attemptid):
+    attempt = QuizzAttempt.from_id(attemptid)
+    quizz = Quizz.from_id(quizzid)
+    return render(
+        req,
+        'quizz-attempt-review.django',
+        {
+            'attempt': attempt,
+            'quizz': quizz,
+            'user': user,
+        }
+    )
 
 
 class profiles:

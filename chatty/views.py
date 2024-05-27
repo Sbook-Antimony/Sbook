@@ -1,9 +1,12 @@
-from django.shortcuts import render
-from django.http import HttpResponseRedirect, HttpResponse, HttpResponseNotFound
-from django.views import View
 from chatty.accounts import *
+from django.http import HttpResponse
+from django.http import HttpResponseNotFound
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
+from django.views import View
 
 from . import forms
+
 
 @check_login
 def index(req, user):
@@ -16,6 +19,7 @@ def index(req, user):
         }
     )
 
+
 @check_login
 def send_message(req, user, roomid):
     form = forms.SendMessageForm(req.POST)
@@ -25,16 +29,17 @@ def send_message(req, user, roomid):
         ChattyMessage.create(user, data, ChattyRoom.from_id(roomid))
         return HttpResponseRedirect(f"/chatty/rooms/{roomid}/messages/")
     except Exception as e:
-        return HttpResponse('false'+str(e))
+        return HttpResponse('false' + str(e))
+
 
 class room(View):
     @check_login
     def get(self, req, user, roomid, *_, **__):
         try:
             room = ChattyRoom.from_id(roomid)
-        except:
+        except ChattyRoomDoesExistError:
             return HttpResponseNotFound(
-                "room %d not found"%roomid
+                "room %d not found" % roomid
             )
         else:
             return render(

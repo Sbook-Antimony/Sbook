@@ -110,14 +110,16 @@ class signin(View):
                 req.session["user-id"] = user.id
                 return HttpResponseRedirect('/')
 
+
 class signup(View):
     def get(self, req, *args, **kw):
-        return render(req,"signup.django", {'errors': False})
+        return render(req, "signup.django", {'errors': False})
+
     def post(self, req, *args, **kw):
         data = parse_recaptcha_token(req.POST.get("signincaptcha"))
-        #print(data)
+        # print(data)
         if not data["success"]:
-            #return HttpResponseRedirect("/signup/")
+            # return HttpResponseRedirect("/signup/")
             pass
 
         form = forms.SignupForm(req.POST)
@@ -147,6 +149,7 @@ class signup(View):
                 req.session["user-id"] = user.id
                 return HttpResponseRedirect('/')
 
+
 @check_login
 def do_profile_upload(req, user):
     file = req.FILES.get('file')
@@ -154,9 +157,18 @@ def do_profile_upload(req, user):
     return JsonResponse({'succes': True})
 
 
-@check_login(False)
-def do_profile(req, user:User):
+@check_login(True)
+def do_profile(req, user: User):
     if user is not None:
         return HttpResponse(user.profile_asBytes, 'img/png')
     else:
         return File(User.DEFAULT_PROFILE_PATH)
+
+
+def do_userid_profile(req, userid):
+    try:
+        user = User.from_id(userid)
+    except UserDoesNotExistError:
+        return File(User.DEFAULT_PROFILE_PATH)
+    else:
+        return HttpResponse(user.profile_asBytes, 'img/png')

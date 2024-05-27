@@ -125,9 +125,14 @@ img.text-fit {
   color: rgba(76, 79, 77, 0.4666666667) !important;
 }
 
+.fg-antimony10,
+.fg-antimony10-hover:hover {
+  color: rgba(76, 79, 77, 0.0901960784) !important;
+}
+
 .bg-antimony10,
 .bg-antimony10-hover:hover {
-  background-color: rgba(76, 79, 77, 0.0980392157) !important;
+  background-color: rgba(76, 79, 77, 0.0901960784) !important;
 }
 
 .bg-antimony5,
@@ -140,28 +145,28 @@ img.text-fit {
   background-color: rgba(76, 79, 77, 0.1450980392) !important;
 }
 
-.bd-napples,
-.bd-napples-hover:hover {
+.bd-naple,
+.bd-naple-hover:hover {
   border-color: #fada5e !important;
 }
 
-.bg-napples,
-.bg-napples-hover:hover {
-  background-color: #fada5e !important;
+.bg-naple,
+.bg-naple-hover:hover {
+  background-color: rgb(250, 218, 94) !important;
 }
 
-.bg-napples50,
-.bg-napples50-hover:hover {
+.bg-naple50,
+.bg-naple50-hover:hover {
   background-color: rgba(250, 218, 94, 0.4666666667) !important;
 }
 
-.bg-napples10,
-.bg-napples10-hover:hover {
+.bg-naple10,
+.bg-naple10-hover:hover {
   background-color: rgba(250, 218, 94, 0.0823529412) !important;
 }
 
-.fg-napples,
-.w3-napples-hover:hover {
+.fg-naple,
+.w3-naple-hover:hover {
   color: rgba(250, 218, 94, 0.4666666667) !important;
 }
 

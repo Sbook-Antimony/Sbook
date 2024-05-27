@@ -2,6 +2,7 @@ import functools
 import io
 
 import json
+import textwrap
 
 from django.http import HttpRequest
 from django.http import HttpResponse
@@ -16,6 +17,12 @@ from quizz import models
 
 from PIL import Image
 from pathlib import Path
+
+
+class Tuple(tuple):
+    @property
+    def length(self):
+        return len(self)
 
 
 class QuizzUserDoesNotExistError(ValueError):
@@ -74,11 +81,15 @@ class QuizzUser():
 
     @functools.cached_property
     def quizzes(self):
-        return tuple(map(Quizz, self.model.quizzes.all()))
+        return Tuple(map(Quizz, self.model.quizzes.all()))
 
     @functools.cached_property
     def hasQuizzes(self):
         return len(self.quizzes) > 0
+
+    @functools.cached_property
+    def quizz_attempts(self):
+        return Tuple(map(QuizzAttempt, self.model.quizz_attempts.all()))
 
 
 class Question:
@@ -92,7 +103,7 @@ class MCQQuestion(Question):
 
     def __init__(self, data, id=0):
         self.question = data.get('question')
-        self.options = data.get('options').items()
+        self.options = data.get('options', {}).items()
         self.answer = data.get('answer')
         self.id = id
 
@@ -156,7 +167,11 @@ class Quizz:
 
     @functools.cached_property
     def description(self):
-        return str(self.model.description)
+        return self.model.description
+
+    @functools.cached_property
+    def short_description(self):
+        return textwrap.shorten(self.description, 30)
 
     @functools.cached_property
     def profile(self):
@@ -214,6 +229,63 @@ class Quizz:
     def prolog(self):
         return self.data.get('prolog')
 
+    @functools.cached_property
+    def attempts(self):
+        return tuple(map(QuizzAttempt, self.model.answer_attempts.all()))
+
+    @functools.cached_property
+    def num_attempts(self):
+        return len(self.attempts)
+
+    @functools.cached_property
+    def num_attempts_remarked(self):
+        i = 0
+        for attempt in self.attempts:
+            if attempt.model.remarked:
+                i += 1
+        return i
+
+    @property
+    def num_attempts_unremarked(self):
+        return self.num_attempts - self.num_attempts_remarked
+
+    @property
+    def attempts_remark_status(self):
+        if self.num_attempts == 0 or self.num_attempts_unremarked == 0:
+            return 2
+        elif self.num_attempts_remarked == 0:
+            return 0
+        else:
+            return 1
+
+    @functools.cached_property
+    def on_submit(self):
+        return self.data.get(
+            'on_submit',
+            '''Thanks for answering, stydy well!''',
+        )
+
+
+class QuestionAttempt:
+    @classmethod
+    def from_dict(cls, js, i, a):
+        ques = Question.from_dict(js, i)
+        return MCQQuestionAttempt(ques, a)
+
+    @classmethod
+    def from_question(cls, ques, a):
+        print(ques, a)
+        return MCQQuestionAttempt(ques, a)
+
+
+class MCQQuestionAttempt(QuestionAttempt):
+    mode = 'mcq'
+
+    def __init__(self, question, ans):
+        print(question, ans)
+        self.answer = ans
+        self.question = question
+
 
 class QuizzAttemptDoesNotExistError(ValueError):
     pass
@@ -228,8 +300,8 @@ class QuizzAttempt:
     def create(cls, author, quizz, answers):
         model = models.QuizzAttempt(
             answers=answers,
-            author=author,
-            quizz=quizz,
+            author=author.model,
+            quizz=quizz.model,
         )
         model.save()
         return cls(model)
@@ -237,7 +309,7 @@ class QuizzAttempt:
     @classmethod
     def from_id(cls, id):
         try:
-            found = models.Quizz.objects.get(id=id)
+            found = models.QuizzAttempt.objects.get(id=id)
         except models.QuizzAttempt.DoesNotExist as e:
             raise QuizzAttemptDoesNotExistError() from e
         else:
@@ -247,7 +319,28 @@ class QuizzAttempt:
         if model is None:
             raise QuizzAttemptDoesNotExistError()
         self.model = model
-        self.data = model.data
+
+    @functools.cached_property
+    def author(self):
+        return QuizzUser(self.model.author)
+
+    @functools.cached_property
+    def quizz(self):
+        return Quizz(self.model.quizz)
+
+    @functools.cached_property
+    def answers(self):
+        ret = tuple(
+            QuestionAttempt.from_question(
+                self.quizz.questions[i], a
+            )
+            for i, a in enumerate(self.model.answers)
+        )
+        return ret
+
+    @functools.cached_property
+    def id(self):
+        return self.model.id
 
 
 def check_login(func, redirect=True):

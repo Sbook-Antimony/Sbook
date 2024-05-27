@@ -27,6 +27,27 @@
             </a>
         </div>
     </div>
+    <div class="w3-container w3-margin-bottom w3-round">
+        <button onclick="$('#attempted-quizzes-list').slideToggle();" class="w3-button w3-round bg-antimony10">
+            {{ user_name }}'s quizzes
+        </button>
+        <div id="attempted-quizzes-list" class="w3-margin w3-round bg-a1">
+            {% for quizz in user.quizzes %}
+                {% include 'quizz-view-part.django' %}
+            {% empty %}
+                <div class="w3-padding-64 bg-antimony50">
+                    <img src="/static/svg/solid/file-circle-question.svg" class="inline w fg-antimony50 ">
+                    <p class="w3-padding-64 inline">
+                        No quizz attempted yet.,
+                        <a href="/quizz/browse/" title="browse quizzes" class="w3-button">browse quizzes</a>
+                    </p>
+                </div>
+            {% endfor %}
+            <a href="/quizz/new" view-class="jump" hover-class="shake" class="w3-margin w3-center hexa fa-2xl w3-circle w3-border-0">
+                <i class="fas fa-plus bg-rainbow w3-button w3-white w3-round-xxlarge w3-margin-bottom">create</i>
+            </a>
+        </div>
+    </div>
 {% endblock 'center' %}
 {% block 'right' %}
     <script>
