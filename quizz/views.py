@@ -113,9 +113,21 @@ def review_attempt(req, user, quizzid, attemptid):
 
 @check_login
 def review_attempt_sumbit(req, user, quizzid, attemptid):
+    remark = req.POST.get('remark')
+    score = req.POST.get('score')
+    if None in (remark, score):
+        return render(
+            req,
+            'quizz-attempt-review.django',
+            {
+                'messages': [
+                    ('error', 'partial content'),
+                ],
+            },
+        )
     attempt = QuizzAttempt.from_id(attemptid)
-    attempt.remark = req.POST.get('remark')
-    attempt.score = req.POST.get('score')
+    attempt.remark = remark
+    attempt.score = score
     attempt.remarked = True
     attempt.save()
     return HttpResponseRedirect(
