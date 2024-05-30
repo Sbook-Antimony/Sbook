@@ -16,12 +16,7 @@
                         <label class="block s4">
                             {{ name }}. {{ val }}
                         </label>
-                        <input
-                            type="checkbox"
-                            name="q{{ question.id }}"
-                            value="{{ name }}"
-                            class="w3-jumbo"
-                        />
+                        
                     {% endif %}
                 {% empty %}
                     <div class="w3-padding-64 fg-antimony50">
@@ -60,6 +55,10 @@
                 {{ quizz.epilog | markdown }}
             </div>
         {% endif %}
+    <textarea class="f-aclonica" placeholder="Write your remarks here" name="remark" rows="50" cols="50" required spellcheck>
+    </textarea>
+    <label for="score"></label>
+    <input type="range" id="score" name="score" min="-5" step="0" value="0" max="50" />
     </form>
 {% endblock 'center' %}
 {% block 'right' %}
@@ -67,23 +66,6 @@
         const app = angular.module('{{ ng_app_name }}', []);
         app.controller('{{ ng_app_name }}Ctrl', function($scope) {
             $scope.anwsers = {};
-            $scope.answerChecked = function() {
-                setTimeout(function() {
-                    for(let i in $scope.anwsers) {
-                        if(!(i-1 in $scope.anwsers) && i != 0) {
-                            $('#submit-button')
-                                .addClass('w3-blue')
-                                .removeClass('w3-red bg-rainbow');
-                            break;
-                        } else {
-                            $('#submit-button')
-                                .removeClass('w3-red w3-blue')
-                                .addClass('bg-rainbow');
-                        }
-                        v = i;
-                    }
-                }, 1000);
-            }
         });
     </script>
 {% endblock 'right' %}
