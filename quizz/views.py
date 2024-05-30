@@ -111,6 +111,18 @@ def review_attempt(req, user, quizzid, attemptid):
     )
 
 
+@check_login
+def review_attempt_sumbit(req, user, quizzid, attemptid):
+    attempt = QuizzAttempt.from_id(attemptid)
+    attempt.remark = req.POST.get('remark')
+    attempt.score = req.POST.get('score')
+    attempt.remarked = True
+    attempt.save()
+    return HttpResponseRedirect(
+        f'/quizz/quizzes/{quizzid}/attempts/',
+    )
+
+
 class profiles:
     def quizzes(req, quizzid):
         try:
