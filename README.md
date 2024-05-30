@@ -14,10 +14,6 @@ to be read, provides features such as:
 
 Offer an easy way for students to wrewrite what they read in their own words
 
-## mathematica
-
-a mathematic solving tool and calculator intended to help students and teachers
-
 ## wikis
 
 
@@ -48,4 +44,3 @@ notes, videos and other content privately.
 
 
 regroup several classrooms in a larger environment adding media for exchange of more information.
-[![sass compile](https://github.com/Sbook-Antimony/Sbook/actions/workflows/sass.yml/badge.svg)](https://github.com/Sbook-Antimony/Sbook/actions/workflows/sass.yml)
