@@ -19,7 +19,7 @@
             {
                 scroll-behavior: smooth;
                 color: white;
-                box-sizing: content-box;
+                background-image: url('image/index-back.png');
             }
             @media all and (orientation: portrait)
             {
@@ -27,13 +27,6 @@
             }
             body
             {
-                background-image: 
-                    linear-gradient(
-                        var(--base50),
-                        var(--base50)
-                    ),
-                    url('/image/antimony.png');
-
                 background-repeat: no-repeat;
                 background-position-y: 0px;
                 background-position-x: center;
@@ -218,7 +211,7 @@
             </header>
         </div>
         <div id="first-part">
-            <div view-class="w3-animate-opacity !w3-animate-fading" onviewbg="#114e" class="first-part-item" id="first-part-note">
+            <div view-class="w3-animate-opacity !w3-animate-fading" onviewbg="#1143" class="first-part-item" id="first-part-note">
                 <h2>
                     Notes
                 </h2>
@@ -226,7 +219,7 @@
                     Note, an intuitive and interractive tool for building, reading and writting documentations.
                 </p>
             </div>
-            <div view-class="w3-animate-opacity !w3-animate-fading" onviewbg="#251e" class="first-part-item" id="first-part-chatty">
+            <div view-class="w3-animate-opacity !w3-animate-fading" onviewbg="#2513" class="first-part-item" id="first-part-chatty">
                 <h2>
                     Chatty
                 </h2>
@@ -234,7 +227,7 @@
                     Bringing the several tools of Sbook and their tools into a chatting application.
                 </p>
             </div>
-            <div view-class="w3-animate-opacity !w3-animate-fading" onviewbg="#435e" class="first-part-item" id="first-part-question">
+            <div view-class="w3-animate-opacity !w3-animate-fading" onviewbg="#4353" class="first-part-item" id="first-part-question">
                 <h2>
                     question
                 </h2>
@@ -242,7 +235,7 @@
                     Write, Edit, Create and respond to exams and tests to submit or get them marked by teachers
                 </p>
             </div>
-            <div view-class="w3-animate-opacity !w3-animate-fading" onviewbg="#551e" class="first-part-item" id="first-part-classroom">
+            <div view-class="w3-animate-opacity !w3-animate-fading" onviewbg="#5513" class="first-part-item" id="first-part-classroom">
                 <h2>
                     Classroom
                 </h2>

@@ -3,6 +3,9 @@
 {% block 'left' %}
 {% endblock %}
 {% block 'center' %}
+    <style type="text/css">
+
+    </style>
     <dialog id="uploadImageDialog" class="w3-round-large w3-border-0 bkd-antimony50 w3-container">
         <form action="/profile.png/upload/" method="post" enctype="multipart/form-data" id="uploadImageForm" class="w3-container">
             <img
