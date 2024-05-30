@@ -13,4 +13,8 @@ urlpatterns = [
         'quizzes/<int:quizzid>/attempts/<int:attemptid>/review/',
         views.review_attempt,
     ),
+    path(
+        'quizzes/<int:quizzid>/attempts/<int:attemptid>/review/submit/',
+        views.review_attempt_submit,
+    ),
 ]
