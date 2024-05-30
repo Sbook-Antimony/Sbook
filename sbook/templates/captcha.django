@@ -31,3 +31,4 @@
 >
     Submit
 </button>
+<input type="submit" />
