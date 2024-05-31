@@ -15,10 +15,6 @@
 			},
 			1000
 		);
-        try {
-            $('form')[0].submit();
-        } catch(e) {
-        }
 	}
 </script>
 <button
