@@ -7,12 +7,12 @@ side = 100
 image = Image.new('RGB', (side, side), 'white')
 
 cache = []
-diff = 50
-le = 5
-li = 128
+diff = 100
+le = 20
+li = 50
 
-for x in range(side):
-    for y in range(side):
+for y in range(side):
+    for x in range(side):
         cache.append(random.randint(-diff // 2, diff // 2) + li)
         image.putpixel((x, y), (sum(cache) // len(cache), ) * 3)
         cache = cache[-le:]
@@ -28,4 +28,4 @@ for y in range(side):
         cache = cache[-le:]
 
 
-image.save('back.png')
+image.save('back-dark-dashy.png')
