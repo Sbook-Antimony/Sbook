@@ -7,9 +7,9 @@ side = 100
 image = Image.new('RGB', (side, side), 'white')
 
 cache = []
-diff = 100
+diff = 40
 le = 20
-li = 50
+li = 230
 
 for y in range(side):
     for x in range(side):
@@ -28,4 +28,4 @@ for y in range(side):
         cache = cache[-le:]
 
 
-image.save('back-dark-dashy.png')
+image.save('back-lighter-dashy.png')

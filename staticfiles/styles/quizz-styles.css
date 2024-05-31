@@ -288,6 +288,10 @@ bkd-antimony50:-internal-dialog-in-top-layer::backdrop {
   font-weight: italic;
 }
 
+.backens-naple {
+  background-image: linear-gradient(to right, rgba(250, 218, 94, 0), rgba(250, 218, 94, 0.7)), url("/image/back-dark-dotty.png");
+}
+
 body {
   display: flex;
   flex-direction: row;
@@ -298,6 +302,7 @@ body {
   width: 100% !important;
   flex-wrap: wrap;
   padding: 0;
+  background-image: url("/image/back-light-horizontal.png");
 }
 body > #left {
   margin: 0;

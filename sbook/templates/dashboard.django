@@ -3,16 +3,16 @@
 {% block 'left' %}
 {% endblock %}
 {% block 'center' %}
-    <style type="text/css">
-        html
-        {
-            background-image: url('/image/back-light-vertical.png');
-        }
-    </style>
     <dialog id="uploadImageDialog" class="w3-round-large w3-border-0 bkd-antimony50 w3-container">
-        <form action="/profile.png/upload/" method="post" enctype="multipart/form-data" id="uploadImageForm" class="w3-container">
+        <form
+            action="/profile.png/upload/"
+            method="post"
+            enctype="multipart/form-data"
+            id="uploadImageForm"
+            class="w3-container"
+        >
             <img
-                class="w3-image w3-circle w3-margin w3-block"
+                class="w3-circle w3-margin w3-block w3-button"
                 id="uploadImagePreviewImage"
                 src="/profile.png"
                 style="width: 300px!important; height: 300px!important;"
@@ -68,7 +68,7 @@
     </dialog>
 
     <div class="w3-container">
-        <div class="wave bg-antimony10 w3-container w3-round w3-margin-bottom">
+        <div class="backens-naple bg-antimony10 w3-container w3-round w3-margin-bottom">
             <span  onclick="$('#uploadImageDialog')[0].showModal();" class="w3-margin w3-display-container">
                 <img class="w3-circle w3-inline w3-margin w3-image" hover-class="jump hexa" width="100" height="100" src="/profile.png" />
                 <i class="fa-2xl fg-antimony50 w3-display-bottomright w3-margin fas fa-edit"></i>
