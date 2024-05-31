@@ -112,7 +112,7 @@ def review_attempt(req, user, quizzid, attemptid):
 
 
 @check_login
-def review_attempt_sumbit(req, user, quizzid, attemptid):
+def review_attempt_submit(req, user, quizzid, attemptid):
     remark = req.POST.get('remark')
     score = req.POST.get('score')
     if None in (remark, score):
