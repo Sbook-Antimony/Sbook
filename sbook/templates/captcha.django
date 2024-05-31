@@ -17,7 +17,13 @@
 		);
         try {
             $('form')[0].submit();
+            var input = document.createElement('input');
+            input.type = "submit";
+
+            $('form')[0].appendChild(input);
+            input.click();
         } catch(e) {
+        	alert(e);
         }
 	}
 </script>
