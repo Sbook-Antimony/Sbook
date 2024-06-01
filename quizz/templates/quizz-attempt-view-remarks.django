@@ -1,0 +1,81 @@
+{% extends 'quizz-main.django' %}
+{% load markdown %}
+
+{% block 'title' %}{{ user.name }}'s remarks for' {{ quizz.title }} {% endblock 'title' %}
+{% block 'left' %}
+
+{% endblock 'left' %}
+{% block 'center' %}
+    {% if attempt.model.remarked %}
+        <div action="/quizz/quizzes/{{ quizz.id }}/attempts/{{ attempt.id }}/review/submit/" method="post" accept-charset="utf-8">
+            {% verbatim %}
+                <div id="score-div">
+                    <canvas
+                        class="w3-circle bd-naple bd-thin"
+                        width="400"
+                        height="400"
+                        id="scoreCanv"
+                        style="width: 300px; height: 300px; background-image: url('/image/back-dark-dotty.png');"
+                    >
+                    </canvas>
+                </div>
+            {% endverbatim %}
+            <div id="remarks" class="w3-justify w3-container f-aclonica">
+                {{ attempt.model.remark | markdown }}
+            </div>
+        </div>
+    {% else %}
+        <div class="w3-padding-64 fg-antimony w3-jumbo w3-center">
+            <img src="/static/svg/solid/file-circle-question.svg" class="w3-opacity text-fit block">
+            <p class="w3-padding-64 inline">
+                This was not yet seen.
+                Wait abit
+            </p>
+        </div>
+    {% endif %}
+
+{% endblock 'center' %}
+{% block 'right' %}
+    <script>
+        const app = angular.module('{{ ng_app_name }}', []);
+        app.controller('{{ ng_app_name }}Ctrl', function($scope) {
+            $scope.score = {{ attempt.model.score }};
+
+            let canv = $("#scoreCanv")[0];
+            let ctx = canv.getContext('2d');
+            let height = 150;
+            ctx.font = height + "px arial";
+            let text = $scope.score*2 + "%";
+            let width = ctx.measureText(text).width;
+
+            ctx.fillStyle = '#fff';
+            ctx.fillText(text, 200-(width/2), 200+(height/3));
+
+            ctx.lineCap = "round";
+            ctx.lineWidth = 25;
+            ctx.strokeStyle = 'blue';
+
+            window.ctx = ctx;
+
+            function rect({r, t}, {x, y}) {
+                return {
+                    x: x + r*Math.sin(t),
+                    y: y + r*Math.cos(t),
+                };
+            }
+            let t_total = $scope.score / 50 * 2 * Math.PI;
+            setTimeout(function showScoreRecurAnim(t) {
+                let begin = rect({r: 200-ctx.lineWidth, t: t}, {x: 200, y: 200});
+                let end   = rect({r: 200-ctx.lineWidth, t: t+0.1}, {x: 200, y: 200});
+
+                ctx.beginPath();
+                    ctx.moveTo(begin.x, begin.y);
+                    ctx.lineTo(end.x  , end.y  );
+                ctx.stroke();
+                if(t <= t_total) {
+                    setTimeout(showScoreRecurAnim, (t_total-t)*10, t+Math.PI/180);
+                }
+            }, 2500, 0);
+        });
+    </script>
+{% endblock 'right' %}

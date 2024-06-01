@@ -6,6 +6,31 @@
 
 {% endblock 'left' %}
 {% block 'center' %}
+    <style>
+        input.question-option[type='radio'] {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 0.1px solid #999;
+            border-radius: 50%;
+            outline: none;
+            transition: box-shadow 0.3s ease;
+            margin-right: 5px;
+        }
+
+        input.question-option[type='radio']:before {
+            content: '';
+            display: block;
+            width: 90%;
+            height: 90%;
+            margin: 5% 5%;
+            border-radius: 50%;
+        }
+        input.question-option[type='radio']:checked:before {
+            background: #999;
+            box-shadow: 0 0 5px #999;
+        }
+    </style>
     {% if quizz.prolog %}
         <div id="instructions" class="w3-justify f-open-sans w3-large w3-margin w3-padding-0">
             {{ quizz.prolog | markdown }}
@@ -25,7 +50,7 @@
             <div class="question w3-round w3-margin w3-card w3-padding">
                 <p class="f-acloinca">{{ question.question }}</p>
                 {% for name, val in question.options %}
-                    <span class="block w3-margin f-aclonica">
+                    <span class="w3-justify block w3-margin f-aclonica">
                         <label class="block">
                             <input
                                 type="radio"
@@ -33,7 +58,7 @@
                                 ng-checked="answerChecked($event)"
                                 name="q{{ question.id }}"
                                 value="{{ name }}"
-                                class="w3-left inline"
+                                class="w3-left inline question-option"
                             />
                             <span>
                                 {{ name }}. {{ val }}

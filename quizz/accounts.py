@@ -88,7 +88,7 @@ class QuizzUser():
         return len(self.quizzes) > 0
 
     @functools.cached_property
-    def quizz_attempts(self):
+    def attempts(self):
         return Tuple(map(QuizzAttempt, self.model.quizz_attempts.all()))
 
 

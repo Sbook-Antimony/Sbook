@@ -57,8 +57,13 @@
         {% endif %}
         <textarea class="w3-padding-small f-algabumo" placeholder="Write your remarks here" name="remark" rows="10" cols="50" required spellcheck>
         </textarea>
-        <label for="score"></label>
-        <input type="range" id="score" name="score" min="-5" step="0" value="0" max="50" />
+        <label for="score" ng-bind="score"></label>
+        <input type="range" width="100%" id="score" ng-model="score" name="score" min="-5" step="0" max="50" />
+
+        <input
+            type="submit"
+            class="w3-large w3-margin w3-padding w3-text-white w3-round-xxlarge w3-red w3-button"
+        />
     </form>
 {% endblock 'center' %}
 {% block 'right' %}
@@ -66,6 +71,7 @@
         const app = angular.module('{{ ng_app_name }}', []);
         app.controller('{{ ng_app_name }}Ctrl', function($scope) {
             $scope.anwsers = {};
+            $scope.score = 0;
         });
     </script>
 {% endblock 'right' %}
