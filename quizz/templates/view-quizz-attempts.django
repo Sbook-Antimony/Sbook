@@ -21,7 +21,7 @@
                         src="/profile/{{ attempt.author.id }}.png"
                         class="w3-left w3-circle text-fit"
                     />
-                    {% if attempt.remarked %}
+                    {% if attempt.model.remarked %}
                         {{ 'solid circle-check text-fit w3-xxlarge margin-0 inline w3-right' | icon }}
                     {% else %}
                         {{ 'solid xmark text-fit w3-xxlarge margin-0 inline w3-right' | icon }}
