@@ -29,17 +29,16 @@
     </div>
     <div class="w3-container w3-margin-bottom w3-round">
         <button onclick="$('#attempted-quizzes-list').slideToggle();" class="w3-button w3-round bg-antimony10">
-            {{ user_name }}'s quizzes
+            {{ user_name }}'s recent attempts
         </button>
-        <div id="attempted-quizzes-list" class="w3-margin w3-round bg-a1">
-            {% for quizz in user.quizzes %}
-                {% include 'quizz-view-part.django' %}
+        <div id="attempted-quizzes-list" class="w3-row w3-margin w3-round bg-a1">
+            {% for attempt in user.attempts %}
+                {% include 'quizz-attempt-view-part.django' %}
             {% empty %}
                 <div class="w3-padding-64 bg-antimony50">
                     <img src="/static/svg/solid/file-circle-question.svg" class="inline w fg-antimony50 ">
                     <p class="w3-padding-64 inline">
-                        No quizz attempted yet.,
-                        <a href="/quizz/browse/" title="browse quizzes" class="w3-button">browse quizzes</a>
+                        No quizz attempted yet.
                     </p>
                 </div>
             {% endfor %}

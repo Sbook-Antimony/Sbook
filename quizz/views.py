@@ -112,6 +112,22 @@ def review_attempt(req, user, quizzid, attemptid):
 
 
 @check_login
+def review_attempt_review(req, user, quizzid, attemptid):
+    attempt = QuizzAttempt.from_id(attemptid)
+    quizz = Quizz.from_id(quizzid)
+    return render(
+        req,
+        'quizz-attempt-view-remarks.django',
+        {
+            'attempt': attempt,
+            'quizz': quizz,
+            'user': user,
+            'ng_app_name': 'reviewReview',
+        }
+    )
+
+
+@check_login
 def review_attempt_submit(req, user, quizzid, attemptid):
     remark = req.POST.get('remark')
     score = req.POST.get('score')

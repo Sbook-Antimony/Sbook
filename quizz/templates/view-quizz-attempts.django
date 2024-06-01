@@ -15,19 +15,7 @@
 {% block 'center' %}
     <div style="display: flex;">
         {% for attempt in quizz.attempts %}
-            <div class="w3-round w3-card w3-col s3 w3-jumbo w3-margin w3-padding">
-                <a href="/quizz/quizzes/{{ attempt.quizz.id }}/attempts/{{ attempt.id }}/review/" title="">
-                    <img
-                        src="/profile/{{ attempt.author.id }}.png"
-                        class="w3-left w3-circle text-fit"
-                    />
-                    {% if attempt.model.remarked %}
-                        {{ 'solid circle-check text-fit w3-xxlarge margin-0 inline w3-right' | icon }}
-                    {% else %}
-                        {{ 'solid xmark text-fit w3-xxlarge margin-0 inline w3-right' | icon }}
-                    {% endif %}
-                </a>
-            </div>
+            {% include 'quizz-attempt-view-part.django' %}
         {% endfor %}
     </div>
 {% endblock 'center' %}
