@@ -151,6 +151,31 @@ def review_attempt_submit(req, user, quizzid, attemptid):
     )
 
 
+@check_login
+def do_new(req, user):
+    return render(
+        req,
+        'quizz-new.django',
+        {
+            'user': user,
+            'ng_app_name': 'quizzNew',
+        }
+    )
+
+
+@check_login
+def do_new_submit(req, user):
+    data = req.GET.get('data')
+
+    quizz = models.Quizz(
+        data=data,
+        title=req.GET.get('title'),
+        description=req.GET.get('description'),
+        is_private=req.GET.get('is_private'),
+        authors=(user,),
+    )
+
+
 class profiles:
     def quizzes(req, quizzid):
         try:

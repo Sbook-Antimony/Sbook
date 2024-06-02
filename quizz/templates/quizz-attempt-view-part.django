@@ -6,14 +6,14 @@
             class="w3-circle inline"
             height="100px"
             style="margin-right: -70px; z-index: 5;"
-            src="/quizz/profiles/quizzes/{{ attempt.quizz.id }}.png"
+            src="/quizz/profiles/quizzes/{{ attempt.author.id }}.png"
         />
         <img
             hover-class="!w3-animate-zoom"
             class="w3-circle inline"
             height="100px"
             style="margin-left: -70px; z-index: -5;"
-            src="/quizz/profiles/quizzes/{{ attempt.author.id }}.png"
+            src="/profile/{{ attempt.quizz.id }}.png"
         />
     </a>
     <span class="w3-padding-small w3-display-topright w3-margin-right w3-round-large bg-naple">

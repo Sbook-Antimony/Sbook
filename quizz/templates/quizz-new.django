@@ -1,0 +1,219 @@
+{% extends 'quizz-main.django' %}
+{% load markdown %}
+
+{% block 'title' %}quizz dashboard{% endblock 'title' %}
+{% block 'left' %}
+
+{% endblock 'left' %}
+{% block 'center' %}
+    {% verbatim %}
+        <div class="w3-container bg-antimony50 w3-round">
+            <dialog id="uploadImageDialog" class="w3-round-large w3-border-0 bkd-antimony50 w3-container">
+                <form
+                    action="/profile.png/upload/"
+                    method="post"
+                    enctype="multipart/form-data"
+                    id="uploadImageForm"
+                    class="w3-container"
+                >
+                    <img
+                        class="w3-circle w3-margin w3-block w3-button"
+                        id="uploadImagePreviewImage"
+                        src="/profile.png"
+                        style="width: 300px!important; height: 300px!important;"
+                        width="300"
+                        height="300"
+                    />
+                    {% csrf_token %}
+                    <label for="file" onclick="this.querySelector('input').click()" class="bg-antimony10 w3-btn w3-round">
+                        Choose photo
+                        <input onchange="uploadPhotoReadProfile(event)" type="file" name="file" hidden />
+                    </label>
+                    <button type="submit" id="imageUploadButton" onclick="submitNewProfile(); this.setAttribute('hover-class', '');" css-transition="1s" hover-class="w3-red shake" class="hexa w3-disabled bg-antimony10-hover w3-btn w3-round" >
+                        Submit
+                    </button>
+                    <script type="text/javascript" charset="utf-8">
+                        function uploadPhotoReadProfile(e) {
+                            console.log("adding new profile");
+                            let files = e.target.files;
+                            if(files.length < 1) return;
+                            let
+                                file = files[0],
+                                reader = new FileReader();
+                            reader.onloadend = function() {
+                                console.log(reader);
+                                let dataurl = reader.result;
+                                $("#uploadImagePreviewImage")[0].src = dataurl;
+                                setTimeout(function() {
+                                    $("#imageUploadButton")
+                                        .removeClass('w3-disabled')
+                                        .addClass("w3-green");
+                                }, 1000);
+                            }
+                            reader.readAsDataURL(file);
+                        }
+                        function submitNewProfile() {
+                            let formdata = new FormData($("uploadImageForm")[0]);
+                            console.log(formdata);
+                            $.ajax({
+                                type: 'POST',
+                                url: '/profile.png/upload/', // replace with your server-side script
+                                data: formdata,
+                                success: function(data) {
+                                    location.reload();
+                                },
+                                error: function() {
+                                    $("imageUploadButton")
+                                        .toggleClass('w3-green w3-red');
+                                },
+                            });
+                        };
+                    </script>
+                </form>
+            </dialog>
+            <div class="backens-naple bg-antimony10 w3-container w3-round w3-margin-bottom">
+                <span  onclick="$('#uploadImageDialog')[0].showModal();" class="w3-margin w3-display-container">
+                    <img class="w3-circle w3-inline w3-margin w3-image" hover-class="jump hexa" width="100" height="100" src="/profile.png" />
+                    <i class="fa-2xl fg-antimony50 w3-display-bottomright w3-margin fas fa-edit"></i>
+                </span>
+                {#srcset="/profile.png 300w, /profile.png 600w, /profile.png 1200w" sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 1200px"#}
+                <span class="w3-arial w3-xxlarge w3-margin">{{ user.name }}</span>
+            </div>
+            <textarea class="block" ng-model="description">Here a description</textarea>
+        </div>
+        <textarea class="w3-container block" ng-model="instructions">
+        </textarea>
+        <textarea class="w3-container block" ng-model="prolog">
+        </textarea>
+        <div class="w3-container w3-margin-bottom w3-round">
+            <div ng-repeat="question in questions">
+                <div class="w3-card w3-round-large w3-margin">
+                    <textarea
+                        ng-model="question.question"
+                        placeholder="Enter the question here."
+                    >
+                    </textarea>
+                    <div class="bg-antimony10">
+                        <label
+                            class="block"
+                            ng-repeat="option in question.options"
+                        >
+                            {{ option.label }}
+                            <input
+                                ng-model="option.text"
+                                type="text"
+                                name=""
+                                value=""
+                                placeholder="Enter the option here."
+                            />
+                        </label>
+                        <span class="w3-round-large">
+                            <button
+                                ng-click="addQuestionOption(question)"
+                                class="w3-large"
+                            >
+                                <img
+                                    src="/static/svg/solid/circle-plus.svg"
+                                    class="text-fit"
+                                />
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <span class="w3-round-large">
+                <button
+                    ng-click="addQuestion()"
+                    class="w3-large"
+                >
+                    <img
+                        src="/static/svg/solid/circle-plus.svg"
+                        class="text-fit"
+                    />
+                </button>
+            </span>
+        </div>
+        <textarea class="w3-container" ng-model="epilog">
+        </textarea>
+        <button
+            ng-click="submit()"
+            class="block w3-center w3-margin-top colory-border1 w3-button w3-xxlarge w3-padding-16 w3-round-xxlarge"
+        >
+            <span class="w3-white">
+                <span class="w3-padding">
+                    Submit
+                    <img src="/static/svg/solid/chevron-right.svg" class="text-fit hexa jump" />
+                </span>
+            </span>
+        </button>
+    {% endverbatim %}
+{% endblock 'center' %}
+{% block 'right' %}
+    <script>
+        class Option {
+            constructor(text="", label="") {
+                this.text = text;
+                this.label = label;
+            }
+        }
+        class Question {
+            constructor(question="" , options = []) {
+                this.question = question;
+                this.options = options;
+            }
+            serialize() {
+                let obj = {
+                    question: this.question,
+                    options: {},
+                };
+                for(let i = 0; i < this.options.length; i++) {
+                    obj.options[
+                        String.fromCodePoint(i+'a'.charCodeAt(0)).toString()
+                    ] = this.options[i].text;
+                }
+                return obj;
+            }
+        }
+        const app = angular.module('{{ ng_app_name }}', []);
+        app.controller('{{ ng_app_name }}Ctrl', function($scope) {
+            $scope.questions = [];
+            window.$scope = $scope;
+
+            $scope.addQuestion = function() {
+                $scope.questions.push(new Question());
+            }
+            $scope.addQuestionOption = function(question) {
+                question.options.push(new Option());
+            }
+            $scope.serialize = function() {
+                let ret = {
+                    data: {
+                        epilog: $scope.epilog,
+                        prolog: $scope.prolog,
+                        instructions: $scope.instructions,
+                        questions: $scope.questions.map(
+                            (question) => question.serialize()
+                        ),
+                    },
+                    is_private: $scope.is_private,
+                    title: $scope.title,
+                    description: $scope.description,
+                };
+            }
+            $scope.submit = function() {
+                $.ajax({
+                    url: '/quizz/new/submit/',
+                    success: function() {
+                        location.assign('/quizz/');
+                    },
+                    error: function() {
+                        alert("error creating question");
+                    },
+                    type: 'GET',
+                    data: $scope.serialize(),
+                    dataType: 'JSON',
+                });
+            }
+        });
+    </script>
+{% endblock 'right' %}

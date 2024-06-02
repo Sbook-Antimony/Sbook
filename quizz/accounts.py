@@ -177,7 +177,7 @@ class Quizz:
     def profile(self):
         return Image.open(
             self.profile_path,
-        )
+        ).resize((100, 100))
 
     @functools.cached_property
     def profile_path(self):

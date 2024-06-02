@@ -5,6 +5,7 @@ from . import views
 urlpatterns = [
     path('', views.do_index),
     path('new', views.do_new),
+    path('new/submit/', views.do_new_submit),
     path('profiles/quizzes/<int:quizzid>.png', views.profiles.quizzes),
     path('quizzes/<int:quizzid>/preview/', views.preview_quizz),
     path('quizzes/<int:quizzid>/attempt/', views.attempt_quizz),
