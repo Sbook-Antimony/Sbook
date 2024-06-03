@@ -153,7 +153,8 @@ class signup(View):
 @check_login
 def do_profile_upload(req, user):
     file = req.FILES.get('file')
-    user.profile_path.write_bytes(file.read())
+    user.profile = file
+    user.save()
     return JsonResponse({'succes': True})
 
 
