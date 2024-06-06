@@ -78,4 +78,6 @@ for(let element of $("[view-class]")) {
 };
 
 
-
+function markdown(text) {
+    
+}

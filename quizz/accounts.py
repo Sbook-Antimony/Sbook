@@ -12,6 +12,7 @@ from sbook.accounts import DIR
 import profile_images
 import sbook.accounts
 import sbook.models
+import markdown
 
 from quizz import models
 
@@ -203,9 +204,9 @@ class Quizz:
             "num_attempts_remarked": self.num_attempts_remarked,
             "num_attempts_unremarked": self.num_attempts_unremarked,
             "id": self.id,
-            "views": self.views,
             "stars": float(self.stars),
             "description": self.description,
+            "description_html": markdown.markdown(self.description),
             "color": profile_images.average_color(self.profile),
         }
 

@@ -13,6 +13,7 @@ from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from sbook.accounts import *
 import mimetypes
+import markdown
 from . import forms
 
 File = lambda url: FileResponse(open(url, "rb"), filename=url.as_uri())
@@ -182,3 +183,12 @@ def do_userid_profile(req, userid):
         return File(User.DEFAULT_PROFILE_PATH)
     else:
         return HttpResponse(user.profile_asBytes, "img/png")
+
+
+@check_login
+def do_markdown(req):
+    try:
+        data = req.GET.get("md")
+        return HttpResponse(markdown.markdown(data))
+    except Exception:
+        return HttpResponse("<em>Could not be renderred</em>")

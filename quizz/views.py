@@ -37,15 +37,11 @@ def do_quizzes_json(req, user, userid):
     try:
         ouser = QuizzUser.from_id(userid)
     except QuizzUserDoesNotExistError:
-        return JsonResponse({
-            "ok": False,
-            "quizzes": ()
-        })
+        return JsonResponse({"ok": False, "quizzes": ()})
     else:
-        return JsonResponse({
-            "ok": True,
-            "quizzes": (quizz.js for quizz in ouser.quizzes)
-        })
+        return JsonResponse(
+            {"ok": True, "quizzes": tuple(quizz.js for quizz in ouser.quizzes)}
+        )
 
 
 @check_login

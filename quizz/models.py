@@ -43,9 +43,11 @@ class Quizz(models.Model):
         QuizzUser,
         related_name="quizzes",
     )
+
     classrooms = models.ManyToManyField(classroom.Classroom, related_name="quizzes")
     levels = models.ManyToManyField(sbook.Level, related_name="quizzes")
     courses = models.ManyToManyField(sbook.Course, related_name="quizzes")
+    stars = models.IntegerField(default=0)
 
     def __str__(self):
         return f"{self.id}:{self.title}"

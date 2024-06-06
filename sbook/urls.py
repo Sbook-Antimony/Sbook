@@ -25,6 +25,7 @@ from django.urls import path
 urlpatterns = [
     # re_path('djga/', include('google_analytics.urls')),
     path("admin/", admin.site.urls),
+    path("markdown/", views.do_markdown),
     path("csrf/", views.do_csrf),
     path("", views.do_index),
     path("image/<name>", views.do_image),
