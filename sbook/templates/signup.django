@@ -53,6 +53,8 @@
                         $scope.passwordError = data;
                     });
                 }
+                window.setInterval($scope.checkEmail, 2000);
+                window.setInterval($scope.checkPassword, 2000);
             });
         </script>
     </form>

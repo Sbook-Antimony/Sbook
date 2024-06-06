@@ -20,13 +20,16 @@ NOTES = DIR / "notes"
 from PIL import Image
 
 
-
 class BookmarkDoesNotExistError(ValueError):
     pass
+
+
 class BookmarkDoesExistError(ValueError):
     pass
-class Bookmark():
-    model:models.NoteUser
+
+
+class Bookmark:
+    model: models.NoteUser
 
     @classmethod
     def from_id(cls, id):
@@ -36,7 +39,6 @@ class Bookmark():
             raise BookmarkNotExistError() from e
         else:
             return found
-
 
     def __init__(self, model=None):
         if model is None:
@@ -62,10 +64,14 @@ class Bookmark():
 
 class NoteUserDoesNotExistError(ValueError):
     pass
+
+
 class NoteUserDoesExistError(ValueError):
     pass
-class NoteUser():
-    model:models.NoteUser
+
+
+class NoteUser:
+    model: models.NoteUser
 
     @classmethod
     def from_id(cls, id):
@@ -84,7 +90,7 @@ class NoteUser():
             raise NoteUserDoesNotExistError() from e
         else:
             return cls(found)
-  
+
     @classmethod
     def create_from_sbook(cls, sbook):
         try:
@@ -133,7 +139,7 @@ class NoteUser():
     @functools.cached_property
     def hasBookmarks(self):
         return len(self.bookmarks) > 0
-    
+
     @functools.cached_property
     def notes(self):
         return tuple(map(Note, self.model.notes.all()))
@@ -143,10 +149,15 @@ class NoteUser():
         print(self, "have notes", self.notes)
         return len(self.notes) > 0
 
+
 class NoteDoesNotExistError(ValueError):
     pass
+
+
 class NoteDoesExistError(ValueError):
     pass
+
+
 class Note:
     @classmethod
     def from_id(cls, id):
@@ -156,13 +167,14 @@ class Note:
             raise NoteDoesNotExistError() from e
         else:
             return cls(found)
+
     @classmethod
     def create(cls, title, author):
         model = models.Note(
             title=title,
             redactors=[author],
-        
         )
+
     def __init__(self, model=None):
         if model is None:
             raise NoteDoesNotExistError()
@@ -205,30 +217,31 @@ class Note:
 
     @functools.cached_property
     def profile_path(self):
-        return self.directory / 'profile.png'
+        return self.directory / "profile.png"
 
     @functools.cached_property
     def profile_asBytes(self):
         buffer = io.BytesIO()
-        self.profile.save(buffer, format='PNG')
+        self.profile.save(buffer, format="PNG")
         return buffer.getvalue()
 
     @property
     def js(self):
         return {
-            "title"      : self.title, 
-            "id"         : self.id   ,
-            "views"      : self.views,
-            "stars"      : float(self.stars),
-            "profile"    : f'/note/notes/{self.id}/profile.png',
-            "path"       : f'/note/notes/{self.id}/',
+            "title": self.title,
+            "id": self.id,
+            "views": self.views,
+            "stars": float(self.stars),
+            "profile": f"/note/notes/{self.id}/profile.png",
+            "path": f"/note/notes/{self.id}/",
             "description": self.description,
-            "color"      : profile_images.average_color(self.profile),
+            "color": profile_images.average_color(self.profile),
         }
 
     @property
     def json(self, indent=4):
         return json.dumps(self.js, indent=indent)
+
 
 def check_login(func, redirect=True):
     if isinstance(func, bool):
@@ -236,7 +249,7 @@ def check_login(func, redirect=True):
             check_login,
             redirect=func,
         )
-            
+
     @functools.wraps(func)
     def wrapper(*args, **kw):
         req = args[0]
@@ -247,16 +260,17 @@ def check_login(func, redirect=True):
                 user = NoteUser.from_id(req.session.get("user-id", -1))
             except sbook.accounts.UserDoesNotExistError:
                 if not redirect:
-                    return func(user=None, *args,**kw)
-                return HttpResponseRedirect('/signin/')
+                    return func(user=None, *args, **kw)
+                return HttpResponseRedirect("/signin/")
             except NoteUserDoesNotExistError:
                 user = NoteUser.create_from_sbook(
                     sbook.accounts.User.from_id(req.session.get("user-id")),
                 )
-            
-            return func(user=user, *args,**kw)
+
+            return func(user=user, *args, **kw)
         else:
             if not redirect:
-                return func(user=None, *args,**kw)
-            return HttpResponseRedirect('/signin')
+                return func(user=None, *args, **kw)
+            return HttpResponseRedirect("/signin")
+
     return wrapper

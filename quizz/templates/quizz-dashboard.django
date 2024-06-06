@@ -14,18 +14,21 @@
         <button onclick="$('#myquizzes-list').slideToggle();" class="w3-button w3-round bg-antimony10">
             {{ user_name }}'s quizzes
         </button>
-        <div id="myquizzes-list" class="w3-margin w3-round bg-a1">
-            {% for quizz in user.quizzes %}
-                {% include 'quizz-view-part.django' %}
-            {% empty %}
-                <p class="margin-center w3-padding-64 w3-padding-left w3-padding-right fg-antimony w3-opacity">
-                    nothing here yet
-                </p>
-            {% endfor %}
-            <a href="/quizz/new" view-class="jump" hover-class="shake" class="w3-margin w3-center hexa fa-2xl w3-circle w3-border-0">
-                <i class="fas fa-plus bg-rainbow w3-button w3-white w3-round-xxlarge w3-margin-bottom">create</i>
-            </a>
-        </div>
+        {% verbatim %}
+            <div id="myquizzes-list" class="w3-margin w3-round bg-a1">
+                <div ng-show="user_quizzes.length == 0">
+                    <p class="margin-center w3-padding-64 w3-padding-left w3-padding-right fg-antimony w3-opacity">
+                        nothing here yet
+                    </p>
+                </div>
+                <div ng-repeat="quizz in user_quizzes">
+                    <div ng-include="/quizz/quizzes/{{ quizz.id }}/profile"></div>
+                </div>
+                <a href="/quizz/new" view-class="jump" hover-class="shake" class="w3-margin w3-center hexa fa-2xl w3-circle w3-border-0">
+                    <i class="fas fa-plus bg-rainbow w3-button w3-white w3-round-xxlarge w3-margin-bottom">create</i>
+                </a>
+            </div>
+        {% endverbatim %}
     </div>
     <div class="w3-container w3-margin-bottom w3-round">
         <button onclick="$('#attempted-quizzes-list').slideToggle();" class="w3-button w3-round bg-antimony10">
@@ -52,6 +55,35 @@
     <script>
         const app = angular.module('{{ ng_app_name }}', []);
         app.controller('{{ ng_app_name }}Ctrl', function($scope) {
+            $scope.user_id = {{ user.model.id }};
+            $scope.user_name = {{ user.model.name }}n;
+            $scope.user_quizzes = [];
+            $scope.user_attempts = [];
+            $scope.get_quizzes = function() {
+                $.getJSON('/quizz/users/{{ user.model.id }}/quizzes.json').then(function(json) {
+                    data = json;
+                    if(data.ok == true) {
+                        $scope.user_quizzes = data.quizzes;
+                    } else {
+                        setTimeout($scope.get_quizzes, 0);
+                    }
+                });
+            }
+            $scope.get_attempts = function() {
+                $.getJSON('/quizz/users/{{ user.model.id }}/attempts.json').then(function(json) {
+                    data = json;
+                    if(data.ok == true) {
+                        $scope.user_attempts = data.attempts;
+                    } else {
+                        setTimeout($scope.get_attempts, 0);
+                    }
+                });
+            }
+            function update() {
+                $scope.get_quizzes();
+                $scope.get_attempts();
+            }
+            setInterval(update, 1000*60);
         });
     </script>
 {% endblock 'right' %}

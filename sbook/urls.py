@@ -14,28 +14,28 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from . import views
 from django.contrib import admin
 from django.urls import include
 from django.urls import path
+
 # from django.urls import re_path
 
 urlpatterns = [
     # re_path('djga/', include('google_analytics.urls')),
-    path('admin/', admin.site.urls),
-    path('csrf/', views.do_csrf),
-    path('', views.do_index),
-    path('image/<name>', views.do_image),
-    path('signin/', views.signin.as_view()),
-    path('signup/', views.signup.as_view()),
-    path('profile.png', views.do_profile),
-    path('profile.png/upload/', views.do_profile_upload),
-    path('profile/<int:userid>.png', views.do_userid_profile),
-
-    path('<scope>/u-email-check.json', views.u_email_check_json),
-    path('<scope>/u-password-check.json', views.u_password_check_json),
-
-    path('note/', include('note.urls')),
-    path('chatty/', include('chatty.urls')),
-    path('quizz/', include('quizz.urls')),
+    path("admin/", admin.site.urls),
+    path("csrf/", views.do_csrf),
+    path("", views.do_index),
+    path("image/<name>", views.do_image),
+    path("signin/", views.signin.as_view()),
+    path("signup/", views.signup.as_view()),
+    path("profile.png", views.do_profile),
+    path("profile.png/upload/", views.do_profile_upload),
+    path("profile/<int:userid>.png", views.do_userid_profile),
+    path("<scope>/u-email-check.json", views.u_email_check_json),
+    path("<scope>/u-password-check.json", views.u_password_check_json),
+    path("note/", include("note.urls")),
+    path("chatty/", include("chatty.urls")),
+    path("quizz/", include("quizz.urls")),
 ]

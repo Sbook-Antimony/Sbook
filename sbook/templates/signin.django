@@ -43,6 +43,7 @@
                         $scope.emailError = data;
                     });
                 }
+                window.setInterval($scope.checkEmail, 2000);
 
                 /*$scope.passwordError = false;
                 window.checkPassword = $scope.checkPassword = function() {

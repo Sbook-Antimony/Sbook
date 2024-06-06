@@ -26,10 +26,26 @@ def do_index(req, user):
             {
                 "user": user,
                 "user_name": user.sbookAccount.name,
-                'ng_app_name': 'qdashboard',
-            }
+                "ng_app_name": "qdashboard",
+            },
         )
     )
+
+
+@check_login
+def do_quizzes_json(req, user, userid):
+    try:
+        ouser = QuizzUser.from_id(userid)
+    except QuizzUserDoesNotExistError:
+        return JsonResponse({
+            "ok": False,
+            "quizzes": ()
+        })
+    else:
+        return JsonResponse({
+            "ok": True,
+            "quizzes": (quizz.js for quizz in ouser.quizzes)
+        })
 
 
 @check_login
@@ -37,13 +53,13 @@ def preview_quizz(req, user, quizzid):
     quizz = Quizz.from_id(quizzid)
     return render(
         req,
-        'quizz-preview.django',
+        "quizz-preview.django",
         {
-            'user': user,
-            'settings': settings,
-            'quizz': quizz,
-            'ng_app_name': 'quizz_preview',
-        }
+            "user": user,
+            "settings": settings,
+            "quizz": quizz,
+            "ng_app_name": "quizz_preview",
+        },
     )
 
 
@@ -52,13 +68,13 @@ def attempt_quizz(req, user, quizzid):
     quizz = Quizz.from_id(quizzid)
     return render(
         req,
-        'quizz-attempt.django',
+        "quizz-attempt.django",
         {
-            'user': user,
-            'settings': settings,
-            'quizz': quizz,
-            'ng_app_name': 'quizz_attempt',
-        }
+            "user": user,
+            "settings": settings,
+            "quizz": quizz,
+            "ng_app_name": "quizz_attempt",
+        },
     )
 
 
@@ -69,18 +85,9 @@ def submit_quizz(req, user, quizzid):
         quizz = Quizz.from_id(quizzid)
         answers = []
         for i, question in enumerate(quizz.questions):
-            answers.append(
-                req.POST.get(str(i))
-            )
+            answers.append(req.POST.get(str(i)))
         attempt = QuizzAttempt.create(user, quizz, answers)
-        return render(
-            req,
-            'quizz-attempted.django',
-            {
-                'attempt': attempt,
-                'user': user
-            }
-        )
+        return render(req, "quizz-attempted.django", {"attempt": attempt, "user": user})
 
 
 @check_login
@@ -88,11 +95,11 @@ def view_quizz_attempts(req, user, quizzid):
     quizz = Quizz.from_id(quizzid)
     return render(
         req,
-        'view-quizz-attempts.django',
+        "view-quizz-attempts.django",
         {
-            'quizz': quizz,
-            'user': user,
-        }
+            "quizz": quizz,
+            "user": user,
+        },
     )
 
 
@@ -102,12 +109,12 @@ def review_attempt(req, user, quizzid, attemptid):
     quizz = Quizz.from_id(quizzid)
     return render(
         req,
-        'quizz-attempt-review.django',
+        "quizz-attempt-review.django",
         {
-            'attempt': attempt,
-            'quizz': quizz,
-            'user': user,
-        }
+            "attempt": attempt,
+            "quizz": quizz,
+            "user": user,
+        },
     )
 
 
@@ -117,27 +124,27 @@ def review_attempt_review(req, user, quizzid, attemptid):
     quizz = Quizz.from_id(quizzid)
     return render(
         req,
-        'quizz-attempt-view-remarks.django',
+        "quizz-attempt-view-remarks.django",
         {
-            'attempt': attempt,
-            'quizz': quizz,
-            'user': user,
-            'ng_app_name': 'reviewReview',
-        }
+            "attempt": attempt,
+            "quizz": quizz,
+            "user": user,
+            "ng_app_name": "reviewReview",
+        },
     )
 
 
 @check_login
 def review_attempt_submit(req, user, quizzid, attemptid):
-    remark = req.POST.get('remark')
-    score = req.POST.get('score')
+    remark = req.POST.get("remark")
+    score = req.POST.get("score")
     if None in (remark, score):
         return render(
             req,
-            'quizz-attempt-review.django',
+            "quizz-attempt-review.django",
             {
-                'messages': [
-                    ('error', 'partial content'),
+                "messages": [
+                    ("error", "partial content"),
                 ],
             },
         )
@@ -147,7 +154,7 @@ def review_attempt_submit(req, user, quizzid, attemptid):
     attempt.model.remarked = True
     attempt.model.save()
     return HttpResponseRedirect(
-        f'/quizz/quizzes/{quizzid}/attempts/',
+        f"/quizz/quizzes/{quizzid}/attempts/",
     )
 
 
@@ -155,25 +162,26 @@ def review_attempt_submit(req, user, quizzid, attemptid):
 def do_new(req, user):
     return render(
         req,
-        'quizz-new.django',
+        "quizz-new.django",
         {
-            'user': user,
-            'ng_app_name': 'quizzNew',
-        }
+            "user": user,
+            "ng_app_name": "quizzNew",
+        },
     )
 
 
 @check_login
 def do_new_submit(req, user):
-    data = req.GET.get('data')
+    data = req.GET.get("data")
 
     quizz = models.Quizz(
         data=data,
-        title=req.GET.get('title'),
-        description=req.GET.get('description'),
-        is_private=req.GET.get('is_private'),
+        title=req.GET.get("title"),
+        description=req.GET.get("description"),
+        is_private=req.GET.get("is_private"),
         authors=(user,),
     )
+    quizz.save()
 
 
 class profiles:

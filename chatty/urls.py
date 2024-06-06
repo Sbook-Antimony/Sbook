@@ -14,12 +14,14 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
 from django.urls import path
 from chatty import views
+
 urlpatterns = [
-    path('', views.index),
-    path('rooms/create', views.room_create.as_view()),
-    path('rooms/<int:roomid>/messages/', views.room.as_view()),
-    path('rooms/<int:roomid>/messages/send-message/', views.send_message)
+    path("", views.index),
+    path("rooms/create", views.room_create.as_view()),
+    path("rooms/<int:roomid>/messages/", views.room.as_view()),
+    path("rooms/<int:roomid>/messages/send-message/", views.send_message),
 ]

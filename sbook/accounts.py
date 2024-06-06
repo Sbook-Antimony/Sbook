@@ -11,26 +11,21 @@ from sbook import settings
 import requests
 
 
-
-
 def parse_recaptcha_token(token):  # Replace this with your reCAPTCHA secret key
-    """
-    """
+    """ """
     try:
         return requests.post(
-            'https://www.google.com/recaptcha/api/siteverify',
-            data={
-                'secret': settings.RECAPTCHA_SECRET,
-                'response': token
-            }
+            "https://www.google.com/recaptcha/api/siteverify",
+            data={"secret": settings.RECAPTCHA_SECRET, "response": token},
         ).json()
     except:
         return {
             "success": False,
         }
 
+
 DIR = Path(__file__).parent.parent
-ACCOUNTS = DIR/'accounts'
+ACCOUNTS = DIR / "accounts"
 
 assert ACCOUNTS.exists(), f"accounts folder {ACCOUNTS!r} does not exists"
 
@@ -43,8 +38,6 @@ from sbook import models
 from chatty import accounts as chatty
 
 
-
-
 password_policy = PasswordPolicy.from_names(
     length=8,  # min length: 8
     uppercase=2,  # need min. 2 uppercase letters
@@ -54,14 +47,13 @@ password_policy = PasswordPolicy.from_names(
     entropybits=30,
 )
 
+
 class UserDoesNotExistError(ValueError):
     pass
+
+
 class UserDoesExistError(ValueError):
     pass
-
-
-
-
 
 
 def check_login(func, redirect=True):
@@ -70,7 +62,7 @@ def check_login(func, redirect=True):
             check_login,
             redirect=func,
         )
-            
+
     @functools.wraps(func)
     def wrapper(*args, **kw):
         req = args[0]
@@ -81,19 +73,24 @@ def check_login(func, redirect=True):
                 user = User.from_id(req.session.get("user-id", -1))
             except UserDoesNotExistError:
                 if not redirect:
-                    return func(user=None, *args,**kw)
-                return HttpResponseRedirect('/signin')
+                    return func(user=None, *args, **kw)
+                return HttpResponseRedirect("/signin")
             else:
-                return func(user=user, *args,**kw)
+                return func(user=user, *args, **kw)
         else:
             if not redirect:
-                return func(user=None, *args,**kw)
-            return HttpResponseRedirect('/signin')
+                return func(user=None, *args, **kw)
+            return HttpResponseRedirect("/signin")
+
     return wrapper
+
+
 ##########################################
 
+
 class User:
-    model:models.User
+    model: models.User
+
     @staticmethod
     def exists(**kw):
         try:
@@ -111,6 +108,7 @@ class User:
             raise UserDoesNotExistError() from e
         else:
             return cls(found)
+
     @classmethod
     def from_login(cls, email, password):
         try:
@@ -119,6 +117,7 @@ class User:
             raise UserDoesNotExistError() from e
         else:
             return cls(found)
+
     @classmethod
     def create_from_login(cls, name, email, password):
         try:
@@ -126,7 +125,7 @@ class User:
             obj = models.User(name=name, email=email, password=password)
             print("created.. \nnow saving")
             obj.save()
-            print('creating data launch')
+            print("creating data launch")
             createUserData(obj)
         except models.User.DoesNotExist as e:
             raise UserDoesExistError() from e
@@ -148,6 +147,7 @@ class User:
         return Image.open(
             self.profile_path,
         )
+
     @functools.cached_property
     def profile_path(self):
         return Path(self.model.profile.path)
@@ -155,7 +155,7 @@ class User:
     @functools.cached_property
     def profile_asBytes(self):
         buffer = io.BytesIO()
-        self.profile.save(buffer, format='PNG')
+        self.profile.save(buffer, format="PNG")
         return buffer.getvalue()
 
     @functools.cached_property
@@ -167,7 +167,7 @@ class User:
         cha = self.model.chattyAccount.all()
         if len(cha) == 0:
             cha = [chatty.accounts.ChattyUser.create_from_sbook(self.model)]
-            #raise chatty.accounts.UserDoesNotExistError()
+            # raise chatty.accounts.UserDoesNotExistError()
         return chatty.accounts.ChattyUser(cha[0])
 
     @functools.cached_property
@@ -176,26 +176,28 @@ class User:
         if len(cha) == 0:
             raise note.accounts.UserDoesNotExistError()
         return note.accounts.ChattyUser(cha[0])
+
     DEFAULT_PROFILE_PATH = DIR / "image/default-photo.png"
-    name : tuple
-    password : str
-    data : dict
-    folder : Path
-    id : int
-    
+    name: tuple
+    password: str
+    data: dict
+    folder: Path
+    id: int
+
+
 def createUserData(obj) -> int:
-    #users = sbook.models.Account.objects.all()
-    print(f'creating user data {{ obj.id }}')
+    # users = sbook.models.Account.objects.all()
+    print(f"creating user data {{ obj.id }}")
     assert obj.id is not None
     folder = ACCOUNTS / str(obj.id)
-    print(folder, ")"*100)
+    print(folder, ")" * 100)
     folder.mkdir(parents=True, exist_ok=True)
     print(folder.exists())
 
     img = profile_images.random_profile()
     img.save(folder / "profile.png")
 
-    data_file = (folder/"data.yaml")
+    data_file = folder / "data.yaml"
     data_file.touch()
     data_file.write_text(
         yaml.safe_dump(

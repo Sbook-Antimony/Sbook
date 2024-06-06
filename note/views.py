@@ -19,7 +19,7 @@ from sbook import settings
 
 @check_login(True)
 def do_index(req, user):
-    #print(user, user.sbookAccount, user.sbookAccount.name, user.notes, type(user.notes))
+    # print(user, user.sbookAccount, user.sbookAccount.name, user.notes, type(user.notes))
     return HttpResponse(
         render(
             req,
@@ -29,9 +29,10 @@ def do_index(req, user):
                 "hasNotes": user.hasNotes,
                 "hasBookmarks": user.hasBookmarks,
                 "user_name": user.sbookAccount.name,
-            }
+            },
         )
     )
+
 
 @check_login
 def note_profile(req, user, noteid):
@@ -44,7 +45,7 @@ def note_profile(req, user, noteid):
 
 
 class note_upload(View):
-    @check_login    
+    @check_login
     def get(self, req, user, *args, **kw):
         return render(
             req,
@@ -52,16 +53,16 @@ class note_upload(View):
             {
                 "user": user,
                 "settings": settings,
-            }
+            },
         )
-    @check_login    
+
+    @check_login
     def post(self, req, user, *args, **kw):
         form = forms.NoteUploadForm(req.POST)
         form = form.cleaned_data
 
-        file = form.get('file')
+        file = form.get("file")
 
-        
         file = zipfile.ZipFile(file)
         temp_dir = tempfile.TemporaryDirectory()
         url = temp_dir.name
@@ -72,11 +73,7 @@ class note_upload(View):
 
         dest = Note.initialize(user, meta)
 
-        engine.compile(
-            url,
-            meta,
-            dest
-        )
+        engine.compile(url, meta, dest)
 
         Note.create(meta, dest)
 
@@ -87,7 +84,7 @@ class note(View):
         print(req, user, noteid, path)
         try:
             note = Note.from_id(noteid)
-            print('note', note)
+            print("note", note)
             file = note.directory / path
             if not file.exists():
                 raise FileNotFoundError(path)
@@ -97,64 +94,68 @@ class note(View):
             return HttpResponseNotFound(str(e))
         else:
             import mimetypes
+
             mime = mimetypes.guess_type(file)
-            print(f'{mime=}')
+            print(f"{mime=}")
             if mime[0] in ("text/html", "txt/html", "text/javascript"):
                 try:
                     return HttpResponse(
-                        file.read_text(
-                        ).replace(
-                            '{',
-                            '\1',
-                        ).replace(
-                            '}',
-                            '\2',
-                        ).replace(
-                            '<<<',
-                            '{',
-                        ).replace(
-                            '>>>',
-                            '}',
-                        ).format(
+                        file.read_text()
+                        .replace(
+                            "{",
+                            "\1",
+                        )
+                        .replace(
+                            "}",
+                            "\2",
+                        )
+                        .replace(
+                            "<<<",
+                            "{",
+                        )
+                        .replace(
+                            ">>>",
+                            "}",
+                        )
+                        .format(
                             user=user,
                             note=note,
-                        ).replace(
-                            '\1',
-                            '{'
-                        ).replace(
-                            '\2',
-                            '}'
                         )
+                        .replace("\1", "{")
+                        .replace("\2", "}")
                     )
                 except Exception as e:
                     return HttpResponse(str(e))
             else:
                 return HttpResponse(file.read_bytes())
 
+
 @check_login
 def browse_notes_json(req, user):
     return JsonResponse(
-        list(map(
-            lambda note: Note(note).js,
-            models.Note.objects.all(),
-        )),
+        list(
+            map(
+                lambda note: Note(note).js,
+                models.Note.objects.all(),
+            )
+        ),
         safe=False,
     )
+
 
 @check_login
 def browse_notes(req, user):
     from_ = int(req.GET.get("from", "0"))
-    to_ = int(req.GET.get('to', from_+30))
+    to_ = int(req.GET.get("to", from_ + 30))
 
-
-    notes = map(Note, models.Note.objects.order_by('stars')[from_:to_])
+    notes = map(Note, models.Note.objects.order_by("stars")[from_:to_])
 
     return render(
         req,
-        'note-browse.django',
+        "note-browse.django",
         {
-            'user': user,
-            'notes': notes,
-            'ng_app_name': 'browse',
-        }
+            "user": user,
+            "notes": notes,
+            "ng_app_name": "browse",
+        },
     )

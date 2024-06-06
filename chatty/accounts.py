@@ -9,10 +9,14 @@ import sbook.accounts
 
 class ChattyUserDoesNotExistError(ValueError):
     pass
+
+
 class ChattyUserDoesExistError(ValueError):
     pass
-class ChattyUser():
-    model:models.ChattyUser
+
+
+class ChattyUser:
+    model: models.ChattyUser
 
     @classmethod
     def from_id(cls, id):
@@ -22,6 +26,7 @@ class ChattyUser():
             raise ChattyUserDoesNotExistError() from e
         else:
             return found.chattyAccount
+
     def from_chatty_id(cls, id):
         try:
             found = models.ChattyUser.objects.get(id=id)
@@ -44,13 +49,13 @@ class ChattyUser():
         if model is None:
             raise ChattyUserDoesNotExistError()
         self.model = model
-        
+
     @functools.cached_property
     def sbookAccount(self):
         return sbook.accounts.User(
             self.model.sbookAccount,
         )
-    
+
     @functools.cached_property
     def id(self):
         return self.sbookAccount.id
@@ -74,7 +79,7 @@ def check_login(func, redirect=True):
             check_login,
             redirect=func,
         )
-            
+
     @functools.wraps(func)
     def wrapper(*args, **kw):
         req = args[0]
@@ -85,14 +90,13 @@ def check_login(func, redirect=True):
                 user = ChattyUser.from_id(req.session.get("user-id", -1))
             except ChattyUserDoesNotExistError:
                 if not redirect:
-                    return func(user=None, *args,**kw)
-                return HttpResponseRedirect('/signin')
+                    return func(user=None, *args, **kw)
+                return HttpResponseRedirect("/signin")
             else:
-                return func(user=user, *args,**kw)
+                return func(user=user, *args, **kw)
         else:
             if not redirect:
-                return func(user=None, *args,**kw)
-            return HttpResponseRedirect('/signin')
+                return func(user=None, *args, **kw)
+            return HttpResponseRedirect("/signin")
+
     return wrapper
-
-

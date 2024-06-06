@@ -1,5 +1,11 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect, JsonResponse, FileResponse
+from django.http import (
+    HttpResponse,
+    HttpResponseNotFound,
+    HttpResponseRedirect,
+    JsonResponse,
+    FileResponse,
+)
 from django.template import loader
 from django.views import View
 from pathlib import Path
@@ -9,26 +15,29 @@ from sbook.accounts import *
 import mimetypes
 from . import forms
 
-File = lambda url: FileResponse(open(url, 'rb'), filename=url.as_uri())
+File = lambda url: FileResponse(open(url, "rb"), filename=url.as_uri())
+
 
 def u_email_check_json(req, scope):
-    email = req.GET.get('email', '')
+    email = req.GET.get("email", "")
     try:
         validate_email(email)
     except ValidationError as e:
         return JsonResponse(e.message, safe=False)
     else:
         exists = User.exists(email=email)
-        if exists and scope == 'signup':
-            return JsonResponse(f'email {email} already used', safe=False)
+        if exists and scope == "signup":
+            return JsonResponse(f"email {email} already used", safe=False)
         elif not exists and scope == "signin":
-            return JsonResponse(f'email {email} does not exist in our database', safe=False)
+            return JsonResponse(
+                f"email {email} does not exist in our database", safe=False
+            )
         else:
             return JsonResponse(False, safe=False)
 
 
 def u_password_check_json(req, scope):
-    password = req.GET.get('password')
+    password = req.GET.get("password")
     results = password_policy.test(password)
     if len(results) == 0:
         return JsonResponse(False, safe=False)
@@ -44,16 +53,13 @@ def do_index(req, user):
     if user is not None:
         return render(
             req,
-            'dashboard.django',
-            {
-                'user': user,
-                'ng_app_name': 'dashboard'
-            },
+            "dashboard.django",
+            {"user": user, "ng_app_name": "dashboard"},
         )
     else:
         return render(
             req,
-            'index.django',
+            "index.django",
         )
 
 
@@ -75,13 +81,14 @@ class signin(View):
         return render(
             req,
             "signin.django",
-            {'errors': False},
+            {"errors": False},
         )
+
     def post(self, req, *args, **kw):
         data = parse_recaptcha_token(req.POST.get("signincaptcha"))
-        #print(data)
+        # print(data)
         if not data.get("success"):
-            #return HttpResponseRedirect("/signin/")
+            # return HttpResponseRedirect("/signin/")
             pass
         form = forms.SigninForm(req.POST)
         if not form.is_valid():
@@ -90,30 +97,33 @@ class signin(View):
                 req,
                 "signin.django",
                 {
-                    'errors': (str(errors.get("email", "")[0].message) if len(errors.get("email"), []) > 0 else False)
-
-                }
+                    "errors": (
+                        str(errors.get("email", "")[0].message)
+                        if len(errors.get("email"), []) > 0
+                        else False
+                    )
+                },
             )
         else:
             try:
                 data = form.cleaned_data
-                user = User.from_login(email=data.get("email"), password=data.get("password"))
+                user = User.from_login(
+                    email=data.get("email"), password=data.get("password")
+                )
             except UserDoesNotExistError:
                 return render(
                     req,
                     "signin.django",
-                    {
-                        "errors": "Invalid Login: password or email incorrect"
-                    }
+                    {"errors": "Invalid Login: password or email incorrect"},
                 )
             else:
                 req.session["user-id"] = user.id
-                return HttpResponseRedirect('/')
+                return HttpResponseRedirect("/")
 
 
 class signup(View):
     def get(self, req, *args, **kw):
-        return render(req, "signup.django", {'errors': False})
+        return render(req, "signup.django", {"errors": False})
 
     def post(self, req, *args, **kw):
         data = parse_recaptcha_token(req.POST.get("signincaptcha"))
@@ -129,39 +139,38 @@ class signup(View):
                 req,
                 "signup.django",
                 {
-                    'errors': (str(errors.get("email", "")[0].message) if len(errors.get("email", [])) > 0 else False)
-
-                }
+                    "errors": (
+                        str(errors.get("email", "")[0].message)
+                        if len(errors.get("email", [])) > 0
+                        else False
+                    )
+                },
             )
         else:
             try:
                 data = form.cleaned_data
-                user = User.create_from_login(data.get('name'), data.get("email"), data.get("password"))
-            except UserDoesExistError:
-                return render(
-                    req,
-                    "signup.django",
-                    {
-                        "errors": "User exists"
-                    }
+                user = User.create_from_login(
+                    data.get("name"), data.get("email"), data.get("password")
                 )
+            except UserDoesExistError:
+                return render(req, "signup.django", {"errors": "User exists"})
             else:
                 req.session["user-id"] = user.id
-                return HttpResponseRedirect('/')
+                return HttpResponseRedirect("/")
 
 
 @check_login
 def do_profile_upload(req, user):
-    file = req.FILES.get('file')
+    file = req.FILES.get("file")
     user.profile = file
     user.save()
-    return JsonResponse({'succes': True})
+    return JsonResponse({"succes": True})
 
 
 @check_login(True)
 def do_profile(req, user: User):
     if user is not None:
-        return HttpResponse(user.profile_asBytes, 'img/png')
+        return HttpResponse(user.profile_asBytes, "img/png")
     else:
         return File(User.DEFAULT_PROFILE_PATH)
 
@@ -172,4 +181,4 @@ def do_userid_profile(req, userid):
     except UserDoesNotExistError:
         return File(User.DEFAULT_PROFILE_PATH)
     else:
-        return HttpResponse(user.profile_asBytes, 'img/png')
+        return HttpResponse(user.profile_asBytes, "img/png")

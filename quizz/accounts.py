@@ -27,10 +27,14 @@ class Tuple(tuple):
 
 class QuizzUserDoesNotExistError(ValueError):
     pass
+
+
 class QuizzUserDoesExistError(ValueError):
     pass
-class QuizzUser():
-    model:models.QuizzUser
+
+
+class QuizzUser:
+    model: models.QuizzUser
 
     @classmethod
     def from_id(cls, id):
@@ -40,7 +44,6 @@ class QuizzUser():
             raise NoteUserDoesNotExistError() from e
         else:
             return cls(found)
-
 
     @classmethod
     def create_from_sbook(cls, sbook):
@@ -99,18 +102,18 @@ class Question:
 
 
 class MCQQuestion(Question):
-    mode = 'mcq'
+    mode = "mcq"
 
     def __init__(self, data, id=0):
-        self.question = data.get('question')
-        self.options = data.get('options', {}).items()
-        self.answer = data.get('answer')
+        self.question = data.get("question")
+        self.options = data.get("options", {}).items()
+        self.answer = data.get("answer")
         self.id = id
 
     def js(self):
         return {
-            'question': self.question,
-            'options': self.options,
+            "question": self.question,
+            "options": self.options,
         }
 
     def json(self):
@@ -186,18 +189,22 @@ class Quizz:
     @functools.cached_property
     def profile_asBytes(self):
         buffer = io.BytesIO()
-        self.profile.save(buffer, format='PNG')
+        self.profile.save(buffer, format="PNG")
         return buffer.getvalue()
 
     @property
     def js(self):
         return {
+            "remarking_status": self.attempts_remark_status,
+            "prolog": self.prolog,
+            "epilog": self.epilog,
             "title": self.title,
+            "num_attempts": self.num_attempts,
+            "num_attempts_remarked": self.num_attempts_remarked,
+            "num_attempts_unremarked": self.num_attempts_unremarked,
             "id": self.id,
             "views": self.views,
             "stars": float(self.stars),
-            "profile": f'/note/notes/{self.id}/profile.png',
-            "path": f'/note/notes/{self.id}/',
             "description": self.description,
             "color": profile_images.average_color(self.profile),
         }
@@ -206,7 +213,7 @@ class Quizz:
     def questions(self):
         return tuple(
             Question.from_dict(data, i)
-            for i, data in enumerate(self.data.get('questions', []))
+            for i, data in enumerate(self.data.get("questions", []))
         )
 
     @functools.cached_property
@@ -219,15 +226,15 @@ class Quizz:
 
     @functools.cached_property
     def instructions(self):
-        return self.data.get('instructions')
+        return self.data.get("instructions")
 
     @functools.cached_property
     def epilog(self):
-        return self.data.get('epilog')
+        return self.data.get("epilog")
 
     @functools.cached_property
     def prolog(self):
-        return self.data.get('prolog')
+        return self.data.get("prolog")
 
     @functools.cached_property
     def attempts(self):
@@ -261,8 +268,8 @@ class Quizz:
     @functools.cached_property
     def on_submit(self):
         return self.data.get(
-            'on_submit',
-            '''Thanks for answering, stydy well!''',
+            "on_submit",
+            """Thanks for answering, stydy well!""",
         )
 
 
@@ -279,7 +286,7 @@ class QuestionAttempt:
 
 
 class MCQQuestionAttempt(QuestionAttempt):
-    mode = 'mcq'
+    mode = "mcq"
 
     def __init__(self, question, ans):
         print(question, ans)
@@ -331,9 +338,7 @@ class QuizzAttempt:
     @functools.cached_property
     def answers(self):
         ret = tuple(
-            QuestionAttempt.from_question(
-                self.quizz.questions[i], a
-            )
+            QuestionAttempt.from_question(self.quizz.questions[i], a)
             for i, a in enumerate(self.model.answers)
         )
         return ret
@@ -360,15 +365,16 @@ def check_login(func, redirect=True):
                 user = QuizzUser.from_id(req.session.get("user-id", -1))
             except QuizzUserDoesNotExistError:
                 if not redirect:
-                    return func(user=None, *args,**kw)
-                return HttpResponseRedirect('/signin/')
+                    return func(user=None, *args, **kw)
+                return HttpResponseRedirect("/signin/")
             except QuizzUserDoesNotExistError:
                 user = QuizzUser.create_from_sbook(
                     sbook.accounts.User.from_id(req.session.get("user-id")),
                 )
-            return func(user=user, *args,**kw)
+            return func(user=user, *args, **kw)
         else:
             if not redirect:
-                return func(user=None, *args,**kw)
-            return HttpResponseRedirect('/signin/')
+                return func(user=None, *args, **kw)
+            return HttpResponseRedirect("/signin/")
+
     return wrapper

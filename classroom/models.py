@@ -11,16 +11,16 @@ class Classroom(models.Model):
     description = models.TextField()
     members = models.ManyToManyField(
         sbook.User,
-        related_name='classrooms',
+        related_name="classrooms",
     )
     levels = models.ManyToManyField(
-        'sbook.Level',
-        related_name='classrooms',
+        "sbook.Level",
+        related_name="classrooms",
     )
     courses = models.ManyToManyField(
-        'sbook.Course',
-        related_name='classrooms',
+        "sbook.Course",
+        related_name="classrooms",
     )
 
     def __str__(self):
-        return f'{self.id}:{self.name}'
+        return f"{self.id}:{self.name}"
