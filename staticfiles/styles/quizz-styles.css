@@ -292,6 +292,23 @@ bkd-antimony50:-internal-dialog-in-top-layer::backdrop {
   background-image: linear-gradient(to right, rgba(250, 218, 94, 0), rgba(250, 218, 94, 0.7)), url("/image/back-dark-dotty.png");
 }
 
+#header-back-blurred-div {
+  width: 100%;
+  height: 50px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-image: url("/image/back-light-vertical.png");
+  /* Add the blur effect */
+  filter: blur(0.5px);
+  -webkit-filter: blur(0.5px);
+  /* Full height */
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 body {
   display: flex;
   flex-direction: row;
