@@ -1,24 +1,35 @@
-from pathlib import Path
-from PIL import Image
 import io
 
-import yaml
+from PIL import Image
+from pathlib import Path
+
 import django.http
+import yaml
 
 import profile_images
-from password_strength import PasswordPolicy
-from sbook import settings
 import requests
 
+from password_strength import PasswordPolicy
+from sbook import settings
 
-def parse_recaptcha_token(token):  # Replace this with your reCAPTCHA secret key
+import functools
+
+from django.http import HttpResponse
+from django.http import HttpResponseRedirect
+
+from chatty import accounts as chatty
+from note import accounts as note
+from sbook import models
+
+
+def parse_recaptcha_token(token):
     """ """
     try:
         return requests.post(
             "https://www.google.com/recaptcha/api/siteverify",
             data={"secret": settings.RECAPTCHA_SECRET, "response": token},
         ).json()
-    except:
+    except Exception:
         return {
             "success": False,
         }
@@ -30,20 +41,12 @@ ACCOUNTS = DIR / "accounts"
 assert ACCOUNTS.exists(), f"accounts folder {ACCOUNTS!r} does not exists"
 
 
-import functools
-
-from django.http import HttpResponseRedirect, HttpResponse
-
-from sbook import models
-from chatty import accounts as chatty
-
-
 password_policy = PasswordPolicy.from_names(
     length=8,  # min length: 8
     uppercase=2,  # need min. 2 uppercase letters
     numbers=2,  # need min. 2 digits
     special=2,  # need min. 2 special characters
-    nonletters=2,  # need min. 2 non-letter characters (digits, specials, anything)
+    nonletters=2,  # need min. 2 non-letter characters
     entropybits=30,
 )
 
@@ -122,11 +125,15 @@ class User:
     def create_from_login(cls, name, email, password):
         try:
             print("creating user")
-            obj = models.User(name=name, email=email, password=password)
+            obj = models.User(
+                name=name,
+                email=email,
+                password=password,
+                profile=profile_images.random_profile(),
+            )
             print("created.. \nnow saving")
             obj.save()
             print("creating data launch")
-            createUserData(obj)
         except models.User.DoesNotExist as e:
             raise UserDoesExistError() from e
         else:
@@ -163,6 +170,13 @@ class User:
         return self.model.name
 
     @functools.cached_property
+    def js(self):
+        return {
+            "name": self.model.name,
+            "id": self.model.id,
+        }
+
+    @functools.cached_property
     def chattyAccount(self):
         cha = self.model.chattyAccount.all()
         if len(cha) == 0:
@@ -174,8 +188,8 @@ class User:
     def noteAccount(self):
         cha = self.model.noteAccount.all()
         if len(cha) == 0:
-            raise note.accounts.UserDoesNotExistError()
-        return note.accounts.ChattyUser(cha[0])
+            raise note.UserDoesNotExistError()
+        return note.ChattyUser(cha[0])
 
     DEFAULT_PROFILE_PATH = DIR / "image/default-photo.png"
     name: tuple
@@ -183,29 +197,3 @@ class User:
     data: dict
     folder: Path
     id: int
-
-
-def createUserData(obj) -> int:
-    # users = sbook.models.Account.objects.all()
-    print(f"creating user data {{ obj.id }}")
-    assert obj.id is not None
-    folder = ACCOUNTS / str(obj.id)
-    print(folder, ")" * 100)
-    folder.mkdir(parents=True, exist_ok=True)
-    print(folder.exists())
-
-    img = profile_images.random_profile()
-    img.save(folder / "profile.png")
-
-    data_file = folder / "data.yaml"
-    data_file.touch()
-    data_file.write_text(
-        yaml.safe_dump(
-            {
-                "id": obj.id,
-                "name": obj.name,
-                "password": obj.password,
-                "email": obj.email,
-            }
-        )
-    )

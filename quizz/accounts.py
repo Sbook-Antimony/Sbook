@@ -97,7 +97,10 @@ class QuizzUser:
 
     @functools.cached_property
     def js(self):
-        return self.
+        return self.sbookAccount.js | {
+            "user_id": self.model.id,
+        }
+
 
 class Question:
     @classmethod
@@ -110,10 +113,11 @@ class MCQQuestion(Question):
 
     def __init__(self, data, id=0):
         self.question = data.get("question")
-        self.options = data.get("options", {}).items()
+        self.options = list(data.get("options", {}).items())
         self.answer = data.get("answer")
         self.id = id
 
+    @property
     def js(self):
         return {
             "question": self.question,
@@ -169,8 +173,8 @@ class Quizz:
         return self.model.starred
 
     @functools.cached_property
-    def redactors(self):
-        return tuple(map(QuizzUser, self.model.redactors.all()))
+    def authors(self):
+        return tuple(map(QuizzUser, self.model.authors.all()))
 
     @functools.cached_property
     def description(self):
@@ -200,7 +204,7 @@ class Quizz:
     def js(self):
         return {
             "questions": list(map(lambda q: q.js, self.questions)),
-            "author": self.author.js,
+            "authors": [author.js for author in self.authors],
             "remarking_status": self.attempts_remark_status,
             "prolog": self.prolog,
             "epilog": self.epilog,

@@ -9,7 +9,7 @@ image = Image.new("RGB", (side, side), "white")
 cache = []
 diff = 40
 le = 50
-li = 250
+li = 240
 
 for y in range(side):
     for x in range(side):

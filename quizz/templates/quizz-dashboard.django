@@ -63,31 +63,30 @@
         </button>
         {% verbatim %}
             <div
-                id="myquizzes-list"
+                id="attempted-quizzes-list"
                 class="w3-display-container w3-border-bottom w3-padding w3-margin w3-round bg-a1"
             >
-                <div ng-show="user_quizzes.length == 0" class="w3-padding-64 bg-antimony50">
-                    <img src="/static/svg/solid/file-circle-question.svg" class="inline w fg-antimony50 ">
-                    <p class="w3-padding-64 inline">
-                        No quizz attempted yet.
+                <div ng-show="user_attempts.length == 0">
+                    <p class="margin-center w3-padding-64 w3-padding-left w3-padding-right fg-antimony w3-opacity">
+                        nothing here yet
                     </p>
                 </div>
-                <div ng-repeat="attempt in user_attempts">
-                    <div class="w3-col m3 w3-margin w3-display-container bg-thin bd-naple w3-circle">
-                        <a class="" href="/quizz/quizzes/{{ attempt.quizz_id }}/attempts/{{ attempt_id }}/remarks/" class="w3-row">
+                <div>
+                    <div ng-repeat="attempt in user_attempts" class="w3-col m3 w3-margin w3-display-container bg-thin bd-naple w3-circle">
+                        <a class="" href="/quizz/quizzes/{{ attempt.quizz.id }}/attempts/{{ attempt.id }}/remarks/" class="w3-row">
                             <img
                                 hover-class="!w3-animate-zoom"
                                 class="w3-circle inline"
                                 height="100px"
                                 style="margin-right: -70px; z-index: 5;"
-                                src="/quizz/profiles/quizzes/{{ attempt.author_id }}.png"
+                                src="/quizz/profiles/quizzes/{{ attempt.author.id }}.png"
                             />
                             <img
                                 hover-class="!w3-animate-zoom"
                                 class="w3-circle inline"
                                 height="100px"
                                 style="margin-left: -70px; z-index: -5;"
-                                src="/profile/{{ attempt.quizz_id }}.png"
+                                src="/profile/{{ attempt.quizz.id }}.png"
                             />
                         </a>
                         <span class="w3-padding-small w3-display-topright w3-margin-right w3-round-large bg-naple">
@@ -98,16 +97,6 @@
 
         {% endverbatim %}
         <div id="attempted-quizzes-list" class="w3-row w3-margin w3-round bg-a1">
-            {% for attempt in user.attempts %}
-
-            {% empty %}
-                <div class="w3-padding-64 bg-antimony50">
-                    <img src="/static/svg/solid/file-circle-question.svg" class="inline w fg-antimony50 ">
-                    <p class="w3-padding-64 inline">
-                        No quizz attempted yet.
-                    </p>
-                </div>
-            {% endfor %}
             <a href="/quizz/new" view-class="jump" hover-class="shake" class="w3-margin w3-center hexa fa-2xl w3-circle w3-border-0">
                 <i class="fas fa-plus bg-rainbow w3-button w3-white w3-round-xxlarge w3-margin-bottom">create</i>
             </a>
@@ -137,9 +126,9 @@
                 });
             }
             $scope.get_attempts = function() {
-                jQuery.getJSON('/quizz/users/{{ user.model.id }}/attempts.json', {}, function(err, json, gh) {
+                jQuery.getJSON('/quizz/users/{{ user.model.id }}/attempts.json', {}, function(json) {
                     data = json;
-                    console.log(err, json, gh);
+                    console.log(json);
                     if(data.ok == true) {
                         $scope.user_attempts = data.attempts;
                     } else {

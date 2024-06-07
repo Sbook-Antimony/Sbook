@@ -6,8 +6,7 @@ import json
 from django.http import HttpRequest
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
-from sbook.accounts import ACCOUNTS
-from sbook.accounts import DIR
+from sbook.settings import BASE_DIR as DIR
 
 import profile_images
 import sbook.accounts

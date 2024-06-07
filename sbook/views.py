@@ -163,7 +163,8 @@ class signup(View):
 @check_login
 def do_profile_upload(req, user):
     file = req.FILES.get("file")
-    user.profile = file
+    image = Image.open(file)
+    user.profile = image.resize((500, 500))
     user.save()
     return JsonResponse({"succes": True})
 

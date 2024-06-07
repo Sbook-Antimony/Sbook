@@ -93,8 +93,6 @@ class note(View):
         except FileNotFoundError as e:
             return HttpResponseNotFound(str(e))
         else:
-            import mimetypes
-
             mime = mimetypes.guess_type(file)
             print(f"{mime=}")
             if mime[0] in ("text/html", "txt/html", "text/javascript"):
