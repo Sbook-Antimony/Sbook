@@ -42,7 +42,7 @@ class QuizzUser:
         try:
             found = sbook.models.User.objects.get(id=id).quizzAccount.all()[0]
         except IndexError as e:
-            raise NoteUserDoesNotExistError() from e
+            raise QuizzUserDoesNotExistError() from e
         else:
             return cls(found)
 
@@ -95,6 +95,9 @@ class QuizzUser:
     def attempts(self):
         return Tuple(map(QuizzAttempt, self.model.quizz_attempts.all()))
 
+    @functools.cached_property
+    def js(self):
+        return self.
 
 class Question:
     @classmethod
@@ -196,6 +199,8 @@ class Quizz:
     @property
     def js(self):
         return {
+            "questions": list(map(lambda q: q.js, self.questions)),
+            "author": self.author.js,
             "remarking_status": self.attempts_remark_status,
             "prolog": self.prolog,
             "epilog": self.epilog,
@@ -331,6 +336,17 @@ class QuizzAttempt:
     @functools.cached_property
     def author(self):
         return QuizzUser(self.model.author)
+
+    @functools.cached_property
+    def js(self):
+        return {
+            'quizz': self.quizz.js,
+            'author': self.author.js,
+            'answers': self.model.answers,
+            'remark': self.model.remark,
+            'score': self.model.score,
+            'remarked': self.model.remarked,
+        }
 
     @functools.cached_property
     def quizz(self):

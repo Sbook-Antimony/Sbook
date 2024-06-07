@@ -91,12 +91,8 @@
                             />
                         </a>
                         <span class="w3-padding-small w3-display-topright w3-margin-right w3-round-large bg-naple">
-                            {% if attempt.model.remarked %}
-                            <img src="/static/svg/solid/circle-check.svg" class="text-fit" />
-                            {% else %}
-                                {{ 'solid xmark text-fit' | icon }}
-                                <img src="/static/svg/solid/xmark.svg" class="text-fit" />
-                            {% endif %}
+                            <img ng-show="attempt.remarked" src="/static/svg/solid/circle-check.svg" class="text-fit" />
+                            <img ng-hide="attempt.remarked" src="/static/svg/solid/xmark.svg" class="text-fit" />
                         </span>
                     </div>
 
