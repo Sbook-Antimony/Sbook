@@ -97,11 +97,61 @@
 
         {% endverbatim %}
         <div id="attempted-quizzes-list" class="w3-row w3-margin w3-round bg-a1">
-            <a href="/quizz/new" view-class="jump" hover-class="shake" class="w3-margin w3-center hexa fa-2xl w3-circle w3-border-0">
-                <i class="fas fa-plus bg-rainbow w3-button w3-white w3-round-xxlarge w3-margin-bottom">create</i>
+            <a
+                href="/quizz/new"
+                view-class="jump"
+                class="w3-text-white bg-rainbow w3-button w3-white w3-round-xxlarge w3-margin w3-center hexa w3-border-0"
+            >
+                browse quizzes
             </a>
         </div>
     </div>
+    <div class="w3-container w3-margin-bottom w3-round">
+        <button ng-click="jQuery('#quizzes-for-U').slideToggle();" class="w3-button w3-round bg-antimony10">
+            Quizzes for You
+        </button>
+        {% verbatim %}
+            <div
+                id="quizzes-for-U"
+                class="w3-display-container w3-border-bottom w3-padding w3-margin w3-round bg-a1"
+            >
+            <div ng-repeat="quizz in user_quizzes">
+                <a class="" href="/quizz/quizzes/{{ quizz.id }}/preview">
+                    <img
+                        hover-class="!w3-animate-zoom"
+                        height="100%"
+                        class="w3-circle w3-left inline w3-margin-right"
+                        src="/quizz/profiles/quizzes/{{ quizz.id }}.png"
+                    />
+                    <span class="inline">
+                        <h4 class="w3-large">{{ quizz.title }}</h4>
+                        <p class="fg-antimony w3-small">
+                            {{ quizz.description }}
+                        </p>
+                    </span>
+                </a>
+                <span class="w3-padding-small w3-display-topright w3-round-large bg-naple">
+                    <a ng-show="quizz.remarking_status == 0" href="/quizz/quizzes/{{ quizz.id }}/attempts/" title="nothing done">
+                        <img src="/static/svg/solid/list-check.svg" class="text-fit" />
+                    </a>
+                    <a ng-show="quizz.remarking_status == 1" href="/quizz/quizzes/{{ quizz.id }}/attempts/" title="some remaining...">
+                        <img src="/static/svg/solid/list-check.svg" class="text-fit" />
+                    </a>
+                    <a ng-show="quizz.remarking_status == 2" href="/quizz/quizzes/{{ quizz.id }}/attempts/" title="nothing here">
+                        <img src="/static/svg/solid/circle-check.svg" class="text-fit" />
+                    </a>
+                </span>
+            </div>
+            </div>
+
+        {% endverbatim %}
+        <div id="attempted-quizzes-list" class="w3-row w3-margin w3-round bg-a1">
+            <a href="/quizz/new" view-class="jump" hover-class="shake" class="w3-margin w3-center hexa fa-2xl w3-circle w3-border-0">
+                view more
+            </a>
+        </div>
+    </div>
+
 {% endblock 'center' %}
 {% block 'right' %}
     <script>
@@ -118,8 +168,7 @@
                     if(res.status == 200 && res.data.ok) {
                         $scope.user_quizzes = res.data.quizzes;
                     } else {
-                        console.error("failed...", res);
-                        setTimeout($scope.get_quizzes, 0);
+                        setTimeout($scope.get_quizzes, 1000);
                     }
                 });
             }
@@ -128,7 +177,7 @@
                     if(res.status == 200 && res.data.ok) {
                         $scope.user_attempts = res.data.attempts;
                     } else {
-                        setTimeout($scope.get_attempts, 0);
+                        setTimeout($scope.get_attempts, 1000);
                     }
                 });
             }

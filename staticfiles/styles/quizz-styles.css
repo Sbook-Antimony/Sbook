@@ -305,6 +305,11 @@ bkd-antimony50:-internal-dialog-in-top-layer::backdrop {
   /* Full height */
   /* Center and scale the image nicely */
   background-repeat: repeat-x;
+  z-index: 19;
+}
+
+header {
+  z-index: 20 !important;
 }
 
 body {
