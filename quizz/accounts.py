@@ -344,12 +344,12 @@ class QuizzAttempt:
     @functools.cached_property
     def js(self):
         return {
-            'quizz': self.quizz.js,
-            'author': self.author.js,
-            'answers': self.model.answers,
-            'remark': self.model.remark,
-            'score': self.model.score,
-            'remarked': self.model.remarked,
+            "quizz": self.quizz.js,
+            "author": self.author.js,
+            "answers": self.model.answers,
+            "remark": self.model.remark,
+            "score": self.model.score,
+            "remarked": self.model.remarked,
         }
 
     @functools.cached_property

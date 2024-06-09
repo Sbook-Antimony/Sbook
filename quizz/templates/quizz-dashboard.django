@@ -106,7 +106,7 @@
 {% block 'right' %}
     <script>
         const app = angular.module('{{ ng_app_name }}', []);
-        app.controller('{{ ng_app_name }}Ctrl', function($scope) {
+        app.controller('{{ ng_app_name }}Ctrl', function($scope, $http) {
             window.$scope = $scope;
             $scope.jQuery = window.jQuery = jQuery.noConflict();
             $scope.user_id = {{ user.model.id }}n;
@@ -114,23 +114,19 @@
             $scope.user_quizzes = [];
             $scope.user_attempts = [];
             $scope.get_quizzes = function() {
-                jQuery.getJSON('/quizz/users/{{ user.model.id }}/quizzes.json').then(function(json) {
-                    data = json;
-                    console.log(json);
-                    if(data.ok == true) {
-                        $scope.user_quizzes = data.quizzes;
+                $http.get('/quizz/users/{{ user.model.id }}/quizzes.json').then(function(res) {
+                    if(res.status == 200 && res.data.ok) {
+                        $scope.user_quizzes = res.data.quizzes;
                     } else {
-                        alert("failed...");
+                        console.error("failed...", res);
                         setTimeout($scope.get_quizzes, 0);
                     }
                 });
             }
             $scope.get_attempts = function() {
-                jQuery.getJSON('/quizz/users/{{ user.model.id }}/attempts.json', {}, function(json) {
-                    data = json;
-                    console.log(json);
-                    if(data.ok == true) {
-                        $scope.user_attempts = data.attempts;
+                $http.get('/quizz/users/{{ user.model.id }}/attempts.json').then(function(res) {
+                    if(res.status == 200 && res.data.ok) {
+                        $scope.user_attempts = res.data.attempts;
                     } else {
                         setTimeout($scope.get_attempts, 0);
                     }

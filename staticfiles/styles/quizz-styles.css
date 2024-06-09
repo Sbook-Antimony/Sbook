@@ -304,9 +304,7 @@ bkd-antimony50:-internal-dialog-in-top-layer::backdrop {
   -webkit-filter: blur(0.5px);
   /* Full height */
   /* Center and scale the image nicely */
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  background-repeat: repeat-x;
 }
 
 body {
