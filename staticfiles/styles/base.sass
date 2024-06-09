@@ -179,7 +179,10 @@ img.text-fit
             background-color: #ddffff
             border: inherit
             border-radius: inherit
-
+@for $i from 1 through 10
+  .bd-#{$i}
+    border: #{$i}px solid black
+    border-width: #{$i}px!important
 
 .wave
     animation: waveAnim 3s cubic-bezier(0.25, 0.25, 1, 1) infinite

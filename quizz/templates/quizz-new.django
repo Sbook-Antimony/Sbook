@@ -21,18 +21,19 @@
         </div>
         <div class="w3-container round-n-10 w3-margin-bottom w3-margin-top">
             <h5 class="w3-purple w3-text-white w3-container margin-0">Instructions</h5>
-            <textarea class="w3-container w3-input" ng-model="instructions" rows="7"></textarea>
+            <textarea class="bd-a3 bd-1 w3-container w3-input" ng-model="instructions" rows="7"></textarea>
         </div>
         <div class="w3-container round-n-10 w3-margin-bottom w3-margin-top">
             <h5 class="w3-purple w3-text-white w3-container margin-0">Prolog</h5>
-            <textarea placeholder="A little introductory message" class="w3-container w3-input" ng-model="prolog" rows="7"></textarea>
+            <textarea placeholder="A little introductory message" class="bd-a3 bd-1 w3-container w3-input" ng-model="prolog" rows="7"></textarea>
         </div>
         <div class="w3-container w3-margin-bottom w3-round">
-            <div ng-repeat="question in questions">
-                <div class="w3-card w3-round-large w3-margin">
+            <div ng-repeat="question in questions" class="round-n-20 w3-container">
+                <div class="w3-card w3-margin round-n-20">
                     <textarea
                         ng-model="question.question"
                         placeholder="Enter the question here."
+                        class="w3-input bg-a2"
                     >
                     </textarea>
                     <div class="bg-antimony10">
@@ -63,31 +64,25 @@
                     </div>
                 </div>
             </div>
-            <button
+            <img
                 ng-click="addQuestion()"
-                class="w3-large w3-round-large w3-container w3-button colory-border10 w3-round"
-            >
-                <img
-                    src="/static/svg/solid/circle-plus.svg"
-                    class="text-fit"
-                />
-            </button>
+                src="/static/svg/solid/circle-plus.svg"
+                class="text-fit colory-border5 w3-jumbo w3-circle"
+            />
         </div>
         <div class="w3-container round-n-10 w3-margin">
             <h5 class="w3-purple w3-text-white w3-container margin-0">Epilog</h5>
-            <textarea placeholder="Good luck // Go back and check your work!" class="w3-container w3-input" ng-model="epilog" rows="7"></textarea>
+            <textarea placeholder="Good luck // Go back and check your work!" class="bd-a3 bd-1 w3-container w3-input" ng-model="epilog" rows="7"></textarea>
         </div>
-        <button
+        <span
             ng-click="submit()"
-            class="block w3-center w3-margin-top colory-border1 w3-button w3-xxlarge w3-padding-16 w3-round-xxlarge"
+            class="block w3-center w3-margin-top colory-border5 w3-button w3-xxlarge w3-padding-16 w3-round-xxlarge"
         >
             <span class="w3-white">
-                <span class="w3-padding">
-                    Create
-                    <img src="/static/svg/solid/chevron-right.svg" class="text-fit hexa jump" />
-                </span>
+                Create
+                <img src="/static/svg/solid/chevron-right.svg" class="text-fit hexa jump" />
             </span>
-        </button>
+        </span>
     {% endverbatim %}
 {% endblock 'center' %}
 {% block 'right' %}
