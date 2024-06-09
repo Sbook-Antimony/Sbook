@@ -9,8 +9,8 @@
     {% verbatim %}
         <dialog id="changeImage" class="w3-round-large w3-border-0 bkd-antimony50 w3-container">
         </dialog>
-        <div quizzProfile class="w3-container bg-antimony50 w3-round">
-            <div class="backens-a1 w3-container w3-round margin-0">
+        <div quizzProfile class="w3-container bg-antimony50 w3-round padding-0 round-n-10">
+            <div class="backens-a1 w3-container margin-0">
                 <span  ng-click="changePhoto()" class="w3-margin w3-display-container">
                     <img class="w3-circle w3-inline w3-margin w3-image" hover-class="jump hexa" width="100" height="100" src="/profile.png" />
                     <i class="fa-2xl fg-antimony50 w3-display-bottomright w3-margin fas fa-edit"></i>
