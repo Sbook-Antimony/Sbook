@@ -192,13 +192,318 @@ img.text-fit {
 .colory-border1 {
   box-sizing: border-box;
   background: linear-gradient(to bottom right, #fade5e, #8a2be2) !important;
-  padding: 3px !important;
+  padding: 1px !important;
   width: fit-content;
 }
 .colory-border1 > *:only-child {
   width: 100%;
+  display: inline;
+  height: 100%;
+  margin: 1px !important;
+  background-color: #ddffff;
+  border: inherit;
+  border-radius: inherit;
+}
+
+.colory-border2 {
+  box-sizing: border-box;
+  background: linear-gradient(to bottom right, #fade5e, #8a2be2) !important;
+  padding: 2px !important;
+  width: fit-content;
+}
+.colory-border2 > *:only-child {
+  width: 100%;
+  display: inline;
+  height: 100%;
+  margin: 2px !important;
+  background-color: #ddffff;
+  border: inherit;
+  border-radius: inherit;
+}
+
+.colory-border3 {
+  box-sizing: border-box;
+  background: linear-gradient(to bottom right, #fade5e, #8a2be2) !important;
+  padding: 3px !important;
+  width: fit-content;
+}
+.colory-border3 > *:only-child {
+  width: 100%;
+  display: inline;
   height: 100%;
   margin: 3px !important;
+  background-color: #ddffff;
+  border: inherit;
+  border-radius: inherit;
+}
+
+.colory-border4 {
+  box-sizing: border-box;
+  background: linear-gradient(to bottom right, #fade5e, #8a2be2) !important;
+  padding: 4px !important;
+  width: fit-content;
+}
+.colory-border4 > *:only-child {
+  width: 100%;
+  display: inline;
+  height: 100%;
+  margin: 4px !important;
+  background-color: #ddffff;
+  border: inherit;
+  border-radius: inherit;
+}
+
+.colory-border5 {
+  box-sizing: border-box;
+  background: linear-gradient(to bottom right, #fade5e, #8a2be2) !important;
+  padding: 5px !important;
+  width: fit-content;
+}
+.colory-border5 > *:only-child {
+  width: 100%;
+  display: inline;
+  height: 100%;
+  margin: 5px !important;
+  background-color: #ddffff;
+  border: inherit;
+  border-radius: inherit;
+}
+
+.colory-border6 {
+  box-sizing: border-box;
+  background: linear-gradient(to bottom right, #fade5e, #8a2be2) !important;
+  padding: 6px !important;
+  width: fit-content;
+}
+.colory-border6 > *:only-child {
+  width: 100%;
+  display: inline;
+  height: 100%;
+  margin: 6px !important;
+  background-color: #ddffff;
+  border: inherit;
+  border-radius: inherit;
+}
+
+.colory-border7 {
+  box-sizing: border-box;
+  background: linear-gradient(to bottom right, #fade5e, #8a2be2) !important;
+  padding: 7px !important;
+  width: fit-content;
+}
+.colory-border7 > *:only-child {
+  width: 100%;
+  display: inline;
+  height: 100%;
+  margin: 7px !important;
+  background-color: #ddffff;
+  border: inherit;
+  border-radius: inherit;
+}
+
+.colory-border8 {
+  box-sizing: border-box;
+  background: linear-gradient(to bottom right, #fade5e, #8a2be2) !important;
+  padding: 8px !important;
+  width: fit-content;
+}
+.colory-border8 > *:only-child {
+  width: 100%;
+  display: inline;
+  height: 100%;
+  margin: 8px !important;
+  background-color: #ddffff;
+  border: inherit;
+  border-radius: inherit;
+}
+
+.colory-border9 {
+  box-sizing: border-box;
+  background: linear-gradient(to bottom right, #fade5e, #8a2be2) !important;
+  padding: 9px !important;
+  width: fit-content;
+}
+.colory-border9 > *:only-child {
+  width: 100%;
+  display: inline;
+  height: 100%;
+  margin: 9px !important;
+  background-color: #ddffff;
+  border: inherit;
+  border-radius: inherit;
+}
+
+.colory-border10 {
+  box-sizing: border-box;
+  background: linear-gradient(to bottom right, #fade5e, #8a2be2) !important;
+  padding: 10px !important;
+  width: fit-content;
+}
+.colory-border10 > *:only-child {
+  width: 100%;
+  display: inline;
+  height: 100%;
+  margin: 10px !important;
+  background-color: #ddffff;
+  border: inherit;
+  border-radius: inherit;
+}
+
+.colory-border11 {
+  box-sizing: border-box;
+  background: linear-gradient(to bottom right, #fade5e, #8a2be2) !important;
+  padding: 11px !important;
+  width: fit-content;
+}
+.colory-border11 > *:only-child {
+  width: 100%;
+  display: inline;
+  height: 100%;
+  margin: 11px !important;
+  background-color: #ddffff;
+  border: inherit;
+  border-radius: inherit;
+}
+
+.colory-border12 {
+  box-sizing: border-box;
+  background: linear-gradient(to bottom right, #fade5e, #8a2be2) !important;
+  padding: 12px !important;
+  width: fit-content;
+}
+.colory-border12 > *:only-child {
+  width: 100%;
+  display: inline;
+  height: 100%;
+  margin: 12px !important;
+  background-color: #ddffff;
+  border: inherit;
+  border-radius: inherit;
+}
+
+.colory-border13 {
+  box-sizing: border-box;
+  background: linear-gradient(to bottom right, #fade5e, #8a2be2) !important;
+  padding: 13px !important;
+  width: fit-content;
+}
+.colory-border13 > *:only-child {
+  width: 100%;
+  display: inline;
+  height: 100%;
+  margin: 13px !important;
+  background-color: #ddffff;
+  border: inherit;
+  border-radius: inherit;
+}
+
+.colory-border14 {
+  box-sizing: border-box;
+  background: linear-gradient(to bottom right, #fade5e, #8a2be2) !important;
+  padding: 14px !important;
+  width: fit-content;
+}
+.colory-border14 > *:only-child {
+  width: 100%;
+  display: inline;
+  height: 100%;
+  margin: 14px !important;
+  background-color: #ddffff;
+  border: inherit;
+  border-radius: inherit;
+}
+
+.colory-border15 {
+  box-sizing: border-box;
+  background: linear-gradient(to bottom right, #fade5e, #8a2be2) !important;
+  padding: 15px !important;
+  width: fit-content;
+}
+.colory-border15 > *:only-child {
+  width: 100%;
+  display: inline;
+  height: 100%;
+  margin: 15px !important;
+  background-color: #ddffff;
+  border: inherit;
+  border-radius: inherit;
+}
+
+.colory-border16 {
+  box-sizing: border-box;
+  background: linear-gradient(to bottom right, #fade5e, #8a2be2) !important;
+  padding: 16px !important;
+  width: fit-content;
+}
+.colory-border16 > *:only-child {
+  width: 100%;
+  display: inline;
+  height: 100%;
+  margin: 16px !important;
+  background-color: #ddffff;
+  border: inherit;
+  border-radius: inherit;
+}
+
+.colory-border17 {
+  box-sizing: border-box;
+  background: linear-gradient(to bottom right, #fade5e, #8a2be2) !important;
+  padding: 17px !important;
+  width: fit-content;
+}
+.colory-border17 > *:only-child {
+  width: 100%;
+  display: inline;
+  height: 100%;
+  margin: 17px !important;
+  background-color: #ddffff;
+  border: inherit;
+  border-radius: inherit;
+}
+
+.colory-border18 {
+  box-sizing: border-box;
+  background: linear-gradient(to bottom right, #fade5e, #8a2be2) !important;
+  padding: 18px !important;
+  width: fit-content;
+}
+.colory-border18 > *:only-child {
+  width: 100%;
+  display: inline;
+  height: 100%;
+  margin: 18px !important;
+  background-color: #ddffff;
+  border: inherit;
+  border-radius: inherit;
+}
+
+.colory-border19 {
+  box-sizing: border-box;
+  background: linear-gradient(to bottom right, #fade5e, #8a2be2) !important;
+  padding: 19px !important;
+  width: fit-content;
+}
+.colory-border19 > *:only-child {
+  width: 100%;
+  display: inline;
+  height: 100%;
+  margin: 19px !important;
+  background-color: #ddffff;
+  border: inherit;
+  border-radius: inherit;
+}
+
+.colory-border20 {
+  box-sizing: border-box;
+  background: linear-gradient(to bottom right, #fade5e, #8a2be2) !important;
+  padding: 20px !important;
+  width: fit-content;
+}
+.colory-border20 > *:only-child {
+  width: 100%;
+  display: inline;
+  height: 100%;
+  margin: 20px !important;
   background-color: #ddffff;
   border: inherit;
   border-radius: inherit;

@@ -63,19 +63,15 @@
                     </div>
                 </div>
             </div>
-            <span class="w3-round-large w3-container w3-button colory-border1 w3-round">
-                <span>
-                    <button
-                        ng-click="addQuestion()"
-                        class="w3-large"
-                    >
-                        <img
-                            src="/static/svg/solid/circle-plus.svg"
-                            class="text-fit"
-                        />
-                    </button>
-                </span>
-            </span>
+            <button
+                ng-click="addQuestion()"
+                class="w3-large w3-round-large w3-container w3-button colory-border10 w3-round"
+            >
+                <img
+                    src="/static/svg/solid/circle-plus.svg"
+                    class="text-fit"
+                />
+            </button>
         </div>
         <div class="w3-container round-n-10 w3-margin">
             <h5 class="w3-purple w3-text-white w3-container margin-0">Epilog</h5>

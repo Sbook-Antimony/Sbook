@@ -165,14 +165,15 @@ img.text-fit
     border: 0.1px solid
 
 
-@for $i from 1 through 10
-    .colory-border1
+@for $i from 1 through 20
+    .colory-border#{$i}
         box-sizing: border-box
         background: linear-gradient(to bottom right, #fade5e, #8a2be2) !important
         padding: #{$i}px !important
         width: fit-content
         & > *:only-child
             width: 100%
+            display: inline
             height: 100%
             margin: #{$i}px!important
             background-color: #ddffff
