@@ -14,8 +14,18 @@ img.text-fit {
   display: block !important;
 }
 
-.margin-0 {
-  margin: 0;
+.margin-0, .round-n-10 > * {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+.padding-0 {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 
 .bg-clear {
@@ -290,6 +300,44 @@ bkd-antimony50:-internal-dialog-in-top-layer::backdrop {
 
 .backens-naple {
   background-image: linear-gradient(to right, rgba(250, 218, 94, 0), rgba(250, 218, 94, 0.7)), url("/image/back-dark-dotty.png");
+}
+
+.backens-antimony {
+  background-image: linear-gradient(to right, rgba(76, 79, 77, 0), #4c4f4d), url("/image/back-dark-dotty.png");
+}
+
+.round-n-10 {
+  border-radius: 10px;
+}
+.round-n-10 > *:first-child {
+  border-radius: 10px 10px 0 0;
+}
+.round-n-10 > *:last-child {
+  border-radius: 0 0 10px 10px;
+}
+
+.backens-a0 {
+  background-image: linear-gradient(to right, rgba(120, 35, 170, 0), #7823aa), url("/image/back-dark-dotty.png");
+}
+
+.backens-a1 {
+  background-image: linear-gradient(to right, rgba(120, 35, 170, 0), #7823aa), url("/image/back-dark-dotty.png");
+}
+
+.backens-a2 {
+  background-image: linear-gradient(to right, rgba(120, 35, 170, 0), #7823aa), url("/image/back-dark-dotty.png");
+}
+
+.backens-a3 {
+  background-image: linear-gradient(to right, rgba(120, 35, 170, 0), #7823aa), url("/image/back-dark-dotty.png");
+}
+
+.backens-a4 {
+  background-image: linear-gradient(to right, rgba(120, 35, 170, 0), #7823aa), url("/image/back-dark-dotty.png");
+}
+
+.backens-a5 {
+  background-image: linear-gradient(to right, rgba(120, 35, 170, 0), #7823aa), url("/image/back-dark-dotty.png");
 }
 
 #header-back-blurred-div {

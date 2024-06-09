@@ -7,84 +7,26 @@
 {% endblock 'left' %}
 {% block 'center' %}
     {% verbatim %}
-        <div class="w3-container bg-antimony50 w3-round">
-            <dialog id="uploadImageDialog" class="w3-round-large w3-border-0 bkd-antimony50 w3-container">
-                <form
-                    action="/profile.png/upload/"
-                    method="post"
-                    enctype="multipart/form-data"
-                    id="uploadImageForm"
-                    class="w3-container"
-                >
-                    <img
-                        class="w3-circle w3-margin w3-block w3-button"
-                        id="uploadImagePreviewImage"
-                        src="/profile.png"
-                        style="width: 300px!important; height: 300px!important;"
-                        width="300"
-                        height="300"
-                    />
-                    {% csrf_token %}
-                    <label for="file" onclick="this.querySelector('input').click()" class="bg-antimony10 w3-btn w3-round">
-                        Choose photo
-                        <input onchange="uploadPhotoReadProfile(event)" type="file" name="file" hidden />
-                    </label>
-                    <button type="submit" id="imageUploadButton" onclick="submitNewProfile(); this.setAttribute('hover-class', '');" css-transition="1s" hover-class="w3-red shake" class="hexa w3-disabled bg-antimony10-hover w3-btn w3-round" >
-                        Submit
-                    </button>
-                    <script type="text/javascript" charset="utf-8">
-                        function uploadPhotoReadProfile(e) {
-                            console.log("adding new profile");
-                            let files = e.target.files;
-                            if(files.length < 1) return;
-                            let
-                                file = files[0],
-                                reader = new FileReader();
-                            reader.onloadend = function() {
-                                console.log(reader);
-                                let dataurl = reader.result;
-                                $("#uploadImagePreviewImage")[0].src = dataurl;
-                                setTimeout(function() {
-                                    $("#imageUploadButton")
-                                        .removeClass('w3-disabled')
-                                        .addClass("w3-green");
-                                }, 1000);
-                            }
-                            reader.readAsDataURL(file);
-                        }
-                        function submitNewProfile() {
-                            let formdata = new FormData($("uploadImageForm")[0]);
-                            console.log(formdata);
-                            $.ajax({
-                                type: 'POST',
-                                url: '/profile.png/upload/', // replace with your server-side script
-                                data: formdata,
-                                success: function(data) {
-                                    location.reload();
-                                },
-                                error: function() {
-                                    $("imageUploadButton")
-                                        .toggleClass('w3-green w3-red');
-                                },
-                            });
-                        };
-                    </script>
-                </form>
-            </dialog>
-            <div class="backens-naple bg-antimony10 w3-container w3-round w3-margin-bottom">
-                <span  onclick="$('#uploadImageDialog')[0].showModal();" class="w3-margin w3-display-container">
+        <dialog id="changeImage" class="w3-round-large w3-border-0 bkd-antimony50 w3-container">
+        </dialog>
+        <div quizzProfile class="w3-container bg-antimony50 w3-round">
+            <div class="backens-a1 w3-container w3-round margin-0">
+                <span  ng-click="changePhoto()" class="w3-margin w3-display-container">
                     <img class="w3-circle w3-inline w3-margin w3-image" hover-class="jump hexa" width="100" height="100" src="/profile.png" />
                     <i class="fa-2xl fg-antimony50 w3-display-bottomright w3-margin fas fa-edit"></i>
                 </span>
-                {#srcset="/profile.png 300w, /profile.png 600w, /profile.png 1200w" sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 1200px"#}
-                <span class="w3-arial w3-xxlarge w3-margin">{{ user.name }}</span>
+                <span class="w3-arial w3-xxlarge w3-margin" ng-bind="quizzTitle" contenteditable="true"></span>
             </div>
-            <textarea class="block" ng-model="description">Here a description</textarea>
+            <textarea class="block w3-container w3-input bg-a2" ng-model="description">Here a description</textarea>
         </div>
-        <textarea class="w3-container block" ng-model="instructions">
-        </textarea>
-        <textarea class="w3-container block" ng-model="prolog">
-        </textarea>
+        <div class="w3-container round-n-10 w3-margin">
+            <h5 class="w3-purple w3-text-white w3-container margin-0">Instructions</h5>
+            <textarea class="w3-container w3-input" ng-model="instructions" rows="7"></textarea>
+        </div>
+        <div class="w3-container round-n-10 w3-margin">
+            <h5 class="w3-purple w3-text-white w3-container margin-0">Prolog</h5>
+            <textarea placeholder="A little introductory message" class="w3-container w3-input" ng-model="prolog" rows="7"></textarea>
+        </div>
         <div class="w3-container w3-margin-bottom w3-round">
             <div ng-repeat="question in questions">
                 <div class="w3-card w3-round-large w3-margin">
@@ -141,7 +83,7 @@
         >
             <span class="w3-white">
                 <span class="w3-padding">
-                    Submit
+                    Create
                     <img src="/static/svg/solid/chevron-right.svg" class="text-fit hexa jump" />
                 </span>
             </span>
@@ -177,6 +119,9 @@
         const app = angular.module('{{ ng_app_name }}', []);
         app.controller('{{ ng_app_name }}Ctrl', function($scope) {
             $scope.questions = [];
+            $scope.quizzTitle = "My Quizz title";
+            $scope.description = "Here a description";
+            $scope.prolog = "";
             window.$scope = $scope;
 
             $scope.addQuestion = function() {
