@@ -28,7 +28,7 @@
             <textarea placeholder="A little introductory message" class="bd-a3 bd-1 w3-container w3-input" ng-model="prolog" rows="7"></textarea>
         </div>
         <div class="w3-container w3-margin-bottom w3-round">
-            <div ng-repeat="question in questions" class="w3-card round-n-20 w3-container">
+            <div ng-repeat="question in questions" class="w3-card padding-0 round-n-20 w3-container">
                 <div class="w3-margin round-n-20">
                     <textarea
                         ng-model="question.question"
