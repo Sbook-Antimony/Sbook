@@ -1253,7 +1253,7 @@ bkd-antimony50:-internal-dialog-in-top-layer::backdrop {
   position: fixed;
   top: 0;
   left: 0;
-  background-image: url("/image/back-light-vertical.png");
+  background-image: url("/image/quizz-header.png");
   /* Add the blur effect */
   filter: blur(0.5px);
   -webkit-filter: blur(0.5px);

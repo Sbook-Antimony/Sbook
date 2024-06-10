@@ -184,15 +184,18 @@ def do_new(req, user):
 @check_login
 def do_new_submit(req, user):
     data = req.GET.get("data")
-
+    print(data, req.GET, req.POST)
     quizz = models.Quizz(
         data=data,
         title=req.GET.get("title"),
         description=req.GET.get("description"),
         is_private=req.GET.get("is_private"),
-        authors=(user,),
     )
     quizz.save()
+    quizz.authors.set((user,))
+    return JsonResponse({
+        'ok': True,
+    })
 
 
 class profiles:

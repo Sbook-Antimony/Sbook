@@ -7,9 +7,9 @@ side = 100
 image = Image.new("RGB", (side, side), "white")
 
 cache = []
-diff = 40
-le = 50
-li = 240
+diff = 100
+le = 5
+li = 100
 theme = (120, 35, 170)
 
 
