@@ -28,8 +28,11 @@
             <textarea placeholder="A little introductory message" class="no-resize bd-a3 bd-1 w3-container w3-input" ng-model="prolog" rows="7"></textarea>
         </div>
         <div class="w3-container w3-margin-bottom w3-round">
-            <div ng-repeat="question in questions" class="w3-margin-bottom w3-card padding-0 round-n-5 w3-container">
-                <div class="w3-margin round-n-5">
+            <div ng-repeat="question in questions" class="fade-ng-enter from-left-ng-enter w3-margin-bottom w3-card padding-0 round-n-5 w3-container">
+                <div class="w3-margin round-n-5 w3-display-container">
+                    <span class="w3-display-topright bg-antimony w3-large w3-circle">
+                        <img src="/static/svg/solid/xmark.svg" alt="remove" class="text-fit w3-circle w3-padding">
+                    </span>
                     <textarea
                         ng-model="question.question"
                         placeholder="Enter the question here."
@@ -69,7 +72,7 @@
             <img
                 ng-click="addQuestion()"
                 src="/static/svg/solid/circle-plus.svg"
-                class="text-fit colory-border5 w3-jumbo w3-circle"
+                class="w3-button text-fit colory-border5 w3-jumbo w3-circle"
             />
         </div>
         <div class="w3-container round-n-20 w3-margin">
@@ -120,7 +123,7 @@
                 return obj;
             }
         }
-        const app = angular.module('{{ ng_app_name }}', []);
+        const app = angular.module('{{ ng_app_name }}', ['ngAnimate']);
         app.controller('{{ ng_app_name }}Ctrl', function($scope) {
             $scope.questions = [];
             $scope.quizzTitle = "My Quizz title";
@@ -150,6 +153,7 @@
                     title: $scope.title,
                     description: $scope.description,
                 };
+                return ret;
             }
             $scope.submit = function() {
                 $.ajax({
@@ -161,7 +165,7 @@
                     error: function(zer) {
                         alert("error creating question", zer);
                     },
-                    type: 'GET',
+                    type: 'POST',
                     data: $scope.serialize(),
                     dataType: 'JSON',
                 });

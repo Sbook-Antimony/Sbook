@@ -191,12 +191,12 @@ img.text-fit
 
 
 @keyframes waveAnim
-    0%
-        background-position-x: 0%
+  0%
+    background-position-x: 0%
 
 
-    100%
-        background-position-x: 100%
+  100%
+    background-position-x: 100%
 
 
 .arrow-left,
@@ -333,8 +333,8 @@ bkd-antimony50:-internal-dialog-in-top-layer::backdrop
     left: 4px
     bottom: 4px
     background-color: white
-    -webkit-transition: .4s
-    transition: .4s
+    -webkit-transition: .4s cubic-bezier(0.9, 0.04, 0.07, 0.99)
+    transition: .4s cubic-bezier(0.9, 0.04, 0.07, 0.99)
   & > input:checked + span
     background-color: #2196F3
   & > input:focus + span
@@ -350,3 +350,64 @@ bkd-antimony50:-internal-dialog-in-top-layer::backdrop
 
 .no-resize
   resize: none
+
+.appear
+  animation: appear 0.8s
+
+@keyframes appear
+  from
+    opacity:0
+  to
+    opacity:1
+
+.from-side
+    position: relative
+
+.from-top
+  @extend .from-side
+  animation: from-top 0.4s
+@keyframes from-top
+    from
+        top: -300px
+    to
+        top: 0
+.from-bottom
+  @extend .from-side
+  animation: from-bottom 0.4s
+@keyframes from-bottom
+    from
+        top: 300px
+    to
+        top: 0
+.from-left
+  @extend .from-side
+  animation: from-left 0.4s
+@keyframes from-left
+    from
+        left: -300px
+    to
+        left: 0
+.from-right
+  @extend .from-side
+  animation: from-right 0.4s
+@keyframes from-right
+    from
+        left: 300px
+    to
+        left: 0
+
+
+.ng-enter.fade-ng-enter
+  @extend .appear
+
+.ng-enter.from-left-ng-enter
+  @extend .from-left
+.ng-enter.from-right-ng-enter
+  @extend .from-right
+.ng-enter.from-top-ng-enter
+  @extend .from-top
+.ng-enter.from-bottom-ng-enter
+  @extend .from-bottom
+
+.ng-move
+    transition: 1s

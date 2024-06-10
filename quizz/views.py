@@ -183,13 +183,13 @@ def do_new(req, user):
 
 @check_login
 def do_new_submit(req, user):
-    data = req.GET.get("data")
-    print(data, req.GET, req.POST)
+    data = req.POST.get("data")
+    print(req.POST, data)
     quizz = models.Quizz(
         data=data,
-        title=req.GET.get("title"),
-        description=req.GET.get("description"),
-        is_private=req.GET.get("is_private"),
+        title=req.POST.get("title"),
+        description=req.POST.get("description"),
+        is_private=req.POST.get("is_private") in (True, 'true'),
     )
     quizz.save()
     quizz.authors.set((user,))

@@ -32,7 +32,7 @@
             class="w3-right w3-bar-item w3-circle"
         />
     </header>
-    <div id="header-back-blurred-div" style="opacity: 0;" css-transition="1s">
+    <div id="header-back-blurred-div" style="opacity: 0;" css-transition="0.1s">
     </div>
     <body
         class=""
