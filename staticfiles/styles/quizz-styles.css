@@ -1161,6 +1161,68 @@ bkd-antimony50:-internal-dialog-in-top-layer::backdrop {
   border-radius: 0 0 49px 49px;
 }
 
+/* The switch - the box around the slider*/
+/*<label class="slider round">*/
+ * /*<input type="checkbox" ng-model="is_private">*/
+ * /*<span></span>*/
+/*</label>*/
+.slider {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+.slider > input:first-child {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.slider > span:last-child {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+.slider > span:last-child:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+.slider > input:checked + span {
+  background-color: #2196F3;
+}
+.slider > input:focus + span {
+  box-shadow: 0 0 1px #2196F3;
+}
+.slider > input:checked + span:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+.slider.round > span:last-child {
+  border-radius: 34px;
+}
+
+.slider.round > span:last-child:before {
+  border-radius: 50%;
+}
+
+.no-resize {
+  resize: none;
+}
+
 .backens-a0 {
   background-image: linear-gradient(to right, rgba(120, 35, 170, 0), #7823aa), url("/image/back-dark-dotty.png");
 }
@@ -1233,7 +1295,7 @@ body > #left > .bar {
 }
 body > #center {
   margin: auto;
-  max-width: 500px;
+  max-width: 700px;
   width: 100%;
   order: 2;
   flex-grow: 8;

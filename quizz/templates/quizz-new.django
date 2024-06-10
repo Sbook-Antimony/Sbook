@@ -9,7 +9,7 @@
     {% verbatim %}
         <dialog id="changeImage" class="w3-round-large w3-border-0 bkd-antimony50 w3-container">
         </dialog>
-        <div quizzProfile class="w3-container bg-antimony50 w3-round padding-0 round-n-10">
+        <div quizzProfile class="w3-container bg-antimony50 w3-round padding-0 round-n-20">
             <div class="backens-a1 w3-container margin-0">
                 <span  ng-click="changePhoto()" class="w3-margin w3-display-container">
                     <img class="w3-circle w3-inline w3-margin w3-image" hover-class="jump hexa" width="100" height="100" src="/profile.png" />
@@ -17,19 +17,19 @@
                 </span>
                 <span class="w3-arial w3-xxlarge w3-margin" ng-bind="quizzTitle" contenteditable="true"></span>
             </div>
-            <textarea class="block w3-container w3-input bg-a2" ng-model="description">Here a description</textarea>
+            <textarea class="no-resize block w3-container w3-input bg-a2" ng-model="description">Here a description</textarea>
         </div>
-        <div class="w3-container round-n-10 w3-margin-bottom w3-margin-top">
+        <div class="w3-container round-n-20 w3-margin-bottom w3-margin-top">
             <h5 class="w3-purple w3-text-white w3-container margin-0">Instructions</h5>
-            <textarea class="bd-a3 bd-1 w3-container w3-input" ng-model="instructions" rows="7"></textarea>
+            <textarea class="no-resize bd-a3 bd-1 w3-container w3-input" ng-model="instructions" rows="7"></textarea>
         </div>
-        <div class="w3-container round-n-10 w3-margin-bottom w3-margin-top">
+        <div class="w3-container round-n-20 w3-margin-bottom w3-margin-top">
             <h5 class="w3-purple w3-text-white w3-container margin-0">Prolog</h5>
-            <textarea placeholder="A little introductory message" class="bd-a3 bd-1 w3-container w3-input" ng-model="prolog" rows="7"></textarea>
+            <textarea placeholder="A little introductory message" class="no-resize bd-a3 bd-1 w3-container w3-input" ng-model="prolog" rows="7"></textarea>
         </div>
         <div class="w3-container w3-margin-bottom w3-round">
-            <div ng-repeat="question in questions" class="w3-card padding-0 round-n-20 w3-container">
-                <div class="w3-margin round-n-20">
+            <div ng-repeat="question in questions" class="w3-card padding-0 round-n-5 w3-container">
+                <div class="w3-margin round-n-5">
                     <textarea
                         ng-model="question.question"
                         placeholder="Enter the question here."
@@ -71,9 +71,16 @@
                 class="text-fit colory-border5 w3-jumbo w3-circle"
             />
         </div>
-        <div class="w3-container round-n-10 w3-margin">
+        <div class="w3-container round-n-20 w3-margin">
             <h5 class="w3-purple w3-text-white w3-container margin-0">Epilog</h5>
-            <textarea placeholder="Good luck // Go back and check your work!" class="bd-a3 bd-1 w3-container w3-input" ng-model="epilog" rows="7"></textarea>
+            <textarea placeholder="Good luck // Go back and check your work!" class="no-resize bd-a3 bd-1 w3-container w3-input" ng-model="epilog" rows="7"></textarea>
+        </div>
+        <div class="round-n-20">
+            <label for="status">Private:</label>
+            <label class="slider round">
+              <input type="checkbox" ng-model="is_private">
+              <span></span>
+            </label>
         </div>
         <span
             ng-click="submit()"
@@ -118,6 +125,7 @@
             $scope.quizzTitle = "My Quizz title";
             $scope.description = "Here a description";
             $scope.prolog = "";
+            $scope.is_private = false;
             window.$scope = $scope;
 
             $scope.addQuestion = function() {
@@ -147,8 +155,8 @@
                     success: function() {
                         location.assign('/quizz/');
                     },
-                    error: function() {
-                        alert("error creating question");
+                    error: function(zer) {
+                        alert("error creating question", zer);
                     },
                     type: 'GET',
                     data: $scope.serialize(),
