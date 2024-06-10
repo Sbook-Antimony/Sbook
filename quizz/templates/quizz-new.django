@@ -3,7 +3,7 @@
 
 {% block 'title' %}quizz dashboard{% endblock 'title' %}
 {% block 'left' %}
-
+    {% csrf_token %}
 {% endblock 'left' %}
 {% block 'center' %}
     {% verbatim %}
@@ -15,7 +15,7 @@
                     <img class="w3-circle w3-inline w3-margin w3-image" hover-class="jump hexa" width="100" height="100" src="/profile.png" />
                     <i class="fa-2xl fg-antimony50 w3-display-bottomright w3-margin fas fa-edit"></i>
                 </span>
-                <span class="w3-arial w3-xxlarge w3-margin w3-right inline" ng-bind="quizzTitle" contenteditable="true"></span>
+                <span class="w3-arial w3-xxlarge w3-margin w3-right inline" ng-bind="title" contenteditable="true"></span>
             </div>
             <textarea rows="5" class="no-resize block w3-container w3-input bg-a2" ng-model="description">Here a description</textarea>
         </div>
@@ -28,17 +28,17 @@
             <textarea placeholder="A little introductory message" class="no-resize bd-a3 bd-1 w3-container w3-input" ng-model="prolog" rows="7"></textarea>
         </div>
         <div class="w3-container w3-margin-bottom w3-round">
-            <div ng-repeat="question in questions" class="fade-ng-enter from-left-ng-enter w3-margin-bottom w3-card padding-0 round-n-5 w3-container">
+            <div ng-repeat="question in questions" class="fade-ng-enter from-left-ng-enter to-right-ng-leave w3-margin-bottom w3-card padding-0 round-n-5 w3-container">
                 <div class="w3-margin round-n-5 w3-display-container">
-                    <span class="w3-display-topright bg-antimony w3-large w3-circle">
-                        <img src="/static/svg/solid/xmark.svg" alt="remove" class="text-fit w3-circle w3-padding">
-                    </span>
                     <textarea
                         ng-model="question.question"
                         placeholder="Enter the question here."
-                        class="w3-input bg-a2"
+                        class="w3-input bg-a2 no-resize"
                     >
                     </textarea>
+                    <span ng-click="removeQuestion(question)" class="w3-button w3-display-topright w3-xlarge w3-circle padding-5">
+                        <img src="/static/svg/solid/xmark.svg" alt="remove" class="text-fit w3-circle">
+                    </span>
                     <div class="bd-a5 bd-thin">
                         <label
                             class="block w3-leftbar"
@@ -126,8 +126,8 @@
         const app = angular.module('{{ ng_app_name }}', ['ngAnimate']);
         app.controller('{{ ng_app_name }}Ctrl', function($scope) {
             $scope.questions = [];
-            $scope.quizzTitle = "My Quizz title";
-            $scope.description = "Here a description";
+            $scope.title = "A little title here";
+            $scope.description = "";
             $scope.prolog = "";
             $scope.epilog = "";
             $scope.is_private = false;
@@ -136,22 +136,26 @@
             $scope.addQuestion = function() {
                 $scope.questions.push(new Question());
             }
+            $scope.removeQuestion = function(ques) {
+                let idx = $scope.questions.indexOf(ques);
+                if(idx >= 0)
+                    $scope.questions = $scope.questions.splice(idx, idx);
+            }
             $scope.addQuestionOption = function(question) {
                 question.options.push(new Option());
             }
             $scope.serialize = function() {
                 let ret = {
-                    data: {
-                        epilog: $scope.epilog,
-                        prolog: $scope.prolog,
-                        instructions: $scope.instructions,
-                        questions: $scope.questions.map(
-                            (question) => question.serialize()
-                        ),
-                    },
+                    epilog: $scope.epilog,
+                    prolog: $scope.prolog,
+                    instructions: $scope.instructions,
+                    questions: JSON.stringify($scope.questions.map(
+                        (question) => question.serialize()
+                    )),
                     is_private: $scope.is_private,
                     title: $scope.title,
                     description: $scope.description,
+                    csrfmiddlewaretoken: document.querySelector('[name=csrfmiddlewaretoken]').value,
                 };
                 return ret;
             }

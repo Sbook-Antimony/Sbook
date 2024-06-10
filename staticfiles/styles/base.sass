@@ -15,19 +15,21 @@ img.text-fit
 .block
   display: block !important
 
-.margin-0
-  margin:
-    top: 0!important
-    bottom: 0!important
-    left: 0!important
-    right: 0!important
 
-.padding-0
-  padding:
-    top: 0!important
-    bottom: 0!important
-    left: 0!important
-    right: 0!important
+@for $i from 0 through 64
+  .padding-#{$i}
+    padding:
+      top: #{$i}!important
+      bottom: #{$i}!important
+      left: #{$i}!important
+      right: #{$i}!important
+  .margin-#{$i}
+    margin:
+      top: #{$i}!important
+      bottom: #{$i}!important
+      left: #{$i}!important
+      right: #{$i}!important
+
 .bg-clear
   background-color: rgba(7, 7, 7, 0)
 
@@ -86,59 +88,59 @@ img.text-fit
 
 
 .close-btn
-    position: absolute
-    top: 90%
-    right: 90%
-    border-radius: 50%
-    border: 0.5px black solid
+  position: absolute
+  top: 90%
+  right: 90%
+  border-radius: 50%
+  border: 0.5px black solid
 
 
 
 .bg-red-invalid:invalid
-    background: #ff997733
+  background: #ff997733
 
 
 .bg-clear
-    background: #0000
+  background: #0000
 
 
 .bd-antimony,
 .bd-antimony-hover:hover
-    border-color: #4c4f4d!important
+  border-color: #4c4f4d!important
 
 .bg-antimony,
 .bg-antimony-hover:hover
-    background-color: #4c4f4d!important
+  background-color: #4c4f4d!important
 
 .bg-antimony50,
 .bg-antimony50-hover:hover
-    background-color: #4c4f4d77!important
+  background-color: #4c4f4d77!important
 
 .fg-antimony50,
 .fg-antimony50-hover:hover
-    color: #4c4f4d77!important
+  color: #4c4f4d77!important
 
 .fg-antimony10,
 .fg-antimony10-hover:hover
-    color: #4c4f4d17!important
+  color: #4c4f4d17!important
 
 .bg-antimony10,
 .bg-antimony10-hover:hover
-    background-color: #4c4f4d17!important
+  background-color: #4c4f4d17!important
 
 .bg-antimony5,
 .bg-antimony5-hover:hover
-    background-color: #4c4f4d0c!important
+  background-color: #4c4f4d0c!important
 
 
 .bg-antimony15,
 .bg-antimony15-hover:hover
-    background-color: #4c4f4d25!important
+  background-color: #4c4f4d25!important
 
 
 .bd-naple,
 .bd-naple-hover:hover
-    border-color: #fada5e!important
+  border-color: #fada5e!important
 
 .bd-naple,
 .bd-naple-hover:hover
@@ -146,48 +148,48 @@ img.text-fit
 
 .bg-naple,
 .bg-naple-hover:hover
-    background-color: $naple!important
+  background-color: $naple!important
 
 .bg-naple50,
 .bg-naple50-hover:hover
-    background-color: #fada5e77!important
+  background-color: #fada5e77!important
 
 .bg-naple10,
 .bg-naple10-hover:hover
-    background-color: #fada5e15!important
+  background-color: #fada5e15!important
 
 .fg-naple,
 .w3-naple-hover:hover
-    color: #fada5e77!important
+  color: #fada5e77!important
 
 
 .bd-thin
-    border: 0.1px solid
+  border: 0.1px solid
 
 
 @for $i from 1 through 20
-    .colory-border#{$i}
-        box-sizing: border-box
-        background: linear-gradient(to bottom right, #fade5e, #8a2be2) !important
-        padding: #{$i}px !important
-        width: fit-content
-        & > *:only-child
-            width: 100%
-            display: inline
-            height: 100%
-            margin: #{$i}px!important
-            background-color: #ddffff
-            border: inherit
-            border-radius: inherit
+  .colory-border#{$i}
+    box-sizing: border-box
+    background: linear-gradient(to bottom right, #fade5e, #8a2be2) !important
+    padding: #{$i}px !important
+    width: fit-content
+    & > *:only-child
+      width: 100%
+      display: inline
+      height: 100%
+      margin: #{$i}px!important
+      background-color: #ddffff
+      border: inherit
+      border-radius: inherit
 @for $i from 1 through 10
   .bd-#{$i}
     border: #{$i}px solid black
     border-width: #{$i}px!important
 
 .wave
-    animation: waveAnim 3s cubic-bezier(0.25, 0.25, 1, 1) infinite
-    background-size: 100% 100%
-    background-image: linear-gradient(90deg, #4c4f4d, #fada5e)
+  animation: waveAnim 3s cubic-bezier(0.25, 0.25, 1, 1) infinite
+  background-size: 100% 100%
+  background-image: linear-gradient(90deg, #4c4f4d, #fada5e)
 
 
 @keyframes waveAnim
@@ -396,6 +398,40 @@ bkd-antimony50:-internal-dialog-in-top-layer::backdrop
     to
         left: 0
 
+.to-side
+    position: relative
+.to-top
+  @extend .to-side
+  animation: to-top 0.4s
+@keyframes to-top
+    from
+        top: 0
+    to
+        top: -300px
+.to-bottom
+  @extend .to-side
+  animation: to-bottom 0.4s
+@keyframes to-bottom
+    from
+        top: 0
+    to
+        top: 300px
+.to-left
+  @extend .to-side
+  animation: to-left 0.4s
+@keyframes to-left
+    from
+        left: 0
+    to
+        left: -300px
+.to-right
+  @extend .to-side
+  animation: to-right 0.4s
+@keyframes to-right
+    from
+        left: 0
+    to
+        left: 300px
 
 .ng-enter.fade-ng-enter
   @extend .appear
@@ -408,6 +444,26 @@ bkd-antimony50:-internal-dialog-in-top-layer::backdrop
   @extend .from-top
 .ng-enter.from-bottom-ng-enter
   @extend .from-bottom
+.ng-enter.fade-ng-enter
+  @extend .appear
+
+.ng-leave.from-left-ng-leave
+  @extend .from-left
+.ng-leave.from-right-ng-leave
+  @extend .from-right
+.ng-leave.from-top-ng-leave
+  @extend .from-top
+.ng-leave.from-bottom-ng-leave
+  @extend .from-bottom
+
+.ng-leave.to-left-ng-leave
+  @extend .to-left
+.ng-leave.to-right-ng-leave
+  @extend .to-right
+.ng-leave.to-top-ng-leave
+  @extend .to-top
+.ng-leave.to-bottom-ng-leave
+  @extend .to-bottom
 
 .ng-move
-    transition: 1s
+  transition: 1s

@@ -223,7 +223,7 @@ class Quizz:
     def questions(self):
         return tuple(
             Question.from_dict(data, i)
-            for i, data in enumerate(self.data.get("questions", []))
+            for i, data in enumerate(self.data.get("questions") or [])
         )
 
     @functools.cached_property

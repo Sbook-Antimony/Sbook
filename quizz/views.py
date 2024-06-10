@@ -1,7 +1,7 @@
 import mimetypes
 import tempfile
-import yaml, json
-import zipfile
+import profile_images
+import json
 
 from . import forms
 from .accounts import *
@@ -183,16 +183,22 @@ def do_new(req, user):
 
 @check_login
 def do_new_submit(req, user):
-    data = req.POST.get("data")
-    print(req.POST, data)
+    data = {
+        'epilog': req.POST.get('epilog'),
+        'prolog': req.POST.get('prolog'),
+        'instructions': req.POST.get('instructions'),
+        'questions': json.loads(req.POST.get('questions')),
+    }
+    print(req.POST.get('questions'), "-" * 50)
     quizz = models.Quizz(
         data=data,
         title=req.POST.get("title"),
         description=req.POST.get("description"),
         is_private=req.POST.get("is_private") in (True, 'true'),
+        profile=open('profile.png', 'rb'),
     )
     quizz.save()
-    quizz.authors.set((user,))
+    quizz.authors.set((user.id, ))
     return JsonResponse({
         'ok': True,
     })
