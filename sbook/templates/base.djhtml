@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" class="bg-naple10">
+    <head>
+        <link rel="icon" href="image/antimony.png" />
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="/static/scripts/angular.min.js"></script>
+        <script src="/static/scripts/jquery.js"></script>
+        <link rel="stylesheet" href="/static/styles/w3.css" />
+        <link rel="stylesheet" href="/static/styles/styles.css" />
+        <link rel="stylesheet" href="/static/styles/hexa.css" />
+        <title>{% block 'title' %}{% endblock %}</title>
+        <script src="https://kit.fontawesome.com/ba5b68e3cc.js" crossorigin="anonymous"></script>
+        <script src="/static/scripts/nightly.js"></script>
+        <script src="/static/scripts/script.js"></script>
+        {% block 'styles' %}
+        {% endblock %}
+        {% include 'google-analytics.django' %}
+        {% include 'fonts.django' %}
+    </head>
+
+    {% block 'header' %}
+    {% endblock  %}
+    <body
+        class=""
+        {% if ng_app_name %}
+            ng-app="{{ ng_app_name }}"
+            ng-controller="{{ ng_app_name }}Ctrl"
+        {% endif %}
+    >
+        {% block 'body' %}
+
+        {% endblock %}
+        <script src="/static/scripts/script.js"></script>
+        <script src="/static/scripts/response.js"></script>
+    </body>
+</html>
