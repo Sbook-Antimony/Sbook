@@ -5,15 +5,14 @@ import json
 import textwrap
 
 from django.http import HttpRequest
-from django.http import HttpResponse
 from django.http import HttpResponseRedirect
-from sbook.accounts import DIR
 
+import markdown
 import profile_images
 import sbook.accounts
 import sbook.models
-import markdown
 
+from pyoload import *
 from quizz import models
 
 from PIL import Image
@@ -26,25 +25,14 @@ class Tuple(tuple):
         return len(self)
 
 
-class QuizzUserDoesNotExistError(ValueError):
-    pass
+class QuizzUser(sbook.accounts.ModelInder):
+    class DoesNotExistError(ValueError):
+        pass
 
+    class DoesExistError(ValueError):
+        pass
 
-class QuizzUserDoesExistError(ValueError):
-    pass
-
-
-class QuizzUser:
-    model: models.QuizzUser
-
-    @classmethod
-    def from_id(cls, id):
-        try:
-            found = sbook.models.User.objects.get(id=id).quizzAccount.all()[0]
-        except IndexError as e:
-            raise QuizzUserDoesNotExistError() from e
-        else:
-            return cls(found)
+    model: models.QuizzUser = models.QuizzUser
 
     @classmethod
     def create_from_sbook(cls, sbook):
@@ -52,51 +40,29 @@ class QuizzUser:
             obj = models.QuizzUser(sbookAccount=sbook.model)
             obj.save()
         except Exception as e:
-            raise QuizzUserDoesExistError() from e
+            raise QuizzUser.DoesExistError() from e
         else:
             return cls(obj)
 
-    def __init__(self, model=None):
-        if model is None:
-            raise QuizzUserDoesNotExistError()
-        self.model = model
-
     @functools.cached_property
-    def sbookAccount(self):
+    @annotate
+    def sbook(self: 'QuizzUser') -> sbook.accounts.User:
         return sbook.accounts.User(
             self.model.sbookAccount,
         )
 
     @functools.cached_property
-    def stars(self):
-        return self.model.stars
+    @annotate
+    def quizzes(self: 'QuizzUser') -> Cast(Tuple[Quizz]):
+        return map(Quizz, self.model.quizzes.all())
 
     @functools.cached_property
-    def starred(self):
-        return self.model.starred
-
-    @functools.cached_property
-    def id(self):
-        return self.sbookAccount.id
-
-    @functools.cached_property
-    def name(self):
-        return self.sbookAccount.name
-
-    @functools.cached_property
-    def quizzes(self):
-        return Tuple(map(Quizz, self.model.quizzes.all()))
-
-    @functools.cached_property
-    def hasQuizzes(self):
-        return len(self.quizzes) > 0
-
-    @functools.cached_property
-    def attempts(self):
+    @annotate
+    def attempts(self: 'QuizzUser') -> Cast(Tuple[QuizzAttempt]):
         return Tuple(map(QuizzAttempt, self.model.quizz_attempts.all()))
 
     @functools.cached_property
-    def js(self):
+    def js(self: 'QuizzUser') -> dict[str]:
         return self.sbookAccount.js | {
             "user_id": self.model.id,
         }
@@ -128,100 +94,44 @@ class MCQQuestion(Question):
         return json.dumps(self.js)
 
 
-class QuizzDoesNotExistError(ValueError):
-    pass
+class Quizz(sbook.accounts.ModelInder):
+    class DoesNotExistError(ValueError):
+        pass
 
+    class DoesExistError(ValueError):
+        pass
 
-class QuizzDoesExistError(ValueError):
-    pass
-
-
-class Quizz:
-    @classmethod
-    def from_id(cls, id):
-        try:
-            found = models.Quizz.objects.get(id=id)
-        except models.Quizz.DoesNotExist as e:
-            raise QuizzDoesNotExistError() from e
-        else:
-            return cls(found)
-
-    def __init__(self, model=None):
-        if model is None:
-            raise QuizzDoesNotExistError()
-        self.model = model
-        self.data = model.data
+    model = models.Quizz
 
     @functools.cached_property
-    def id(self):
-        return self.model.id
-
-    @functools.cached_property
-    def title(self):
-        return self.model.title
-
-    @functools.cached_property
-    def views(self):
-        return self.model.views
-
-    @functools.cached_property
-    def stars(self):
-        return self.model.stars
-
-    @functools.cached_property
-    def starred(self):
-        return self.model.starred
-
-    @functools.cached_property
-    def authors(self):
-        return tuple(map(QuizzUser, self.model.authors.all()))
-
-    @functools.cached_property
-    def description(self):
-        return self.model.description
+    @annotate
+    def authors(self: 'Quizz') -> Tuple:
+        return map(QuizzUser, self.model.authors.all())
 
     @functools.cached_property
     def short_description(self):
         return textwrap.shorten(self.description, 30)
 
-    @functools.cached_property
-    def profile(self):
-        return Image.open(
-            self.profile_path,
-        ).resize((100, 100))
-
-    @functools.cached_property
-    def profile_path(self):
-        return Path(self.model.profile.path)
-
-    @functools.cached_property
-    def profile_asBytes(self):
-        buffer = io.BytesIO()
-        self.profile.save(buffer, format="PNG")
-        return buffer.getvalue()
-
     @property
     def js(self):
         return {
-            "questions": list(map(lambda q: q.js, self.questions)),
-            "authors": [author.js for author in self.authors],
+            "questions": list(map(lambda q: q.id, self.questions)),
+            "authors": [author.id for author in self.authors],
             "remarking_status": self.attempts_remark_status,
-            "prolog": self.prolog,
-            "epilog": self.epilog,
-            "title": self.title,
+            "prolog": self.model.prolog,
+            "epilog": self.model.epilog,
+            "title": self.model.title,
             "num_attempts": self.num_attempts,
             "num_attempts_remarked": self.num_attempts_remarked,
             "num_attempts_unremarked": self.num_attempts_unremarked,
             "id": self.id,
-            "stars": float(self.stars),
-            "description": self.description,
-            "description_html": markdown.markdown(self.description),
-            "color": profile_images.average_color(self.profile),
+            "stars": self.model.stars,
+            "description": self.model.description,
         }
 
     @functools.cached_property
     def questions(self):
-        return tuple(
+        return Tuple(
             Question.from_dict(data, i)
             for i, data in enumerate(self.data.get("questions") or [])
         )
@@ -229,22 +139,6 @@ class Quizz:
     @functools.cached_property
     def questions_js(self):
         return tuple(ques.js for ques in self.questions)
-
-    @property
-    def json(self, indent=4):
-        return json.dumps(self.js, indent=indent)
-
-    @functools.cached_property
-    def instructions(self):
-        return self.data.get("instructions")
-
-    @functools.cached_property
-    def epilog(self):
-        return self.data.get("epilog")
-
-    @functools.cached_property
-    def prolog(self):
-        return self.data.get("prolog")
 
     @functools.cached_property
     def attempts(self):
@@ -304,15 +198,15 @@ class MCQQuestionAttempt(QuestionAttempt):
         self.question = question
 
 
-class QuizzAttemptDoesNotExistError(ValueError):
-    pass
+class QuizzAttempt(sbook.accounts.ModelInder):
+    class DoesNotExistError(ValueError):
+        pass
 
+    class DoesExistError(ValueError):
+        pass
 
-class QuizzAttemptDoesExistError(ValueError):
-    pass
+    model = models.QuizzAttempt
 
-
-class QuizzAttempt:
     @classmethod
     def create(cls, author, quizz, answers):
         model = models.QuizzAttempt(
@@ -323,51 +217,36 @@ class QuizzAttempt:
         model.save()
         return cls(model)
 
-    @classmethod
-    def from_id(cls, id):
-        try:
-            found = models.QuizzAttempt.objects.get(id=id)
-        except models.QuizzAttempt.DoesNotExist as e:
-            raise QuizzAttemptDoesNotExistError() from e
-        else:
-            return cls(found)
-
-    def __init__(self, model=None):
-        if model is None:
-            raise QuizzAttemptDoesNotExistError()
-        self.model = model
+    @functools.cached_property
+    @annotate
+    def author(self: 'QuizzAttempt') -> Cast(QuizzUser):
+        return self.model.author
 
     @functools.cached_property
-    def author(self):
-        return QuizzUser(self.model.author)
-
-    @functools.cached_property
-    def js(self):
+    def js(self: 'QuizzAttempt'):
         return {
             "id": self.model.id,
-            "quizz": self.quizz.js,
-            "author": self.author.js,
+            "quizz": self.quizz.id,
+            "author": self.author.id,
             "answers": self.model.answers,
-            "remark": self.model.remark,
+            "remarks": self.model.remarks,
             "score": self.model.score,
             "remarked": self.model.remarked,
         }
 
     @functools.cached_property
-    def quizz(self):
+    @annotate
+    def quizz(self: 'QuizzAttempt') -> Quizz:
         return Quizz(self.model.quizz)
 
     @functools.cached_property
-    def answers(self):
+    @annotate
+    def answers(self: 'QuizzAttempt') -> Tuple[QuestionAttempt]:
         ret = tuple(
             QuestionAttempt.from_question(self.quizz.questions[i], a)
             for i, a in enumerate(self.model.answers)
         )
         return ret
-
-    @functools.cached_property
-    def id(self):
-        return self.model.id
 
 
 def check_login(func, redirect=True):

@@ -22,13 +22,13 @@ class MarkdownText {
     }
 }
 
-class User {
-    constructor(id, data) {
+class ModelInter {
+    constructor(id) {
         this.id = id;
-        this.collected = false;
-        this.#data = data;
     }
-    collect(callback) {
+}
+class User extends ModelInter {
+    static from_id(id) {
         return new Promise(function(resolve) {
             $.ajax({
                 dataType: "json",
@@ -36,10 +36,7 @@ class User {
                 data: null,
                 success: function(data) {
                     if(data.ok) {
-                        this.#data = data;
-                        this.collected = true;
-                        if(callback) callback(data);
-                        resolve(true);
+                        resolve(new User(data.user));
                     } else {
                         resolve(false);
                     }
@@ -47,7 +44,11 @@ class User {
             });
         });
     }
+    constructor(data) {
+        this.data = data;
+    }
     name() {
         return this.#data.name;
     }
 }
+

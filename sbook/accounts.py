@@ -16,6 +16,7 @@ from django.http import HttpResponseRedirect
 from chatty import accounts as chatty
 from note import accounts as note
 from sbook import models
+from pyoload import *
 
 
 def parse_recaptcha_token(token):
@@ -74,7 +75,13 @@ def check_login(func, redirect=True):
 
 ##########################################
 
-class ModelInder():
+class ModelInder:
+    __pyod_norecur__ = True
+
+    @classmethod
+    def __init_subclass__(cls):
+        annotate(cls)
+
     @classmethod
     def from_id(cls, id):
         try:
@@ -83,6 +90,10 @@ class ModelInder():
             raise cls.DoesNotExistError() from e
         else:
             return cls(found)
+
+    @staticmethod
+    def all(cls):
+        return map(cls, cls.model.objects.all())
 
     def __init__(self, model):
         self.model = model
@@ -102,6 +113,9 @@ class ModelInder():
         buffer = io.BytesIO()
         self.profile.save(buffer, format="PNG")
         return buffer.getvalue()
+
+    def js(self):
+        raise NotImplementedError()
 
 
 class User(ModelInder):
@@ -164,33 +178,53 @@ class User(ModelInder):
         return note.ChattyUser(cha[0])
 
 
-class Serie(ModelInder):
+class Classifier(ModelInder):
+    def js(self):
+        return {
+            'type': self.__class__.__name__.lower(),
+            'id': self.model.id,
+            'description': self.model.description,
+        } | self.js_spec()
+
+
+class Serie(Classifier):
     model = models.Serie
 
-    @staticmethod
-    def all(cls):
-        return map(Serie, models.Serie.objects.all())
+    def js_spec(self):
+        return {}
 
 
-class Level(ModelInder):
+class Level(Classifier):
     model = models.Level
 
-    @staticmethod
-    def all(cls):
-        return map(Level, models.Level.objects.all())
+    def js_spec(self):
+        return {
+            'series': [
+                serie.id for serie in self.model.series.all()
+            ]
+        }
 
 
-class Course(ModelInder):
-    model = models.Level
+class Course(Classifier):
+    model = models.Course
 
-    @staticmethod
-    def all(cls):
-        return map(Course, models.Course.objects.all())
+    def js_spec(self):
+        return {
+            'series': [
+                serie.id for serie in self.model.series.all()
+            ],
+            'levels': [
+                level.id for level in self.model.levels.all()
+            ]
+        }
 
 
-class Topic(ModelInder):
-    model = models.Level
+class Topic(Classifier):
+    model = models.Topic
 
-    @staticmethod
-    def all(cls):
-        return map(Topic, models.Topic.objects.all())
+    def js_spec(self):
+        return {
+            'courses': [
+                course.id for course in self.model.courses.all()
+            ]
+        }

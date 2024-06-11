@@ -2272,7 +2272,7 @@ bkd-antimony50:-internal-dialog-in-top-layer::backdrop {
   background-image: url("/image/quizz-header.png");
   /* Add the blur effect */
   backdrop-filter: blur(5px);
-  -webkit-filter: blur(0.5px);
+  -webkit-backdrop-filter: blur(5px);
   /* Full height */
   /* Center and scale the image nicely */
   background-repeat: repeat;

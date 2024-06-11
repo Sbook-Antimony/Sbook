@@ -1,19 +1,12 @@
-import mimetypes
-import tempfile
-import profile_images
 import json
 
 from . import forms
 from .accounts import *
-from django.http import FileResponse
 from django.http import HttpResponse
 from django.http import HttpResponseNotFound
 from django.http import HttpResponseRedirect
 from django.http import JsonResponse
 from django.shortcuts import render
-from django.template import loader
-from django.views import View
-from pathlib import Path
 from sbook import settings
 
 
