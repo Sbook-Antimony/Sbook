@@ -23,7 +23,7 @@ from django.urls import path
 # from django.urls import re_path
 
 urlpatterns = [
-    # re_path('djga/', include('google_analytics.urls')),
+    path('martor/', include('martor.urls')),
     path("admin/", admin.site.urls),
     path("markdown/", views.do_markdown),
     path("csrf/", views.do_csrf),

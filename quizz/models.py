@@ -1,7 +1,9 @@
 from django.db import models
 
-import sbook.models as sbook
 import classroom.models as classroom
+import sbook.models as sbook
+
+from martor.models import MartorField
 
 
 class QuizzUser(models.Model):
@@ -36,7 +38,7 @@ class QuizzAttempt(models.Model):
 class Quizz(models.Model):
     data = models.JSONField()
     title = models.CharField(max_length=255)
-    description = models.TextField()
+    description = MartorField()
     profile = models.ImageField(upload_to="profiles")
     is_private = models.BooleanField(default=False)
     authors = models.ManyToManyField(

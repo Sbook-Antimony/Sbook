@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "martor",
     "sbook",
     "note",
     "chatty",
@@ -74,46 +75,14 @@ WSGI_APPLICATION = "sbook.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-if os.getenv("ENV") == "render":
-    DATABASES = {
-        "default": dj_database_url.config(
-            # Replace this value with your local database's connection string.
-            default=(
-                "postgresql://postgres:dpg-co0tm3mn7f5s73dt8hlg-a"
-                "@sbook.onrender.com:5432/sbook"
-            ),
-            conn_max_age=600,
-        )
-    }
-    STATIC_URL = "/static/"
 
-    ALLOWED_HOSTS = ["sbook.onrender.com"]
-elif os.getenv("ENV") == "vercel":
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
-        }
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
-    STATIC_URL = "/static/"
-    ALLOWED_HOSTS = ["127.0.0.1", ".vercel.app"]
-elif os.getenv("ENV") == "railway":
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
-        }
-    }
-    STATIC_URL = "/static/"
-    ALLOWED_HOSTS = ["127.0.0.1", "sbook.up.railway.app"]
-else:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
-        }
-    }
-    STATIC_URL = "http://localhost/static/"
+}
+STATIC_URL = "http://sbook.up.railway.app/static/"
 
 ALLOWED_HOSTS = [
     "localhost",
@@ -189,3 +158,106 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 THEMES = {
     "note": "#274",
 }
+
+
+# Choices are: "semantic", "bootstrap"
+MARTOR_THEME = 'bootstrap'
+
+# Global martor settings
+# Input: string boolean, `true/false`
+MARTOR_ENABLE_CONFIGS = {
+    'emoji': 'true',        # to enable/disable emoji icons.
+    'imgur': 'true',        # to enable/disable imgur/custom uploader.
+    'mention': 'false',     # to enable/disable mention
+    'jquery': 'true',       # to include/revoke jquery
+    'living': 'false',      # to enable/disable live updates in preview
+    'spellcheck': 'false',  # to enable/disable spellcheck in form textareas
+    'hljs': 'true',         # to enable/disable hljs highlighting in preview
+}
+
+# To show the toolbar buttons
+MARTOR_TOOLBAR_BUTTONS = [
+    'bold', 'italic', 'horizontal', 'heading', 'pre-code',
+    'blockquote', 'unordered-list', 'ordered-list',
+    'link', 'image-link', 'image-upload', 'emoji',
+    'direct-mention', 'toggle-maximize', 'help'
+]
+
+# To setup the martor editor with title label or not (default is False)
+MARTOR_ENABLE_LABEL = False
+
+# Disable admin style when using custom admin interface e.g django-grappelli
+MARTOR_ENABLE_ADMIN_CSS = True
+
+# Imgur API Keys
+MARTOR_IMGUR_CLIENT_ID = '1342e05a9f40019'
+MARTOR_IMGUR_API_KEY = '448dda190d0b4739333353f721ff9b218460a232'
+
+# Markdownify
+MARTOR_MARKDOWNIFY_FUNCTION = 'martor.utils.markdownify'  # default
+MARTOR_MARKDOWNIFY_URL = '/martor/markdownify/'  # default
+
+MARTOR_MARKDOWNIFY_TIMEOUT = 0
+
+# Markdown extensions (default)
+MARTOR_MARKDOWN_EXTENSIONS = [
+    'markdown.extensions.extra',
+    'markdown.extensions.nl2br',
+    'markdown.extensions.smarty',
+    'markdown.extensions.fenced_code',
+    'markdown.extensions.sane_lists',
+
+    # Custom markdown extensions.
+    'martor.extensions.urlize',
+    'martor.extensions.del_ins',      # ~~strikethrough~~ and ++underscores++
+    'martor.extensions.mention',      # to parse markdown mention
+    'martor.extensions.emoji',        # to parse markdown emoji
+    'martor.extensions.mdx_video',    # to parse embed/iframe video
+    'martor.extensions.escape_html',  # to handle the XSS vulnerabilities
+]
+
+# Markdown Extensions Configs
+MARTOR_MARKDOWN_EXTENSION_CONFIGS = {}
+
+MARTOR_UPLOAD_URL = '/martor/uploader/'  # default
+
+MARTOR_SEARCH_USERS_URL = '/martor/search-user/'  # default
+
+# Markdown Extensions
+MARTOR_MARKDOWN_BASE_EMOJI_URL = (
+    'https://github.githubassets.com'
+    '/images/icons/emoji/'
+)
+MARTOR_MARKDOWN_BASE_MENTION_URL = 'https://sbook.up.railway.app/author/'
+# please change this to your domain
+
+# If you need to use your own themed "bootstrap" or "semantic ui" dependency
+# replace the values with the file in your static files dir
+MARTOR_ALTERNATIVE_JS_FILE_THEME = "semantic-themed/semantic.min.js"
+MARTOR_ALTERNATIVE_CSS_FILE_THEME = "semantic-themed/semantic.min.css"
+MARTOR_ALTERNATIVE_JQUERY_JS_FILE = "jquery/dist/jquery.min.js"
+
+# URL schemes that are allowed within links
+ALLOWED_URL_SCHEMES = [
+    "file", "ftp", "ftps", "http", "https", "irc", "mailto",
+    "sftp", "ssh", "tel", "telnet", "tftp", "vnc", "xmpp",
+]
+
+# https://gist.github.com/mrmrs/7650266
+ALLOWED_HTML_TAGS = [
+    "a", "abbr", "b", "blockquote", "br", "cite", "code", "command",
+    "dd", "del", "dl", "dt", "em", "fieldset", "h1", "h2", "h3", "h4", "h5",
+    "h6", "hr", "i", "iframe", "img", "input", "ins", "kbd", "label", "legend",
+    "li", "ol", "optgroup", "option", "p", "pre", "small", "span", "strong",
+    "sub", "sup", "table", "tbody", "td", "tfoot", "th", "thead", "tr", "u",
+    "ul"
+]
+
+# https://github.com/decal/werdlists/blob/master/html-words/html-attributes-list.txt
+ALLOWED_HTML_ATTRIBUTES = [
+    "alt", "class", "color", "colspan", "datetime",  # "data",
+    "height", "href", "id", "name", "reversed", "rowspan",
+    "scope", "src", "style", "title", "type", "width"
+]
+
+CSRF_COOKIE_HTTPONLY = False

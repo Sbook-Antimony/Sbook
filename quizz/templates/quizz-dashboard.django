@@ -94,7 +94,6 @@
                             <img ng-hide="attempt.remarked" src="/static/svg/solid/xmark.svg" class="text-fit" />
                         </span>
                     </div>
-
         {% endverbatim %}
         <div id="attempted-quizzes-list" class="w3-row w3-margin w3-round bg-a1">
             <a

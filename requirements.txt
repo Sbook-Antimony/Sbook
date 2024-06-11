@@ -11,3 +11,4 @@ password-strength
 requests==2.32.2
 scss
 markdown
+martor==1.6.44

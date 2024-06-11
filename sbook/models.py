@@ -1,11 +1,12 @@
 from django.db import models
+from martor.models import MartorField
 
 
 class User(models.Model):
     name = models.CharField(max_length=255)
     password = models.CharField(max_length=255)
     email = models.EmailField()
-    bio = models.TextField()
+    bio = MartorField()
     profile = models.ImageField(upload_to="profiles", null=True)
 
     def __str__(self):
