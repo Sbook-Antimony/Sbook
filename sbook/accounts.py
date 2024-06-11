@@ -4,9 +4,6 @@ from PIL import Image
 from pathlib import Path
 
 import django.http
-import yaml
-
-import profile_images
 import requests
 
 from password_strength import PasswordPolicy
@@ -14,7 +11,6 @@ from sbook import settings
 
 import functools
 
-from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 
 from chatty import accounts as chatty
@@ -36,10 +32,6 @@ def parse_recaptcha_token(token):
 
 
 DIR = Path(__file__).parent.parent
-ACCOUNTS = DIR / "accounts"
-
-assert ACCOUNTS.exists(), f"accounts folder {ACCOUNTS!r} does not exists"
-
 
 password_policy = PasswordPolicy.from_names(
     length=8,  # min length: 8
@@ -49,14 +41,6 @@ password_policy = PasswordPolicy.from_names(
     nonletters=2,  # need min. 2 non-letter characters
     entropybits=30,
 )
-
-
-class UserDoesNotExistError(ValueError):
-    pass
-
-
-class UserDoesExistError(ValueError):
-    pass
 
 
 def check_login(func, redirect=True):
@@ -74,7 +58,7 @@ def check_login(func, redirect=True):
         if "user-id" in req.session:
             try:
                 user = User.from_id(req.session.get("user-id", -1))
-            except UserDoesNotExistError:
+            except User.DoesNotExistError:
                 if not redirect:
                     return func(user=None, *args, **kw)
                 return HttpResponseRedirect("/signin")
@@ -90,64 +74,18 @@ def check_login(func, redirect=True):
 
 ##########################################
 
-
-class User:
-    model: models.User
-
-    @staticmethod
-    def exists(**kw):
-        try:
-            models.User.objects.get(**kw)
-        except models.User.DoesNotExist:
-            return False
-        else:
-            return True
-
+class ModelInder():
     @classmethod
     def from_id(cls, id):
         try:
-            found = models.User.objects.get(id=id)
-        except models.User.DoesNotExist as e:
-            raise UserDoesNotExistError() from e
+            found = cls.model.objects.get(id=id)
+        except cls.model.DoesNotExist as e:
+            raise cls.DoesNotExistError() from e
         else:
             return cls(found)
 
-    @classmethod
-    def from_login(cls, email, password):
-        try:
-            found = models.User.objects.get(email=email, password=password)
-        except models.User.DoesNotExist as e:
-            raise UserDoesNotExistError() from e
-        else:
-            return cls(found)
-
-    @classmethod
-    def create_from_login(cls, name, email, password):
-        try:
-            print("creating user")
-            obj = models.User(
-                name=name,
-                email=email,
-                password=password,
-                profile=profile_images.random_profile(),
-            )
-            print("created.. \nnow saving")
-            obj.save()
-            print("creating data launch")
-        except models.User.DoesNotExist as e:
-            raise UserDoesExistError() from e
-        else:
-            return cls(obj)
-
-    def __init__(self, model=None):
-        if model is None:
-            raise UserDoesNotExistError()
+    def __init__(self, model):
         self.model = model
-        self.directory = ACCOUNTS / str(self.id)
-
-    @functools.cached_property
-    def id(self):
-        return self.model.id
 
     @functools.cached_property
     def profile(self):
@@ -165,15 +103,49 @@ class User:
         self.profile.save(buffer, format="PNG")
         return buffer.getvalue()
 
-    @functools.cached_property
-    def name(self):
-        return self.model.name
+
+class User(ModelInder):
+    model = models.User
+
+    class DoesNotExistError(ValueError):
+        pass
+
+    class DoesExistError(ValueError):
+        pass
+
+    @classmethod
+    def from_login(cls, email, password):
+        try:
+            found = models.User.objects.get(email=email, password=password)
+        except models.User.DoesNotExist as e:
+            raise User.DoesNotExistError() from e
+        else:
+            return cls(found)
+
+    @classmethod
+    def create_from_login(cls, name, email, password):
+        try:
+            print("creating user")
+            obj = models.User(
+                name=name,
+                email=email,
+                password=password,
+            )
+            print("created.. \nnow saving")
+            obj.save()
+            print("creating data launch")
+        except models.User.DoesNotExist as e:
+            raise User.DoesExistError() from e
+        else:
+            return cls(obj)
 
     @functools.cached_property
     def js(self):
         return {
             "name": self.model.name,
+            "bio": self.model.bio,
             "id": self.model.id,
+            "email": self.model.email,
         }
 
     @functools.cached_property
@@ -191,9 +163,34 @@ class User:
             raise note.UserDoesNotExistError()
         return note.ChattyUser(cha[0])
 
-    DEFAULT_PROFILE_PATH = DIR / "image/default-photo.png"
-    name: tuple
-    password: str
-    data: dict
-    folder: Path
-    id: int
+
+class Serie(ModelInder):
+    model = models.Serie
+
+    @staticmethod
+    def all(cls):
+        return map(Serie, models.Serie.objects.all())
+
+
+class Level(ModelInder):
+    model = models.Level
+
+    @staticmethod
+    def all(cls):
+        return map(Level, models.Level.objects.all())
+
+
+class Course(ModelInder):
+    model = models.Level
+
+    @staticmethod
+    def all(cls):
+        return map(Course, models.Course.objects.all())
+
+
+class Topic(ModelInder):
+    model = models.Level
+
+    @staticmethod
+    def all(cls):
+        return map(Topic, models.Topic.objects.all())

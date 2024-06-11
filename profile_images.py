@@ -1,4 +1,5 @@
 import random
+import json
 
 from PIL import Image
 from PIL import ImageDraw
@@ -23,7 +24,7 @@ eqs = [
 ]
 
 
-def random_profile(size=500, scale=2):
+def random_profile(size=200, scale=2):
     image = Image.new("RGB", (size, size), "white")
     s = 1
     for _ in range(random.randint(3, 10)):
@@ -34,8 +35,7 @@ def random_profile(size=500, scale=2):
         e = (
             size,
             size,
-        )  # (random.randint(size-size//2, size), random.randint(size-size//2, size))
-
+        )
         c = random.randint(0, 2)
 
         cenx = random.randint(0, size)
@@ -85,5 +85,17 @@ def average_color(image, step=10):
     return (red // num, green // num, blue // num)
 
 
-if __name__ == "__main__":
-    random_profile().save("notes/5/profile.png")
+profile_images = [
+    f"media/profiles/random/{x}.png"
+    for x in json.loads(
+        open('media/profiles/random/random-profiles.json').read()
+    )
+]
+
+
+def get_random():
+    return random.choice(profile_images)
+
+
+def get_random_file():
+    return open(get_random())

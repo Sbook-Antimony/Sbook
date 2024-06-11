@@ -1,3 +1,5 @@
+import profile_images
+
 from django.db import models
 from mdeditor.fields import MDTextField
 
@@ -5,16 +7,22 @@ from mdeditor.fields import MDTextField
 class User(models.Model):
     name = models.CharField(max_length=255)
     password = models.CharField(max_length=255)
-    email = models.EmailField()
+    email = models.EmailField(unique=True)
     bio = MDTextField()
-    profile = models.ImageField(upload_to="profiles")
+    profile = models.ImageField(
+        upload_to="media/profiles",
+        default=profile_images.get_random_file,
+    )
 
     def __str__(self):
         return f"{self.id}:{self.name}:{self.email}"
 
 
 class Serie(models.Model):
-    profile = models.ImageField(upload_to="profiles")
+    profile = models.ImageField(
+        upload_to="media/profiles",
+        default=profile_images.get_random_file,
+    )
     name = models.CharField(max_length=32)
     description = MDTextField()
 
@@ -29,7 +37,10 @@ class Level(models.Model):
     )
     position = models.IntegerField()
     name = models.CharField(max_length=32)
-    profile = models.ImageField(upload_to="profiles")
+    profile = models.ImageField(
+        upload_to="media/profiles",
+        default=profile_images.get_random_file,
+    )
     description = MDTextField()
 
     def __str__(self):
@@ -38,17 +49,34 @@ class Level(models.Model):
 
 class Course(models.Model):
     name = models.CharField(max_length=32)
-    profile = models.ImageField(upload_to="profiles")
+    profile = models.ImageField(
+        upload_to="media/profiles",
+        default=profile_images.get_random_file,
+    )
     description = MDTextField()
     levels = models.ManyToManyField(
         Level,
         related_name="courses",
-        default=[],
     )
     series = models.ManyToManyField(
         Serie,
         related_name="courses",
-        default=[],
+    )
+
+    def __str__(self):
+        return f"{self.id}:{self.name}"
+
+
+class Topic(models.Model):
+    name = models.CharField(max_length=32)
+    profile = models.ImageField(
+        upload_to="media/profiles",
+        default=profile_images.get_random_file,
+    )
+    description = MDTextField()
+    course = models.ManyToManyField(
+        Course,
+        related_name="topics",
     )
 
     def __str__(self):
