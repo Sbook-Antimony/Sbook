@@ -20,7 +20,9 @@
         <script src="/static/scripts/script.js"></script>
         {% include 'google-analytics.django' %}
         {% include 'fonts.django' %}
-        {% include 'martor-dependencies.djhtml' %}
+        <script>
+            window.jQuery = jQuery.noConflict();
+        </script>
     </head>
 
     <header  role="navigation" class="w3-bar w3-top w3-padding-small">

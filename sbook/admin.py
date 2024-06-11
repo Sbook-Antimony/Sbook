@@ -4,15 +4,13 @@ from .models import Serie
 from .models import User
 from django.contrib import admin
 from django.db import models
-from martor.widgets import AdminMartorWidget
+from mdeditor.widgets import MDEditorWidget
 
 
 class UserAdmin(admin.ModelAdmin):
     list_display = ("id", "name", "email", "password")
     formfield_overrides = {
-        models.TextField: {
-            'widget': AdminMartorWidget,
-        },
+        models.TextField: {'widget': MDEditorWidget}
     }
 
 

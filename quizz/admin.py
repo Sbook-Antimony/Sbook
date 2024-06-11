@@ -7,7 +7,7 @@ from django.db.models import TextField
 class MDAdmin(admin.ModelAdmin):
     formfield_overrides = {
         TextField: {
-            'widget': AdminMartorWidget,
+            "widget": AdminMartorWidget,
         },
     }
 

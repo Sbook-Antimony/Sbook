@@ -184,24 +184,26 @@ def do_new(req, user):
 @check_login
 def do_new_submit(req, user):
     data = {
-        'epilog': req.POST.get('epilog'),
-        'prolog': req.POST.get('prolog'),
-        'instructions': req.POST.get('instructions'),
-        'questions': json.loads(req.POST.get('questions')),
+        "epilog": req.POST.get("epilog"),
+        "prolog": req.POST.get("prolog"),
+        "instructions": req.POST.get("instructions"),
+        "questions": json.loads(req.POST.get("questions")),
     }
-    print(req.POST.get('questions'), "-" * 50)
+    print(req.POST.get("questions"), "-" * 50)
     quizz = models.Quizz(
         data=data,
         title=req.POST.get("title"),
         description=req.POST.get("description"),
-        is_private=req.POST.get("is_private") in (True, 'true'),
-        profile=open('profile.png', 'rb'),
+        is_private=req.POST.get("is_private") in (True, "true"),
+        profile=open("profile.png", "rb"),
     )
     quizz.save()
-    quizz.authors.set((user.id, ))
-    return JsonResponse({
-        'ok': True,
-    })
+    quizz.authors.set((user.id,))
+    return JsonResponse(
+        {
+            "ok": True,
+        }
+    )
 
 
 class profiles:
