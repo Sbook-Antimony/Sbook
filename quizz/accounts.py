@@ -344,6 +344,7 @@ class QuizzAttempt:
     @functools.cached_property
     def js(self):
         return {
+            "id": self.model.id,
             "quizz": self.quizz.js,
             "author": self.author.js,
             "answers": self.model.answers,
