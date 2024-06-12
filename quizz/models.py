@@ -1,6 +1,6 @@
 from django.db import models
 
-import classroom.models as classroom
+import school.models as school
 import profile_images
 import sbook.models as sbook
 
@@ -58,7 +58,7 @@ class Quizz(models.Model):
         related_name="quizzes",
     )
     classrooms = models.ManyToManyField(
-        classroom.Classroom,
+        school.Classroom,
         related_name="quizzes"
     )
     levels = models.ManyToManyField(sbook.Level, related_name="quizzes")

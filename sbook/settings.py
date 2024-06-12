@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     "note",
     "chatty",
     "classroom",
+    "school",
     "quizz",
     "mdeditor",
 ]
@@ -217,9 +218,9 @@ MDEDITOR_CONFIGS = {
             "png",
         ],  # image upload format type
         "image_folder": "editor",  # image save the folder name
-        "theme": "default",  # edit box theme, dark / default
-        "preview_theme": "default",  # Preview area theme, dark / default
-        "editor_theme": "default",  # edit area theme, pastel-on-dark / default
+        "theme": "dark",  # edit box theme, dark / default
+        "preview_theme": "dark",  # Preview area theme, dark / default
+        "editor_theme": "dark",  # edit area theme, pastel-on-dark / default
         "toolbar_autofixed": True,  # Whether the toolbar capitals
         "search_replace": True,  # Whether to open the search for replacement
         "emoji": True,  # whether to open the expression function

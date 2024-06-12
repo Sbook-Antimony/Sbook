@@ -10,7 +10,7 @@ class User(models.Model):
     email = models.EmailField(unique=True)
     bio = MDTextField()
     profile = models.ImageField(
-        upload_to="media/profiles",
+        upload_to="profiles/user",
         default=profile_images.get_random_file,
     )
 
@@ -20,7 +20,7 @@ class User(models.Model):
 
 class Serie(models.Model):
     profile = models.ImageField(
-        upload_to="media/profiles",
+        upload_to="profiles/series",
         default=profile_images.get_random_file,
     )
     name = models.CharField(max_length=32)
@@ -38,7 +38,7 @@ class Level(models.Model):
     position = models.IntegerField()
     name = models.CharField(max_length=32)
     profile = models.ImageField(
-        upload_to="media/profiles",
+        upload_to="profiles/levels",
         default=profile_images.get_random_file,
     )
     description = MDTextField()
@@ -50,7 +50,7 @@ class Level(models.Model):
 class Course(models.Model):
     name = models.CharField(max_length=32)
     profile = models.ImageField(
-        upload_to="media/profiles",
+        upload_to="profiles/courses",
         default=profile_images.get_random_file,
     )
     description = MDTextField()
@@ -70,7 +70,7 @@ class Course(models.Model):
 class Topic(models.Model):
     name = models.CharField(max_length=32)
     profile = models.ImageField(
-        upload_to="media/profiles",
+        upload_to="profiles/topics",
         default=profile_images.get_random_file,
     )
     description = MDTextField()
