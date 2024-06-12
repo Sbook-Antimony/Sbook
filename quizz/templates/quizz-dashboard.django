@@ -27,7 +27,7 @@
                     <a class="" href="/quizz/quizzes/{{ quizz.id }}/preview">
                         <img
                             hover-class="!w3-animate-zoom"
-                            height="50"
+                            height="100"
                             class="w3-circle w3-left inline w3-margin-right"
                             src="/quizz/profiles/quizzes/{{ quizz.id }}.png"
                         />
@@ -61,7 +61,7 @@
             </button>
     <div
         id="attempted-quizzes-list"
-        class="w3-display-container w3-border-bottom w3-padding w3-margin w3-round bg-a1"
+        class="w3-display-container w3-border-bottom w3-padding w3-margin w3-round"
     >
         <div ng-show="user_attempts.length == 0">
             <p class="margin-center w3-padding-64 w3-padding-left w3-padding-right fg-antimony w3-opacity">
@@ -69,7 +69,7 @@
             </p>
         </div>
         <div>
-            <div ng-repeat="attempt in user_attempts" class="w3-col m3 w3-margin w3-display-container bg-thin bd-naple w3-circle">
+            <div ng-repeat="attempt in user_attempts" class="w3-col m3 w3-margin w3-display-container bg-thin bd-naple">
                 <a class="" href="/quizz/quizzes/{{ attempt.quizz.id }}/attempts/{{ attempt.id }}/remarks/" class="w3-row">
                     <img
                         hover-class="!w3-animate-zoom"
@@ -113,7 +113,7 @@
                 <a class="" href="/quizz/quizzes/{{ quizz.id }}/preview">
                     <img
                         hover-class="!w3-animate-zoom"
-                        height="50"
+                        height="100"
                         class="w3-circle w3-left inline w3-margin-right"
                         src="/quizz/profiles/quizzes/{{ quizz.id }}.png"
                     />

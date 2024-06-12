@@ -1,14 +1,15 @@
 {% extends 'quizz-main.django' %}
-{% load martortags %}
+{% load markdown %}
 
 {% block 'title' %}quizz dashboard{% endblock 'title' %}
 {% block 'left' %}
-    <div class="w3-rightbar bd-antimony">
+    <div class="bd-antimony w3-left" style="height: 100%;">
         <img
             hover-class="!w3-animate-zoom"
-            height="100%"
+            height="100"
             class="w3-circle w3-margin"
             src="/quizz/profiles/quizzes/{{ quizz.id }}.png"
+
         />
     </div>
 {% endblock 'left' %}
@@ -16,7 +17,7 @@
     <div class="w3-margin w3-padding-0">
         <h1 class="w3-jumbo f-agbalumo-bold">{{ quizz.title }}</h1>
         <div class="w3-round-medium w3-rightbar w3-leftbar w3-topbar bd-naple fg-antimony w3-large w3-padding-32">
-            {{ quizz.description | safe_markdown }}
+            {{ quizz.description | markdown }}
         </div>
         <a
             href="/quizz/quizzes/{{ quizz.id }}/attempt/"

@@ -13,3 +13,4 @@ scss
 markdown
 django-mdeditor
 pyoload=2.0.0
+martor
