@@ -20,13 +20,11 @@ class User extends ModelInter {
             });
         });
     }
-    static get(id, $scope, $http) {
+    static get(id, $http, callback) {
         $http.get(`/users/${id}.json`).then(function(res) {
             let data = res.data;
             if(data.ok) {
-                $scope.user = new User(data.user);
-                window.user = $scope.user;
-            } else {
+                callback(new User(data.user));
             }
         });
     }
@@ -44,15 +42,18 @@ class User extends ModelInter {
         )
     }
     save() {
+        let user = this;
         jQuery.ajax({
             url: '/settings/profile/submit/',
             success: function(data) {
                 flashMessage("green", "Updated profile succesfuly");
+                user.data.bio = user.bio;
+                user.data.name = user.name;
             },
             error: function(zer) {
                 flashMessage("red" , "Could not save question");
             },
-            type: 'POST',
+            type: 'GET',
             data: this.serialize(),
             dataType: 'JSON',
         });
@@ -69,7 +70,7 @@ function flashMessage(stat, text) {
     jQuery.toast({
         text : text,
         showHideTransition : 'slide',  // It can be plain, fade or slide
-        bgColor : 'stat',              // Background color for toast
+        bgColor : stat,              // Background color for toast
         textColor : '#fff',            // text color
         allowToastClose : false,       // Show the close button or not
         hideAfter : 5000,              // `false` to make it sticky or time in miliseconds to hide after

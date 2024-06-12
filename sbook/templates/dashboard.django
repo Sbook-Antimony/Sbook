@@ -74,8 +74,9 @@
     <script>
         const app = angular.module('{{ ng_app_name }}', ['ngRoute', 'ngAnimate']);
         app.controller('{{ ng_app_name }}Ctrl', async function($scope, $http) {
-            User.get({{ user.model.id }}, $scope, $http);
-            window.user = $scope.user;
+            User.get({{ user.model.id }}, $http, function(user) {
+                window.user = $scope.user = user;
+            });
 
             $scope.submitProfileSettings = function() {
                 $scope.user.save();
@@ -122,6 +123,9 @@
             </p>
         </div>
         <div id="profile-view" hidden>
+            <a href="#" class="w3-button w3-pale-blue w3-round">
+
+            </a>
             <div class="bg-antimony10 w3-container w3-round w3-margin-bottom">
                 <span  onclick="jQuery('#uploadImageDialog').showModal()" class="w3-margin w3-display-container">
                     <img class="w3-circle w3-inline w3-margin w3-image" hover-class="jump hexa" width="100" height="100" src="/profile.png" />

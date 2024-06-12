@@ -220,6 +220,6 @@ def do_update_profile(req, user):
     user.model.name = req.GET.get('name', user.model.name)
 
     user.model.save()
-    return {
+    return JsonResponse({
         'ok': True,
-    }
+    })
