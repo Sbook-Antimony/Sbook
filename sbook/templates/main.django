@@ -6,10 +6,14 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <script src="/static/scripts/angular.min.js"></script>
+        <script src="/static/scripts/angular-animate.min.js"></script>
+        <script src="/static/scripts/angular-route.min.js"></script>
         <script src="/static/scripts/jquery.js"></script>
+        <script src="/static/scripts/jquery-toast.js"></script>
         <link rel="stylesheet" href="/static/styles/w3.css" />
         <link rel="stylesheet" href="/static/styles/styles.css" />
         <link rel="stylesheet" href="/static/styles/hexa.css" />
+        <link rel="stylesheet" href="/static/styles/jquery-toast.css" />
         <title>{% block 'title' %}{% endblock %}</title>
         <script src="https://kit.fontawesome.com/ba5b68e3cc.js" crossorigin="anonymous"></script>
         <script src="/static/scripts/nightly.js"></script>
@@ -68,6 +72,8 @@
         
 
     </header>
+    <div id="header-back-blurred-div" style="opacity: 0;" css-transition="0.1s">
+    </div>
     <body
         class=""
         {% if ng_app_name %}
@@ -90,4 +96,9 @@
         <script src="/static/scripts/script.js"></script>
         <script src="/static/scripts/response.js"></script>
     </body>
+    <footer>
+        {% block 'footer' %}
+
+        {% endblock %}
+    </footer>
 </html>

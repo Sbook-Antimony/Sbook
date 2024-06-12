@@ -1,9 +1,9 @@
 /* Error: expected "}".
  *   ,
- * 1 | {% extends 'quizz-main.django' %}
+ * 1 | {% extends 'main.django' %}
  *   | ^
  *   '
- *   quizz-new.django 1:1  root stylesheet */
+ *   dashboard.django 1:1  root stylesheet */
 
 body::before {
   font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
@@ -13,5 +13,5 @@ body::before {
   padding: 1em;
   margin-bottom: 1em;
   border-bottom: 2px solid black;
-  content: "Error: expected \"}\".\a   \2577 \a 1 \2502  {% extends 'quizz-main.django' %}\d\a   \2502  ^\a   \2575 \a   quizz-new.django 1:1  root stylesheet";
+  content: "Error: expected \"}\".\a   \2577 \a 1 \2502  {% extends 'main.django' %}\d\a   \2502  ^\a   \2575 \a   dashboard.django 1:1  root stylesheet";
 }

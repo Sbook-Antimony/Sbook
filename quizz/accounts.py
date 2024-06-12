@@ -53,12 +53,12 @@ class QuizzUser(sbook.accounts.ModelInder):
 
     @functools.cached_property
     @annotate
-    def quizzes(self: 'QuizzUser') -> Cast(Tuple[Quizz]):
+    def quizzes(self: 'QuizzUser') -> Cast('Tuple[Quizz]'):
         return map(Quizz, self.model.quizzes.all())
 
     @functools.cached_property
     @annotate
-    def attempts(self: 'QuizzUser') -> Cast(Tuple[QuizzAttempt]):
+    def attempts(self: 'QuizzUser') -> Cast('Tuple[QuizzAttempt]'):
         return Tuple(map(QuizzAttempt, self.model.quizz_attempts.all()))
 
     @functools.cached_property

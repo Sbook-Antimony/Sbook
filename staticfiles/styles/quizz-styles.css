@@ -2239,6 +2239,21 @@ bkd-antimony50:-internal-dialog-in-top-layer::backdrop {
   transition: 1s;
 }
 
+#header-back-blurred-div {
+  width: 100%;
+  height: 50px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  z-index: 19;
+}
+
+header {
+  z-index: 20 !important;
+}
+
 .backens-a0 {
   background-image: linear-gradient(to right, rgba(120, 35, 170, 0), #7823aa), url("/image/back-dark-dotty.png");
 }
@@ -2264,23 +2279,11 @@ bkd-antimony50:-internal-dialog-in-top-layer::backdrop {
 }
 
 #header-back-blurred-div {
-  width: 100%;
-  height: 50px;
-  position: fixed;
-  top: 0;
-  left: 0;
   background-image: url("/image/quizz-header.png");
   /* Add the blur effect */
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
   /* Full height */
   /* Center and scale the image nicely */
   background-repeat: repeat;
-  z-index: 19;
-}
-
-header {
-  z-index: 20 !important;
 }
 
 body {

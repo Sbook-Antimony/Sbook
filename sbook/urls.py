@@ -36,11 +36,14 @@ urlpatterns = [
     path("profile.png", views.do_profile),
     path("profile.png/upload/", views.do_profile_upload),
     path("profile/<int:userid>.png", views.do_userid_profile),
+    path("settings/profile/submit/", views.do_update_profile),
     path("<scope>/u-email-check.json", views.u_email_check_json),
     path("<scope>/u-password-check.json", views.u_password_check_json),
     path("note/", include("note.urls")),
     path("chatty/", include("chatty.urls")),
     path("quizz/", include("quizz.urls")),
+
+    path("users/<int:userid>.json", views.do_user_json),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

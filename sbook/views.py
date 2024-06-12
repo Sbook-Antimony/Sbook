@@ -15,6 +15,7 @@ from sbook.accounts import *
 import mimetypes
 import markdown
 from . import forms
+from pyoload import *
 
 File = lambda url: FileResponse(open(url, "rb"), filename=url.as_uri())
 
@@ -169,12 +170,9 @@ def do_profile_upload(req, user):
     return JsonResponse({"succes": True})
 
 
-@check_login(True)
+@check_login
 def do_profile(req, user: User):
-    if user is not None:
-        return HttpResponse(user.profile_asBytes, "img/png")
-    else:
-        return File(User.DEFAULT_PROFILE_PATH)
+    return do_userid_profile(req, user.model.id)
 
 
 def do_userid_profile(req, userid):
@@ -193,3 +191,35 @@ def do_markdown(req):
         return HttpResponse(markdown.markdown(data))
     except Exception:
         return HttpResponse("<em>Could not be renderred</em>")
+
+
+@annotate
+def do_user_json(req, userid: int) -> Cast(JsonResponse):
+    try:
+        user = User.from_id(userid)
+    except UserDoesNotExistError:
+        return {
+            'ok': False,
+            'error': 404,
+        }
+    except Exception:
+        return {
+            'ok': False,
+            'error': 0,
+        }
+    else:
+        return {
+            'ok': True,
+            'user': user.js,
+        }
+
+
+@check_login
+def do_update_profile(req, user):
+    user.model.bio = req.GET.get('bio', user.model.bio)
+    user.model.name = req.GET.get('name', user.model.name)
+
+    user.model.save()
+    return {
+        'ok': True,
+    }

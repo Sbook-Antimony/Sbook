@@ -13,10 +13,12 @@ import functools
 
 from django.http import HttpResponseRedirect
 
+import markdown
+
 from chatty import accounts as chatty
 from note import accounts as note
-from sbook import models
 from pyoload import *
+from sbook import models
 
 
 def parse_recaptcha_token(token):
@@ -80,6 +82,7 @@ class ModelInder:
 
     @classmethod
     def __init_subclass__(cls):
+        cls.__pyod_norecur__ = True
         annotate(cls)
 
     @classmethod
@@ -155,9 +158,11 @@ class User(ModelInder):
 
     @functools.cached_property
     def js(self):
+        print(dir(self.model.bio))
         return {
             "name": self.model.name,
             "bio": self.model.bio,
+            "bio_html": markdown.markdown(self.model.bio),
             "id": self.model.id,
             "email": self.model.email,
         }

@@ -85,17 +85,19 @@ function markdown(text) {
 
 window.addEventListener('scroll', function() {
     let headerBg = jQuery("#header-back-blurred-div");
-    headerBg[0].style.backgroundPositionY = (-(window.pageYOffset).toFixed(0)).toString()+"px";
-    let t = window.pageYOffset/150;
-    if(t > 1) t = 1;
-    headerBg[0].style.opacity = (t*t*t).toFixed(2).toString()
-    let elts = jQuery("[onviewbg]")
-    for(let i = elts.length - 1; i >= 0; i--) {
-        let element = elts[i];
-        if(window.pageYOffset >= element.offsetTop + 350) {
-            element.parentElement.style.transition = "1s",
-            element.parentElement.style.backgroundColor = element.getAttribute('onviewbg');
-            break;
-        }
-    };
+    if(headerBg.length > 0) {
+        headerBg[0].style.backgroundPositionY = (-(window.pageYOffset).toFixed(0)).toString()+"px";
+        let t = window.pageYOffset/150;
+        if(t > 1) t = 1;
+        headerBg[0].style.opacity = (t*t*t).toFixed(2).toString()
+        let elts = jQuery("[onviewbg]")
+        for(let i = elts.length - 1; i >= 0; i--) {
+            let element = elts[i];
+            if(window.pageYOffset >= element.offsetTop + 350) {
+                element.parentElement.style.transition = "1s",
+                element.parentElement.style.backgroundColor = element.getAttribute('onviewbg');
+                break;
+            }
+        };
+    }
 });
