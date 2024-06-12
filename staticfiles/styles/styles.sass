@@ -1,0 +1,84 @@
+@import base
+
+html
+    $base: blue
+    background-image: url('/image/back-lighter-dashy.png')
+
+body
+    display: flex
+    flex-direction: row
+    justify-content: center
+    align-items: center
+    align-content: space-between
+    margin-top: 50px!important
+    flex-wrap: nowrap
+
+    & > #left
+        margin-top: 50px
+        order: 1
+        flex-grow: 2
+        justify-content: left
+        display: block
+    
+    & > #center
+        margin-top: 50px
+        max-width: 700px
+        order: 2
+        flex-grow: 5
+        justify-content: center
+        text-align: center
+        margin: auto
+        padding: auto
+        display: block
+    
+    & > #right
+        margin-top: 50px
+        order: 3
+        flex-grow: 2
+        justify-content: right
+        display: block
+
+bd-antimony
+    border-color: $antimony
+
+
+
+
+
+
+
+// extract from w3.css
+.w3-btn,
+.w3-button
+    border: none
+    display: inline-block
+    padding: 8px 16px
+    vertical-align: middle
+    overflow: hidden
+    text-decoration: none
+    color: inherit
+    background-color: inherit
+    text-align: center
+    cursor: pointer
+    white-space: nowrap
+
+.w3-btn:hover
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)
+
+.w3-btn,
+.w3-button
+    -webkit-touch-callout: none
+    -webkit-user-select: none
+    -khtml-user-select: none
+    -moz-user-select: none
+    -ms-user-select: none
+    user-select: none
+
+.w3-disabled,
+.w3-btn:disabled,
+.w3-button:disabled
+    cursor: not-allowed
+    opacity: 0.3
+
+#header-back-blurred-div
+  backdrop-filter: blur(40px)

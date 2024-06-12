@@ -1,0 +1,152 @@
+{% extends 'main.django' %}
+
+{% block 'left' %}
+    <dialog id="uploadImageDialog" class="w3-round-large w3-border-0 bkd-antimony50 w3-container">
+        <form
+            action="/profile.png/upload/"
+            method="post"
+            enctype="multipart/form-data"
+            id="uploadImageForm"
+            class="w3-container"
+        >
+            <img
+                class="w3-circle w3-margin w3-block w3-button"
+                id="uploadImagePreviewImage"
+                src="/profile.png"
+                style="width: 300px!important; height: 300px!important;"
+                width="300"
+                height="300"
+            />
+            {% csrf_token %}
+            <label for="file" onclick="this.querySelector('input').click()" class="bg-antimony10 w3-btn w3-round">
+                Choose photo
+                <input onchange="uploadPhotoReadProfile(event)" type="file" name="file" hidden />
+            </label>
+            <button type="submit" id="imageUploadButton" onclick="submitNewProfile(); this.setAttribute('hover-class', '');" css-transition="1s" hover-class="w3-red shake" class="hexa w3-disabled bg-antimony10-hover w3-btn w3-round" >
+                Submit
+            </button>
+            <script type="text/javascript" charset="utf-8">
+                function uploadPhotoReadProfile(e) {
+                    console.log("adding new profile");
+                    let files = e.target.files;
+                    if(files.length < 1) return;
+                    let
+                        file = files[0],
+                        reader = new FileReader();
+                    reader.onloadend = function() {
+                        console.log(reader);
+                        let dataurl = reader.result;
+                        jQuery("#uploadImagePreviewImage")[0].src = dataurl;
+                        setTimeout(function() {
+                            jQuery("#imageUploadButton")
+                                .removeClass('w3-disabled')
+                                .addClass("w3-green");
+                        }, 1000);
+                    }
+                    reader.readAsDataURL(file);
+                }
+                function submitNewProfile() {
+                    let formdata = new FormData(jQuery("uploadImageForm")[0]);
+                    console.log(formdata);
+                    jQuery.ajax({
+                        type: 'GET',
+                        url: '/profile.png/upload/', // replace with your server-side script
+                        data: formdata,
+                        success: function(data) {
+                            location.reload();
+                        },
+                        error: function() {
+                            jQuery("imageUploadButton")
+                                .toggleClass('w3-green w3-red');
+                        },
+                    });
+                };
+            </script>
+        </form>
+    </dialog>
+{% endblock %}
+{% block 'center' %}
+    <div class="w3-container" ng-view>
+    </div>
+{% endblock %}
+
+{% block 'right' %}
+    <script>
+        const app = angular.module('{{ ng_app_name }}', ['ngRoute', 'ngAnimate']);
+        app.controller('{{ ng_app_name }}Ctrl', async function($scope, $http) {
+            User.get({{ user.model.id }}, $http, function(user) {
+                window.user = $scope.user = user;
+            });
+
+            $scope.submitProfileSettings = function() {
+                $scope.user.save();
+            }
+        });
+        app.config(function($routeProvider) {
+            $routeProvider
+            .when("/profile", {
+                template : jQuery("#profile-view").html()
+            })
+            .otherwise({
+                template: jQuery("#dashboard-view").html()
+            });
+        });
+        function uploading_photo() {
+            jQuery("dialog[askphoto]")[0].showModal();
+        }
+    </script>
+{% endblock %}
+{% block 'footer' %}
+    {#srcset="/profile.png 300w, /profile.png 600w, /profile.png 1200w" sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 1200px"#}
+    {% verbatim %}
+        <div id="dashboard-view" hidden>
+            <div class="backens-naple bg-antimony10 w3-container w3-round w3-margin-bottom">
+                <a href="#!profile" class="w3-margin w3-display-container">
+                    <img class="w3-circle w3-inline w3-margin w3-image" hover-class="jump hexa" width="100" height="100" src="/profile.png" />
+                </span>
+                <a class="w3-arial w3-xxlarge w3-margin">{{ user.name }}</span>
+            </div>
+            <p ng-bind="user.bio" class="w3-medium w3-justify w3-container"></p>
+            <p class="w3-container margin-center w3-row">
+                <a href="/note/" class="w3-red w3-col m5 w3-round w3-padding-32 w3-margin w3-large">
+                    Notes
+                </a>
+                <a href="/classroom/" class="w3-green w3-col m5 w3-round w3-padding-32 w3-margin w3-large">
+                    CLassroms
+                </a>
+                <a href="/quizz/" class="w3-blue w3-col m5 w3-round w3-padding-32 w3-margin w3-large">
+                    Quizzes
+                </a>
+                <a href="/chatty/" class="bg-naple w3-col m5 w3-round w3-padding-32 w3-margin w3-large">
+                    Chatty
+                </a>
+            </p>
+        </div>
+        <div id="profile-view" hidden>
+            <a href="#" class="w3-left-align w3-left w3-button w3-text-pale-blue w3-round">
+                <i class="fa fa-arrow-left fa-xl" ></i>
+            </a>
+            <div class="bg-antimony10 w3-container w3-round w3-margin-bottom">
+                <span  onclick="jQuery('#uploadImageDialog').showModal()" class="w3-margin w3-display-container">
+                    <img class="w3-circle w3-inline w3-margin w3-image" hover-class="jump hexa" width="100" height="100" src="/profile.png" />
+                    <i class="fa-2xl fg-antimony50 w3-display-bottomright w3-margin fas fa-edit"></i>
+                </span>
+                <div>
+                    <label class="w3-input">
+                        user name:
+                        <input type="text" class="" ng-model="user.name" />
+                    </label>
+                </div>
+            </div>
+            <div class="w3-container round-n-20 w3-margin-bottom w3-margin-top">
+                <h5 class="bg-naple w3-text-white w3-container margin-0">Bio</h5>
+                <textarea class="no-resize w3-input w3-container w3-medium bd-naple bd-1" ng-model="user.bio"></textarea>
+            </div>
+            <button
+                ng-click="submitProfileSettings()"
+                class="from-left-ng-enter to-right-ng-leave w3-round-large w3-border-blue w3-border w3-button"
+                ng-show="user.modified()"
+            >Save</button>
+        </div>
+    {% endverbatim %}
+{% endblock %}

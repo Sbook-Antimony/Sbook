@@ -1,0 +1,27 @@
+{% extends 'main.django' %}
+{% block 'title' %}
+    create room
+{% endblock %}
+{% block 'left' %}
+{% endblock %}
+{% block 'center' %}
+
+    <form method="post" class="bg-clear fg-antimony w3-round-xlarge w3-padding w3-margin ">
+        {% if errors %}
+            <div style="transition: 0.5s;" class="w3-animate-opacity w3-margin w3-padding w3-display-container w3-red w3-round-large margin-center w3-panel">
+                <div class="w3-margin-small w3-monospace w3-display-topright w3-circle" onclick="this.parentElement.style.display = 'none';">x</div>
+                {{ errors }}
+            </div>
+        {% endif %}
+        {% csrf_token %}
+        <p class="bg-antimony10 fg-antimony w3-padding w3-margin w3-center w3-round-large">
+            signup room
+        </p>
+        <div class="w3-padding w3-margin bg-antimony10 w3-round-xlarge fg-antimony">
+            <label for="name">name:</label>
+            <input type="text" name="name" class="bg-red-invalid fg-antimony w3-padding-small w3-border-0 w3-margin bg-naple50  w3-round-large" />
+        </div>
+    </form>
+{% endblock %}
+{% block 'right' %}
+{% endblock %}

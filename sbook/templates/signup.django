@@ -1,0 +1,64 @@
+{% extends 'main.django' %}
+{% block 'title' %}
+    chatty signup
+{% endblock %}
+
+{% block 'left' %}
+{% endblock %}
+{% block 'center' %}
+
+    <form action="/signup/" ng-app="signup" ng-controller="signupCtrl" method="post" class="bg-clear fg-antimony w3-round-xlarge w3-padding w3-margin ">
+        {% if errors %}
+            <div style="transition: 0.5s;" class="w3-animate-opacity w3-margin w3-padding w3-display-container w3-red w3-round-large margin-center w3-panel">
+                <div class="w3-margin-small w3-monospace w3-display-topright w3-circle" onclick="this.parentElement.style.display = 'none';">x</div>
+                {{ errors }}
+            </div>
+        {% endif %}
+        {% csrf_token %}
+        <p class="bg-antimony10 fg-antimony w3-padding w3-margin w3-center w3-round-large">signup</p>
+        <div class="w3-padding w3-margin bg-antimony10 w3-round-xlarge fg-antimony">
+            <label for="email">email:</label>
+            <input ng-change="checkEmail()" ng-keyup="checkEmail()" oninput="checkEmail()" ng-input="checkEmail()" ng-model="email" type="email" name="email" class="bg-red-invalid fg-antimony w3-padding-small w3-border-0 w3-margin bg-naple50  w3-round-large" />
+            <div ng-show="emailError" ng-bind="emailError" class="w3-panel w3-red w3-margin w3-round-large">
+            </div>
+        </div>
+        <div class="w3-padding w3-margin bg-antimony10 w3-round-xlarge fg-antimony">
+            <label for="name">name:</label>
+            <input type="text" name="name" class="bg-red-invalid fg-antimony w3-padding-small w3-border-0 w3-margin bg-naple50  w3-round-large" />
+
+        </div>
+        <div class="w3-padding w3-margin fg-antimony bg-antimony10 w3-round-xlarge">
+            <label for="password">password:</label>
+            <input ng-change="checkPassword()" ng-keyup="checkPassword()" oninput="checkPassword()" ng-input="checkPassword()" ng-model="password" type="password" name="password" class="fg-antimony w3-border-0 w3-padding-small w3-margin bg-naple50  w3-round-large" />
+            <div ng-show="passwordError" ng-bind="passwordError" class="w3-panel w3-red w3-margin w3-round-large">
+            </div>
+        </div>
+        <div>
+            {% include 'captcha.django' with captcha_name='signupcaptcha' %}
+            <p>Have an account?, <a href="/signin">signin</a></p>
+        </div>
+
+        <script>
+            const app = angular.module("signup", []);
+            app.controller("signupCtrl", function($scope) {
+                $scope.emailError = false;
+                window.checkEmail = $scope.checkEmail = function() {
+                    $.getJSON("/signup/u-email-check.json", { "email": $scope.email }, function(data) {
+                        $scope.emailError = data;
+                    });
+                }
+                $scope.passwordError = false;
+                window.checkPassword = $scope.checkPassword = function() {
+                    $.getJSON("/signup/u-password-check.json", { "password": $scope.password }, function(data) {
+                        $scope.passwordError = data;
+                    });
+                }
+                window.setInterval($scope.checkEmail, 2000);
+                window.setInterval($scope.checkPassword, 2000);
+            });
+        </script>
+    </form>
+{% endblock %}
+
+{% block 'right' %}
+{% endblock %}

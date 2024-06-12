@@ -1,0 +1,179 @@
+{% extends 'quizz-main.django' %}
+{% load markdown %}
+
+{% block 'title' %}quizz dashboard{% endblock 'title' %}
+{% block 'left' %}
+    {% csrf_token %}
+{% endblock 'left' %}
+{% block 'center' %}
+    {% verbatim %}
+        <dialog id="changeImage" class="w3-round-large w3-border-0 bkd-antimony50 w3-container">
+        </dialog>
+        <div quizzProfile class="w3-container bg-antimony50 w3-round padding-0 round-n-20">
+            <div class="backens-a1 w3-container margin-0">
+                <span  ng-click="changePhoto()" class="w3-margin w3-display-container">
+                    <img class="w3-circle w3-inline w3-margin w3-image" hover-class="jump hexa" width="100" height="100" src="/profile.png" />
+                    <i class="fa-2xl fg-antimony50 w3-display-bottomright w3-margin fas fa-edit"></i>
+                </span>
+                <span class="w3-arial w3-xxlarge w3-margin w3-right inline" ng-bind="title" contenteditable="true"></span>
+            </div>
+            <textarea rows="5" class="no-resize block w3-container w3-input bg-a2" ng-model="description">Here a description</textarea>
+        </div>
+        <div class="w3-container round-n-20 w3-margin-bottom w3-margin-top">
+            <h5 class="w3-purple w3-text-white w3-container margin-0">Instructions</h5>
+            <textarea class="no-resize bd-a3 bd-1 w3-container w3-input" ng-model="instructions" rows="7"></textarea>
+        </div>
+        <div class="w3-container round-n-20 w3-margin-bottom w3-margin-top">
+            <h5 class="w3-purple w3-text-white w3-container margin-0">Prolog</h5>
+            <textarea placeholder="A little introductory message" class="no-resize bd-a3 bd-1 w3-container w3-input" ng-model="prolog" rows="7"></textarea>
+        </div>
+        <div class="w3-container w3-margin-bottom w3-round">
+            <div ng-repeat="question in questions" class="fade-ng-enter from-left-ng-enter to-right-ng-leave w3-margin-bottom w3-card padding-0 round-n-5 w3-container">
+                <div class="w3-margin round-n-5 w3-display-container">
+                    <textarea
+                        ng-model="question.question"
+                        placeholder="Enter the question here."
+                        class="w3-input bg-a2 no-resize"
+                    >
+                    </textarea>
+                    <span ng-click="removeQuestion(question)" class="w3-button w3-display-topright w3-xlarge w3-circle padding-5">
+                        <img src="/static/svg/solid/xmark.svg" alt="remove" class="text-fit w3-circle">
+                    </span>
+                    <div class="bd-a5 bd-thin">
+                        <label
+                            class="block w3-leftbar"
+                            ng-repeat="option in question.options"
+                            style="width: 90%; margin-left: 10%;"
+                        >
+                            {{ option.label }}
+                            <input
+                                ng-model="option.text"
+                                class="w3-input"
+                                type="text"
+                                name=""
+                                value=""
+                                placeholder="Enter the option here."
+                            />
+                        </label>
+                        <span class="w3-round-large">
+                            <button
+                                ng-click="addQuestionOption(question)"
+                                class="w3-large"
+                            >
+                                <img
+                                    src="/static/svg/solid/circle-plus.svg"
+                                    class="text-fit"
+                                />
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <img
+                ng-click="addQuestion()"
+                src="/static/svg/solid/circle-plus.svg"
+                class="w3-button text-fit colory-border5 w3-jumbo w3-circle"
+            />
+        </div>
+        <div class="w3-container round-n-20 w3-margin">
+            <h5 class="w3-purple w3-text-white w3-container margin-0">Epilog</h5>
+            <textarea placeholder="Good luck // Go back and check your work!" class="no-resize bd-a3 bd-1 w3-container w3-input" ng-model="epilog" rows="7"></textarea>
+        </div>
+        <div class="round-n-20">
+            <label for="status">Private:</label>
+            <label class="slider round">
+              <input type="checkbox" ng-model="is_private">
+              <span></span>
+            </label>
+        </div>
+        <span
+            ng-click="submit()"
+            class="block w3-center w3-margin-top colory-border5 w3-button w3-xxlarge w3-padding-16 w3-round-xxlarge"
+        >
+            <span class="w3-white">
+                Create
+                <img src="/static/svg/solid/chevron-right.svg" class="text-fit hexa jump" />
+            </span>
+        </span>
+    {% endverbatim %}
+{% endblock 'center' %}
+{% block 'right' %}
+    <script>
+        class Option {
+            constructor(text="", label="") {
+                this.text = text;
+                this.label = label;
+            }
+        }
+        class Question {
+            constructor(question="" , options = []) {
+                this.question = question;
+                this.options = options;
+            }
+            serialize() {
+                let obj = {
+                    question: this.question,
+                    options: {},
+                };
+                for(let i = 0; i < this.options.length; i++) {
+                    obj.options[
+                        String.fromCodePoint(i+'a'.charCodeAt(0)).toString()
+                    ] = this.options[i].text;
+                }
+                return obj;
+            }
+        }
+        const app = angular.module('{{ ng_app_name }}', ['ngAnimate']);
+        app.controller('{{ ng_app_name }}Ctrl', function($scope) {
+            $scope.questions = [];
+            $scope.title = "A little title here";
+            $scope.description = "";
+            $scope.prolog = "";
+            $scope.epilog = "";
+            $scope.is_private = false;
+            window.$scope = $scope;
+
+            $scope.addQuestion = function() {
+                $scope.questions.push(new Question());
+            }
+            $scope.removeQuestion = function(ques) {
+                let idx = $scope.questions.indexOf(ques);
+                if(idx >= 0)
+                    $scope.questions = $scope.questions.splice(idx, idx);
+            }
+            $scope.addQuestionOption = function(question) {
+                question.options.push(new Option());
+            }
+            $scope.serialize = function() {
+                let ret = {
+                    epilog: $scope.epilog,
+                    prolog: $scope.prolog,
+                    instructions: $scope.instructions,
+                    questions: JSON.stringify($scope.questions.map(
+                        (question) => question.serialize()
+                    )),
+                    is_private: $scope.is_private,
+                    title: $scope.title,
+                    description: $scope.description,
+                    csrfmiddlewaretoken: document.querySelector('[name=csrfmiddlewaretoken]').value,
+                };
+                return ret;
+            }
+            $scope.submit = function() {
+                jQuery.ajax({
+                    url: '/quizz/new/submit/',
+                    success: function(data) {
+                        alert(data, JSON.stringify(data));
+                        location.assign('/quizz/');
+                    },
+                    error: function(zer) {
+                        alert("error creating question", zer);
+                    },
+                    type: 'POST',
+                    data: $scope.serialize(),
+                    dataType: 'JSON',
+                });
+            }
+        });
+    </script>
+{% endblock 'right' %}

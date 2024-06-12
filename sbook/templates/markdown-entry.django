@@ -1,0 +1,4 @@
+{% load markdown %}
+<div class="w3-container w3-round">
+    <textarea name="{{ name }}" class="w3-container"></textarea>
+</div>

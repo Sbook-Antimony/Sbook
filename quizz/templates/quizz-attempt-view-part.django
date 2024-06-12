@@ -1,0 +1,26 @@
+{% load markdown %}
+<div class="w3-col m3 w3-margin w3-display-container bg-thin bd-naple w3-circle">
+    <a class="" href="/quizz/quizzes/{{ attempt.quizz.id }}/attempts/{{ attempt.model.id }}/remarks/" class="w3-row">
+        <img
+            hover-class="!w3-animate-zoom"
+            class="w3-circle inline"
+            height="100px"
+            style="margin-right: -70px; z-index: 5;"
+            src="/quizz/profiles/quizzes/{{ attempt.author.id }}.png"
+        />
+        <img
+            hover-class="!w3-animate-zoom"
+            class="w3-circle inline"
+            height="100px"
+            style="margin-left: -70px; z-index: -5;"
+            src="/profile/{{ attempt.quizz.id }}.png"
+        />
+    </a>
+    <span class="w3-padding-small w3-display-topright w3-margin-right w3-round-large bg-naple">
+        {% if attempt.model.remarked %}
+            {{ 'solid circle-check text-fit' | icon }}
+        {% else %}
+            {{ 'solid xmark text-fit' | icon }}
+        {% endif %}
+    </span>
+</div>

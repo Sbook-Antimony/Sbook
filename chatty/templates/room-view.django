@@ -1,0 +1,55 @@
+
+<style>
+</style>
+<div class="w3-padding w3-margin fg-antimony bg-clear w3-round-xlarge">
+    <div class="w3-container bg-clear">
+        {% for message in room.messages %}
+            <div class="w3-container bg-clear w3-margin">
+                <small class="w3-tiny w3-center w3-block w3-margin-bottom w3-round bg-naple10">{{ message.sent_date }}</small>
+                <div class="w3-padding w3-round-large {% if message.sender.id == User.id %}w3-right bg-antimony10{% else %}w3-left bg-naple10{% endif %}" >
+                    <h6 class="w3-center w3-xsmall">{{ message.sender.name }}</h6>
+                    <p class="bd-naple bd-thin fg-antimony w3-padding-small w3-round-large w3-container">
+                        {{ message.content }}
+                    </p>
+                </div>
+            </div>
+        {% endfor %}
+        div.w3-container.bg-clear.w3-margin>small
+        </div>
+        <footer class="bg-antimony10" style="position: fixed; left: 0; bottom: 0; width: 100%; margin: 0px; padding: 5px;">
+            <input id="message-entry" class="w3-inline bd-naple bd-thin bg-naple10 bg-antimony10-hover w3-padding-small w3-round-large" name="message" placeholder="Wanna type something here, {{ User.name }}" />
+            {% csrf_token %}
+            <button onclick="sendMessage()" class="w3-inline w3-button w3-round-large">
+                <i class="fas fa-paper-plane" style="height: 100%"></i>
+            </button>
+        </footer>
+        <script>
+           function sendMessage() {
+               alert('hello');
+               $("body").after("hhhhh");
+               let
+                msg = $("#message-entry")[0].value,
+                csrf_token = $("footer input[name=csrfmiddlewaretoken]")[0].value;
+                let data = formData();
+               alert(formData);
+                data.csrfmiddlewaretoken = csrf_token;
+                data.content = msg;
+                $.ajax({
+                    url: 'send-message',
+                    data: data,
+                    processData: false,
+                    type: 'POST',
+                    success: function ( data ) {
+                        new Notification("succesfully sent message");
+                        //$("")
+                    },
+                    error: () => {new Notification("error sending message")};
+                });
+           }
+       </script>
+    </div>
+
+
+
+
+

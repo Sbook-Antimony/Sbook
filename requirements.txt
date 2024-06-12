@@ -1,0 +1,16 @@
+Django==4.1.13
+PyYAML==6.0.1
+psycopg2-binary==2.9.9
+dj-database-url==2.1.0
+whitenoise[brotli]==6.6.0
+uvicorn==0.29.0
+gunicorn==22.0.0
+Pillow
+numpy
+password-strength
+requests==2.32.2
+scss
+markdown
+django-mdeditor
+pyoload==2.0.0
+martor

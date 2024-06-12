@@ -1,0 +1,38 @@
+{% load markdown %}
+<div class="w3-display-container w3-border-bottom margin-0 w3-padding w3-justify w3-container w3-round">
+    <a class="" href="/quizz/quizzes/{{ quizz.id }}/preview">
+        <img
+            hover-class="!w3-animate-zoom"
+            height="100%"
+            class="w3-circle w3-left inline w3-margin-right"
+            src="/quizz/profiles/quizzes/{{ quizz.id }}.png"
+        />
+        <span class="inline">
+            <h4 class="w3-large">{{ quizz.title }}</h4>
+            <p class="fg-antimony w3-small">
+                {{ quizz.short_description | markdown }}
+            </p>
+        </span>
+    </a>
+    <span class="w3-padding-small w3-display-topright w3-round-large bg-naple">
+        {% with rem=quizz.attempts_remark_status %}
+            {% if rem == 0 %}
+                <a href="/quizz/quizzes/{{ quizz.id }}/attempts/" title="nothing done">
+                    {{ 'solid list-check text-fit' | icon }}
+                </a>
+            {% elif rem == 1 %}
+                <a href="/quizz/quizzes/{{ quizz.id }}/attempts/" title="some remaining...">
+                    {{ 'solid list-check text-fit' | icon }}
+                </a>
+            {% elif rem == 2 %}
+                <a href="/quizz/quizzes/{{ quizz.id }}/attempts/" title="nothing here">
+                    {{ 'solid circle-check text-fit' | icon }}
+                </a>
+            {% else %}
+                <a href="/quizz/quizzes/{{ quizz.id }}/attempts/" title="not known">
+                    {{ 'solid xmark text-fit' | icon }}
+                </a>
+            {% endif %}
+        {% endwith %}
+    </span>
+</div>

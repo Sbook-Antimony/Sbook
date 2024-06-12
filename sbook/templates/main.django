@@ -1,0 +1,104 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="bg-naple10">
+    <head>
+        <link rel="icon" href="image/antimony.png" />
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="/static/scripts/angular.min.js"></script>
+        <script src="/static/scripts/angular-animate.min.js"></script>
+        <script src="/static/scripts/angular-route.min.js"></script>
+        <script src="/static/scripts/jquery.js"></script>
+        <script src="/static/scripts/jquery-toast.js"></script>
+        <link rel="stylesheet" href="/static/styles/w3.css" />
+        <link rel="stylesheet" href="/static/styles/styles.css" />
+        <link rel="stylesheet" href="/static/styles/hexa.css" />
+        <link rel="stylesheet" href="/static/styles/jquery-toast.css" />
+        <title>{% block 'title' %}{% endblock %}</title>
+        <script src="https://kit.fontawesome.com/ba5b68e3cc.js" crossorigin="anonymous"></script>
+        <script src="/static/scripts/nightly.js"></script>
+        <script src="/static/scripts/script.js"></script>
+        <script src="/static/scripts/sbook.js"></script>
+        {% include 'google-analytics.django' %}
+        {% include 'fonts.django' %}
+    </head>
+
+    <header  role="navigation" style="padding: 0;" class="w3-bar bg-clear w3-top w3-padding-0">
+        <a
+            href="/"
+            style="height: 100%;"
+            class="w3-padding-0 w3-button w3-bar-item bg-clear bg-antimony10 w3-large">
+            <img src="/static/svg/solid/house.svg" height="30" class="margin-0" />
+        </a>
+
+        <div style="margin-top: 0; margin-bottom: 0; padding: 0px;" class="w3-bar-item" id="top-bar-div">
+            <button
+                id="top-bar-div-button"
+                class="w3-dropdown-hover w3-padding-0 w3-button w3-bar-item bg-clear bg-antimony10 w3-large"
+            >
+                <img
+                    id="top-bar-div-image"
+                    src="/static/svg/solid/chevron-down.svg"
+                    css-transition="0.5s"
+                    height="30"
+                    class="margin-0"
+                />
+            </button>
+            <div id="top-bar-buttons" class="w3-container">
+                <a style="width: 100%" href="/note" class="bg-antimony50 bg-antimony10-hover w3-button w3-hover-text w3-block">
+                    note
+                </a>
+                <a style="width: 100%" href="/chatty" class="bg-antimony50 bg-antimony10-hover w3-button w3-hover-text w3-block">
+                    chatty
+                </a>
+                <a style="width: 100%;" href="/questions" class="bg-antimony50 bg-antimony10-hover w3-button w3-hover-text w3-block">
+                    questions
+                </a>
+            </div>
+            <script>
+                $('#top-bar-buttons').slideUp();
+                let up = true;
+                $("#top-bar-div-button").click(function() {
+                    if(up)
+                        $("#top-bar-buttons").slideDown();
+                    else
+                        $("#top-bar-buttons").slideUp();
+                    up = !up;
+                    $("#top-bar-div-image")[0].style.transform = up?'rotateZ(0deg)':'rotateZ(180deg)'
+                });
+            </script>
+        </div>
+        <img src="/profile.png" style="width: 40px; height: 40px; padding: 0; margin: 0;" class="w3-right w3-bar-item w3-circle" />
+        
+
+    </header>
+    <div id="header-back-blurred-div" style="opacity: 0;" css-transition="0.1s">
+    </div>
+    <body
+        class=""
+        {% if ng_app_name %}
+            ng-app="{{ ng_app_name }}"
+            ng-controller="{{ ng_app_name }}Ctrl"
+        {% endif %}
+    >
+        <div id="left" class="w3-container w3-round">
+            {% block 'left' %}
+            {% endblock %}
+        </div>
+        <div id="center" class="w3-container w3-round">
+            {% block 'center' %}
+            {% endblock %}
+        </div>
+        <div id="right" class="w3-container w3-round">
+            {% block 'right' %}
+            {% endblock %}
+        </div>
+        <script src="/static/scripts/script.js"></script>
+        <script src="/static/scripts/response.js"></script>
+    </body>
+    <footer>
+        {% block 'footer' %}
+
+        {% endblock %}
+    </footer>
+</html>

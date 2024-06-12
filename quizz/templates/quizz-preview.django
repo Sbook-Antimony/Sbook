@@ -1,0 +1,41 @@
+{% extends 'quizz-main.django' %}
+{% load markdown %}
+
+{% block 'title' %}quizz dashboard{% endblock 'title' %}
+{% block 'left' %}
+    <div class="bd-antimony w3-left" style="height: 100%;">
+        <img
+            hover-class="!w3-animate-zoom"
+            height="100"
+            class="w3-circle w3-margin"
+            src="/quizz/profiles/quizzes/{{ quizz.id }}.png"
+
+        />
+    </div>
+{% endblock 'left' %}
+{% block 'center' %}
+    <div class="w3-margin w3-padding-0">
+        <h1 class="w3-jumbo f-agbalumo-bold">{{ quizz.title }}</h1>
+        <div class="w3-round-medium w3-rightbar w3-leftbar w3-topbar bd-naple fg-antimony w3-large w3-padding-32">
+            {{ quizz.description | markdown }}
+        </div>
+        <a
+            href="/quizz/quizzes/{{ quizz.id }}/attempt/"
+            class="w3-margin-top colory-border1 w3-button w3-xxlarge w3-padding-16 w3-round-xxlarge"
+        >
+            <span class="w3-white">
+                <span class="w3-padding">
+                    Attempt
+                    <img src="/static/svg/solid/chevron-right.svg" class="text-fit hexa jump" />
+                </span>
+            </span>
+        </a>
+    </div>
+{% endblock 'center' %}
+{% block 'right' %}
+    <script>
+        const app = angular.module('{{ ng_app_name }}', []);
+        app.controller('{{ ng_app_name }}Ctrl', function($scope) {
+        });
+    </script>
+{% endblock 'right' %}

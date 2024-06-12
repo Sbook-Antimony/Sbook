@@ -1,0 +1,12 @@
+{% extends 'note-main.django' %}
+{% block 'title' %}Notes dashboard{% endblock %}
+
+{% block 'left' %}
+{% endblock %}
+
+{% block 'center' %}
+    
+{% endblock %}
+
+{% block 'right' %}
+{% endblock %}

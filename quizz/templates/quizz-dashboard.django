@@ -1,0 +1,178 @@
+{% extends 'quizz-main.django' %}
+
+{% block 'title' %}quizz dashboard{% endblock 'title' %}
+{% block 'left' %}
+
+{% endblock 'left' %}
+{% block 'center' %}
+    {% verbatim %}
+        <div class="w3-margin w3-padding-0">
+            <h2>Hey {{ user.name }}</h2>
+        </div>
+        <hr class="bg-clear" />
+        <div class="w3-container w3-margin-bottom w3-round">
+            <button ng-click="jQuery('#myquizzes-list').slideToggle();" class="w3-button w3-round bg-antimony10">
+                {{ user.name }}'s quizzes
+            </button>
+            <div
+                id="myquizzes-list"
+                class="w3-display-container w3-border-bottom w3-padding w3-margin w3-round bg-a1"
+            >
+                <div ng-show="user_quizzes.length == 0">
+                    <p class="margin-center w3-padding-64 w3-padding-left w3-padding-right fg-antimony w3-opacity">
+                        nothing here yet
+                    </p>
+                </div>
+                <div ng-repeat="quizz in user_quizzes" class="w3-display-container">
+                    <a class="" href="/quizz/quizzes/{{ quizz.id }}/preview">
+                        <img
+                            hover-class="!w3-animate-zoom"
+                            height="100"
+                            class="w3-circle w3-left inline w3-margin-right"
+                            src="/quizz/profiles/quizzes/{{ quizz.id }}.png"
+                        />
+                        <span class="inline">
+                            <h4 class="w3-large">{{ quizz.title }}</h4>
+                            <p class="fg-antimony w3-small">
+                                {{ quizz.description }}
+                            </p>
+                        </span>
+                    </a>
+                    <span class="w3-padding-small w3-display-topright w3-round-large bg-naple">
+                        <a ng-show="quizz.remarking_status == 0" href="/quizz/quizzes/{{ quizz.id }}/attempts/" title="nothing done">
+                            <img src="/static/svg/solid/list-check.svg" class="text-fit" />
+                        </a>
+                        <a ng-show="quizz.remarking_status == 1" href="/quizz/quizzes/{{ quizz.id }}/attempts/" title="some remaining...">
+                            <img src="/static/svg/solid/list-check.svg" class="text-fit" />
+                        </a>
+                        <a ng-show="quizz.remarking_status == 2" href="/quizz/quizzes/{{ quizz.id }}/attempts/" title="nothing here">
+                            <img src="/static/svg/solid/circle-check.svg" class="text-fit" />
+                        </a>
+                    </span>
+                </div>
+                <a href="/quizz/new" view-class="jump" hover-class="shake" class="w3-margin w3-center hexa fa-2xl w3-circle w3-border-0">
+                    <i class="fas fa-plus bg-rainbow w3-button w3-white w3-round-xxlarge w3-margin-bottom">create</i>
+                </a>
+            </div>
+        </div>
+        <div class="w3-container w3-margin-bottom w3-round">
+            <button ng-click="jQuery('#attempted-quizzes-list').slideToggle();" class="w3-button w3-round bg-antimony10">
+                {{ user.name }}'s recent attempts
+            </button>
+    <div
+        id="attempted-quizzes-list"
+        class="w3-display-container w3-border-bottom w3-padding w3-margin w3-round"
+    >
+        <div ng-show="user_attempts.length == 0">
+            <p class="margin-center w3-padding-64 w3-padding-left w3-padding-right fg-antimony w3-opacity">
+                nothing here yet
+            </p>
+        </div>
+        <div>
+            <div ng-repeat="attempt in user_attempts" class="w3-col m3 w3-margin w3-display-container bg-thin bd-naple">
+                <a class="" href="/quizz/quizzes/{{ attempt.quizz.id }}/attempts/{{ attempt.id }}/remarks/" class="w3-row">
+                    <img
+                        hover-class="!w3-animate-zoom"
+                        class="w3-circle inline"
+                        height="100"
+                        style="margin-right: -70px; z-index: 5;"
+                        src="/quizz/profiles/quizzes/{{ attempt.quizz.id }}.png"
+                    />
+                    <img
+                        hover-class="!w3-animate-zoom"
+                        class="w3-circle inline"
+                        height="100"
+                        style="margin-left: -70px; z-index: -5;"
+                        src="/profile/{{ attempt.author.sbook.id }}.png"
+                    />
+                </a>
+                <span class="w3-padding-small w3-display-topright w3-margin-right w3-round-large bg-naple">
+                    <img ng-show="attempt.remarked" src="/static/svg/solid/circle-check.svg" class="text-fit" />
+                    <img ng-hide="attempt.remarked" src="/static/svg/solid/xmark.svg" class="text-fit" />
+                </span>
+            </div>
+            <div id="attempted-quizzes-list" class="w3-row w3-margin w3-round bg-a1">
+                <a
+                    href="/quizz/new"
+                    view-class="jump"
+                    class="w3-text-white bg-rainbow w3-button w3-white w3-round-xxlarge w3-margin w3-center hexa w3-border-0"
+                >
+                    browse quizzes
+                </a>
+            </div>
+        </div>
+        <div class="w3-container w3-margin-bottom w3-round">
+            <button ng-click="jQuery('#quizzes-for-U').slideToggle();" class="w3-button w3-round bg-antimony10">
+                Quizzes for You
+            </button>
+            <div
+                id="quizzes-for-U"
+                class="w3-display-container w3-border-bottom w3-padding w3-margin w3-round bg-a1"
+            >
+            <div ng-repeat="quizz in user_quizzes">
+                <a class="" href="/quizz/quizzes/{{ quizz.id }}/preview">
+                    <img
+                        hover-class="!w3-animate-zoom"
+                        height="100"
+                        class="w3-circle w3-left inline w3-margin-right"
+                        src="/quizz/profiles/quizzes/{{ quizz.id }}.png"
+                    />
+                    <span class="inline">
+                        <h4 class="w3-large">{{ quizz.title }}</h4>
+                        <p class="fg-antimony w3-small">
+                            {{ quizz.description }}
+                        </p>
+                    </span>
+                </a>
+            </div>
+            </div>
+
+            <div id="attempted-quizzes-list" class="w3-row w3-margin w3-round bg-a1">
+                <a href="/quizz/new" view-class="jump" hover-class="shake" class="w3-margin w3-center hexa fa-2xl w3-circle w3-border-0">
+                    view more
+                </a>
+            </div>
+        </div>
+    {% endverbatim %}
+{% endblock 'center' %}
+{% block 'right' %}
+    <script>
+        const app = angular.module('{{ ng_app_name }}', []);
+        app.controller('{{ ng_app_name }}Ctrl', function($scope, $http) {
+            window.$scope = $scope;
+            QuizzUser.get({{ user.model.id }}, $http, function(user) {
+                window.quizz_user = $scope.quizz_user = user;
+                window.user = $scope.user = user.sbook;
+            });
+            $scope.jQuery = window.jQuery = jQuery.noConflict();
+            $scope.user_id = {{ user.model.id }}n;
+            $scope.user_name = "{{ user.model.name }}";
+            $scope.user_quizzes = [];
+            $scope.user_attempts = [];
+            $scope.get_quizzes = function() {
+                $http.get('/quizz/users/{{ user.model.id }}/quizzes.json').then(function(res) {
+                    if(res.status == 200 && res.data.ok) {
+                        $scope.user_quizzes = res.data.quizzes;
+                    } else {
+                        setTimeout($scope.get_quizzes, 1000);
+                    }
+                });
+            }
+            $scope.get_attempts = function() {
+                $http.get('/quizz/users/{{ user.model.id }}/attempts.json').then(function(res) {
+                    if(res.status == 200 && res.data.ok) {
+                        $scope.user_attempts = res.data.attempts;
+                    } else {
+                        setTimeout($scope.get_attempts, 1000);
+                    }
+                });
+            }
+            window.update = function update() {
+                $scope.get_quizzes();
+                $scope.get_attempts();
+            }
+            setInterval(update, 1000*60);
+            update();
+        });
+    </script>
+{% endblock 'right' %}

@@ -1,0 +1,35 @@
+<div class="w3-padding w3-margin fg-antimony bg-antimony10 w3-round-xlarge">
+       {% for room in User.rooms %}
+           <div class="w3-container bg-naple10 bg-antimony10-hover bd-thin bd-naple w3-padding w3-round-large">
+               <div>
+                   <span>
+                       <h4 class="w3-inline bg-antimony10 w3-round-large w3-center margin-center">
+                           {{ room.name }}
+                       </h4>
+                   </span>
+               </div>
+               <div>
+                   <h5 class="w3-bar w3-container w3-center margin-center w3-round-large">Members</h5>
+                   {% for member in room.members %}
+                       <span class="w3-margin-left w3-round-large w3-padding-small w3-border w3-border-grey">
+                           <img class="w3-circle w3-inline" title="{{ member.name }}" alt="{{ member.initials }}" src="{{ member.photo }}" />
+                           <span>{{ member.name }}</span>
+                       </span>
+                   {% endfor %}
+                   <hr />
+               </div>
+               <span>
+                   <a href="/chatty/rooms/{{room.id}}/messages" class="w3-button w3-naple10-hover w3-border w3-border-grey w3-round-large">
+                       Open room
+                   </a>
+               </span>
+           </div>
+           <hr class="bg-antimony" />
+       {% endfor %}
+       <div class="w3-container">
+           <a href="/chatty/rooms/create" class="bg-naple50 w3-button w3-round-large margin-center">
+               Create Room
+           </a>
+       </div>
+    </div>
+</div>

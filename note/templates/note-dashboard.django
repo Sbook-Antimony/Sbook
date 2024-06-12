@@ -1,0 +1,75 @@
+{% extends 'note-main.django' %}
+{% block 'title' %}Notes dashboard{% endblock %}
+
+{% block 'left' %}
+{% endblock %}
+
+{% block 'center' %}
+    <div ng-app="dashboard" ng-controller="dashboardCtrl" class="w3-container w3-round w3-round-medium w3-animate-show">
+        <div class="wave bg-antimony10 w3-container w3-round w3-margin-bottom">
+            <span  onclick="$('#uploadImageDialog')[0].showModal();" class="w3-margin w3-display-container">
+                <img class="w3-circle w3-inline w3-margin w3-image" hover-class="jump hexa" width="100" height="100" src="/profile.png" />
+                <i class="fa-2xl fg-antimony50 w3-display-bottomright w3-margin fas fa-edit"></i>
+            </span>
+            {#srcset="/profile.png 300w, /profile.png 600w, /profile.png 1200w" sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 1200px"#}
+            <span ng-bind="user_name" class="w3-arial w3-xxlarge w3-margin"></span>
+        </div>
+        <div class="w3-container bg-naple10 bd-naple bd-thin w3-margin-bottom w3-round">
+            <button onclick="$('#note-list').slideToggle();" class="w3-margin w3-button w3-round bg-antimony10">
+                your notes
+            </button>
+            <div id="note-list" class="margin-center">
+                {% for note in user.notes %}
+                    <div class="w3-justify w3-container w3-padding-small w3-round">
+                        <img hover-class="!w3-animate-zoom" width="75" class="w3-circle w3-left w3-margin-right" src="/note/notes/{{ note.id }}/profile.png" />
+                        <span class="">
+                            <h4 class="w3-large">{{ note.title }}</h4>
+                            <p class="fg-antimony w3-small">
+                                {{ note.description }}
+                            </p>                                
+                        </span>
+                    </div>
+
+                    <hr class="bg-antimony" />
+                {% empty %}
+                    <p class="margin-center w3-padding-64 fg-antimony w3-opacity">
+                        nothing here yet
+                    </p>
+                {% endfor %}
+            </div>
+            <a href="/note/notes/upload/" view-class="jump" hover-class="shake" class="w3-center hexa fa-2xl w3-button w3-circle w3-margin w3-border-0">
+                <i class="fas fa-plus-circle"></i>
+            </a>
+        </div>
+        <div class="w3-container w3-round bg-naple10 bd-naple bd-thin w3-margin-bottom">
+            <button onclick="$('#bookmark-list').slideToggle();" class="w3-margin w3-button w3-round bg-antimony10">
+                my bookmarks <i class="w3-text-yellow fas fa-star"></i>
+            </button>
+            <div id="bookmark-list" class="margin-center w3-padding-64">
+                {% for bookmark in user.bookmarks %}
+                {% empty %}
+                    <p class="w3-padding-64 fg-antimony w3-opacity">
+                        nothing here yet
+                    </p>
+                {% endfor %}
+            </div>
+        </div>
+
+
+
+
+
+        <script type="text/javascript">
+            const app = angular.module("dashboard", []);
+            app.controller("dashboardCtrl", function($scope) {
+                $scope.user_name = "{{ user_name }}";
+                $scope.uploadNote = function() {
+                    $("#uploadNoteDialog")[0].showModal();
+                }
+            });
+        </script>
+    </div>
+{% endblock %}
+
+{% block 'right' %}
+{% endblock %}
