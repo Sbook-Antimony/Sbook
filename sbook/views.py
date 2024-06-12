@@ -154,7 +154,7 @@ class signup(View):
                 user = User.create_from_login(
                     data.get("name"), data.get("email"), data.get("password")
                 )
-            except UserDoesExistError:
+            except User.DoesNotExistError:
                 return render(req, "signup.django", {"errors": "User exists"})
             else:
                 req.session["user-id"] = user.id

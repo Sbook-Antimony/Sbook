@@ -5,7 +5,7 @@ from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageEnhance
 from PIL import ImageFont
-
+from django.core.files import File
 eqs = [
     lambda x, y: x % y,
     lambda x, y: y % x,
@@ -98,4 +98,4 @@ def get_random():
 
 
 def get_random_file():
-    return open(get_random())
+    return File(open(get_random(), 'rb'))
