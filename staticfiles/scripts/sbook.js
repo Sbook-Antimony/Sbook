@@ -65,7 +65,36 @@ class User extends ModelInter {
         };
     }
 }
-
+class QuizzUser extends ModelInter {
+    static from_id_async(id) {
+        return new Promise(function(resolve) {
+            $.ajax({
+                dataType: "json",
+                url: `/quizz/users/${id}.json`,
+                data: null,
+                success: function(data) {
+                    if(data.ok) {
+                        resolve(new QuizzUser(data.user));
+                    } else {
+                        resolve(false);
+                    }
+                }
+            });
+        });
+    }
+    static get(id, $http, callback) {
+        $http.get(`/quizz/users/${id}.json`).then(function(res) {
+            let data = res.data;
+            if(data.ok) {
+                callback(new QuizzUser(data.user));
+            }
+        });
+    }
+    constructor(data) {
+        super(data);
+        this.sbook = new User(data.sbook);
+    }
+}
 function flashMessage(stat, text) {
     jQuery.toast({
         text : text,

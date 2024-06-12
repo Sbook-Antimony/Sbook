@@ -53,18 +53,23 @@ class QuizzUser(sbook.accounts.ModelInder):
 
     @functools.cached_property
     @annotate
-    def quizzes(self: 'QuizzUser') -> Cast('Tuple[Quizz]'):
+    def quizzes(self: 'QuizzUser') -> Cast(Tuple):
         return map(Quizz, self.model.quizzes.all())
 
     @functools.cached_property
     @annotate
-    def attempts(self: 'QuizzUser') -> Cast('Tuple[QuizzAttempt]'):
+    def attempts(self: 'QuizzUser') -> Cast(Tuple):
         return Tuple(map(QuizzAttempt, self.model.quizz_attempts.all()))
 
     @functools.cached_property
     def js(self: 'QuizzUser') -> dict[str]:
-        return self.sbookAccount.js | {
-            "user_id": self.model.id,
+        return {
+            "attempts": [x.model.id for x in self.attempts],
+            "quizzes": [x.model.id for x in self.quizzes],
+            "starred_quizzes": [
+                x.id for x in self.model.starred_quizzes.all()
+            ],
+            "sbook": self.sbook.js,
         }
 
 
@@ -106,7 +111,7 @@ class Quizz(sbook.accounts.ModelInder):
     @functools.cached_property
     @annotate
     def authors(self: 'Quizz') -> Tuple:
-        return map(QuizzUser, self.model.authors.all())
+        return Tuple(map(QuizzUser, self.model.authors.all()))
 
     @functools.cached_property
     def short_description(self):
@@ -116,7 +121,7 @@ class Quizz(sbook.accounts.ModelInder):
     def js(self):
         return {
             "questions": list(map(lambda q: q.id, self.questions)),
-            "authors": [author.id for author in self.authors],
+            "authors": list(map(lambda a: a.model.id, self.authors)),
             "remarking_status": self.attempts_remark_status,
             "prolog": self.model.prolog,
             "epilog": self.model.epilog,
@@ -124,7 +129,7 @@ class Quizz(sbook.accounts.ModelInder):
             "num_attempts": self.num_attempts,
             "num_attempts_remarked": self.num_attempts_remarked,
             "num_attempts_unremarked": self.num_attempts_unremarked,
-            "id": self.id,
+            "id": self.model.id,
             "stars": self.model.stars,
             "description": self.model.description,
         }
@@ -133,7 +138,9 @@ class Quizz(sbook.accounts.ModelInder):
     def questions(self):
         return Tuple(
             Question.from_dict(data, i)
-            for i, data in enumerate(self.data.get("questions") or [])
+            for i, data in enumerate(
+                self.model.questions.get("questions") or []
+            )
         )
 
     @functools.cached_property
@@ -226,8 +233,8 @@ class QuizzAttempt(sbook.accounts.ModelInder):
     def js(self: 'QuizzAttempt'):
         return {
             "id": self.model.id,
-            "quizz": self.quizz.id,
-            "author": self.author.id,
+            "quizz": self.quizz.js,
+            "author": self.author.js,
             "answers": self.model.answers,
             "remarks": self.model.remarks,
             "score": self.model.score,

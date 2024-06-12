@@ -117,8 +117,13 @@ class ModelInder:
         self.profile.save(buffer, format="PNG")
         return buffer.getvalue()
 
+    @functools.cached_property
     def js(self):
         raise NotImplementedError()
+
+    @property
+    def id(self):
+        return self.model.id
 
 
 class User(ModelInder):

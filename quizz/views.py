@@ -18,7 +18,6 @@ def do_index(req, user):
             "quizz-dashboard.django",
             {
                 "user": user,
-                "user_name": user.sbookAccount.name,
                 "ng_app_name": "qdashboard",
             },
         )
@@ -207,3 +206,24 @@ class profiles:
             return HttpResponseNotFound()
         else:
             return HttpResponse(quizz.profile_asBytes)
+
+
+@annotate
+def do_user_json(req, userid: int) -> Cast(JsonResponse):
+    try:
+        user = QuizzUser.from_id(userid)
+    except QuizzUser.DoesNotExistError:
+        return {
+            'ok': False,
+            'error': 404,
+        }
+    except Exception:
+        return {
+            'ok': False,
+            'error': 0,
+        }
+    else:
+        return {
+            'ok': True,
+            'user': user.js,
+        }

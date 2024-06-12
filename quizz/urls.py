@@ -9,6 +9,7 @@ urlpatterns = [
     path("profiles/quizzes/<int:quizzid>.png", views.profiles.quizzes),
     path("users/<int:userid>/quizzes.json", views.do_quizzes_json),
     path("users/<int:userid>/attempts.json", views.do_user_attempts_json),
+    path("users/<int:userid>.json", views.do_user_json),
     path("quizzes/<int:quizzid>/preview/", views.preview_quizz),
     path("quizzes/<int:quizzid>/attempt/", views.attempt_quizz),
     path("quizzes/<int:quizzid>/attempts/", views.view_quizz_attempts),
