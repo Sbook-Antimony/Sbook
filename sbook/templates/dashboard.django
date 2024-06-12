@@ -106,7 +106,7 @@
                 </span>
                 <a class="w3-arial w3-xxlarge w3-margin">{{ user.name }}</span>
             </div>
-            <p ng-bind="user.bio" class="w3-container"></p>
+            <p ng-bind="user.bio" class="w3-medium w3-justify w3-container"></p>
             <p class="w3-container margin-center w3-row">
                 <a href="/note/" class="w3-red w3-col m5 w3-round w3-padding-32 w3-margin w3-large">
                     Notes
@@ -123,8 +123,8 @@
             </p>
         </div>
         <div id="profile-view" hidden>
-            <a href="#" class="w3-button w3-pale-blue w3-round">
-
+            <a href="#" class="w3-left-align w3-left w3-button w3-text-pale-blue w3-round">
+                <i class="fa fa-arrow-left fa-xl" ></i>
             </a>
             <div class="bg-antimony10 w3-container w3-round w3-margin-bottom">
                 <span  onclick="jQuery('#uploadImageDialog').showModal()" class="w3-margin w3-display-container">
