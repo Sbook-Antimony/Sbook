@@ -21,7 +21,7 @@ class NoteUser(models.Model):
     )
 
     def __str__(self):
-        return f"{self.id}:{self.sbookAccount}:{self.stars}"
+        return f"{self.id}:{self.sbookAccount!s}"
 
 
 class Bookmark(models.Model):

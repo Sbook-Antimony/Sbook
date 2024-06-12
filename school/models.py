@@ -5,6 +5,17 @@ from django.db import models
 from mdeditor.fields import MDTextField
 
 
+class UserRole(models.Model):
+    name = models.CharField(max_length=16)
+    profile = models.ImageField(
+        upload_to='profiles/user-roles/',
+        default=profile_images.get_random,
+    )
+
+    def __str__(self):
+        return f"UserRole({self.id}: {self.name})"
+
+
 class Classroom(models.Model):
     name = models.CharField(max_length=64)
     school = models.ForeignKey(
@@ -48,7 +59,7 @@ class Classroom(models.Model):
     code_of_conduct = MDTextField()
 
     def __str__(self):
-        return f"{self.id}:{self.name}"
+        return f" Classroom({self.id}:{self.name})"
 
 
 class School(models.Model):
@@ -72,3 +83,22 @@ class School(models.Model):
         related_name="admins_schools",
     )
     code_of_conduct = MDTextField()
+
+    def __str__(self):
+        return f"School({self.name!s})"
+
+
+class SchoolUser(models.Model):
+    sbook = models.ForeignKey(
+        sbook.User,
+        related_name='schoolAccount',
+        on_delete=models.CASCADE,
+    )
+    role = models.ForeignKey(
+        UserRole,
+        on_delete=models.CASCADE,
+        related_name='school_users'
+    )
+
+    def __str__(self):
+        return f"SchoolUser({self.sbook!s})"

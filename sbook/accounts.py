@@ -94,6 +94,15 @@ class ModelInder:
         else:
             return cls(found)
 
+    @classmethod
+    def exists(cls, **kw):
+        try:
+            cls.model.objects.get(**kw)
+        except cls.model.DoesNotExist:
+            return False
+        else:
+            return True
+
     @staticmethod
     def all(cls):
         return map(cls, cls.model.objects.all())

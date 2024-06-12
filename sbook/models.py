@@ -64,7 +64,7 @@ class Course(models.Model):
     )
 
     def __str__(self):
-        return f"{self.id}:{self.name}"
+        return f"Course({self.id}:{self.name})"
 
 
 class Topic(models.Model):
@@ -80,4 +80,4 @@ class Topic(models.Model):
     )
 
     def __str__(self):
-        return f"{self.id}:{self.name}"
+        return f"Topic({self.id}:{self.name})"

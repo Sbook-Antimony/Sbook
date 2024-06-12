@@ -27,6 +27,10 @@ from django.urls import path
 urlpatterns = [
     path("mdeditor/", include("mdeditor.urls")),
     path("admin/", admin.site.urls),
+    path("note/", include("note.urls")),
+    path("school/", include("school.urls")),
+    path("quizz/", include("quizz.urls")),
+
     path("markdown/", views.do_markdown),
     path("csrf/", views.do_csrf),
     path("", views.do_index),
@@ -39,9 +43,6 @@ urlpatterns = [
     path("settings/profile/submit/", views.do_update_profile),
     path("<scope>/u-email-check.json", views.u_email_check_json),
     path("<scope>/u-password-check.json", views.u_password_check_json),
-    path("note/", include("note.urls")),
-    path("chatty/", include("chatty.urls")),
-    path("quizz/", include("quizz.urls")),
 
     path("users/<int:userid>.json", views.do_user_json),
 ]
