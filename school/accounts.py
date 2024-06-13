@@ -6,7 +6,6 @@ import textwrap
 from django.http import HttpRequest
 from django.http import HttpResponseRedirect
 
-import markdown
 import sbook.accounts
 import sbook.models
 
