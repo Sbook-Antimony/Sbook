@@ -111,8 +111,28 @@ function flashMessage(stat, text) {
 
 
 function renderMarkdown() {
-    for(let elt of document.getElementsByClassName('unrenderred-markdown')) {
-        let md = elt.innerHTML;
-        $http
+    for(let elt of document.getElementsByClassName('raw-markdown')) {
+        if(!elt.innerHTML) {
+            continue;
+        }
+        jQuery.ajax({
+            url: '/markdown/',
+            success: function(data, d, a) {
+                console.log(data);
+                if(data.ok) {
+                    elt.innerHTML = data.html;
+                    elt.classList.remove('raw-markdown');
+                }
+            },
+            type: 'GET',
+            data: {
+                md: btoa(elt.innerHTML),
+            },
+            dataType: 'JSON',
+        });
     }
 }
+
+jQuery(function() {
+    //setInterval(renderMarkdown, 1000);
+});

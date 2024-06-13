@@ -15,67 +15,69 @@ for(let element of  jQuery("[hover-class]")) {
 for(let element of  jQuery("[css-transition]")) {
     element.style.transition = element.getAttribute("css-transition");
 };
+$(function addViewClasses() {
+    for(let element of jQuery("[view-class]")) {
+        let margin = "10";
+        (new IntersectionObserver(
+            (entries, observer) => {
+                entries.forEach((entry) => {
+                    // Each entry describes an intersection change for one observed
+                    // target element:
+                    //   entry.boundingClientRect
+                    //   entry.intersectionRatio
+                    //   entry.intersectionRect
+                    //   entry.isIntersecting
+                    //   entry.rootBounds
+                    //   entry.target
+                    //   entry.time
+                    let cls = element.getAttribute("view-class");
 
-for(let element of jQuery("[view-class]")) {
-    let margin = "10";
-    (new IntersectionObserver(
-        (entries, observer) => {
-            entries.forEach((entry) => {
-                // Each entry describes an intersection change for one observed
-                // target element:
-                //   entry.boundingClientRect
-                //   entry.intersectionRatio
-                //   entry.intersectionRect
-                //   entry.isIntersecting
-                //   entry.rootBounds
-                //   entry.target
-                //   entry.time
-                let cls = element.getAttribute("view-class");
-
-                if(!cls) return;
+                    if(!cls) return;
 
 
-                cls = cls.split(" ");
-                if(cls[0].endsWith(":")) {
-                    [margin, ...cls] = cls;
-                    margin = margin.slice(0,-1);
-                }
-                let ncls = cls.filter((c) => c.startsWith("!"));
-                cls = cls.filter((c) => !c.startsWith("!"));
-                for(var i = 0; i < ncls.length; i++) ncls[i] = ncls[i].slice(1);
-                
-                                
-                try {
-                    if(entry.isIntersecting) {
-                        //console.log("added", ...element.getAttribute("view-class").split(" "));
-                        element.classList.add(
-                            ...cls
-                        );
-                        element.classList.remove(
-                            ...ncls
-                        );
-                    } else {
-                        //console.log("removed", ...element.getAttribute("view-class").split(" "));
-                        element.classList.remove(
-                            ...cls
-                        );
-                        element.classList.add(
-                            ...ncls
-                        );
+                    cls = cls.split(" ");
+                    if(cls[0].endsWith(":")) {
+                        [margin, ...cls] = cls;
+                        margin = margin.slice(0,-1);
                     }
-                } catch (e) {
-                
-                }
-                
-            });
-        },
-        {
-            root: null,
-            rootMargin: margin+"px",
-            threshold: [1.0, 0.0],
-        },
-    )).observe(element);
-};
+                    let ncls = cls.filter((c) => c.startsWith("!"));
+                    cls = cls.filter((c) => !c.startsWith("!"));
+                    for(var i = 0; i < ncls.length; i++) ncls[i] = ncls[i].slice(1);
+
+
+                    try {
+                        if(entry.isIntersecting) {
+                            //console.log("added", ...element.getAttribute("view-class").split(" "));
+                            element.classList.add(
+                                ...cls
+                            );
+                            element.classList.remove(
+                                ...ncls
+                            );
+                        } else {
+                            //console.log("removed", ...element.getAttribute("view-class").split(" "));
+                            element.classList.remove(
+                                ...cls
+                            );
+                            element.classList.add(
+                                ...ncls
+                            );
+                        }
+                    } catch (e) {
+
+                    }
+
+                });
+            },
+            {
+                root: null,
+                rootMargin: margin+"px",
+                threshold: [1.0, 0.0],
+            },
+        )).observe(element);
+    };
+});
+
 
 
 function markdown(text) {

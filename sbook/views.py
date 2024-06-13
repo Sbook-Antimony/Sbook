@@ -12,10 +12,11 @@ from pathlib import Path
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from sbook.accounts import *
-import mimetypes
+import base64
 import markdown
 from . import forms
 from pyoload import *
+
 
 File = lambda url: FileResponse(open(url, "rb"), filename=url.as_uri())
 
@@ -185,12 +186,19 @@ def do_userid_profile(req, userid):
 
 
 @check_login
-def do_markdown(req):
+def do_markdown(req, user):
     try:
         data = req.GET.get("md")
-        return HttpResponse(markdown.markdown(data))
+        data = base64.b64decode(data).decode('utf-8')
+        return JsonResponse({
+            'html': markdown.markdown(data),
+            'ok': True,
+        })
     except Exception:
-        return HttpResponse("<em>Could not be renderred</em>")
+        return JsonResponse({
+            'html': '<em>Could not be renderred</em>',
+            'ok': False,
+        })
 
 
 @annotate
