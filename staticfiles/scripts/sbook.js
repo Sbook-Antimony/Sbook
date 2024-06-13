@@ -134,5 +134,5 @@ function renderMarkdown() {
 }
 
 jQuery(function() {
-    //setInterval(renderMarkdown, 1000);
+    setInterval(renderMarkdown, 1000);
 });

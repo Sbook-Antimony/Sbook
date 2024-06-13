@@ -28,15 +28,15 @@
                         <img
                             view-class="w3-animate-zoom jump hexa"
                             height="100"
-                            class="w3-circle w3-left inline w3-margin-right"
+                            class="w3-circle inline w3-margin-right"
                             src="/quizz/profiles/quizzes/{{ quizz.id }}.png"
                         />
-                        <span class="inline">
+                        <div class="inline">
                             <h4 class="w3-large">{{ quizz.title }}</h4>
-                            <p class="fg-antimony w3-small raw-markdown">
+                            <p class="fg-antimony w3-small w3-justify w3-block raw-markdown">
                                 {{ quizz.description }}
                             </p>
-                        </span>
+                        </div>
                     </a>
                     <span class="w3-padding-small w3-display-topright w3-round-large bg-naple">
                         <a ng-show="quizz.remarking_status == 0" href="/quizz/quizzes/{{ quizz.id }}/attempts/" title="nothing done">

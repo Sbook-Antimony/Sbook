@@ -190,8 +190,9 @@ def do_markdown(req, user):
     try:
         data = req.GET.get("md")
         data = base64.b64decode(data).decode('utf-8')
+        data = data.strip().strip('\n').strip()
         return JsonResponse({
-            'html': markdown.markdown(data),
+            'html': sbook.markdown(data),
             'ok': True,
         })
     except Exception:
