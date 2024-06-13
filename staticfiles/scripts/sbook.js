@@ -111,5 +111,8 @@ function flashMessage(stat, text) {
 
 
 function renderMarkdown() {
-    for(let )
+    for(let elt of document.getElementsByClassName('unrenderred-markdown')) {
+        let md = elt.innerHTML;
+        $http
+    }
 }
