@@ -29,7 +29,7 @@
     </head>
 
     <header  role="navigation" class="w3-bar w3-top w3-padding-small">
-        <a href="/note/" class="w3-circle w3-bar-item bg-clear">
+        <a href="/school/" class="w3-circle w3-bar-item bg-clear">
             <i class="fas fa-dashboard fa-2xl"></i>
         </a>
         <img
@@ -62,4 +62,10 @@
         <script src="/static/scripts/script.js"></script>
         <script src="/static/scripts/response.js"></script>
     </body>
+    <footer>
+        {% block 'footer' %}
+
+        {% endblock %}
+        {% include 'pango.djhtml' %}
+    </footer>
 </html>

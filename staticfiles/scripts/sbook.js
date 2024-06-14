@@ -1,6 +1,7 @@
 class ModelInter {
     constructor(data) {
         this.data = data;
+        for(let key in data) this[key] = data[key];
     }
 }
 class User extends ModelInter {
@@ -30,10 +31,7 @@ class User extends ModelInter {
     }
     constructor(data) {
         super(data);
-        this.name =  data.name;
         this.profile = `/users/${this.data.id}/profile.png`;
-        this.bio = data.bio;
-        this.bio_html = data.bio_html;
     }
     modified() {
         return (
@@ -41,7 +39,7 @@ class User extends ModelInter {
             this.bio != this.data.bio
         )
     }
-    save() {
+    save(callback) {
         let user = this;
         jQuery.ajax({
             url: '/settings/profile/submit/',
@@ -49,6 +47,7 @@ class User extends ModelInter {
                 flashMessage("green", "Updated profile succesfuly");
                 user.data.bio = user.bio;
                 user.data.name = user.name;
+                if(callback) callback();
             },
             error: function(zer) {
                 flashMessage("red" , "Could not save question");
@@ -68,7 +67,7 @@ class User extends ModelInter {
 class QuizzUser extends ModelInter {
     static from_id_async(id) {
         return new Promise(function(resolve) {
-            $.ajax({
+            jQuery.ajax({
                 dataType: "json",
                 url: `/quizz/users/${id}.json`,
                 data: null,
@@ -95,6 +94,117 @@ class QuizzUser extends ModelInter {
         this.sbook = new User(data.sbook);
     }
 }
+
+
+
+
+
+
+class Option {
+    constructor(text="", label="") {
+        this.text = text;
+        this.label = label;
+    }
+}
+class Question extends ModelInter {
+    constructor(id, {question, options}) {
+        let opts = {};
+        if(options) for(let [k, v] of options) opts[k] = v;
+        super({question, id, options: opts});
+    }
+    serialize() {
+        let obj = {
+            question: this.question,
+            options: {},
+        };
+        for(let i = 0; i < this.options.length; i++) {
+            obj.options[
+                String.fromCodePoint(i+'a'.charCodeAt(0)).toString()
+            ] = this.options[i].text;
+        }
+        return obj;
+    }
+}
+class Quizz extends ModelInter {
+    static from_id_async(id) {
+        return new Promise(function(resolve) {
+            $.ajax({
+                dataType: "json",
+                url: `/quizz/quizzes/${id}.json`,
+                data: null,
+                success: function(data) {
+                    if(data.ok) {
+                        resolve(new Quizz(data.quizz));
+                    } else {
+                        resolve(false);
+                    }
+                }
+            });
+        });
+    }
+    static get(id, $http, callback) {
+        $http.get(`/quizz/quizzes/${id}.json`).then(function(res) {
+            let data = res.data;
+            if(data.ok) {
+                callback(new Quizz(data.quizz));
+            }
+        });
+    }
+    static all($http, callback) {
+        $http.get(`/quizz/quizzes.json`).then(function(res) {
+            let data = res.data;
+            if(data.ok) {
+                let quizzes = [];
+                for(let qd of data.quizzes) {
+                    quizzes.push(new Quizz(qd));
+                }
+                callback(quizzes);
+            }
+        });
+    }
+    constructor(data) {
+        super(data);
+        let i = 0;
+        this.questions = data.questions.map((q) => new Question(i++ ,q));
+        this.authors = data.authors.map((q) => new QuizzUser(q));
+    }
+    modified() {
+        return (
+            this.name != this.data.name ||
+            this.bio != this.data.bio
+        )
+    }
+    save(callback) {
+        let user = this;
+        jQuery.ajax({
+            url: '/settings/profile/submit/',
+            success: function(data) {
+                flashMessage("green", "Updated profile succesfuly");
+                user.data.bio = user.bio;
+                user.data.name = user.name;
+                if(callback) callback();
+            },
+            error: function(zer) {
+                flashMessage("red" , "Could not save question");
+            },
+            type: 'GET',
+            data: this.serialize(),
+            dataType: 'JSON',
+        });
+    }
+    serialize() {
+        return {
+            bio: this.bio,
+            name: this.name,
+        };
+    }
+}
+
+
+
+
+
+
 function flashMessage(stat, text) {
     jQuery.toast({
         text : text,
@@ -110,14 +220,14 @@ function flashMessage(stat, text) {
 }
 
 
-function renderMarkdown() {
+setInterval(function() {
     for(let elt of document.getElementsByClassName('raw-markdown')) {
         if(!elt.innerHTML) {
             continue;
         }
         jQuery.ajax({
             url: '/markdown/',
-            success: function(data, d, a) {
+            success: function(data) {
                 console.log(data);
                 if(data.ok) {
                     elt.innerHTML = data.html;
@@ -126,13 +236,10 @@ function renderMarkdown() {
             },
             type: 'GET',
             data: {
-                md: btoa(elt.innerHTML),
+                md: btoa(elt.innerHTML.trim()),
             },
             dataType: 'JSON',
         });
     }
-}
+}, 2000);
 
-jQuery(function() {
-    setInterval(renderMarkdown, 1000);
-});

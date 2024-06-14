@@ -1,0 +1,28 @@
+{% extends 'main.django' %}
+{% load markdown %}
+
+{% block 'title' %}{{ quizz.title }} {% endblock 'title' %}
+{% block 'left' %}
+    <img src="/profile/{{ id }}.png" class="w3-circle" alt="">
+{% endblock 'left' %}
+{% block 'center' %}
+    <div>
+        <div class="padding-64">
+            <p class="backens-naple w3-round w3-xlarge" ng-bind="user.name"></p>
+        </div>
+        <p
+            ng-bind="user.bio"
+            class="raw-markdown w3-container w3-round"
+        ></p>
+    </div>
+{% endblock 'center' %}
+{% block 'right' %}
+    <script>
+        const app = angular.module('{{ ng_app_name }}', []);
+        app.controller('{{ ng_app_name }}Ctrl', function($scope, $http) {
+            User.get({{ id }}, $http, function(user) {
+                window.user = $scope.user = user;
+            });
+        });
+    </script>
+{% endblock 'right' %}

@@ -21,7 +21,7 @@
                 </div>
             {% endverbatim %}
             <div id="remarks" class="w3-justify w3-container f-aclonica">
-                {{ attempt.model.remark | markdown }}
+                {{ attempt.model.remarks | markdown }}d
             </div>
         </div>
     {% else %}

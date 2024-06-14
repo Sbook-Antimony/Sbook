@@ -1,7 +1,7 @@
-from django.urls import include
 from django.urls import path
 
 from . import views
+from . import short_notes
 
 urlpatterns = [
     path("", views.do_index),
@@ -13,4 +13,6 @@ urlpatterns = [
     # path('my-notes/get-notes.json', views.do_mynotes.do_get_json),
     # path('my-notes/upload', views.do_mynotes.do_upload),
     # path('my-notes/<noteName>/icon.png', views.do_mynotes.do_get_icon),
+    path('short-notes/side-bar', short_notes.do_sidebar),
+    path('short-notes/<int:snid>.json', short_notes.do_json),
 ]

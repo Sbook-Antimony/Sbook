@@ -1,0 +1,102 @@
+{% verbatim %}
+    <div id="pango-container">
+        <style>
+            #pango-btn
+            {
+                z-index: 20;
+                width: 50px;
+                height: 50px;
+                position: fixed;
+                bottom: 10px;
+                right: 10px;
+                border-radius: 50%;
+                background-image:
+                    url('/media/pango/pango-computer.png'),
+                    linear-gradient(to right, #aa999922, #aa999955);
+                background-size: 50px;
+                background-position: center;
+                background-repeat: no-repeat;
+                backdrop-filter: blur(5px);
+            }
+            #pango-chat
+            {
+                max-height: 500px;
+                overflow-y: auto;
+                border: 0.5px lightgrey solid;
+                width: 100%;
+                max-width: 500px;
+                position: fixed;
+                bottom: 50px;
+                right: 50px;
+                border-radius: 25px;
+                background-color: white;
+            }
+        </style>
+        <div id="pango-btn" class="w3-button" onclick="Pango.togglePanel()">
+        </div>
+        <div id="pango-chat">
+            <div id="pango-chats">
+            </div>
+            <form entry onsubmit="Pango.sendMsg(event)">
+                <input placeholder="enter your chat here." id="pango-entry" type="text" class="w3-input inline" style="width: 87%;" />
+                <input
+                    type="image"
+                    src="/static/svg/solid/paper-plane.svg"
+                    alt="send"
+                    class="w3-round-xlarge w3-large w3-button inline"
+                    style="width: 10%;"
+                >
+                </input>
+            </form>
+        </div>
+        <script>
+            jQuery(function() {
+                jQuery("#pango-chat").slideUp();
+            });
+            class Pango {
+                static chat({text, author}) {
+                    let container = document.createElement("div");
+                    container.classList.add(..."w3-container margin-0".split(" "));
+                    let p = document.createElement("p");
+                    p.innerHTML = text;
+                    container.appendChild(p);
+                    p.classList.add(..."margin-0 padding-5 w3-padding-8 w3-round-xlarge raw-markdown".split(" "));
+                    if(author == "user") p.classList.add(..."w3-left".split(" "))
+                    else p.classList.add(..."w3-right w3-pale-blue".split(" "));
+                    document.getElementById("pango-chats").appendChild(container);
+                }
+                static togglePanel() {
+                    jQuery("#pango-chat").slideToggle();
+                }
+                static sendMsg(e) {
+                    if(e) e.preventDefault();
+                    let entry = document.getElementById("pango-entry");
+                    let text = entry.value;
+                    if(!text) return;
+                    console.log(text);
+                    Pango.chat({
+                        text,
+                        author: 'user',
+                    });
+                    jQuery.ajax({
+                        dataType: "json",
+                        url: "/pango/query/",
+                        data: {
+                            q: text,
+                        },
+                        success: function(data) {
+                            if(data.ok) {
+                                Pango.chat({
+                                    text: data.response,
+                                    author: 'pango',
+                                });
+                                entry.value = "";
+                            }
+                        }
+                    });
+                }
+            }
+        </script>
+    </div>
+
+{% endverbatim %}

@@ -25,7 +25,7 @@ class Tuple(tuple):
         return len(self)
 
 
-class QuizzUser(sbook.accounts.ModelInder):
+class QuizzUser(sbook.accounts.ModelInter):
     class DoesNotExistError(ValueError):
         pass
 
@@ -99,7 +99,7 @@ class MCQQuestion(Question):
         return json.dumps(self.js)
 
 
-class Quizz(sbook.accounts.ModelInder):
+class Quizz(sbook.accounts.ModelInter):
     class DoesNotExistError(ValueError):
         pass
 
@@ -120,8 +120,9 @@ class Quizz(sbook.accounts.ModelInder):
     @property
     def js(self):
         return {
-            "questions": list(map(lambda q: q.id, self.questions)),
-            "authors": list(map(lambda a: a.model.id, self.authors)),
+            "attempts": tuple(map(lambda a: a.id, self.attempts)),
+            "questions": tuple(map(lambda q: q.js, self.questions)),
+            "authors": list(map(lambda a: a.js, self.authors)),
             "remarking_status": self.attempts_remark_status,
             "prolog": self.model.prolog,
             "epilog": self.model.epilog,
@@ -136,12 +137,15 @@ class Quizz(sbook.accounts.ModelInder):
 
     @functools.cached_property
     def questions(self):
-        return Tuple(
-            Question.from_dict(data, i)
-            for i, data in enumerate(
-                self.model.questions.get("questions") or []
+        if isinstance(self.model.questions, list):
+            return Tuple(
+                Question.from_dict(data, i)
+                for i, data in enumerate(
+                    self.model.questions or []
+                )
             )
-        )
+        else:
+            return []
 
     @functools.cached_property
     def questions_js(self):
@@ -183,6 +187,26 @@ class Quizz(sbook.accounts.ModelInder):
             """Thanks for answering, stydy well!""",
         )
 
+    @functools.cache
+    def accessible_by(self, user):
+        id = user.id
+        if not self.model.is_private:
+            return True
+        elif id in map(lambda u: u.id, self.authors):
+            return True
+        else:
+            for clsrm in self.model.classrooms.all():
+                members = (
+                    tuple(clsrm.teachers.all())
+                    + tuple(clsrm.students.all())
+                    + tuple(clsrm.admins.all())
+                )
+                for usr in members:
+                    if usr.id == id:
+                        return True
+                else:
+                    return False
+
 
 class QuestionAttempt:
     @classmethod
@@ -205,7 +229,7 @@ class MCQQuestionAttempt(QuestionAttempt):
         self.question = question
 
 
-class QuizzAttempt(sbook.accounts.ModelInder):
+class QuizzAttempt(sbook.accounts.ModelInter):
     class DoesNotExistError(ValueError):
         pass
 
@@ -271,11 +295,11 @@ def check_login(func, redirect=True):
         if "user-id" in req.session:
             try:
                 user = QuizzUser.from_id(req.session.get("user-id", -1))
-            except QuizzUserDoesNotExistError:
+            except sbook.accounts.User.DoesNotExistError:
                 if not redirect:
                     return func(user=None, *args, **kw)
                 return HttpResponseRedirect("/signin/")
-            except QuizzUserDoesNotExistError:
+            except QuizzUser.DoesNotExistError:
                 user = QuizzUser.create_from_sbook(
                     sbook.accounts.User.from_id(req.session.get("user-id")),
                 )

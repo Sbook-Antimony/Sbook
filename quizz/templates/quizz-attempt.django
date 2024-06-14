@@ -3,9 +3,6 @@
 
 {% block 'title' %}{{ quizz.title }} {% endblock 'title' %}
 {% block 'left' %}
-
-{% endblock 'left' %}
-{% block 'center' %}
     <style>
         input.question-option[type='radio'] {
             appearance: none;
@@ -31,30 +28,46 @@
             box-shadow: 0 0 5px #999;
         }
     </style>
-    {% if quizz.prolog %}
-        <div id="instructions" class="w3-justify f-open-sans w3-large w3-margin w3-padding-0">
-            {{ quizz.prolog | markdown }}
-        </div>
-    {% endif %}
-    {% if quizz.instructions %}
-        <div class="w3-container round5-eq-contents w3-padding-0 w3-margin">
-            <h1 class="bg-a1 w3-left-align f-algabumo">Instructions:</h1>
-            <div id="instructions" class="w3-pale-red f-open-sans w3-large w3-padding-0">
-                {{ quizz.instructions | markdown }}
-            </div>
-        </div>
-    {% endif %}
-    <form class="w3-justify" action="/quizz/quizzes/{{ quizz.id }}/submit/" method="post" accept-charset="utf-8">
+{% endblock 'left' %}
+{% block 'center' %}
+    <form
+        class="w3-justify"
+        action="/quizz/quizzes/{{ quizz.id }}/submit/"
+        method="post"
+        accept-charset="utf-8"
+    >
         {% csrf_token %}
-        {% for question in quizz.questions %}
-            <div class="question w3-round w3-margin w3-card w3-padding">
+        {% verbatim %}
+            <div
+                ng-show="quizz.prolog"
+                ng-bind="quizz.prolog"
+                id="instructions"
+                class="raw-markdown w3-justify f-open-sans w3-large w3-margin w3-padding-0"
+            ></div>
+            <div
+                ng-show="quizz.instructions"
+                class="w3-container round-n-5 w3-padding-0 w3-margin-bottom"
+            >
+                <h1 class="bg-a1 w3-left-align f-algabumo">Instructions:</h1>
+                <div
+                    id="instructions"
+                    ng-bind="quizz.instructions"
+                    class="raw-markdown w3-pale-red f-open-sans w3-large w3-padding-0"
+                ></div>
+            </div>
+            <div
+                ng-repeat="question in quizz.questions"
+                class="question w3-round w3-margin w3-card w3-padding"
+            >
                 <p class="f-acloinca">{{ question.question }}</p>
-                {% for name, val in question.options %}
-                    <span class="w3-justify block w3-margin f-aclonica">
+                    <span
+                        ng-repeat="(name, val) in question.options"
+                        class="w3-justify block w3-margin f-aclonica"
+                    >
                         <label class="block">
                             <input
                                 type="radio"
-                                ng-model="anwsers[{{ question.id }}]"
+                                ng-model="anwsers[question.id]"
                                 ng-checked="answerChecked($event)"
                                 name="q{{ question.id }}"
                                 value="{{ name }}"
@@ -65,8 +78,10 @@
                             </span>
                         </label>
                     </span>
-                {% empty %}
-                    <div class="w3-padding-64 fg-antimony50">
+                    <div
+                        ng-show="!question.options"
+                        class="w3-padding-64 fg-antimony50"
+                    >
                         <img
                             src="/static/svg/solid/file-circle-question.svg"
                             class="w3-opacity-max w3-left inline"
@@ -76,51 +91,60 @@
                             No option.
                         </p>
                     </div>
-                {% endfor %}
-            </div>
-        {% empty %}
-            <div class="w3-padding-64 bg-antimony50">
-                <img src="/static/svg/solid/file-circle-question.svg" class="inline w fg-antimony50 ">
+                </div>
+            <div
+                ng-show="!quizz.questions"
+                class="w3-padding-64 bg-antimony50"
+            >
+                <img src="/media/pango/pango-computer.png" class="inline w fg-antimony50 ">
                 <p class="w3-padding-64 inline">
                     We searched but found no question.
                 </p>
             </div>
-        {% endfor %}
-        <div class="w3-container w3-center">
-            <button
-                type="submit"
-                class="w3-large w3-margin w3-padding w3-text-white w3-round-xxlarge w3-red w3-button"
-                id="submit-button"
-                css-transition="1s"
-            >
-                Submit
-                {{ "solid chevron-right text-fit w3-text-white" | icon }}
-            </button>
-        </div>
-        {% if quizz.epilog %}
-            <div id="instructions" class="f-open-sans w3-large w3-margin w3-padding-0">
-                {{ quizz.epilog | markdown }}
+            <div class="w3-container w3-center">
+                <button
+                    type="submit"
+                    class="w3-large w3-margin w3-padding w3-text-white w3-round-xxlarge w3-red w3-button"
+                    id="submit-button"
+                    css-transition="1s"
+                >
+                    Submit
+                    <img src="/static/svg/solid/chevron-right.svg" class="text-fit w3-text-white" />
+                </button>
             </div>
-        {% endif %}
+            <div
+                id="epilog"
+                ng-bind="quizz.epilog"
+                ng-show="quizz.epilog"
+                class="raw-markdown f-open-sans w3-large w3-margin w3-padding-0"
+            ></div>
+        {% endverbatim %}
     </form>
 {% endblock 'center' %}
 {% block 'right' %}
     <script>
         const app = angular.module('{{ ng_app_name }}', []);
-        app.controller('{{ ng_app_name }}Ctrl', function($scope) {
+        app.controller('{{ ng_app_name }}Ctrl', function($scope, $http) {
+            QuizzUser.get({{ user.model.id }}, $http, function(user) {
+                window.quizz_user = $scope.quizz_user = user;
+                window.user = $scope.user = user.sbook;
+            });
+            Quizz.get({{ quizz.model.id }}, $http, function(quizz) {
+                window.quizz = $scope.quizz = quizz;
+            });
             $scope.anwsers = {};
             $scope.answerChecked = function() {
                 setTimeout(function() {
                     for(let i in $scope.anwsers) {
-                        if(!(i-1 in $scope.anwsers) && i != 0) {
-                            $('#submit-button')
+                        if(!(i-1 in $scope.anwsers)) {
+                            jQuery('#submit-button')
                                 .addClass('w3-blue')
                                 .removeClass('w3-red bg-rainbow');
-                            break;
                         } else {
-                            $('#submit-button')
+                            jQuery('#submit-button')
                                 .removeClass('w3-red w3-blue')
                                 .addClass('bg-rainbow');
+                            break;
                         }
                         v = i;
                     }

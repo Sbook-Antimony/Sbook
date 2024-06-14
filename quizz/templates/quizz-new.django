@@ -99,30 +99,6 @@
 {% endblock 'center' %}
 {% block 'right' %}
     <script>
-        class Option {
-            constructor(text="", label="") {
-                this.text = text;
-                this.label = label;
-            }
-        }
-        class Question {
-            constructor(question="" , options = []) {
-                this.question = question;
-                this.options = options;
-            }
-            serialize() {
-                let obj = {
-                    question: this.question,
-                    options: {},
-                };
-                for(let i = 0; i < this.options.length; i++) {
-                    obj.options[
-                        String.fromCodePoint(i+'a'.charCodeAt(0)).toString()
-                    ] = this.options[i].text;
-                }
-                return obj;
-            }
-        }
         const app = angular.module('{{ ng_app_name }}', ['ngAnimate']);
         app.controller('{{ ng_app_name }}Ctrl', function($scope) {
             $scope.questions = [];

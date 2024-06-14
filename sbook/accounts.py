@@ -16,7 +16,6 @@ from django.http import HttpResponseRedirect
 import markdown
 
 from chatty import accounts as chatty
-from note import accounts as note
 from pyoload import *
 from sbook import models
 
@@ -77,7 +76,7 @@ def check_login(func, redirect=True):
 
 ##########################################
 
-class ModelInder:
+class ModelInter:
     __pyod_norecur__ = True
 
     @classmethod
@@ -87,23 +86,27 @@ class ModelInder:
 
     @classmethod
     def from_id(cls, id):
-        try:
-            found = cls.model.objects.get(id=id)
-        except cls.model.DoesNotExist as e:
-            raise cls.DoesNotExistError() from e
-        else:
-            return cls(found)
+        return cls.get(id=id)
 
     @classmethod
     def exists(cls, **kw):
         try:
-            cls.model.objects.get(**kw)
-        except cls.model.DoesNotExist:
+            cls.get(**kw)
+        except cls.DoesNotExistError:
             return False
         else:
             return True
 
-    @staticmethod
+    @classmethod
+    def get(cls, **kw):
+        try:
+            obj = cls.model.objects.get(**kw)
+        except cls.model.DoesNotExist as e:
+            raise cls.DoesNotExistError(e)
+        else:
+            return cls(obj)
+
+    @classmethod
     def all(cls):
         return map(cls, cls.model.objects.all())
 
@@ -135,7 +138,7 @@ class ModelInder:
         return self.model.id
 
 
-class User(ModelInder):
+class User(ModelInter):
     model = models.User
 
     class DoesNotExistError(ValueError):
@@ -182,22 +185,15 @@ class User(ModelInder):
         }
 
     @functools.cached_property
-    def chattyAccount(self):
-        cha = self.model.chattyAccount.all()
-        if len(cha) == 0:
-            cha = [chatty.accounts.ChattyUser.create_from_sbook(self.model)]
-            # raise chatty.accounts.UserDoesNotExistError()
-        return chatty.accounts.ChattyUser(cha[0])
-
-    @functools.cached_property
     def noteAccount(self):
+        import note.accounts
         cha = self.model.noteAccount.all()
         if len(cha) == 0:
-            raise note.UserDoesNotExistError()
-        return note.ChattyUser(cha[0])
+            raise note.accounts.NoteUser.DoesNotExistError()
+        return note.accounts.NoteUser(cha[0])
 
 
-class Classifier(ModelInder):
+class Classifier(ModelInter):
     def js(self):
         return {
             'type': self.__class__.__name__.lower(),

@@ -75,3 +75,18 @@ class Note(models.Model):
 
     def __str__(self):
         return f"{self.id}:{self.title}:{self.stars}:{self.views}"
+
+
+class ShortNote(models.Model):
+    title = models.CharField(max_length=255)
+    content = MDTextField()
+    author = models.ForeignKey(
+        NoteUser,
+        related_name='short_notes',
+        on_delete=models.CASCADE,
+    )
+    description = MDTextField(default="")
+    private = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"ShortNote({self.title=}:{self.author=!s})"

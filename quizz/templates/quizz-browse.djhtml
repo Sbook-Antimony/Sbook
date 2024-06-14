@@ -1,0 +1,72 @@
+{% extends 'quizz-main.django' %}
+
+{% block 'title' %}quizz dashboard{% endblock 'title' %}
+{% block 'left' %}
+    {% csrf_token %}
+{% endblock 'left' %}
+{% block 'center' %}
+    {% verbatim %}
+        <div class="w3-margin w3-padding-0">
+            <h2>Browse</h2>
+        </div>
+        <hr class="bg-clear" />
+        <div class="w3-container w3-margin-bottom w3-round">
+            <div
+                id="myquizzes-list"
+                class="w3-display-container w3-border-bottom w3-padding w3-margin w3-round bg-a1"
+            >
+                <div ng-show="user_quizzes.length == 0">
+                    <p class="margin-center w3-padding-64 w3-padding-left w3-padding-right fg-antimony w3-opacity">
+                        nothing here yet
+                    </p>
+                </div>
+                <div ng-repeat="quizz in quizzes" class="w3-display-container">
+                    <a class="" href="/quizz/quizzes/{{ quizz.id }}/preview">
+                        <img
+                            hover-class="zoom-2"
+                            height="100"
+                            class="w3-circle inline w3-margin-right w3-left"
+                            src="/quizz/profiles/quizzes/{{ quizz.id }}.png"
+                        />
+                        <div class="inline" style="width: 80%; height: 100%;">
+                            <h4 class="w3-large">{{ quizz.title }}</h4>
+                            <p class="fg-antimony w3-small w3-justify w3-block raw-markdown">
+                                {{ quizz.description }}
+                            </p>
+                        </div>
+                    </a>
+                    <span class="w3-padding-small w3-display-topright w3-round-large bg-naple">
+                        <a ng-show="quizz.remarking_status == 0" href="/quizz/quizzes/{{ quizz.id }}/attempts/" title="nothing done">
+                            <img src="/static/svg/solid/list-check.svg" class="text-fit" />
+                        </a>
+                        <a ng-show="quizz.remarking_status == 1" href="/quizz/quizzes/{{ quizz.id }}/attempts/" title="some remaining...">
+                            <img src="/static/svg/solid/list-check.svg" class="text-fit" />
+                        </a>
+                        <a ng-show="quizz.remarking_status == 2" href="/quizz/quizzes/{{ quizz.id }}/attempts/" title="nothing here">
+                            <img src="/static/svg/solid/circle-check.svg" class="text-fit" />
+                        </a>
+                    </span>
+                </div>
+                <a href="/quizz/new" view-class="jump" hover-class="shake" class="w3-margin w3-center hexa fa-2xl w3-circle w3-border-0">
+                    <i class="fas fa-plus bg-rainbow w3-button w3-white w3-round-xxlarge w3-margin-bottom">create</i>
+                </a>
+            </div>
+        </div>
+    {% endverbatim %}
+{% endblock 'center' %}
+{% block 'right' %}
+    <script>
+        const app = angular.module('{{ ng_app_name }}', ['ngAnimate']);
+        app.controller('{{ ng_app_name }}Ctrl', function($scope, $http) {
+            window.$scope = $scope;
+            $scope.quizzes = [];
+            QuizzUser.get({{ user.model.id }}, $http, function(user) {
+                window.quizz_user = $scope.quizz_user = user;
+                window.user = $scope.user = user.sbook;
+            });
+            Quizz.all($http, function(quizzes) {
+                $scope.quizzes = quizzes;
+            });
+        });
+    </script>
+{% endblock 'right' %}

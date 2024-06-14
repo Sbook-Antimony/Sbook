@@ -79,7 +79,9 @@
             });
 
             $scope.submitProfileSettings = function() {
-                $scope.user.save();
+                $scope.user.save(function() {
+                    jQuery('#bio-view').addClass("raw-markdown")
+                });
             }
         });
         app.config(function($routeProvider) {
@@ -106,13 +108,13 @@
                 </span>
                 <a class="w3-arial w3-xxlarge w3-margin">{{ user.name }}</span>
             </div>
-            <p ng-bind="user.bio" class="w3-medium w3-justify w3-container raw-markdown"></p>
+            <p ng-bind="user.bio" class="w3-medium w3-justify w3-container raw-markdown" id="bio-view"></p>
             <p class="w3-container margin-center w3-row">
                 <a href="/note/" class="w3-red w3-col m5 w3-round w3-padding-32 w3-margin w3-large">
                     Notes
                 </a>
-                <a href="/classroom/" class="w3-green w3-col m5 w3-round w3-padding-32 w3-margin w3-large">
-                    CLassroms
+                <a href="/school/" class="w3-green w3-col m5 w3-round w3-padding-32 w3-margin w3-large">
+                    Schools
                 </a>
                 <a href="/quizz/" class="w3-blue w3-col m5 w3-round w3-padding-32 w3-margin w3-large">
                     Quizzes

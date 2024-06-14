@@ -12,7 +12,8 @@ import profile_images
 import sbook.accounts
 import sbook.models
 
-from note import models
+from . import models
+from sbook.accounts import ModelInter
 
 NOTES = DIR / "notes"
 
@@ -273,3 +274,41 @@ def check_login(func, redirect=True):
             return HttpResponseRedirect("/signin")
 
     return wrapper
+
+
+class ShortNote(ModelInter):
+    class DoesNotExist(ValueError):
+        pass
+
+    class DoesExist(ValueError):
+        pass
+
+    model = models.ShortNote
+
+    @classmethod
+    def create(cls, title, author, content=""):
+        model = cls.model(
+            title=title,
+            author=author,
+            content=content,
+        )
+        model.save()
+
+    def __init__(self, model=None):
+        if model is None:
+            raise NoteDoesNotExistError()
+        self.model = model
+
+    @functools.cached_property
+    def author(self):
+        return NoteUser(self.model.author)
+
+    @property
+    def js(self):
+        return {
+            "title": self.model.title,
+            "id": self.model.id,
+            "description": self.model.description,
+            "content": self.model.content,
+            "author": self.author.js,
+        }

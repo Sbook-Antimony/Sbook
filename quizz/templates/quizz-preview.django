@@ -17,7 +17,7 @@
     <div class="w3-margin w3-padding-0">
         <h1 class="w3-jumbo f-agbalumo-bold">{{ quizz.title }}</h1>
         <div class="w3-round-medium w3-rightbar w3-leftbar w3-topbar bd-naple fg-antimony w3-large w3-padding-32">
-            {{ quizz.description | markdown }}
+            {{ quizz.model.description | markdown }}
         </div>
         <a
             href="/quizz/quizzes/{{ quizz.id }}/attempt/"

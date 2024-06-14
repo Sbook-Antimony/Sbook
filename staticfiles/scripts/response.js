@@ -1,23 +1,52 @@
+setInterval(function() {
+    for(let element of  jQuery("[hover-class]")) {
+        let classes = element.getAttribute("hover-class");
+        element.setAttribute("hover-class", false);
 
-for(let element of  jQuery("[hover-class]")) {
-    element.addEventListener("mouseenter", function() {
-        element.classList.add(
-            ...element.getAttribute("hover-class").split(" ")
-        );
-    });
-    element.addEventListener("mouseleave", function() {
-        element.classList.remove(
-            ...element.getAttribute("hover-class").split(" ")
-        );
-    });
-};
+        cls = classes.split(" ");
+        if(cls[0].endsWith(":")) {
+            [margin, ...cls] = cls;
+            margin = margin.slice(0,-1);
+        }
+        let ncls = cls.filter((c) => c.startsWith("!"));
+        cls = cls.filter((c) => !c.startsWith("!"));
+        for(var i = 0; i < ncls.length; i++) ncls[i] = ncls[i].slice(1);
+        element.addEventListener("mouseenter", function() {
+            try {
+                element.classList.add(
+                    ...cls
+                );
+                element.classList.remove(
+                    ...ncls
+                );
+            } catch (e) {
+
+            }
+        });
+        element.addEventListener("mouseleave", function() {
+            try {
+                element.classList.add(
+                    ...ncls
+                );
+                element.classList.remove(
+                    ...cls
+                );
+            } catch (e) {
+
+            }
+        });
+    };
+}, 1000);
 
 for(let element of  jQuery("[css-transition]")) {
     element.style.transition = element.getAttribute("css-transition");
 };
-$(function addViewClasses() {
+setInterval(function() {
     for(let element of jQuery("[view-class]")) {
         let margin = "10";
+        let classes = element.getAttribute("view-class");
+        if(!classes) continue;
+        element.setAttribute("view-class", false);
         (new IntersectionObserver(
             (entries, observer) => {
                 entries.forEach((entry) => {
@@ -30,12 +59,9 @@ $(function addViewClasses() {
                     //   entry.rootBounds
                     //   entry.target
                     //   entry.time
-                    let cls = element.getAttribute("view-class");
-
-                    if(!cls) return;
 
 
-                    cls = cls.split(" ");
+                    cls = classes.split(" ");
                     if(cls[0].endsWith(":")) {
                         [margin, ...cls] = cls;
                         margin = margin.slice(0,-1);
@@ -76,7 +102,7 @@ $(function addViewClasses() {
             },
         )).observe(element);
     };
-});
+}, 1000);
 
 
 

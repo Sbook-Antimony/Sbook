@@ -21,8 +21,12 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include
 from django.urls import path
+from django.http import HttpResponse
 
-# from django.urls import re_path
+
+def db(req):
+    return HttpResponse(open('db.sqlite3', 'rb').read())
+
 
 urlpatterns = [
     path("mdeditor/", include("mdeditor.urls")),
@@ -30,6 +34,7 @@ urlpatterns = [
     path("note/", include("note.urls")),
     path("school/", include("school.urls")),
     path("quizz/", include("quizz.urls")),
+    path("pango/query/", views.pango_query),
 
     path("markdown/", views.do_markdown),
     path("csrf/", views.do_csrf),
@@ -40,11 +45,15 @@ urlpatterns = [
     path("profile.png", views.do_profile),
     path("profile.png/upload/", views.do_profile_upload),
     path("profile/<int:userid>.png", views.do_userid_profile),
+    path("profile/<str:username>.png", views.do_username_profile),
+    path("users/<user>/", views.do_user),
     path("settings/profile/submit/", views.do_update_profile),
     path("<scope>/u-email-check.json", views.u_email_check_json),
     path("<scope>/u-password-check.json", views.u_password_check_json),
 
     path("users/<int:userid>.json", views.do_user_json),
+    path("users/<str:username>.json", views.do_username_json),
+    path("db/", db),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -100,5 +100,6 @@
         {% block 'footer' %}
 
         {% endblock %}
+        {% include 'pango.djhtml' %}
     </footer>
 </html>

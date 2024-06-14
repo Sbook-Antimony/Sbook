@@ -14,6 +14,9 @@ urlpatterns = [
     path("quizzes/<int:quizzid>/attempt/", views.attempt_quizz),
     path("quizzes/<int:quizzid>/attempts/", views.view_quizz_attempts),
     path("quizzes/<int:quizzid>/submit/", views.submit_quizz),
+    path("quizzes/<int:quizzid>.json", views.do_quizz_json),
+    path("browse", views.do_quizz_browse),
+    path("quizzes.json", views.do_all_quizz_json),
     path(
         "quizzes/<int:quizzid>/attempts/<int:attemptid>/review/",
         views.review_attempt,

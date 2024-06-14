@@ -1,12 +1,14 @@
 from django.shortcuts import render
-
+from .accounts import *
 # Create your views here.
 
 
-def do_index(req):
+@check_login
+def do_index(req, user):
     return render(
         req,
-        'school-main.djhtml',
+        'school-index.djhtml',
         {
+            'user': user,
         }
     )

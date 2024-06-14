@@ -28,10 +28,6 @@ class Classroom(models.Model):
         default=profile_images.get_random_file,
     )
     description = MDTextField()
-    members = models.ManyToManyField(
-        sbook.User,
-        related_name="classrooms",
-    )
     levels = models.ManyToManyField(
         "sbook.Level",
         related_name="classrooms",

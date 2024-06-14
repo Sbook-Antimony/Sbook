@@ -16,6 +16,9 @@ import base64
 import markdown
 from . import forms
 from pyoload import *
+from . import markdown
+import pango
+
 
 
 File = lambda url: FileResponse(open(url, "rb"), filename=url.as_uri())
@@ -179,10 +182,30 @@ def do_profile(req, user: User):
 def do_userid_profile(req, userid):
     try:
         user = User.from_id(userid)
-    except UserDoesNotExistError:
+    except User.DoesNotExistError:
         return File(User.DEFAULT_PROFILE_PATH)
     else:
         return HttpResponse(user.profile_asBytes, "img/png")
+
+
+def do_username_profile(req, username):
+    try:
+        user = User.get(username=username)
+    except User.DoesNotExistError:
+        return File(User.DEFAULT_PROFILE_PATH)
+    else:
+        return HttpResponse(user.profile_asBytes, "img/png")
+
+
+def do_user(req, user_id):
+    return render(
+        req,
+        'user-profile.djhtml',
+        {
+            'id': user_id,
+            'ng_app_name': 'userProfile',
+        },
+    )
 
 
 @check_login
@@ -190,12 +213,12 @@ def do_markdown(req, user):
     try:
         data = req.GET.get("md")
         data = base64.b64decode(data).decode('utf-8')
-        data = data.strip().strip('\n').strip()
         return JsonResponse({
-            'html': sbook.markdown(data),
+            'html': markdown(data),
             'ok': True,
         })
-    except Exception:
+    except Exception as e:
+        print(e)
         return JsonResponse({
             'html': '<em>Could not be renderred</em>',
             'ok': False,
@@ -223,6 +246,27 @@ def do_user_json(req, userid: int) -> Cast(JsonResponse):
         }
 
 
+@annotate
+def do_username_json(req, username: str) -> Cast(JsonResponse):
+    try:
+        user = User.get(username=username)
+    except UserDoesNotExistError:
+        return {
+            'ok': False,
+            'error': 404,
+        }
+    except Exception:
+        return {
+            'ok': False,
+            'error': 0,
+        }
+    else:
+        return {
+            'ok': True,
+            'user': user.js,
+        }
+
+
 @check_login
 def do_update_profile(req, user):
     user.model.bio = req.GET.get('bio', user.model.bio)
@@ -231,4 +275,20 @@ def do_update_profile(req, user):
     user.model.save()
     return JsonResponse({
         'ok': True,
+    })
+
+
+@check_login
+def pango_query(req, user):
+    query = req.GET.get('q')
+    if not query:
+        return JsonResponse({
+            "ok": False,
+            "response": None,
+            "msg": "No query provided",
+        })
+    res = pango.query(user.model.username, query)
+    return JsonResponse({
+        "ok": True,
+        "response": res,
     })

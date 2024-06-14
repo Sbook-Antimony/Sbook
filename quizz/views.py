@@ -227,3 +227,44 @@ def do_user_json(req, userid: int) -> Cast(JsonResponse):
             'ok': True,
             'user': user.js,
         }
+
+
+@check_login
+def do_quizz_json(req, user, quizzid):
+    try:
+        quizz = Quizz.from_id(quizzid)
+    except Quizz.DoesNotExistError:
+        return JsonResponse({
+            'ok': False,
+            'quizz': None,
+        })
+    else:
+        return JsonResponse({
+            'ok': True,
+            'quizz': quizz.js,
+        })
+
+
+@check_login
+def do_quizz_browse(req, user):
+    return render(
+        req,
+        'quizz-browse.djhtml',
+        {
+            "user": user,
+            "ng_app_name": "browse",
+        }
+    )
+
+
+@check_login
+def do_all_quizz_json(req, user):
+    return JsonResponse({
+        "ok": True,
+        "quizzes": list(
+            map(
+                lambda q: q.js,
+                filter(lambda q: q.accessible_by(user), Quizz.all())
+            ),
+        ),
+    })

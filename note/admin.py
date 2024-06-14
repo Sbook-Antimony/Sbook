@@ -6,3 +6,4 @@ import note.models
 admin.site.register(note.models.Bookmark)
 admin.site.register(note.models.NoteUser)
 admin.site.register(note.models.Note)
+admin.site.register(note.models.ShortNote)
