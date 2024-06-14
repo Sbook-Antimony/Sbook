@@ -1,6 +1,8 @@
 from pyoload import *
 import time
 import uuid
+import sbook.accounts
+import difflib
 
 try:
     from . import chatbot
@@ -13,10 +15,44 @@ except ImportError:
 scope = {}
 
 
+def quote(txt):
+    fl, *lns = txt.splitlines()
+    ret = "> " + fl
+    for ln in lns:
+        ret += "\n  " + ln
+    return ret
+
+
 @chatbot.register_call("callMe")
 def call_me(query, session_id="general"):
     scope['name'] = query
     return "Ok, "
+
+
+@chatbot.register_call("whoIs")
+def who_is(query, session_id="general"):
+    users = []
+    for user in sbook.accounts.User.all():
+        s = difflib.SequenceMatcher(
+            lambda x: x == " ",
+            "private Thread currentThread;",
+            "private volatile Thread currentThread;",
+        )
+        r = s.ratio()
+        if len(users) == 0 or r > users[-1][0] and r > 0.5:
+            users.append((r, user))
+            users.sort(key=lambda u: u[0], reverse=True)
+        if r > 0.9:
+            break
+    if len(users) == 0:
+        return f"**Sorry** I cannot find {query}, are you sure he exists?"
+    elif len(users) == 1 or users[0][0] - 0.2 > users[1][0]:
+        user = users[0][1]
+        return (
+            f"Yeah you mean @user:{user.model.username}, his bio says:\n\n"
+            + quote(user.model.bio)
+        )
+
 
 
 @annotate

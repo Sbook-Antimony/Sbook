@@ -1,7 +1,8 @@
 {% block %}
-    {% client %}(What is your name|who are you|How (do you|can you|are) (call you|called)){% endclient %}
+    {% client %}(How can (I|we) call you|What is your name|who are you|How (do you|can you|are) (call you|called)){% endclient %}
     {% response %}My name is Pango, the Pangolin!{% endresponse %}
     {% response %}Pango am I!{% endresponse %}
+    {% response %}Call me @user:pango{% endresponse %}
 {% endblock %}
 
 {% block %}
@@ -36,93 +37,16 @@
 {% endblock %}
 
 {% block %}
-    {% client %}Why do not you (.*){% endclient %}
-    {% response %}Do you really think I do not %1?{% endresponse %}
-    {% response %}Perhaps eventually I will %1.{% endresponse %}
-    {% response %}Do you really want me to %1?{% endresponse %}
+    {% client %}Who (created|programmed|made|coded|trained) you?{% endclient %}
+    {% response %}I am trained by you, and your queries, but I was programmed by @user:ken-morel{% endresponse %}
 {% endblock %}
 
-{% block %}
-    {% client %}(I (am|feel) )?(feeling )?(absolutely )?(.*){% endclient %}
-    {% prev %}.*how are you{% endprev %}
-    {% response %}{% if {%low %5 %} == fine | {%low %5 %} == good | {%low %5 %} == happy %}  Nice to know that you are %5. What else? {% else %} why you feel %5 {% endif %}{% endresponse %}
-{% endblock %}
 
 {% block %}
-    {% client %}Why can not I (.*){% endclient %}
-    {% response %}Do you think you should be able to %1?{% endresponse %}
-    {% response %}If you could %1, what would you do?{% endresponse %}
-    {% response %}I do not know -- why can not you %1?{% endresponse %}
-    {% response %}Have you really tried?{% endresponse %}
+    {% client %}What (can|do|will) you do{% endclient %}
+    {% response %}I {abc:%1} help **you** to Use this website{% endresponse %}
 {% endblock %}
 
-{% block %}
-    {% client %}I can not (.*){% endclient %}
-    {% response %}How do you know you can not %1?{% endresponse %}
-    {% response %}Perhaps you could %1 if you tried.{% endresponse %}
-    {% response %}What would it take for you to %1?{% endresponse %}
-{% endblock %}
-
-{% block %}
-    {% client %}I am (.*){% endclient %}
-    {% response %}Did you come to me because you are %1?{% endresponse %}
-    {% response %}How long have you been %1?{% endresponse %}
-    {% response %}How do you feel about being %1?{% endresponse %}
-    {% response %}How does being %1 make you feel?{% endresponse %}
-    {% response %}Do you enjoy being %1?{% endresponse %}
-    {% response %}Why do you tell me you are %1?{% endresponse %}
-    {% response %}Why do you think you are %1?{% endresponse %}
-{% endblock %}
-
-{% block %}
-    {% client %}Hello(.*){% endclient %}
-    {% response %}Hello... I am glad you could drop by today.{% endresponse %}
-    {% response %}Hi there... how are you today?{% endresponse %}
-    {% response %}Hello, how are you feeling today?{% endresponse %}
-{% endblock %}
-
-{% block %}
-    {% client %}I think (.*){% endclient %}
-    {% response %}Do you doubt %1?{% endresponse %}
-    {% response %}Do you really think so?{% endresponse %}
-    {% response %}But you are not sure %1?{% endresponse %}
-{% endblock %}
-
-{% block %}
-    {% client %}(.*) friend (.*) is (.*) {% endclient %}
-    {% response %}Tell me more about your friends.{% endresponse %}
-    {% response %}When you think of a friend, what comes to mind?{% endresponse %}
-    {% response %}Why do not you tell me about a childhood friend?{% endresponse %}
-{% endblock %}
-
-{% block %}
-    {% client %}(.*) computer(.*){% endclient %}
-    {% response %}Are you really talking about me?{% endresponse %}
-    {% response %}Does it seem strange to talk to a computer?{% endresponse %}
-    {% response %}How do computers make you feel?{% endresponse %}
-    {% response %}Do you feel threatened by computers?{% endresponse %}
-{% endblock %}
-
-{% block %}
-    {% client %}It is (.*){% endclient %}
-    {% response %}You seem very certain.{% endresponse %}
-    {% response %}If I told you that it probably is not %1, what would you feel?{% endresponse %}
-{% endblock %}
-
-{% block %}
-    {% client %}Can you (.*){% endclient %}
-    {% response %}What makes you think I can not %1?{% endresponse %}
-    {% response %}If I could %1, then what?{% endresponse %}
-    {% response %}Why do you ask if I can %1?{% endresponse %}
-{% endblock %}
-
-{% block %}
-    {% client %}(.*)\?{% endclient %}
-    {% response %}Why do you ask that?{% endresponse %}
-    {% response %}Please consider whether you can answer your own question.{% endresponse %}
-    {% response %}Perhaps the answer lies within yourself?{% endresponse %}
-    {% response %}Why do not you tell me?{% endresponse %}
-{% endblock %}
 
 {% block %}
     {% client %}(quit|bye|goodbye|see you (na|tomorrow|latter)){% endclient %}
@@ -132,7 +56,7 @@
 {% endblock %}
 
 {% block %}
-    {% client %}(Do you know about|what is|who is|tell me about)(.*){% endclient %}
+    {% client %}(Do you know about|who is|tell me about) ([\w\-_]+){% endclient %}
     {% response %}{% call whoIs:%2 %}{% endresponse %}
 {% endblock %}
 

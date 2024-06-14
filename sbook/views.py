@@ -278,7 +278,7 @@ def do_update_profile(req, user):
     })
 
 
-@check_login
+@check_login(False)
 def pango_query(req, user):
     query = req.GET.get('q')
     if not query:
@@ -287,7 +287,10 @@ def pango_query(req, user):
             "response": None,
             "msg": "No query provided",
         })
-    res = pango.query(user.model.username, query)
+    if user is not None:
+        res = pango.query(user.model.username, query)
+    else:
+        res = pango.query("anonymy", query)
     return JsonResponse({
         "ok": True,
         "response": res,

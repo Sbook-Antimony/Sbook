@@ -20,8 +20,6 @@
             }
             #pango-chat
             {
-                max-height: 500px;
-                overflow-y: auto;
                 border: 0.5px lightgrey solid;
                 width: 100%;
                 max-width: 500px;
@@ -31,14 +29,26 @@
                 border-radius: 25px;
                 background-color: white;
             }
+            #pango-chats
+            {
+                max-height: 500px;
+                overflow-y: auto;
+                overflow-anchor: bottom;
+            }
         </style>
         <div id="pango-btn" class="w3-button" onclick="Pango.togglePanel()">
         </div>
         <div id="pango-chat">
             <div id="pango-chats">
             </div>
-            <form entry onsubmit="Pango.sendMsg(event)">
-                <input placeholder="enter your chat here." id="pango-entry" type="text" class="w3-input inline" style="width: 87%;" />
+            <form entry class="w3-round-xlarge" onsubmit="Pango.sendMsg(event)">
+                <input
+                    placeholder="enter your chat here."
+                    id="pango-entry"
+                    type="text"
+                    class="w3-input inline w3-round-xlarge"
+                    style="width: 87%;"
+                />
                 <input
                     type="image"
                     src="/static/svg/solid/paper-plane.svg"
@@ -63,7 +73,9 @@
                     p.classList.add(..."margin-0 padding-5 w3-padding-8 w3-round-xlarge raw-markdown".split(" "));
                     if(author == "user") p.classList.add(..."w3-left".split(" "))
                     else p.classList.add(..."w3-right w3-pale-blue".split(" "));
-                    document.getElementById("pango-chats").appendChild(container);
+                    let chats = document.getElementById("pango-chats");
+                    chats.appendChild(container);
+                    chats.scrollTop = chats.scrollHeight;
                 }
                 static togglePanel() {
                     jQuery("#pango-chat").slideToggle();

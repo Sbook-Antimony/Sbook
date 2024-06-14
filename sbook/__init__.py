@@ -3,6 +3,7 @@ from django.utils.safestring import mark_safe
 from pathlib import Path
 import re
 
+
 icons = []
 icon_dir = Path("staticfiles/static")
 mention = re.compile(r"@(user|topic)\:([\d\w\-_]+)")
@@ -13,6 +14,8 @@ for icn in icon_dir.glob("*.svg"):
 
 
 def markdown(text):
+    import sbook.accounts
+
     html = md.markdown(text)
     for icon in icons:
         html = html.replace(
@@ -21,12 +24,17 @@ def markdown(text):
         )
     for m_type, name in mention.findall(text):
         if m_type == "user":
-            html = html.replace(
-                f"@user:{name}",
-                (
-                    f'<a href="/users/{name}/" style="color: blue;">'
-                    f'<img src="/profile/{name}.png" class="text-fit" />'
-                    f'{name}</a>'
+            try:
+                user = sbook.accounts.User.get(username=name)
+            except sbook.accounts.User.DoesExistError:
+                pass
+            else:
+                html = html.replace(
+                    f"@user:{name}",
+                    (
+                        f'<a href="/users/{name}/" style="color: blue;">'
+                        f'<img src="/profile/{name}.png" class="text-fit" />'
+                        f'{user.model.name}</a>'
+                    )
                 )
-            )
     return mark_safe(html)

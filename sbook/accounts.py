@@ -158,20 +158,24 @@ class User(ModelInter):
 
     @classmethod
     def create_from_login(cls, name, email, password):
-        try:
-            print("creating user")
-            obj = models.User(
-                name=name,
-                email=email,
-                password=password,
-            )
-            print("created.. \nnow saving")
-            obj.save()
-            print("creating data launch")
-        except models.User.DoesNotExist as e:
-            raise User.DoesExistError() from e
-        else:
-            return cls(obj)
+        i = 0
+        while True:
+            try:
+                obj = models.User(
+                    username=name.lower.replace(
+                        " ", ""
+                    ) + (str(i) if i > 0 else ""),
+                    name=name,
+                    email=email,
+                    password=password,
+                )
+                i += 1
+                obj.save()
+            except Exception:
+                continue
+            else:
+                break
+        return cls(obj)
 
     @functools.cached_property
     def js(self):
