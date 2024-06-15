@@ -129,7 +129,7 @@
                 <i class="fa fa-arrow-left fa-xl" ></i>
             </a>
             <div class="bg-antimony10 w3-container w3-round w3-margin-bottom">
-                <span  onclick="jQuery('#uploadImageDialog').showModal()" class="w3-margin w3-display-container">
+                <span onclick="jQuery('#uploadImageDialog').showModal()" class="w3-margin w3-display-container">
                     <img class="w3-circle w3-inline w3-margin w3-image" hover-class="jump hexa" width="100" height="100" src="/profile.png" />
                     <i class="fa-2xl fg-antimony50 w3-display-bottomright w3-margin fas fa-edit"></i>
                 </span>
@@ -142,7 +142,7 @@
             </div>
             <div class="w3-container round-n-20 w3-margin-bottom w3-margin-top">
                 <h5 class="bg-naple w3-text-white w3-container margin-0">Bio</h5>
-                <textarea rows="10" class="no-resize w3-input w3-container w3-medium bd-naple bd-1" ng-model="user.bio"></textarea>
+                <textarea rows="20" class="no-resize w3-input w3-container w3-medium bd-naple bd-1" ng-model="user.bio"></textarea>
             </div>
             <button
                 ng-click="submitProfileSettings()"

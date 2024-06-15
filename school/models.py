@@ -27,18 +27,21 @@ class Classroom(models.Model):
         upload_to="profiles/classroom",
         default=profile_images.get_random_file,
     )
-    description = MDTextField()
+    description = MDTextField(null=True)
     levels = models.ManyToManyField(
         "sbook.Level",
         related_name="classrooms",
+        null=True,
     )
     courses = models.ManyToManyField(
         "sbook.Course",
         related_name="classrooms",
+        null=True,
     )
     series = models.ManyToManyField(
         "sbook.Serie",
         related_name="classrooms",
+        null=True,
     )
     teachers = models.ManyToManyField(sbook.User, related_name="teaches_classrooms")
     students = models.ManyToManyField(sbook.User, related_name="teached_classrooms")
@@ -46,7 +49,7 @@ class Classroom(models.Model):
         sbook.User,
         related_name="admins_classrooms",
     )
-    code_of_conduct = MDTextField()
+    code_of_conduct = MDTextField(null=True)
 
     def __str__(self):
         return f" Classroom({self.id}:{self.name})"

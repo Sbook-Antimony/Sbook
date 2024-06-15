@@ -60,7 +60,6 @@ class Quizz(models.Model):
     classrooms = models.ManyToManyField(school.Classroom, related_name="quizzes")
     levels = models.ManyToManyField(sbook.Level, related_name="quizzes")
     courses = models.ManyToManyField(sbook.Course, related_name="quizzes")
-    series = models.ManyToManyField(sbook.Serie, related_name="quizzes")
     stars = models.IntegerField(default=0)
 
     def __str__(self):
