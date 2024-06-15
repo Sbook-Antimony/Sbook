@@ -13,12 +13,11 @@ from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from sbook.accounts import *
 import base64
-import markdown
 from . import forms
 from pyoload import *
-from . import markdown
 import pango
-
+from django.core.files.base import ContentFile
+from sbook import markdown
 
 File = lambda url: FileResponse(open(url, "rb"), filename=url.as_uri())
 
@@ -166,11 +165,21 @@ class signup(View):
 
 @check_login
 def do_profile_upload(req, user):
-    file = req.FILES.get("file")
-    image = Image.open(file)
-    user.profile = image.resize((500, 500))
-    user.save()
-    return JsonResponse({"succes": True})
+    max_size = 10 * 1024 * 1024
+    try:
+        img = req.POST.get("image")
+        data = base64.b64decode(img)
+        assert len(data) > max_size, f"Image too large ({len(data) > max_size})"
+        image = ContentFile(data, name=req.GET.get("imagename"))
+        user.model.profile = image
+        user.model.save()
+    except Exception as e:
+        return JsonResponse({
+            "succes": False,
+            "error": e.__class__.__name__ + ": " + str(e),
+        })
+    else:
+        return JsonResponse({"succes": True})
 
 
 @check_login

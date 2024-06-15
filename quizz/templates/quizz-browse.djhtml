@@ -1,6 +1,6 @@
 {% extends 'quizz-main.django' %}
 
-{% block 'title' %}quizz dashboard{% endblock 'title' %}
+{% block 'title' %}browse quizzes{% endblock 'title' %}
 {% block 'left' %}
     {% csrf_token %}
 {% endblock 'left' %}

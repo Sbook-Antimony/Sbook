@@ -36,7 +36,7 @@ def markdown(text):
                         />
                         {user.model.name}
                     </a>
-                    <div hidden class="raw-markdown tooltip-text">
+                    <div class="raw-markdown tooltip-text">
                         {user.model.bio}
                     </div>
                 </div>

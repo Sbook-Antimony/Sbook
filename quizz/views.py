@@ -1,15 +1,16 @@
-import json
 import base64
+import json
+
+import sbook.accounts
 
 from .accounts import *
+from django.core.files.base import ContentFile
 from django.http import HttpResponse
 from django.http import HttpResponseNotFound
 from django.http import HttpResponseRedirect
 from django.http import JsonResponse
 from django.shortcuts import render
 from sbook import settings
-import sbook.accounts
-from django.core.files.base import ContentFile
 
 
 @check_login(True)
@@ -186,19 +187,16 @@ def do_new(req, user):
 
 @check_login
 def do_new_submit(req, user):
-    data = (json.loads(req.POST.get("questions")),)
+    questions = json.loads(req.POST.get("questions"))
     prof = {}
     if img := req.POST.get("image"):
-        print(img[:50], len(img))
         data = base64.b64decode(img)
-        print(data[:50], len(data))
-        assert data[1:4] == b"PNG"
         prof["profile"] = ContentFile(data, name=req.POST.get("imagename"))
     quizz = models.Quizz(
         instructions=req.POST.get("instructions"),
         epilog=req.POST.get("epilog"),
         prolog=req.POST.get("prolog"),
-        questions=data[0],
+        questions=questions,
         title=req.POST.get("title"),
         description=req.POST.get("description"),
         is_private=req.POST.get("is_private") in (True, "true"),

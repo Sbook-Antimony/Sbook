@@ -20,17 +20,17 @@
             {% csrf_token %}
             <label for="file" onclick="this.querySelector('input').click()" class="bg-antimony10 w3-btn w3-round">
                 Choose photo
-                <input onchange="uploadPhotoReadProfile(event)" type="file" name="file" hidden />
+                <input id="uploadImageInput" onchange="uploadPhotoReadProfile(event)" type="file" name="file" hidden />
             </label>
-            <button type="submit" id="imageUploadButton" onclick="submitNewProfile(); this.setAttribute('hover-class', '');" css-transition="1s" hover-class="w3-red shake" class="hexa w3-disabled bg-antimony10-hover w3-btn w3-round" >
+            <button type="submit" id="imageUploadButton" onclick="submitNewProfile(); event.preventDefault()" css-transition="0.5s" class="w3-red w3-disabled bg-antimony10-hover w3-btn w3-round" >
                 Submit
             </button>
             <script type="text/javascript" charset="utf-8">
+                let data = null;
                 function uploadPhotoReadProfile(e) {
                     console.log("adding new profile");
                     let files = e.target.files;
                     if(files.length < 1) return;
-                    let
                         file = files[0],
                         reader = new FileReader();
                     reader.onloadend = function() {
@@ -39,25 +39,28 @@
                         jQuery("#uploadImagePreviewImage")[0].src = dataurl;
                         setTimeout(function() {
                             jQuery("#imageUploadButton")
-                                .removeClass('w3-disabled')
+                                .removeClass('w3-disabled w3-red')
                                 .addClass("w3-green");
                         }, 1000);
                     }
                     reader.readAsDataURL(file);
                 }
                 function submitNewProfile() {
-                    let formdata = new FormData(jQuery("uploadImageForm")[0]);
-                    console.log(formdata);
                     jQuery.ajax({
-                        type: 'GET',
+                        type: 'POST',
                         url: '/profile.png/upload/', // replace with your server-side script
-                        data: formdata,
+                        data: {
+                            image: jQuery("#uploadImagePreviewImage")[0].src.slice(22,),
+                            imagename: jQuery("#uploadImageInput")[0].files[0].name,
+                        },
                         success: function(data) {
-                            location.reload();
+                            if(data.ok) flashMessage("green", "updated profile successfully, reload to see effects");
+                            else flashMessage("red", "Error uploading image" + data.error);
                         },
                         error: function() {
                             jQuery("imageUploadButton")
                                 .toggleClass('w3-green w3-red');
+                            flashMessage("red", "Could not update profile");
                         },
                     });
                 };
@@ -129,7 +132,7 @@
                 <i class="fa fa-arrow-left fa-xl" ></i>
             </a>
             <div class="bg-antimony10 w3-container w3-round w3-margin-bottom">
-                <span onclick="jQuery('#uploadImageDialog').showModal()" class="w3-margin w3-display-container">
+                <span onclick="jQuery('#uploadImageDialog')[0].showModal()" class="w3-margin w3-display-container">
                     <img class="w3-circle w3-inline w3-margin w3-image" hover-class="jump hexa" width="100" height="100" src="/profile.png" />
                     <i class="fa-2xl fg-antimony50 w3-display-bottomright w3-margin fas fa-edit"></i>
                 </span>
