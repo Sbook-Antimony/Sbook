@@ -6,10 +6,12 @@ import difflib
 
 try:
     from . import chatbot
-    pango = chatbot.Chat(default_template='pango/pango.tmpl')
+
+    pango = chatbot.Chat(default_template="pango/pango.tmpl")
 except ImportError:
     import chatbot
-    pango = chatbot.Chat(default_template='pango.tmpl')
+
+    pango = chatbot.Chat(default_template="pango.tmpl")
 
 
 scope = {}
@@ -25,7 +27,7 @@ def quote(txt):
 
 @chatbot.register_call("callMe")
 def call_me(query, session_id="you"):
-    scope['name'] = query
+    scope["name"] = query
     return "Ok, "
 
 
@@ -61,9 +63,8 @@ def who_is(query, session_id="general"):
         return f"**Sorry** I cannot find {query}, are you sure so exists?"
     elif len(users) == 1 or users[0][0] - 0.2 > users[1][0]:
         user = users[0][1]
-        return (
-            f"Yeah you mean @user:{user.model.username}, his bio says:\n\n"
-            + quote(user.model.bio)
+        return f"Yeah you mean @user:{user.model.username}, his bio says:\n\n" + quote(
+            user.model.bio
         )
 
 
@@ -129,7 +130,7 @@ def main():
         print(c.answer(input("> ")))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
 
 

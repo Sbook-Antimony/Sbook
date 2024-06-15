@@ -41,8 +41,7 @@ defaultGender = {
     "him": "her",
     "his": "her",
     "himself": "herself",
-
-    # feminine -> masculine    
+    # feminine -> masculine
     "she": "he",
     "her": "him",
     "hers": "his",
@@ -56,18 +55,16 @@ defaultPerson = {
     "my": "his",
     "mine": "his",
     "myself": "himself",
-
     # 3rd->1st (masculine)
-    "he":"I",
-    "him":"me",
-    "his":"my",
-    "himself":"myself",
-    
+    "he": "I",
+    "him": "me",
+    "his": "my",
+    "himself": "myself",
     # 3rd->1st (feminine)
-    "she":"I",
-    "her":"me",
-    "hers":"mine",
-    "herself":"myself",
+    "she": "I",
+    "her": "me",
+    "hers": "mine",
+    "herself": "myself",
 }
 
 defaultPerson2 = {
@@ -77,7 +74,6 @@ defaultPerson2 = {
     "my": "your",
     "mine": "yours",
     "myself": "yourself",
-
     # 2nd -> 1st
     "you": "me",
     "your": "my",
@@ -90,7 +86,6 @@ defaultPerson2 = {
 defaultNormal = {
     "wanna": "want to",
     "gonna": "going to",
-    
     "yha": "yes",
     "aye": "yes",
     "yep": "yes",
@@ -108,7 +103,6 @@ defaultNormal = {
     "sure": "yes",
     "yessir": "yes",
     "okey-dokey": "yes",
-    
     "uh-uh": "no",
     "nix": "no",
     "nixie": "no",
@@ -120,11 +114,9 @@ defaultNormal = {
     "negative": "no",
     "veto": "no",
     "none": "no",
-    
     "ok": "okay",
     "o.k": "okay",
     "okey": "okay",
-    
     "I'm": "I am",
     "I'd": "I would",
     "I'll": "I will",
@@ -147,15 +139,12 @@ defaultNormal = {
     "they'd": "they would",
     "they'll": "they will",
     "they've": "they have",
-
-    "y'all": "you all",    
-
+    "y'all": "you all",
     "can't": "can not",
     "cannot": "can not",
     "couldn't": "could not",
     "wouldn't": "would not",
     "shouldn't": "should not",
-    
     "isn't": "is not",
     "ain't": "is not",
     "don't": "do not",
@@ -167,7 +156,6 @@ defaultNormal = {
     "hasn't": "has not",
     "hadn't": "had not",
     "haven't": "have not",
-
     "where's": "where is",
     "where'd": "where did",
     "where'll": "where will",
@@ -184,7 +172,6 @@ defaultNormal = {
     "why's": "why is",
     "why'd": "why did",
     "why'll": "why will",
-
     "it's": "it is",
     "it'd": "it would",
     "it'll": "it will",

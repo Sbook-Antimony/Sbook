@@ -147,7 +147,8 @@
                 $scope.all_quizzes = quizzes.slice(0, 5);
             });
             $scope.get_quizzes = function() {
-                $http.get('/quizz/users/{{ user.model.id }}/quizzes.json').then(function(res) {
+                if(!$scope.user) return setTimeout($scope.get_quizzes, 1000);
+                $http.get(`/quizz/users/${$scope.user.id}/quizzes.json`).then(function(res) {
                     if(res.status == 200 && res.data.ok) {
                         $scope.user_quizzes = res.data.quizzes;
                     } else {
@@ -156,7 +157,8 @@
                 });
             }
             $scope.get_attempts = function() {
-                $http.get('/quizz/users/{{ user.model.id }}/attempts.json').then(function(res) {
+                if(!$scope.user) return setTimeout($scope.get_attempts, 1000);
+                $http.get(`/quizz/users/${$scope.user.id}/attempts.json`).then(function(res) {
                     if(res.status == 200 && res.data.ok) {
                         $scope.user_attempts = res.data.attempts;
                     } else {

@@ -9,29 +9,66 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('classroom', '0002_classroom_members'),
-        ('sbook', '0007_course_series'),
+        ("classroom", "0002_classroom_members"),
+        ("sbook", "0007_course_series"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='User',
+            name="User",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('sbookAccount', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='quizzAccount', to='sbook.user')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "sbookAccount",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="quizzAccount",
+                        to="sbook.user",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Quizz',
+            name="Quizz",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('data', models.JSONField()),
-                ('title', models.CharField(max_length=255)),
-                ('profile', models.ImageField(upload_to='')),
-                ('classrooms', models.ManyToManyField(related_name='quizzes', to='classroom.classroom')),
-                ('couses', models.ManyToManyField(related_name='quizzes', to='sbook.course')),
-                ('levels', models.ManyToManyField(related_name='quizzes', to='sbook.level')),
-                ('authors', models.ManyToManyField(related_name='quizzes', to='quizz.user')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("data", models.JSONField()),
+                ("title", models.CharField(max_length=255)),
+                ("profile", models.ImageField(upload_to="")),
+                (
+                    "classrooms",
+                    models.ManyToManyField(
+                        related_name="quizzes", to="classroom.classroom"
+                    ),
+                ),
+                (
+                    "couses",
+                    models.ManyToManyField(related_name="quizzes", to="sbook.course"),
+                ),
+                (
+                    "levels",
+                    models.ManyToManyField(related_name="quizzes", to="sbook.level"),
+                ),
+                (
+                    "authors",
+                    models.ManyToManyField(related_name="quizzes", to="quizz.user"),
+                ),
             ],
         ),
     ]

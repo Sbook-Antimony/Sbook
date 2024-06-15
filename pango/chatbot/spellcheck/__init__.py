@@ -10,10 +10,17 @@ from collections import Counter
 
 
 def words(text):
-    return re.findall(r'\w+', text.lower())
+    return re.findall(r"\w+", text.lower())
 
 
-WORDS = Counter(words(open(path.join(path.dirname(path.abspath(__file__)), 'words.txt'), encoding='utf-8').read()))
+WORDS = Counter(
+    words(
+        open(
+            path.join(path.dirname(path.abspath(__file__)), "words.txt"),
+            encoding="utf-8",
+        ).read()
+    )
+)
 
 
 def correction(text, min_word_length=4):
@@ -23,8 +30,14 @@ def correction(text, min_word_length=4):
     :param min_word_length: word length
     :return: str
     """
-    return " ".join(i if len(i) < min_word_length or WORDS[i] else max(candidates(i), key=probability)
-                    for i in text.split())
+    return " ".join(
+        (
+            i
+            if len(i) < min_word_length or WORDS[i]
+            else max(candidates(i), key=probability)
+        )
+        for i in text.split()
+    )
 
 
 def probability(word, n=sum(WORDS.values())):
@@ -61,7 +74,7 @@ def edits1(word):
     :param word: String
     :return: set of words
     """
-    letters = 'abcdefghijklmnopqrstuvwxyz'
+    letters = "abcdefghijklmnopqrstuvwxyz"
     splits = [(word[:i], word[i:]) for i in range(len(word) + 1)]
     deletes = [L + R[1:] for L, R in splits if R]
     transposes = [L + R[1] + R[0] + R[2:] for L, R in splits if len(R) > 1]

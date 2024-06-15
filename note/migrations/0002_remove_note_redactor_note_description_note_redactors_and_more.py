@@ -7,57 +7,79 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('note', '0001_initial'),
+        ("note", "0001_initial"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='note',
-            name='redactor',
+            model_name="note",
+            name="redactor",
         ),
         migrations.AddField(
-            model_name='note',
-            name='description',
-            field=models.CharField(default='no description', max_length=255),
+            model_name="note",
+            name="description",
+            field=models.CharField(default="no description", max_length=255),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='note',
-            name='redactors',
-            field=models.ManyToManyField(related_name='notes', to='note.noteuser'),
+            model_name="note",
+            name="redactors",
+            field=models.ManyToManyField(related_name="notes", to="note.noteuser"),
         ),
         migrations.AddField(
-            model_name='note',
-            name='starred',
+            model_name="note",
+            name="starred",
             field=models.BigIntegerField(default=0),
         ),
         migrations.AddField(
-            model_name='note',
-            name='stars',
+            model_name="note",
+            name="stars",
             field=models.DecimalField(decimal_places=5, default=0.0, max_digits=6),
         ),
         migrations.AddField(
-            model_name='note',
-            name='views',
+            model_name="note",
+            name="views",
             field=models.BigIntegerField(default=0),
         ),
         migrations.AddField(
-            model_name='noteuser',
-            name='starred',
+            model_name="noteuser",
+            name="starred",
             field=models.BigIntegerField(default=0),
         ),
         migrations.AddField(
-            model_name='noteuser',
-            name='stars',
+            model_name="noteuser",
+            name="stars",
             field=models.DecimalField(decimal_places=5, default=0.0, max_digits=6),
         ),
         migrations.CreateModel(
-            name='Bookmark',
+            name="Bookmark",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('position', models.BigIntegerField()),
-                ('note', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='bookmarks', to='note.note')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='bookmarks', to='note.noteuser')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("position", models.BigIntegerField()),
+                (
+                    "note",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="bookmarks",
+                        to="note.note",
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="bookmarks",
+                        to="note.noteuser",
+                    ),
+                ),
             ],
         ),
     ]

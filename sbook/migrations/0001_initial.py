@@ -7,17 +7,16 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Account',
+            name="Account",
             fields=[
-                ('id', models.BigAutoField(primary_key=True, serialize=False)),
-                ('firstname', models.CharField(max_length=255)),
-                ('lastname', models.CharField(max_length=255)),
-                ('password', models.CharField(max_length=255)),
+                ("id", models.BigAutoField(primary_key=True, serialize=False)),
+                ("firstname", models.CharField(max_length=255)),
+                ("lastname", models.CharField(max_length=255)),
+                ("password", models.CharField(max_length=255)),
             ],
         ),
     ]

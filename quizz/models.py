@@ -12,8 +12,8 @@ class QuizzUser(models.Model):
         sbook.User, related_name="quizzAccount", on_delete=models.CASCADE
     )
     starred_quizzes = models.ManyToManyField(
-        'Quizz',
-        related_name='starred_by',
+        "Quizz",
+        related_name="starred_by",
     )
 
     def __str__(self):
@@ -57,10 +57,7 @@ class Quizz(models.Model):
         QuizzUser,
         related_name="quizzes",
     )
-    classrooms = models.ManyToManyField(
-        school.Classroom,
-        related_name="quizzes"
-    )
+    classrooms = models.ManyToManyField(school.Classroom, related_name="quizzes")
     levels = models.ManyToManyField(sbook.Level, related_name="quizzes")
     courses = models.ManyToManyField(sbook.Course, related_name="quizzes")
     series = models.ManyToManyField(sbook.Serie, related_name="quizzes")

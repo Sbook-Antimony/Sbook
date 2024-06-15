@@ -6,28 +6,28 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('sbook', '0007_course_series'),
+        ("sbook", "0007_course_series"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='course',
-            name='profile',
-            field=models.ImageField(upload_to='profiles'),
+            model_name="course",
+            name="profile",
+            field=models.ImageField(upload_to="profiles"),
         ),
         migrations.AlterField(
-            model_name='level',
-            name='profile',
-            field=models.ImageField(upload_to='profiles'),
+            model_name="level",
+            name="profile",
+            field=models.ImageField(upload_to="profiles"),
         ),
         migrations.AlterField(
-            model_name='serie',
-            name='profile',
-            field=models.ImageField(upload_to='profiles'),
+            model_name="serie",
+            name="profile",
+            field=models.ImageField(upload_to="profiles"),
         ),
         migrations.AlterField(
-            model_name='user',
-            name='profile',
-            field=models.ImageField(null=True, upload_to='profiles'),
+            model_name="user",
+            name="profile",
+            field=models.ImageField(null=True, upload_to="profiles"),
         ),
     ]

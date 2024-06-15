@@ -9,9 +9,7 @@ from mdeditor.widgets import MDEditorWidget
 
 class UserAdmin(admin.ModelAdmin):
     list_display = ("id", "name", "email", "password")
-    formfield_overrides = {
-        models.TextField: {'widget': MDEditorWidget}
-    }
+    formfield_overrides = {models.TextField: {"widget": MDEditorWidget}}
 
 
 admin.site.register(User, UserAdmin)

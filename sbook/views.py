@@ -20,7 +20,6 @@ from . import markdown
 import pango
 
 
-
 File = lambda url: FileResponse(open(url, "rb"), filename=url.as_uri())
 
 
@@ -200,10 +199,10 @@ def do_username_profile(req, username):
 def do_user(req, user):
     return render(
         req,
-        'user-profile.djhtml',
+        "user-profile.djhtml",
         {
-            'id': user,
-            'ng_app_name': 'userProfile',
+            "id": user,
+            "ng_app_name": "userProfile",
         },
     )
 
@@ -212,17 +211,21 @@ def do_user(req, user):
 def do_markdown(req, user):
     try:
         data = req.GET.get("md")
-        data = base64.b64decode(data).decode('utf-8')
-        return JsonResponse({
-            'html': markdown(data),
-            'ok': True,
-        })
+        data = base64.b64decode(data).decode("utf-8")
+        return JsonResponse(
+            {
+                "html": markdown(data),
+                "ok": True,
+            }
+        )
     except Exception as e:
         print(e)
-        return JsonResponse({
-            'html': '<em>Could not be renderred</em>',
-            'ok': False,
-        })
+        return JsonResponse(
+            {
+                "html": "<em>Could not be renderred</em>",
+                "ok": False,
+            }
+        )
 
 
 @annotate
@@ -231,27 +234,29 @@ def do_user_json(req, userid: int) -> Cast(JsonResponse):
         user = User.from_id(userid)
     except UserDoesNotExistError:
         return {
-            'ok': False,
-            'error': 404,
+            "ok": False,
+            "error": 404,
         }
     except Exception:
         return {
-            'ok': False,
-            'error': 0,
+            "ok": False,
+            "error": 0,
         }
     else:
         return {
-            'ok': True,
-            'user': user.js,
+            "ok": True,
+            "user": user.js,
         }
 
 
 @check_login
 def do_current_user_json(req, user):
-    return JsonResponse({
-        "ok": True,
-        "user": user.js,
-    })
+    return JsonResponse(
+        {
+            "ok": True,
+            "user": user.js,
+        }
+    )
 
 
 @annotate
@@ -260,46 +265,52 @@ def do_username_json(req, username: str) -> Cast(JsonResponse):
         user = User.get(username=username)
     except UserDoesNotExistError:
         return {
-            'ok': False,
-            'error': 404,
+            "ok": False,
+            "error": 404,
         }
     except Exception:
         return {
-            'ok': False,
-            'error': 0,
+            "ok": False,
+            "error": 0,
         }
     else:
         return {
-            'ok': True,
-            'user': user.js,
+            "ok": True,
+            "user": user.js,
         }
 
 
 @check_login
 def do_update_profile(req, user):
-    user.model.bio = req.GET.get('bio', user.model.bio)
-    user.model.name = req.GET.get('name', user.model.name)
+    user.model.bio = req.GET.get("bio", user.model.bio)
+    user.model.name = req.GET.get("name", user.model.name)
 
     user.model.save()
-    return JsonResponse({
-        'ok': True,
-    })
+    return JsonResponse(
+        {
+            "ok": True,
+        }
+    )
 
 
 @check_login(False)
 def pango_query(req, user):
-    query = req.GET.get('q')
+    query = req.GET.get("q")
     if not query:
-        return JsonResponse({
-            "ok": False,
-            "response": None,
-            "msg": "No query provided",
-        })
+        return JsonResponse(
+            {
+                "ok": False,
+                "response": None,
+                "msg": "No query provided",
+            }
+        )
     if user is not None:
         res = pango.query(user.model.username, query)
     else:
         res = pango.query("anonymy", query)
-    return JsonResponse({
-        "ok": True,
-        "response": res,
-    })
+    return JsonResponse(
+        {
+            "ok": True,
+            "response": res,
+        }
+    )

@@ -9,43 +9,92 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('sbook', '0002_user_delete_account'),
+        ("sbook", "0002_user_delete_account"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='ChattyRoom',
+            name="ChattyRoom",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=32)),
-                ('creation_date', models.DateTimeField(auto_now_add=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=32)),
+                ("creation_date", models.DateTimeField(auto_now_add=True)),
             ],
         ),
         migrations.CreateModel(
-            name='ChattyUser',
+            name="ChattyUser",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('sbookAccount', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='chattyAccount', to='sbook.user')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "sbookAccount",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="chattyAccount",
+                        to="sbook.user",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='ChattyTextMessage',
+            name="ChattyTextMessage",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('content', models.TextField()),
-                ('sent_date', models.DateTimeField(auto_now_add=True)),
-                ('room', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='messages', to='chatty.chattyroom')),
-                ('sender', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='sent', to='chatty.chattyuser')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("content", models.TextField()),
+                ("sent_date", models.DateTimeField(auto_now_add=True)),
+                (
+                    "room",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="messages",
+                        to="chatty.chattyroom",
+                    ),
+                ),
+                (
+                    "sender",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="sent",
+                        to="chatty.chattyuser",
+                    ),
+                ),
             ],
         ),
         migrations.AddField(
-            model_name='chattyroom',
-            name='admin',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='admins', to='chatty.chattyuser'),
+            model_name="chattyroom",
+            name="admin",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="admins",
+                to="chatty.chattyuser",
+            ),
         ),
         migrations.AddField(
-            model_name='chattyroom',
-            name='members',
-            field=models.ManyToManyField(related_name='rooms', to='chatty.chattyuser'),
+            model_name="chattyroom",
+            name="members",
+            field=models.ManyToManyField(related_name="rooms", to="chatty.chattyuser"),
         ),
     ]

@@ -8,19 +8,35 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('sbook', '0003_level_user_bio_user_profile_course_serie'),
+        ("sbook", "0003_level_user_bio_user_profile_course_serie"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Classroom',
+            name="Classroom",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=255)),
-                ('profile', models.ImageField(upload_to='')),
-                ('description', models.CharField(max_length=255)),
-                ('courses', models.ManyToManyField(related_name='classrooms', to='sbook.course')),
-                ('levels', models.ManyToManyField(related_name='classrooms', to='sbook.level')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=255)),
+                ("profile", models.ImageField(upload_to="")),
+                ("description", models.CharField(max_length=255)),
+                (
+                    "courses",
+                    models.ManyToManyField(
+                        related_name="classrooms", to="sbook.course"
+                    ),
+                ),
+                (
+                    "levels",
+                    models.ManyToManyField(related_name="classrooms", to="sbook.level"),
+                ),
             ],
         ),
     ]

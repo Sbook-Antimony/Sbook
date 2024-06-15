@@ -77,5 +77,5 @@ class Migration(migrations.Migration):
             model_name="note",
             name="stars",
             field=models.IntegerField(default=0),
-        )
+        ),
     ]

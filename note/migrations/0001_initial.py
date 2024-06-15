@@ -9,23 +9,53 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('sbook', '0002_user_delete_account'),
+        ("sbook", "0002_user_delete_account"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='NoteUser',
+            name="NoteUser",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('sbookAccount', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='noteAccount', to='sbook.user')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "sbookAccount",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="noteAccount",
+                        to="sbook.user",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Note',
+            name="Note",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=255)),
-                ('redactor', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='notes', to='note.noteuser')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("title", models.CharField(max_length=255)),
+                (
+                    "redactor",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="notes",
+                        to="note.noteuser",
+                    ),
+                ),
             ],
         ),
     ]

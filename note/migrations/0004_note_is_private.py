@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('note', '0003_note_classrooms_note_courses_note_levels'),
+        ("note", "0003_note_classrooms_note_courses_note_levels"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='note',
-            name='is_private',
+            model_name="note",
+            name="is_private",
             field=models.BooleanField(default=False),
         ),
     ]

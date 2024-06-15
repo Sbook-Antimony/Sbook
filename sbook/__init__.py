@@ -45,7 +45,7 @@ def markdown(text):
                 )
     for icon in icons:
         html = html.replace(
-            f':{icon};',
+            f":{icon};",
             f'<img src="/static/static/{icon}.svg" class="text-fit" />',
         )
     for classes in fawesome.findall(html):
@@ -60,6 +60,6 @@ def markdown(text):
                 '<img src="https://www.webfx.com/assets/emoji-cheat-sheet/img'
                 f'/graphics/emojis/{emojii}.png" class="text-fit emoji" '
                 f'title=":expressionless:" alt=":{emojii}:">',
-            )
+            ),
         )
     return mark_safe(html)

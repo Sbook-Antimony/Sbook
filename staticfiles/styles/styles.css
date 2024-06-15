@@ -2279,6 +2279,16 @@ header {
   visibility: visible;
 }
 
+@media all and (orientation: portrait) {
+  .landscape {
+    display: none;
+  }
+}
+@media all and (orientation: landscape) {
+  .portrait {
+    display: none;
+  }
+}
 html {
   background-image: url("/image/back-lighter-dashy.png");
 }

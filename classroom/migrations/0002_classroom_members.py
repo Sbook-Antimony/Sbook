@@ -6,14 +6,14 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('classroom', '0001_initial'),
-        ('sbook', '0003_level_user_bio_user_profile_course_serie'),
+        ("classroom", "0001_initial"),
+        ("sbook", "0003_level_user_bio_user_profile_course_serie"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='classroom',
-            name='members',
-            field=models.ManyToManyField(related_name='classrooms', to='sbook.user'),
+            model_name="classroom",
+            name="members",
+            field=models.ManyToManyField(related_name="classrooms", to="sbook.user"),
         ),
     ]

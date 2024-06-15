@@ -6,25 +6,27 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('classroom', '0001_initial'),
-        ('note', '0002_remove_note_redactor_note_description_note_redactors_and_more'),
-        ('sbook', '0003_level_user_bio_user_profile_course_serie'),
+        ("classroom", "0001_initial"),
+        ("note", "0002_remove_note_redactor_note_description_note_redactors_and_more"),
+        ("sbook", "0003_level_user_bio_user_profile_course_serie"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='note',
-            name='classrooms',
-            field=models.ManyToManyField(related_name='notes', to='classroom.classroom'),
+            model_name="note",
+            name="classrooms",
+            field=models.ManyToManyField(
+                related_name="notes", to="classroom.classroom"
+            ),
         ),
         migrations.AddField(
-            model_name='note',
-            name='courses',
-            field=models.ManyToManyField(related_name='notes', to='sbook.course'),
+            model_name="note",
+            name="courses",
+            field=models.ManyToManyField(related_name="notes", to="sbook.course"),
         ),
         migrations.AddField(
-            model_name='note',
-            name='levels',
-            field=models.ManyToManyField(related_name='notes', to='sbook.level'),
+            model_name="note",
+            name="levels",
+            field=models.ManyToManyField(related_name="notes", to="sbook.level"),
         ),
     ]

@@ -6,46 +6,78 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('sbook', '0002_user_delete_account'),
+        ("sbook", "0002_user_delete_account"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Level',
+            name="Level",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('position', models.IntegerField()),
-                ('name', models.CharField(max_length=32)),
-                ('profile', models.ImageField(upload_to='')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("position", models.IntegerField()),
+                ("name", models.CharField(max_length=32)),
+                ("profile", models.ImageField(upload_to="")),
             ],
         ),
         migrations.AddField(
-            model_name='user',
-            name='bio',
-            field=models.CharField(default='a human with eyes and fingers', max_length=1023),
+            model_name="user",
+            name="bio",
+            field=models.CharField(
+                default="a human with eyes and fingers", max_length=1023
+            ),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='user',
-            name='profile',
-            field=models.ImageField(default=None, upload_to=''),
+            model_name="user",
+            name="profile",
+            field=models.ImageField(default=None, upload_to=""),
             preserve_default=False,
         ),
         migrations.CreateModel(
-            name='Course',
+            name="Course",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=32)),
-                ('profile', models.ImageField(upload_to='')),
-                ('levels', models.ManyToManyField(related_name='courses', to='sbook.level')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=32)),
+                ("profile", models.ImageField(upload_to="")),
+                (
+                    "levels",
+                    models.ManyToManyField(related_name="courses", to="sbook.level"),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Serie',
+            name="Serie",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('profile', models.ImageField(upload_to='')),
-                ('levels', models.ManyToManyField(related_name='series', to='sbook.level')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("profile", models.ImageField(upload_to="")),
+                (
+                    "levels",
+                    models.ManyToManyField(related_name="series", to="sbook.level"),
+                ),
             ],
         ),
     ]

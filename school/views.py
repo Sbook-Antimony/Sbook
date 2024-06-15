@@ -4,6 +4,7 @@ from django.http import HttpResponseNotFound
 from django.http import JsonResponse
 from django.shortcuts import render
 from sbook.accounts import *
+
 # Create your views here.
 
 
@@ -11,10 +12,10 @@ from sbook.accounts import *
 def do_index(req, user):
     return render(
         req,
-        'school-index.djhtml',
+        "school-index.djhtml",
         {
-            'user': user,
-        }
+            "user": user,
+        },
     )
 
 
@@ -23,16 +24,20 @@ def do_classroom_json(req, user, clsid):
     try:
         classroom = Classroom.from_id(clsid)
     except Classroom.DoesNotExist:
-        return JsonResponse({
-            "ok": False,
-            "status": 404,
-        })
+        return JsonResponse(
+            {
+                "ok": False,
+                "status": 404,
+            }
+        )
     else:
-        return JsonResponse({
-            "ok": True,
-            "status": 200,
-            "classroom": classroom.js,
-        })
+        return JsonResponse(
+            {
+                "ok": True,
+                "status": 200,
+                "classroom": classroom.js,
+            }
+        )
 
 
 @check_login

@@ -7,24 +7,46 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('quizz', '0006_alter_quizz_description'),
+        ("quizz", "0006_alter_quizz_description"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='quizz',
-            old_name='couses',
-            new_name='courses',
+            model_name="quizz",
+            old_name="couses",
+            new_name="courses",
         ),
         migrations.CreateModel(
-            name='QuizzAnswerEttempt',
+            name="QuizzAnswerEttempt",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('answers', models.JSONField()),
-                ('remark', models.JSONField(default=None)),
-                ('remarked', models.BooleanField(default=False)),
-                ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='answer_attempts', to='quizz.quizzuser')),
-                ('quizz', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='answer_attempts', to='quizz.quizz')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("answers", models.JSONField()),
+                ("remark", models.JSONField(default=None)),
+                ("remarked", models.BooleanField(default=False)),
+                (
+                    "author",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="answer_attempts",
+                        to="quizz.quizzuser",
+                    ),
+                ),
+                (
+                    "quizz",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="answer_attempts",
+                        to="quizz.quizz",
+                    ),
+                ),
             ],
         ),
     ]

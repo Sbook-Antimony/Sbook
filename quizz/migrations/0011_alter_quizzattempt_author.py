@@ -7,13 +7,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('quizz', '0010_alter_quizzattempt_remark'),
+        ("quizz", "0010_alter_quizzattempt_remark"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='quizzattempt',
-            name='author',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='quizz_attempts', to='quizz.quizzuser'),
+            model_name="quizzattempt",
+            name="author",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="quizz_attempts",
+                to="quizz.quizzuser",
+            ),
         ),
     ]

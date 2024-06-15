@@ -72,6 +72,7 @@ def check_login(func, redirect=True):
 
 ##########################################
 
+
 class ModelInter:
     __pyod_norecur__ = True
 
@@ -82,8 +83,11 @@ class ModelInter:
 
     @classmethod
     def from_id(cls, id):
-        if hasattr(cls, 'parent'):
-            return cls.fromParent(cls.parent.from_id(id))
+        if hasattr(cls, "parent"):
+            try:
+                return cls.fromParent(cls.parent.from_id(id))
+            except cls.parent.DoesNotExistError as e:
+                raise cls.DoesNotExistError(e) from e
         else:
             try:
                 return cls.get(id=int(id))
@@ -167,9 +171,7 @@ class User(ModelInter):
         while i < 10000:
             try:
                 obj = models.User(
-                    username=name.lower().replace(
-                        " ", ""
-                    ) + (str(i) if i > 0 else ""),
+                    username=name.lower().replace(" ", "") + (str(i) if i > 0 else ""),
                     name=name,
                     email=email,
                     password=password,
@@ -191,16 +193,19 @@ class User(ModelInter):
             "bio_html": markdown.markdown(self.model.bio),
             "id": self.model.id,
             "email": self.model.email,
-            "classrooms": tuple(set(
-                [clsrm.id for clsrm in self.model.teaches_classrooms.all()]
-                + [clsrm.id for clsrm in self.model.teached_classrooms.all()]
-                + [clsrm.id for clsrm in self.model.admins_classrooms.all()]
-            ))
+            "classrooms": tuple(
+                set(
+                    [clsrm.id for clsrm in self.model.teaches_classrooms.all()]
+                    + [clsrm.id for clsrm in self.model.teached_classrooms.all()]
+                    + [clsrm.id for clsrm in self.model.admins_classrooms.all()]
+                )
+            ),
         }
 
     @functools.cached_property
     def noteAccount(self):
         import note.accounts
+
         cha = self.model.noteAccount.all()
         if len(cha) == 0:
             raise note.accounts.NoteUser.DoesNotExistError()
@@ -210,9 +215,9 @@ class User(ModelInter):
 class Classifier(ModelInter):
     def js(self):
         return {
-            'type': self.__class__.__name__.lower(),
-            'id': self.model.id,
-            'description': self.model.description,
+            "type": self.__class__.__name__.lower(),
+            "id": self.model.id,
+            "description": self.model.description,
         } | self.js_spec()
 
 
@@ -227,11 +232,7 @@ class Level(Classifier):
     model = models.Level
 
     def js_spec(self):
-        return {
-            'series': [
-                serie.id for serie in self.model.series.all()
-            ]
-        }
+        return {"series": [serie.id for serie in self.model.series.all()]}
 
 
 class Course(Classifier):
@@ -239,12 +240,8 @@ class Course(Classifier):
 
     def js_spec(self):
         return {
-            'series': [
-                serie.id for serie in self.model.series.all()
-            ],
-            'levels': [
-                level.id for level in self.model.levels.all()
-            ]
+            "series": [serie.id for serie in self.model.series.all()],
+            "levels": [level.id for level in self.model.levels.all()],
         }
 
 
@@ -252,8 +249,4 @@ class Topic(Classifier):
     model = models.Topic
 
     def js_spec(self):
-        return {
-            'courses': [
-                course.id for course in self.model.courses.all()
-            ]
-        }
+        return {"courses": [course.id for course in self.model.courses.all()]}

@@ -6,6 +6,7 @@ from PIL import ImageDraw
 from PIL import ImageEnhance
 from PIL import ImageFont
 from django.core.files import File
+
 eqs = [
     lambda x, y: x % y,
     lambda x, y: y % x,
@@ -87,9 +88,7 @@ def average_color(image, step=10):
 
 profile_images = [
     f"media/profiles/random/{x}.png"
-    for x in json.loads(
-        open('media/profiles/random/random-profiles.json').read()
-    )
+    for x in json.loads(open("media/profiles/random/random-profiles.json").read())
 ]
 
 
@@ -98,4 +97,4 @@ def get_random():
 
 
 def get_random_file():
-    return File(open(get_random(), 'rb'))
+    return File(open(get_random(), "rb"))

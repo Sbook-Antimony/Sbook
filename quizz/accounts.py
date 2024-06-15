@@ -51,29 +51,27 @@ class QuizzUser(sbook.accounts.ModelInter):
 
     @functools.cached_property
     @annotate
-    def sbook(self: 'QuizzUser') -> sbook.accounts.User:
+    def sbook(self: "QuizzUser") -> sbook.accounts.User:
         return sbook.accounts.User(
             self.model.sbookAccount,
         )
 
     @functools.cached_property
     @annotate
-    def quizzes(self: 'QuizzUser') -> Cast(Tuple):
+    def quizzes(self: "QuizzUser") -> Cast(Tuple):
         return map(Quizz, self.model.quizzes.all())
 
     @functools.cached_property
     @annotate
-    def attempts(self: 'QuizzUser') -> Cast(Tuple):
+    def attempts(self: "QuizzUser") -> Cast(Tuple):
         return Tuple(map(QuizzAttempt, self.model.quizz_attempts.all()))
 
     @functools.cached_property
-    def js(self: 'QuizzUser') -> dict[str]:
+    def js(self: "QuizzUser") -> dict[str]:
         return {
             "attempts": [x.model.id for x in self.attempts],
             "quizzes": [x.model.id for x in self.quizzes],
-            "starred_quizzes": [
-                x.id for x in self.model.starred_quizzes.all()
-            ],
+            "starred_quizzes": [x.id for x in self.model.starred_quizzes.all()],
             "sbook": self.sbook.js,
         }
 
@@ -116,7 +114,7 @@ class Quizz(sbook.accounts.ModelInter):
 
     @functools.cached_property
     @annotate
-    def authors(self: 'Quizz') -> Tuple:
+    def authors(self: "Quizz") -> Tuple:
         return Tuple(map(QuizzUser, self.model.authors.all()))
 
     @functools.cached_property
@@ -146,9 +144,7 @@ class Quizz(sbook.accounts.ModelInter):
         if isinstance(self.model.questions, list):
             return Tuple(
                 Question.from_dict(data, i)
-                for i, data in enumerate(
-                    self.model.questions or []
-                )
+                for i, data in enumerate(self.model.questions or [])
             )
         else:
             return []
@@ -256,11 +252,11 @@ class QuizzAttempt(sbook.accounts.ModelInter):
 
     @functools.cached_property
     @annotate
-    def author(self: 'QuizzAttempt') -> Cast(QuizzUser):
+    def author(self: "QuizzAttempt") -> Cast(QuizzUser):
         return self.model.author
 
     @functools.cached_property
-    def js(self: 'QuizzAttempt'):
+    def js(self: "QuizzAttempt"):
         return {
             "id": self.model.id,
             "quizz": self.quizz.js,
@@ -273,12 +269,12 @@ class QuizzAttempt(sbook.accounts.ModelInter):
 
     @functools.cached_property
     @annotate
-    def quizz(self: 'QuizzAttempt') -> Quizz:
+    def quizz(self: "QuizzAttempt") -> Quizz:
         return Quizz(self.model.quizz)
 
     @functools.cached_property
     @annotate
-    def answers(self: 'QuizzAttempt') -> Tuple[QuestionAttempt]:
+    def answers(self: "QuizzAttempt") -> Tuple[QuestionAttempt]:
         ret = tuple(
             QuestionAttempt.from_question(self.quizz.questions[i], a)
             for i, a in enumerate(self.model.answers)

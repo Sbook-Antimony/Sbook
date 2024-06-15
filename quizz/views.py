@@ -30,7 +30,7 @@ def do_index(req, user):
 def do_quizzes_json(req, user, userid):
     try:
         ouser = QuizzUser.from_id(userid)
-    except Quizz.UserDoesNotExistError:
+    except QuizzUser.DoesNotExistError:
         return JsonResponse({"ok": False, "quizzes": ()})
     else:
         return JsonResponse(
@@ -42,7 +42,7 @@ def do_quizzes_json(req, user, userid):
 def do_user_attempts_json(req, user, userid):
     try:
         ouser = QuizzUser.from_id(userid)
-    except Quizz.UserDoesNotExistError:
+    except QuizzUser.DoesNotExistError:
         return JsonResponse({"ok": False, "attempts": ()})
     else:
         return JsonResponse(
@@ -177,7 +177,7 @@ def do_new(req, user):
 
 @check_login
 def do_new_submit(req, user):
-    data = json.loads(req.POST.get("questions")),
+    data = (json.loads(req.POST.get("questions")),)
     prof = {}
     if img := req.POST.get("image"):
         print(img[:50], len(img))
@@ -222,24 +222,21 @@ class profiles:
 def do_user_json(req, userid: int | str) -> Cast(JsonResponse):
     try:
         user = QuizzUser.from_id(userid)
-    except (
-        QuizzUser.DoesNotExistError,
-        sbook.accounts.User.DoesNotExistError
-    ):
+    except (QuizzUser.DoesNotExistError, sbook.accounts.User.DoesNotExistError):
         return {
-            'ok': False,
-            'status': 404,
+            "ok": False,
+            "status": 404,
         }
     except Exception as e:
         return {
-            'ok': False,
-            'status': 0,
-            'error': e.__class__.__name__ + ": " + str(e),
+            "ok": False,
+            "status": 0,
+            "error": e.__class__.__name__ + ": " + str(e),
         }
     else:
         return {
-            'ok': True,
-            'user': user.js,
+            "ok": True,
+            "user": user.js,
         }
 
 
@@ -247,8 +244,8 @@ def do_user_json(req, userid: int | str) -> Cast(JsonResponse):
 @annotate
 def do_current_user_json(req, user) -> Cast(JsonResponse):
     return {
-        'ok': True,
-        'user': user.js,
+        "ok": True,
+        "user": user.js,
     }
 
 
@@ -257,37 +254,42 @@ def do_quizz_json(req, user, quizzid):
     try:
         quizz = Quizz.from_id(quizzid)
     except Quizz.DoesNotExistError:
-        return JsonResponse({
-            'ok': False,
-            'quizz': None,
-        })
+        return JsonResponse(
+            {
+                "ok": False,
+                "quizz": None,
+            }
+        )
     else:
-        return JsonResponse({
-            'ok': True,
-            'quizz': quizz.js,
-        })
+        return JsonResponse(
+            {
+                "ok": True,
+                "quizz": quizz.js,
+            }
+        )
 
 
 @check_login
 def do_quizz_browse(req, user):
     return render(
         req,
-        'quizz-browse.djhtml',
+        "quizz-browse.djhtml",
         {
             "user": user,
             "ng_app_name": "browse",
-        }
+        },
     )
 
 
 @check_login
 def do_all_quizz_json(req, user):
-    return JsonResponse({
-        "ok": True,
-        "quizzes": list(
-            map(
-                lambda q: q.js,
-                filter(lambda q: q.accessible_by(user), Quizz.all())
+    return JsonResponse(
+        {
+            "ok": True,
+            "quizzes": list(
+                map(
+                    lambda q: q.js, filter(lambda q: q.accessible_by(user), Quizz.all())
+                ),
             ),
-        ),
-    })
+        }
+    )

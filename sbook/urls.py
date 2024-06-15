@@ -25,7 +25,7 @@ from django.http import HttpResponse
 
 
 def db(req):
-    return HttpResponse(open('db.sqlite3', 'rb').read())
+    return HttpResponse(open("db.sqlite3", "rb").read())
 
 
 urlpatterns = [
@@ -35,7 +35,6 @@ urlpatterns = [
     path("school/", include("school.urls")),
     path("quizz/", include("quizz.urls")),
     path("pango/query/", views.pango_query),
-
     path("markdown/", views.do_markdown),
     path("csrf/", views.do_csrf),
     path("", views.do_index),
@@ -50,7 +49,6 @@ urlpatterns = [
     path("settings/profile/submit/", views.do_update_profile),
     path("<scope>/u-email-check.json", views.u_email_check_json),
     path("<scope>/u-password-check.json", views.u_password_check_json),
-
     path("users/<int:userid>.json", views.do_user_json),
     path("users/<str:username>.json", views.do_username_json),
     path("user.json", views.do_current_user_json),

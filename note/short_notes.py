@@ -10,7 +10,7 @@ def do_sidebar(req, user):
         "short-notes/side-bar.django",
         {
             "user": user,
-        }
+        },
     )
 
 
@@ -19,21 +19,27 @@ def do_json(req, user, snid):
     try:
         snote = ShortNote.from_id(snid)
     except ShortNote.DoesNotExist:
-        return JsonResponse({
-            "ok": False,
-            "status": 404,
-            "short_note": None,
-        })
+        return JsonResponse(
+            {
+                "ok": False,
+                "status": 404,
+                "short_note": None,
+            }
+        )
     else:
         if not snote.model.private or snote.author.id == user.id:
-            return JsonResponse({
-                "ok": True,
-                "status": 200,
-                "short_note": snote.js,
-            })
+            return JsonResponse(
+                {
+                    "ok": True,
+                    "status": 200,
+                    "short_note": snote.js,
+                }
+            )
         else:
-            return JsonResponse({
-                "ok": True,
-                "status": 403,
-                "short_note": None,
-            })
+            return JsonResponse(
+                {
+                    "ok": True,
+                    "status": 403,
+                    "short_note": None,
+                }
+            )
