@@ -1,9 +1,6 @@
 import json
-import io
-import tempfile
 import base64
 
-from . import forms
 from .accounts import *
 from django.http import HttpResponse
 from django.http import HttpResponseNotFound
@@ -11,6 +8,7 @@ from django.http import HttpResponseRedirect
 from django.http import JsonResponse
 from django.shortcuts import render
 from sbook import settings
+import sbook.accounts
 from django.core.files.base import ContentFile
 
 
@@ -32,7 +30,7 @@ def do_index(req, user):
 def do_quizzes_json(req, user, userid):
     try:
         ouser = QuizzUser.from_id(userid)
-    except QuizzUserDoesNotExistError:
+    except Quizz.UserDoesNotExistError:
         return JsonResponse({"ok": False, "quizzes": ()})
     else:
         return JsonResponse(
@@ -44,7 +42,7 @@ def do_quizzes_json(req, user, userid):
 def do_user_attempts_json(req, user, userid):
     try:
         ouser = QuizzUser.from_id(userid)
-    except QuizzUserDoesNotExistError:
+    except Quizz.UserDoesNotExistError:
         return JsonResponse({"ok": False, "attempts": ()})
     else:
         return JsonResponse(
@@ -197,8 +195,11 @@ def do_new_submit(req, user):
         is_private=req.POST.get("is_private") in (True, "true"),
         **prof,
     )
-    quizz.classrooms.set(req.POST.get("classrooms"))
     quizz.save()
+    if req.POST.get("is_private") in (True, "true"):
+        quizz.classrooms.set(req.POST.get("classrooms"))
+    else:
+        quizz.classrooms.set(())
     quizz.authors.set((user.id,))
     return JsonResponse(
         {
@@ -211,31 +212,44 @@ class profiles:
     def quizzes(req, quizzid):
         try:
             quizz = Quizz.from_id(quizzid)
-        except QuizzDoesNotExistError:
+        except Quizz.DoesNotExistError:
             return HttpResponseNotFound()
         else:
             return HttpResponse(quizz.profile_asBytes)
 
 
 @annotate
-def do_user_json(req, userid: int) -> Cast(JsonResponse):
+def do_user_json(req, userid: int | str) -> Cast(JsonResponse):
     try:
         user = QuizzUser.from_id(userid)
-    except QuizzUser.DoesNotExistError:
+    except (
+        QuizzUser.DoesNotExistError,
+        sbook.accounts.User.DoesNotExistError
+    ):
         return {
             'ok': False,
-            'error': 404,
+            'status': 404,
         }
-    except Exception:
+    except Exception as e:
         return {
             'ok': False,
-            'error': 0,
+            'status': 0,
+            'error': e.__class__.__name__ + ": " + str(e),
         }
     else:
         return {
             'ok': True,
             'user': user.js,
         }
+
+
+@check_login
+@annotate
+def do_current_user_json(req, user) -> Cast(JsonResponse):
+    return {
+        'ok': True,
+        'user': user.js,
+    }
 
 
 @check_login

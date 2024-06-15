@@ -60,7 +60,7 @@
         app.controller('{{ ng_app_name }}Ctrl', function($scope, $http) {
             window.$scope = $scope;
             $scope.quizzes = [];
-            QuizzUser.get({{ user.model.id }}, $http, function(user) {
+            QuizzUser.get_current($http, function(user) {
                 window.quizz_user = $scope.quizz_user = user;
                 window.user = $scope.user = user.sbook;
             });

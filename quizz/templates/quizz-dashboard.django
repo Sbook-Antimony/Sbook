@@ -24,14 +24,14 @@
                     </p>
                 </div>
                 <div ng-repeat="quizz in user_quizzes" class="w3-display-container">
-                    <a class="" href="/quizz/quizzes/{{ quizz.id }}/preview">
+                    <a class="" style="max-height: 100px!important;" href="/quizz/quizzes/{{ quizz.id }}/preview">
                         <img
                             hover-class="zoom-2"
                             height="100"
                             class="w3-circle inline w3-margin-right w3-left"
                             src="/quizz/profiles/quizzes/{{ quizz.id }}.png"
                         />
-                        <div class="inline" style="width: 80%; height: 100%;">
+                        <div class="inline" style="width: 80%; height: 100px;">
                             <h4 class="w3-large">{{ quizz.title }}</h4>
                             <p class="fg-antimony w3-small w3-justify w3-block raw-markdown">
                                 {{ quizz.description }}
@@ -109,22 +109,22 @@
                 id="quizzes-for-U"
                 class="w3-display-container w3-border-bottom w3-padding w3-margin w3-round bg-a1"
             >
-            <div ng-repeat="quizz in user_quizzes">
-                <a class="" href="/quizz/quizzes/{{ quizz.id }}/preview">
-                    <img
-                        hover-class="w3-animate-zoom"
-                        height="100"
-                        class="w3-circle w3-left inline w3-margin-right"
-                        src="/quizz/profiles/quizzes/{{ quizz.id }}.png"
-                    />
-                    <span class="inline">
-                        <h4 class="w3-large">{{ quizz.title }}</h4>
-                        <p class="fg-antimony w3-small raw-markdown">
-                            {{ quizz.description }}
-                        </p>
-                    </span>
-                </a>
-            </div>
+                <div ng-repeat="quizz in all_quizzes" class="w3-display-container">
+                    <a class="" style="max-height: 100px!important;" href="/quizz/quizzes/{{ quizz.id }}/preview">
+                        <img
+                            hover-class="zoom-2"
+                            height="100"
+                            class="w3-circle inline w3-margin-right w3-left"
+                            src="/quizz/profiles/quizzes/{{ quizz.id }}.png"
+                        />
+                        <div class="inline" style="width: 80%; height: 100px;">
+                            <h4 class="w3-large">{{ quizz.title }}</h4>
+                            <p class="fg-antimony w3-small w3-justify w3-block raw-markdown">
+                                {{ quizz.description }}
+                            </p>
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
     {% endverbatim %}
@@ -134,7 +134,7 @@
         const app = angular.module('{{ ng_app_name }}', []);
         app.controller('{{ ng_app_name }}Ctrl', function($scope, $http) {
             window.$scope = $scope;
-            QuizzUser.get({{ user.model.id }}, $http, function(user) {
+            QuizzUser.get_current($http, function(user) {
                 window.quizz_user = $scope.quizz_user = user;
                 window.user = $scope.user = user.sbook;
             });
@@ -142,6 +142,10 @@
             $scope.user_name = "{{ user.model.name }}";
             $scope.user_quizzes = [];
             $scope.user_attempts = [];
+            $scope.all_quizzes = [];
+            Quizz.all($http, function(quizzes) {
+                $scope.all_quizzes = quizzes.slice(0, 5);
+            });
             $scope.get_quizzes = function() {
                 $http.get('/quizz/users/{{ user.model.id }}/quizzes.json').then(function(res) {
                     if(res.status == 200 && res.data.ok) {

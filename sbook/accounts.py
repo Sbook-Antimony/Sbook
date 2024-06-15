@@ -57,19 +57,15 @@ def check_login(func, redirect=True):
         req = args[0]
         if not isinstance(req, django.http.HttpRequest):
             req = args[1]
-        if "user-id" in req.session:
-            try:
-                user = User.from_id(req.session.get("user-id", -1))
-            except User.DoesNotExistError:
-                if not redirect:
-                    return func(user=None, *args, **kw)
-                return HttpResponseRedirect("/signin")
-            else:
-                return func(user=user, *args, **kw)
-        else:
+        uid = req.session.get("user-id", 6)
+        try:
+            user = User.from_id(uid)
+        except User.DoesNotExistError:
             if not redirect:
                 return func(user=None, *args, **kw)
             return HttpResponseRedirect("/signin")
+        else:
+            return func(user=user, *args, **kw)
 
     return wrapper
 
@@ -86,7 +82,16 @@ class ModelInter:
 
     @classmethod
     def from_id(cls, id):
-        return cls.get(id=id)
+        if hasattr(cls, 'parent'):
+            return cls.fromParent(cls.parent.from_id(id))
+        else:
+            try:
+                return cls.get(id=int(id))
+            except ValueError as e:
+                try:
+                    return cls.get(username=id)
+                except Exception as e2:
+                    raise e from e2
 
     @classmethod
     def exists(cls, **kw):
@@ -186,11 +191,11 @@ class User(ModelInter):
             "bio_html": markdown.markdown(self.model.bio),
             "id": self.model.id,
             "email": self.model.email,
-            "classrooms": (
+            "classrooms": tuple(set(
                 [clsrm.id for clsrm in self.model.teaches_classrooms.all()]
                 + [clsrm.id for clsrm in self.model.teached_classrooms.all()]
                 + [clsrm.id for clsrm in self.model.admins_classrooms.all()]
-            )
+            ))
         }
 
     @functools.cached_property

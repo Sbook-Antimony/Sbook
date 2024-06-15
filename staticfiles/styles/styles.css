@@ -1,9 +1,11 @@
 .markdown img[alt=icon] {
   height: 1em;
+  color: violet;
+  color: #dbc;
 }
 
 img.text-fit {
-  height: 1em;
+  height: 1.2em;
 }
 
 .inline {
@@ -2261,8 +2263,8 @@ header {
 /* Tooltip text */
 .tooltip > .tooltip-text {
   visibility: hidden;
-  width: 120px;
-  background-color: black;
+  max-width: 500px;
+  background-color: rgb(76, 79, 77);
   color: #fff;
   text-align: center;
   padding: 5px 0;
@@ -2291,14 +2293,14 @@ body {
   flex-wrap: nowrap;
 }
 body > #left {
-  margin-top: 50px;
+  padding: 0;
+  margin: 0;
   order: 1;
   flex-grow: 2;
   justify-content: left;
   display: block;
 }
 body > #center {
-  margin-top: 50px;
   max-width: 700px;
   order: 2;
   flex-grow: 5;
@@ -2309,7 +2311,8 @@ body > #center {
   display: block;
 }
 body > #right {
-  margin-top: 50px;
+  padding: 0;
+  margin: 0;
   order: 3;
   flex-grow: 2;
   justify-content: right;
@@ -2357,7 +2360,8 @@ bd-antimony {
 }
 
 #header-back-blurred-div {
-  backdrop-filter: blur(40px);
+  backdrop-filter: blur(5px);
+  filter: blur(10px);
 }
 
 zoom-0 {

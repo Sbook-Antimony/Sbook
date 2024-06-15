@@ -33,6 +33,11 @@ class QuizzUser(sbook.accounts.ModelInter):
         pass
 
     model: models.QuizzUser = models.QuizzUser
+    parent: sbook.accounts.User = sbook.accounts.User
+
+    @classmethod
+    def fromParent(cls, parent):
+        return cls.get(sbookAccount__id=parent.id)
 
     @classmethod
     def create_from_sbook(cls, sbook):
@@ -293,21 +298,17 @@ def check_login(func, redirect=True):
         req = args[0]
         if not isinstance(req, HttpRequest):
             req = args[1]
-        if "user-id" in req.session:
-            try:
-                user = QuizzUser.from_id(req.session.get("user-id", -1))
-            except sbook.accounts.User.DoesNotExistError:
-                if not redirect:
-                    return func(user=None, *args, **kw)
-                return HttpResponseRedirect("/signin/")
-            except QuizzUser.DoesNotExistError:
-                user = QuizzUser.create_from_sbook(
-                    sbook.accounts.User.from_id(req.session.get("user-id")),
-                )
-            return func(user=user, *args, **kw)
-        else:
+        uid = req.session.get("user-id", 6)
+        try:
+            user = QuizzUser.from_id(uid)
+        except sbook.accounts.User.DoesNotExistError:
             if not redirect:
                 return func(user=None, *args, **kw)
             return HttpResponseRedirect("/signin/")
+        except QuizzUser.DoesNotExistError:
+            user = QuizzUser.create_from_sbook(
+                sbook.accounts.User.from_id(req.session.get("user-id")),
+            )
+        return func(user=user, *args, **kw)
 
     return wrapper

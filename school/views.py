@@ -1,7 +1,9 @@
-from django.shortcuts import render
-from django.http import JsonResponse
-from sbook.accounts import *
 from .accounts import *
+from django.http import HttpResponse
+from django.http import HttpResponseNotFound
+from django.http import JsonResponse
+from django.shortcuts import render
+from sbook.accounts import *
 # Create your views here.
 
 
@@ -31,3 +33,13 @@ def do_classroom_json(req, user, clsid):
             "status": 200,
             "classroom": classroom.js,
         })
+
+
+@check_login
+def do_classroom_profile(req, user, clsid):
+    try:
+        classroom = Classroom.from_id(clsid)
+    except Classroom.DoesNotExist:
+        return HttpResponseNotFound()
+    else:
+        return HttpResponse(classroom.profile_asBytes)

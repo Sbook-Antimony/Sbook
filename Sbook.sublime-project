@@ -20,7 +20,20 @@
 			"file_regex": "^[ ]*File \"(...*?)\", line ([0-9]*)",
 			"name": "Anaconda Python Builder",
 			"selector": "source.python",
-			"shell_cmd": "\"python\" -u \"$file\""
+			"shell_cmd": "\"python\" -u \"$file\"",
 		},
 	],
+	"color_helper_palettes":
+	[
+		{
+			"colors":
+			[
+				"color(srgb 0.98039215686274506 0.85490196078431369 0.36862745098039218)",
+				"color(srgb 0.29803921568627451 0.30980392156862746 0.30196078431372547)",
+				"color(srgb 0.50196078431372548 0 0.50196078431372548)",
+			],
+			"name": "Antimony",
+		}
+	],
+	"color_helper_palettes_format": "3.0",
 }

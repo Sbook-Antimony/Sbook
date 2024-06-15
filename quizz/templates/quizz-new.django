@@ -88,7 +88,13 @@
               <span></span>
             </label>
             <div ng-show="is_private">
-
+                <div class="inline" ng-repeat="classroom in classrooms" style="overflow-x: auto;">
+                    <caption class="tooltip inline">
+                        <img height="100" src="{{ classroom.profile }}" class="w3-circle" />
+                        <div class="tooltip-text raw-markdown" ng-bind="classroom.description">
+                        </div>
+                    </caption>
+                </div>
             </div>
         </div>
         <span
@@ -153,11 +159,11 @@
                 jQuery.ajax({
                     url: '/quizz/new/submit/',
                     success: function(data) {
-                        alert(data, JSON.stringify(data));
+                        flashMessage("green", $scope.title + " created succesfully.");
                         location.assign('/quizz/');
                     },
                     error: function(zer) {
-                        alert("error creating question", zer);
+                        flashMessage("red", "error creating question: "+ zer.toString());
                     },
                     type: 'POST',
                     data: $scope.serialize(),

@@ -105,6 +105,14 @@ class QuizzUser extends ModelInter {
             }
         });
     }
+    static get_current($http, callback) {
+        $http.get(`/quizz/user.json`).then(function(res) {
+            let data = res.data;
+            if(data.ok) {
+                callback(new QuizzUser(data.user));
+            }
+        });
+    }
     constructor(data) {
         super(data);
         this.sbook = new User(data.sbook);
@@ -114,7 +122,7 @@ class QuizzUser extends ModelInter {
 
 class Classroom extends ModelInter {
     static get(id, $http, callback) {
-        $http.get(`/school/classrooms/${id}.json`).then(function(res) {
+        $http.get(`/school/classroom/${id}.json`).then(function(res) {
             let data = res.data;
             if(data.ok) {
                 callback(new Classroom(data.classroom));
@@ -122,6 +130,10 @@ class Classroom extends ModelInter {
                 callback(null);
             }
         });
+    }
+    constructor(data) {
+        super(data);
+        this.profile = `/school/classroom/profile/${this.id}.png`;
     }
 }
 
@@ -147,7 +159,7 @@ class Question extends ModelInter {
     }
     addOption(k, v) {
         if(Object.keys(this.options).length > 10) {
-            flashMessage("#f63",`Oh, ${Object.keys(this.options).length} thats many options, don't you think?`);
+            flashMessage("#f93",`Oh, ${Object.keys(this.options).length} thats many options, don't you think?`);
             return;
         }
         if(k == null) k = String.fromCodePoint(

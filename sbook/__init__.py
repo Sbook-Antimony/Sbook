@@ -7,6 +7,8 @@ import re
 icons = []
 icon_dir = Path("staticfiles/static")
 mention = re.compile(r"@(user|topic)\:([\d\w\-_]+)")
+emoji = re.compile(r":([\w\-]):")
+fawesome = re.compile(r":(fa-[\w\-]):")
 assert icon_dir.exists(), f"icon dir: {icon_dir=} not found"
 
 for icn in icon_dir.glob("*.svg"):
@@ -17,20 +19,15 @@ def markdown(text):
     import sbook.accounts
 
     html = md.markdown(text)
-    for icon in icons:
-        html = html.replace(
-            f':{icon}:',
-            f'<img src="/static/static/{icon}.svg" class="text-fit" />',
-        )
     for m_type, name in mention.findall(text):
         if m_type == "user":
             try:
                 user = sbook.accounts.User.get(username=name)
-            except sbook.accounts.User.DoesExistError:
+            except sbook.accounts.User.DoesNotExistError:
                 pass
             else:
                 html = html.replace(
-                    f"@user:{name}",
+                    f"@user:{name};",
                     f"""\
                     <div class="tooltip">
                         <a href="/users/{name}/" style="color: green;">
@@ -40,11 +37,29 @@ def markdown(text):
                             />
                             {user.model.name}
                         </a>
-                        <div class="raw-markdown tooltip-text">
+                        <div hidden class="raw-markdown tooltip-text">
                             {user.model.bio}
                         </div>
                     </div>
                     """,
                 )
+    for icon in icons:
+        html = html.replace(
+            f':{icon};',
+            f'<img src="/static/static/{icon}.svg" class="text-fit" />',
+        )
+    for classes in fawesome.findall(html):
+        html = html.replace(
+            f":fa:{classes};",
+            f'<i class="text-fit fas {classes}"></i>',
+        )
+    for emojii in emoji.findall(html):
+        html = html.replace(
+            f":{emojii}:",
+            (
+                '<img src="https://www.webfx.com/assets/emoji-cheat-sheet/img'
+                f'/graphics/emojis/{emojii}.png" class="text-fit emoji" '
+                f'title=":expressionless:" alt=":{emojii}:">',
+            )
+        )
     return mark_safe(html)
-

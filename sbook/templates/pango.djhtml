@@ -21,14 +21,13 @@
             #pango-chat
             {
                 border: 0.5px lightgrey solid;
-                width: 100%;
                 max-width: 500px;
                 position: fixed;
                 bottom: 50px;
                 right: 50px;
                 border-radius: 25px;
                 background-color: white;
-            }
+                £
             #pango-chats
             {
                 max-height: 500px;
@@ -82,6 +81,16 @@
                     p.classList.add(..."margin-0 padding-5 w3-padding-8 w3-round-xlarge raw-markdown".split(" "));
                     if(author == "user") p.classList.add(..."w3-left w3-pale-red".split(" "))
                     else p.classList.add(..."w3-right w3-pale-blue".split(" "));
+                    if(author == "pango") {
+                        try {
+                            let utt = new SpeechSynthesisUtterance(text);
+                            utt.lang = "en-UK";
+                            utt.volume = 100;
+                            speechSynthesis.speak(utt);
+                        } catch(e) {
+                            console.error(e);
+                        }
+                    }
                     let chats = Pango.chats_widget;
                     chats.appendChild(container);
                     chats.scrollTop = chats.scrollHeight;

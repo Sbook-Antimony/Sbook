@@ -142,7 +142,7 @@
             </div>
             <div class="w3-container round-n-20 w3-margin-bottom w3-margin-top">
                 <h5 class="bg-naple w3-text-white w3-container margin-0">Bio</h5>
-                <textarea class="no-resize w3-input w3-container w3-medium bd-naple bd-1" ng-model="user.bio"></textarea>
+                <textarea rows="10" class="no-resize w3-input w3-container w3-medium bd-naple bd-1" ng-model="user.bio"></textarea>
             </div>
             <button
                 ng-click="submitProfileSettings()"
