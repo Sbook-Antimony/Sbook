@@ -6,34 +6,56 @@
 {% endblock %}
 
 {% block %}
+    {% client %}(What is|Who is|Tell me) (about|more)( on)? Sbook.*{% endclient %}
+    {% response %}Sbook, is a web platform offering e-learnig facilities, including
+- [Notes](/note/)
+- [Quizzes](/quizz/)
+- [Classrooms](/school/)
+
+The wanted users like you {% call you %} To have acces to education
+even in some... not so good circumstances.{% endresponse %}
+{% endblock %}
+
+{% block %}
+    {% client %}(Do you know(?: about)?|who is|tell me about|are you familiar with) ([\w\-_]+){% endclient %}
+    {% response %}{% call whoIs:%2 %}{% endresponse %}
+{% endblock %}
+
+{% block %}
+    {% client %}(greetings|welcome|Hy|Hello|Good \w+).*{% endclient %}
+    {% response %}{greetings:%1} {% call you:%0 %}{% endresponse %}
+    {% response %}Yeah how are you {% call you:%0 %}{% endresponse %}
+    {% response %}
+{%if {greetings} %}{greetings}{% else %}Hello{% endif %} again {% call you:%0 %}{% endresponse %}
+{% endblock %}
+
+{% block %}
+    {% client %}How(?: are)?(?: ?you)?{% endclient %}
+    {% response %}Fine, of course!{% call you:%0 %}{% endresponse %}
+    {% response %}Fine am I.{% endresponse %}
+    {% response %}_Fine_ and You, how are you {% call you:%0 %}?{% endresponse %}
+{% endblock %}
+
+{% block %}
     {% client %}Call me (.+){% endclient %}
     {% response %}I will remember that {name:%1}{% endresponse %}
 {% endblock %}
 
 {% block %}
-    {% client %}My name is (.*){% endclient %}
+    {% client %}My name is (.+){% endclient %}
     {% response %}So `{name:%1}` is your name *interesting* **!**{% endresponse %}
 {% endblock %}
 
 {% block %}
     {% client %}I am(?: Called)? ([\w.\-_]+){% endclient %}
-    {% response %}So `{name:%2}` is your name *interesting* **!**{% endresponse %}
+    {% response %}So `{name:%1}` is your name *interesting* **!**{% endresponse %}
 {% endblock %}
 
 {% block %}
-    {% client %}what is my name{% endclient %}
-    {% response %}{%if {name} %}Your name is {name}{% else %} I do not know your name, Can you please tell me your name?{% endif %}{% endresponse %}
-{% endblock %}
-
-{% block %}
-    {% client %}(I am |my name is )?(.*){% endclient %}
-    {% prev %}(.*)Can you please tell me your name{% endprev %}
-    {% response %}Thank you {name:%2}{% endresponse %}
-{% endblock %}
-
-{% block %}
-    {% client %}Do you (know|remember) my name{% endclient %}
-    {% response %}{% if {name} %}Yes I do {name}{% else %}No,{% chat what is my name %}{% endif %}{% endresponse %}
+    {% client %}(Do you (know|remember))?( ?what is)? my name{% endclient %}
+    {% response %}Your name is {% call you %}{% endresponse %}
+    {% response %}{% call you %} isn't it{% endresponse %}
+    {% response %}"{% call you %}" fore sure!{% endresponse %}
 {% endblock %}
 
 {% block %}
@@ -41,12 +63,10 @@
     {% response %}I am trained by you, and your queries, but I was programmed by @user:ken-morel{% endresponse %}
 {% endblock %}
 
-
 {% block %}
     {% client %}What (can|do|will) you do{% endclient %}
     {% response %}I {abc:%1} help **you** to Use this website{% endresponse %}
 {% endblock %}
-
 
 {% block %}
     {% client %}(quit|bye|goodbye|see you (na|tomorrow|latter)){% endclient %}
@@ -56,11 +76,23 @@
 {% endblock %}
 
 {% block %}
-    {% client %}(Do you know about|who is|tell me about) ([\w\-_]+){% endclient %}
-    {% response %}{% call whoIs:%2 %}{% endresponse %}
+    {% client %}What (are|is) (note|notes).+{% endclient %}
+    {% response %}[Note](/note) is a simple web platform permitting you
+To easily publish and read notes, It uses a very human-readable markdown-like
+syntax{% endresponse %}
 {% endblock %}
 
-{% response %}Let's change focus a bit... Tell me about your family.{% endresponse %}
-{% response %}Can you elaborate on that?{% endresponse %}
-{% response %}Why do you say that %0?{% endresponse %}
+{% block %}
+    {% client %}.*markdown.*{% endclient %}
+    {% response %}{% call note_docs:%0 %}{% endresponse %}
+    {% response %}{% call note_tip:%0 %}{% endresponse %}
+{% endblock %}
 
+{% response %}Could you reformulate please?{% endresponse %}
+{% response %}Sorry i did not understand{% endresponse %}
+{% response %}You could question Me on any of those interesting topics:
+
+- What is Sbook?
+- How can I create a note?
+
+{% endresponse %}

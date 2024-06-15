@@ -197,12 +197,12 @@ def do_username_profile(req, username):
         return HttpResponse(user.profile_asBytes, "img/png")
 
 
-def do_user(req, user_id):
+def do_user(req, user):
     return render(
         req,
         'user-profile.djhtml',
         {
-            'id': user_id,
+            'id': user,
             'ng_app_name': 'userProfile',
         },
     )

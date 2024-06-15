@@ -19,6 +19,7 @@
         <script src="/static/scripts/nightly.js"></script>
         <script src="/static/scripts/script.js"></script>
         <script src="/static/scripts/sbook.js"></script>
+        <script id='pixel-script-poptin' src='https://cdn.popt.in/pixel.js?id=dc6c96eab6da6' async='true'></script>
         {% include 'google-analytics.django' %}
         {% include 'fonts.django' %}
     </head>

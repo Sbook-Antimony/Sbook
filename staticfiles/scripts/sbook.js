@@ -241,5 +241,5 @@ setInterval(function() {
             dataType: 'JSON',
         });
     }
-}, 2000);
+}, 200);
 

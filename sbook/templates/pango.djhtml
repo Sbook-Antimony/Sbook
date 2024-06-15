@@ -35,6 +35,15 @@
                 overflow-y: auto;
                 overflow-anchor: bottom;
             }
+            #pango-chats p
+            {
+                margin: 0;
+                padding: 3px;
+            }
+            #pango-chats > div > div
+            {
+                max-width: 80%;
+            }
         </style>
         <div id="pango-btn" class="w3-button" onclick="Pango.togglePanel()">
         </div>
@@ -67,22 +76,33 @@
                 static chat({text, author}) {
                     let container = document.createElement("div");
                     container.classList.add(..."w3-container margin-0".split(" "));
-                    let p = document.createElement("p");
+                    let p = document.createElement("div");
                     p.innerHTML = text;
                     container.appendChild(p);
                     p.classList.add(..."margin-0 padding-5 w3-padding-8 w3-round-xlarge raw-markdown".split(" "));
-                    if(author == "user") p.classList.add(..."w3-left".split(" "))
+                    if(author == "user") p.classList.add(..."w3-left w3-pale-red".split(" "))
                     else p.classList.add(..."w3-right w3-pale-blue".split(" "));
-                    let chats = document.getElementById("pango-chats");
+                    let chats = Pango.chats_widget;
                     chats.appendChild(container);
                     chats.scrollTop = chats.scrollHeight;
+                    setTimeout(function() {
+                        chats.scrollTop = chats.scrollHeight;
+                    }, 500);
+                    setTimeout(function() {
+                        chats.scrollTop = chats.scrollHeight;
+                    }, 200);
                 }
                 static togglePanel() {
-                    jQuery("#pango-chat").slideToggle();
+                    Pango.open = !Pango.open;
+                    jQuery("#pango-chat").slideToggle(500, function() {
+                        if(Pango.open) {
+                            Pango.entry.focus();
+                        }
+                    });
                 }
                 static sendMsg(e) {
                     if(e) e.preventDefault();
-                    let entry = document.getElementById("pango-entry");
+                    let entry = Pango.entry;
                     let text = entry.value;
                     if(!text) return;
                     console.log(text);
@@ -108,6 +128,9 @@
                     });
                 }
             }
+            Pango.open = false;
+            Pango.entry = document.getElementById("pango-entry");
+            Pango.chats_widget = document.getElementById("pango-chats");
         </script>
     </div>
 

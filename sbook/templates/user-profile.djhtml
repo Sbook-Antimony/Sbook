@@ -3,16 +3,16 @@
 
 {% block 'title' %}{{ quizz.title }} {% endblock 'title' %}
 {% block 'left' %}
-    <img src="/profile/{{ id }}.png" class="w3-circle" alt="">
+    <img src="/profile/{{ id }}.png" width="100" class="w3-circle" alt="">
 {% endblock 'left' %}
 {% block 'center' %}
     <div>
         <div class="padding-64">
-            <p class="backens-naple w3-round w3-xlarge" ng-bind="user.name"></p>
+            <p class="backens-naple w3-round w3-xlarge w3-jumbo" ng-bind="user.name"></p>
         </div>
         <p
             ng-bind="user.bio"
-            class="raw-markdown w3-container w3-round"
+            class="raw-markdown w3-container w3-round w3-large"
         ></p>
     </div>
 {% endblock 'center' %}
@@ -20,9 +20,10 @@
     <script>
         const app = angular.module('{{ ng_app_name }}', []);
         app.controller('{{ ng_app_name }}Ctrl', function($scope, $http) {
-            User.get({{ id }}, $http, function(user) {
+            User.get("{{ user }}", $http, function(user) {
                 window.user = $scope.user = user;
             });
         });
     </script>
 {% endblock 'right' %}
+

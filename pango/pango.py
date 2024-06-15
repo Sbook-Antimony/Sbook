@@ -1,6 +1,6 @@
 from pyoload import *
 import time
-import uuid
+import random
 import sbook.accounts
 import difflib
 
@@ -24,28 +24,41 @@ def quote(txt):
 
 
 @chatbot.register_call("callMe")
-def call_me(query, session_id="general"):
+def call_me(query, session_id="you"):
     scope['name'] = query
     return "Ok, "
+
+
+@chatbot.register_call("you")
+def get_name(q, session_id="you"):
+    conv = Conversation.instances.get(session_id)
+    return conv.user.model.name if conv is not None else "you"
 
 
 @chatbot.register_call("whoIs")
 def who_is(query, session_id="general"):
     users = []
     for user in sbook.accounts.User.all():
-        s = difflib.SequenceMatcher(
-            lambda x: x == " ",
-            "private Thread currentThread;",
-            "private volatile Thread currentThread;",
+        r = max(
+            difflib.SequenceMatcher(
+                lambda x: x == " -._",
+                query,
+                user.model.name,
+            ).ratio(),
+            difflib.SequenceMatcher(
+                lambda x: x == " -._",
+                query,
+                user.model.username,
+            ).ratio(),
         )
-        r = s.ratio()
-        if len(users) == 0 or r > users[-1][0] and r > 0.5:
+        if r > 0.5 and (len(users) == 0 or r > users[-1][0]):
             users.append((r, user))
             users.sort(key=lambda u: u[0], reverse=True)
         if r > 0.9:
+            users = [(r, user)]
             break
     if len(users) == 0:
-        return f"**Sorry** I cannot find {query}, are you sure he exists?"
+        return f"**Sorry** I cannot find {query}, are you sure so exists?"
     elif len(users) == 1 or users[0][0] - 0.2 > users[1][0]:
         user = users[0][1]
         return (
@@ -53,6 +66,15 @@ def who_is(query, session_id="general"):
             + quote(user.model.bio)
         )
 
+
+@chatbot.register_call("note_doc")
+def notedocs(query, session_id="general"):
+    return note_doc
+
+
+@chatbot.register_call("note_tip")
+def notetip(query, session_id="general"):
+    return random.choice(note_tips)
 
 
 @annotate
@@ -81,6 +103,10 @@ class Conversation:
 
     def __init__(self, username):
         self.last_active = time.perf_counter()
+        try:
+            self.user = sbook.accounts.User.get(username=username)
+        except sbook.accounts.User.DoesExistError:
+            self.user = None
         self.id = username
         pango.start_new_session(username)
 
@@ -105,3 +131,99 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
+note_doc = """\
+Here is an example of markdown code for a documentation that guides users on
+using the markdown syntax in Note:
+
+**Markdown Syntax**
+--------------------
+
+### Headers
+
+To create a header, use the `#` symbol followed by the header text.
+
+```
+# Heading 1
+## Heading 2
+### Heading 3
+```
+
+### Bold and Italic Text
+
+To create bold text, surround the text with `**` symbols.
+
+```
+**This text will be bold**
+```
+
+To create italic text, surround the text with `*` symbols.
+
+```
+*This text will be italic*
+```
+
+### Lists
+
+To create an unordered list, use the `*` symbol followed by the list item.
+
+```
+* Item 1
+* Item 2
+* Item 3
+```
+
+To create an ordered list, use the `1.` symbol followed by the list item.
+
+```
+1. Item 1
+2. Item 2
+3. Item 3
+```
+
+### Mentions
+
+To mention another user, use the `@` symbol followed by the username.
+
+```
+@johnDoe
+```
+
+This will create a link to the user's profile.
+
+### Example Usage
+
+Here is an example of how you can use the markdown syntax in Note:
+
+```
+# Welcome to Note!
+
+This is an **example** of a note that mentions another user.
+
+I would like to thank @johnDoe for his contribution to this project.
+
+Here is a list of items:
+
+* Item 1
+* Item 2 @janeDoe
+* Item 3
+
+Best,
+@antimonyTeam
+```
+
+This documentation will be updated regularly to include more features and
+examples of the markdown syntax in Note. If you have any questions or need
+further assistance, please don't hesitate to ask.
+
+**Happy Writing!**
+"""
+
+
+note_tips = [
+    "#Tip\nUse `*` to quote italic texts\ne.g `*hello*` -> *hello*",
+    "#Tip\nUse `**` to quote bold texts\ne.g `**hello**` -> **hello**",
+    "#Tip\nAdd images with `![image replacement](image url)`",
+    "#Tip\nMention users with `@user:{username}` syntax",
+]

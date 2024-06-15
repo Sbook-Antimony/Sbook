@@ -31,10 +31,20 @@ def markdown(text):
             else:
                 html = html.replace(
                     f"@user:{name}",
-                    (
-                        f'<a href="/users/{name}/" style="color: blue;">'
-                        f'<img src="/profile/{name}.png" class="text-fit" />'
-                        f'{user.model.name}</a>'
-                    )
+                    f"""\
+                    <div class="tooltip">
+                        <a href="/users/{name}/" style="color: green;">
+                            <img
+                                src="/profile/{name}.png"
+                                class="text-fit w3-circle"
+                            />
+                            {user.model.name}
+                        </a>
+                        <div class="raw-markdown tooltip-text">
+                            {user.model.bio}
+                        </div>
+                    </div>
+                    """,
                 )
     return mark_safe(html)
+
