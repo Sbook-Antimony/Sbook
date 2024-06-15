@@ -159,10 +159,10 @@ class User(ModelInter):
     @classmethod
     def create_from_login(cls, name, email, password):
         i = 0
-        while True:
+        while i < 10000:
             try:
                 obj = models.User(
-                    username=name.lower.replace(
+                    username=name.lower().replace(
                         " ", ""
                     ) + (str(i) if i > 0 else ""),
                     name=name,
@@ -171,8 +171,8 @@ class User(ModelInter):
                 )
                 i += 1
                 obj.save()
-            except Exception:
-                continue
+            except Exception as e:
+                print(e)
             else:
                 break
         return cls(obj)

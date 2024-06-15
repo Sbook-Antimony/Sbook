@@ -99,13 +99,6 @@ class QuizzUser extends ModelInter {
 
 
 
-
-class Option {
-    constructor(text="", label="") {
-        this.text = text;
-        this.label = label;
-    }
-}
 class Question extends ModelInter {
     constructor(id, {question, options}) {
         let opts = {};
@@ -119,10 +112,20 @@ class Question extends ModelInter {
         };
         for(let i = 0; i < this.options.length; i++) {
             obj.options[
-                String.fromCodePoint(i+'a'.charCodeAt(0)).toString()
+                String.fromCodePoint(i+'A'.charCodeAt(0)).toString()
             ] = this.options[i].text;
         }
         return obj;
+    }
+    addOption(k, v) {
+        if(Object.keys(this.options).length > 10) {
+            flashMessage("#f63",`Oh, ${Object.keys(this.options).length} thats many options, don't you think?`);
+            return;
+        }
+        if(k == null) k = String.fromCodePoint(
+            Object.keys(this.options).length+'A'.charCodeAt(0)
+        ).toString()
+        this.options[k] = v;
     }
 }
 class Quizz extends ModelInter {

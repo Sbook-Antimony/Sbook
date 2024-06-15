@@ -8,8 +8,8 @@
         <script src="/static/scripts/angular.min.js"></script>
         <script src="/static/scripts/angular-animate.min.js"></script>
         <script src="/static/scripts/angular-route.min.js"></script>
-        <script src="/static/scripts/jquery-toast.js"></script>
         <script src="/static/scripts/jquery.js"></script>
+        <script src="/static/scripts/jquery-toast.js"></script>
         <link rel="stylesheet" href="/static/styles/w3.css" />
         <link rel="stylesheet" href="/static/styles/jquery-toast.css" />
         <link rel="stylesheet" href="/static/styles/quizz-styles.css" />

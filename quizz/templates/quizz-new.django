@@ -1,7 +1,7 @@
 {% extends 'quizz-main.django' %}
 {% load markdown %}
 
-{% block 'title' %}quizz dashboard{% endblock 'title' %}
+{% block 'title' %}new quizz{% endblock 'title' %}
 {% block 'left' %}
     {% csrf_token %}
 {% endblock 'left' %}
@@ -11,10 +11,11 @@
         </dialog>
         <div quizzProfile class="w3-container bg-antimony50 w3-round padding-0 round-n-20">
             <div class="backens-a1 w3-container margin-0">
-                <span  ng-click="changePhoto()" class="w3-margin w3-display-container">
+                <label for="imagefile" ng-click="changePhoto()" class="w3-margin w3-display-container">
                     <img class="w3-circle w3-inline w3-margin w3-image" hover-class="jump hexa" width="100" height="100" src="/profile.png" />
                     <i class="fa-2xl fg-antimony50 w3-display-bottomright w3-margin fas fa-edit"></i>
-                </span>
+                    <input type="file" name="imagefile" id="imagefile" ng-change="changeImage()" required />
+                </label>
                 <span class="w3-arial w3-xxlarge w3-margin w3-right inline" ng-bind="title" contenteditable="true"></span>
             </div>
             <textarea rows="5" class="no-resize block w3-container w3-input bg-a2" ng-model="description">Here a description</textarea>
@@ -42,14 +43,15 @@
                     <div class="bd-a5 bd-thin">
                         <label
                             class="block w3-leftbar"
-                            ng-repeat="option in question.options"
+                            ng-repeat="(label, option) in question.options"
                             style="width: 90%; margin-left: 10%;"
                         >
-                            {{ option.label }}
+                            {{ label }}
                             <input
-                                ng-model="option.text"
+                                ng-model="question.options[label]"
                                 class="w3-input"
                                 type="text"
+                                style="width: 90%; display: block;"
                                 name=""
                                 value=""
                                 placeholder="Enter the option here."
@@ -110,15 +112,14 @@
             window.$scope = $scope;
 
             $scope.addQuestion = function() {
-                $scope.questions.push(new Question());
+                $scope.questions.push(new Question($scope.questions.length, {question: "", options: []}));
             }
             $scope.removeQuestion = function(ques) {
                 let idx = $scope.questions.indexOf(ques);
-                if(idx >= 0)
-                    $scope.questions = $scope.questions.splice(idx, idx);
+                if(idx >= 0) $scope.questions.splice(idx, 1);
             }
             $scope.addQuestionOption = function(question) {
-                question.options.push(new Option());
+                question.addOption(null, "");
             }
             $scope.serialize = function() {
                 let ret = {
@@ -129,6 +130,7 @@
                         (question) => question.serialize()
                     )),
                     is_private: $scope.is_private,
+                    image: $scope.image,
                     title: $scope.title,
                     description: $scope.description,
                     csrfmiddlewaretoken: document.querySelector('[name=csrfmiddlewaretoken]').value,
@@ -149,6 +151,17 @@
                     data: $scope.serialize(),
                     dataType: 'JSON',
                 });
+            }
+            $scope.changeImage = function() {
+                let input = document.getElementById("imagefile");
+                let [file] = input.files;
+                let reader = new FileReader();
+                reader.onloadend = function() {
+                    let url = reader.data;
+                    console.log(reader);
+                    $scope.image = btoa(reader.data);
+                }
+                reader.readAsText(file);
             }
         });
     </script>

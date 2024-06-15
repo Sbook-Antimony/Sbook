@@ -175,19 +175,20 @@ def do_new(req, user):
 
 @check_login
 def do_new_submit(req, user):
-    data = {
-        "epilog": req.POST.get("epilog"),
-        "prolog": req.POST.get("prolog"),
-        "instructions": req.POST.get("instructions"),
-        "questions": json.loads(req.POST.get("questions")),
-    }
+    data = json.loads(req.POST.get("questions")),
     print(req.POST.get("questions"), "-" * 50)
+    prof = {}
+    if req.POST.get("profile_url"):
+        pass
     quizz = models.Quizz(
-        data=data,
+        instructions=req.POST.get("instructions"),
+        epilog=req.POST.get("epilog"),
+        prolog=req.POST.get("prolog"),
+        questions=data,
         title=req.POST.get("title"),
         description=req.POST.get("description"),
         is_private=req.POST.get("is_private") in (True, "true"),
-        profile=open("profile.png", "rb"),
+        **prof
     )
     quizz.save()
     quizz.authors.set((user.id,))
