@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block %}
-    {% client %}(What is|Who is|Tell me) ?(about|more)( on)? ?Sbook.*{% endclient %}
+    {% client %}(What is|Who is|Tell me) ?(about|more|more about)?( on)?Sbook.*{% endclient %}
     {% response %}Sbook, is a web platform offering e-learnig facilities, including
 - [Notes](/note/)
 - [Quizzes](/quizz/)
@@ -14,6 +14,11 @@
 
 The wanted users like you {% call you %} To have acces to education
 even in some... not so good circumstances.{% endresponse %}
+{% endblock %}
+
+{% block %}
+    {% client %}(What is|Who is|Tell me) ?(about|more|more about)?( on)?Note.*{% endclient %}
+    {% response %}{% endresponse %}
 {% endblock %}
 
 {% block %}

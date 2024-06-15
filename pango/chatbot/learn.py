@@ -2,7 +2,6 @@ import re
 
 
 class Learn:
-
     def __init__(self, statements=[], falseStatements=[]):
         sentenceToWords = [s.split() for s in statements]
         if len(sentenceToWords):

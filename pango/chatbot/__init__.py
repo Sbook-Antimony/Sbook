@@ -18,20 +18,15 @@ class MultiFunctionCall:
         self.__func__ = func
 
     @staticmethod
-    def default_func(string, session_id="general"):
-        return string
+    def default_func(string, session_id="you"):
+        return string.split(":")[0]
 
     def call(self, string, session_id):
-        s = string.split(":")
-        if len(s) <= 1:
-            return string
-        name = s[0].strip()
-        s = ":".join(s[1:])
-        func = self.default_func
-        try:
-            func = self.__func__[name]
-        except KeyError:
-            s = string
+        name, args = string.split(":")
+
+        name = name.strip()
+        s = ":".join(args)
+        func = self.__func__.get(name, self.default_func)
         new_string = re.sub(r"([\[\]{}%:])", r"\\\1", s)
         return re.sub(r"\\([\[\]{}%:])", r"\1", func(new_string, session_id=session_id))
 
