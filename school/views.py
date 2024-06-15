@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.http import JsonResponse
+from sbook.accounts import *
 from .accounts import *
 # Create your views here.
 
@@ -12,3 +14,20 @@ def do_index(req, user):
             'user': user,
         }
     )
+
+
+@check_login
+def do_classroom_json(req, user, clsid):
+    try:
+        classroom = Classroom.from_id(clsid)
+    except Classroom.DoesNotExist:
+        return JsonResponse({
+            "ok": False,
+            "status": 404,
+        })
+    else:
+        return JsonResponse({
+            "ok": True,
+            "status": 200,
+            "classroom": classroom.js,
+        })

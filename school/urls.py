@@ -5,4 +5,5 @@ from django.urls import path
 
 urlpatterns = [
     path('', views.do_index),
+    path('classroom/<int:clsid>.json', views.do_classroom_json),
 ]

@@ -29,6 +29,22 @@ class User extends ModelInter {
             }
         });
     }
+    static get_current($http, callback) {
+        $http.get(`/user.json`).then(function(res) {
+            let data = res.data;
+            if(data.ok) {
+                callback(new User(data.user));
+            }
+        });
+    }
+    get_classrooms_iter($http, callback) {
+        let classrooms = [];
+        for(let classroomid of this.data.classrooms) {
+            Classroom.get(classroomid, $http, function(classroom) {
+                callback(classroom);
+            });
+        }
+    }
     constructor(data) {
         super(data);
         this.profile = `/users/${this.data.id}/profile.png`;
@@ -96,6 +112,18 @@ class QuizzUser extends ModelInter {
 }
 
 
+class Classroom extends ModelInter {
+    static get(id, $http, callback) {
+        $http.get(`/school/classrooms/${id}.json`).then(function(res) {
+            let data = res.data;
+            if(data.ok) {
+                callback(new Classroom(data.classroom));
+            } else {
+                callback(null);
+            }
+        });
+    }
+}
 
 
 

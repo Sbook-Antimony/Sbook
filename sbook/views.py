@@ -183,7 +183,7 @@ def do_userid_profile(req, userid):
     try:
         user = User.from_id(userid)
     except User.DoesNotExistError:
-        return File(User.DEFAULT_PROFILE_PATH)
+        return HttpResponseNotFound()
     else:
         return HttpResponse(user.profile_asBytes, "img/png")
 
@@ -244,6 +244,14 @@ def do_user_json(req, userid: int) -> Cast(JsonResponse):
             'ok': True,
             'user': user.js,
         }
+
+
+@check_login
+def do_current_user_json(req, user):
+    return JsonResponse({
+        "ok": True,
+        "user": user.js,
+    })
 
 
 @annotate

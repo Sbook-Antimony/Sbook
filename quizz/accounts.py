@@ -83,6 +83,7 @@ class MCQQuestion(Question):
     mode = "mcq"
 
     def __init__(self, data, id=0):
+        print(data)
         self.question = data.get("question")
         self.options = list(data.get("options", {}).items())
         self.answer = data.get("answer")

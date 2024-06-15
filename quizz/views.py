@@ -1,4 +1,7 @@
 import json
+import io
+import tempfile
+import base64
 
 from . import forms
 from .accounts import *
@@ -8,6 +11,7 @@ from django.http import HttpResponseRedirect
 from django.http import JsonResponse
 from django.shortcuts import render
 from sbook import settings
+from django.core.files.base import ContentFile
 
 
 @check_login(True)
@@ -176,20 +180,24 @@ def do_new(req, user):
 @check_login
 def do_new_submit(req, user):
     data = json.loads(req.POST.get("questions")),
-    print(req.POST.get("questions"), "-" * 50)
     prof = {}
-    if req.POST.get("profile_url"):
-        pass
+    if img := req.POST.get("image"):
+        print(img[:50], len(img))
+        data = base64.b64decode(img)
+        print(data[:50], len(data))
+        assert data[1:4] == b"PNG"
+        prof["profile"] = ContentFile(data, name=req.POST.get("imagename"))
     quizz = models.Quizz(
         instructions=req.POST.get("instructions"),
         epilog=req.POST.get("epilog"),
         prolog=req.POST.get("prolog"),
-        questions=data,
+        questions=data[0],
         title=req.POST.get("title"),
         description=req.POST.get("description"),
         is_private=req.POST.get("is_private") in (True, "true"),
-        **prof
+        **prof,
     )
+    quizz.classrooms.set(req.POST.get("classrooms"))
     quizz.save()
     quizz.authors.set((user.id,))
     return JsonResponse(

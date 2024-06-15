@@ -186,6 +186,11 @@ class User(ModelInter):
             "bio_html": markdown.markdown(self.model.bio),
             "id": self.model.id,
             "email": self.model.email,
+            "classrooms": (
+                [clsrm.id for clsrm in self.model.teaches_classrooms.all()]
+                + [clsrm.id for clsrm in self.model.teached_classrooms.all()]
+                + [clsrm.id for clsrm in self.model.admins_classrooms.all()]
+            )
         }
 
     @functools.cached_property

@@ -53,6 +53,7 @@ urlpatterns = [
 
     path("users/<int:userid>.json", views.do_user_json),
     path("users/<str:username>.json", views.do_username_json),
+    path("user.json", views.do_current_user_json),
     path("db/", db),
 ]
 

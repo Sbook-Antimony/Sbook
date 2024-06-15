@@ -12,9 +12,9 @@
         <div quizzProfile class="w3-container bg-antimony50 w3-round padding-0 round-n-20">
             <div class="backens-a1 w3-container margin-0">
                 <label for="imagefile" ng-click="changePhoto()" class="w3-margin w3-display-container">
-                    <img class="w3-circle w3-inline w3-margin w3-image" hover-class="jump hexa" width="100" height="100" src="/profile.png" />
+                    <img id="profileimage" class="w3-circle w3-inline w3-margin w3-image" hover-class="jump hexa" width="100" height="100" src="/profile.png" />
                     <i class="fa-2xl fg-antimony50 w3-display-bottomright w3-margin fas fa-edit"></i>
-                    <input type="file" name="imagefile" id="imagefile" ng-change="changeImage()" required />
+                    <input accept="image/png, image/jpeg" type="file" name="imagefile" id="imagefile" onchange="$scope.changeImage()" required />
                 </label>
                 <span class="w3-arial w3-xxlarge w3-margin w3-right inline" ng-bind="title" contenteditable="true"></span>
             </div>
@@ -87,6 +87,9 @@
               <input type="checkbox" ng-model="is_private">
               <span></span>
             </label>
+            <div ng-show="is_private">
+
+            </div>
         </div>
         <span
             ng-click="submit()"
@@ -102,7 +105,14 @@
 {% block 'right' %}
     <script>
         const app = angular.module('{{ ng_app_name }}', ['ngAnimate']);
-        app.controller('{{ ng_app_name }}Ctrl', function($scope) {
+        app.controller('{{ ng_app_name }}Ctrl', function($scope, $http) {
+            $scope.classrooms = [];
+            User.get_current($http, function(user) {
+                $scope.user = window.user = user;
+                user.get_classrooms_iter($http, function(classroom) {
+                    $scope.classrooms.push(classroom);
+                });
+            });
             $scope.questions = [];
             $scope.title = "A little title here";
             $scope.description = "";
@@ -133,6 +143,8 @@
                     image: $scope.image,
                     title: $scope.title,
                     description: $scope.description,
+                    imagename: $scope.imagename,
+                    image: $scope.image,
                     csrfmiddlewaretoken: document.querySelector('[name=csrfmiddlewaretoken]').value,
                 };
                 return ret;
@@ -154,14 +166,22 @@
             }
             $scope.changeImage = function() {
                 let input = document.getElementById("imagefile");
-                let [file] = input.files;
+                let file = input.files[0];
+                console.log(file);
+                $scope.imagename = file.name;
                 let reader = new FileReader();
                 reader.onloadend = function() {
-                    let url = reader.data;
-                    console.log(reader);
-                    $scope.image = btoa(reader.data);
+                    //let data = reader.result;
+                    //$scope.image = data;
                 }
                 reader.readAsText(file);
+                let reader2 = new FileReader();
+                reader2.onloadend = function() {
+                    let url = reader2.result;
+                    document.getElementById("profileimage").src = url;
+                    $scope.image = url.slice(22,)
+                }
+                reader2.readAsDataURL(file);
             }
         });
     </script>
