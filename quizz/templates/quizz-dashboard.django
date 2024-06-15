@@ -59,48 +59,48 @@
             <button ng-click="jQuery('#attempted-quizzes-list').slideToggle();" class="w3-button w3-round bg-antimony10">
                 {{ user.name }}'s recent attempts
             </button>
-    <div
-        id="attempted-quizzes-list"
-        class="w3-display-container bg-a1 w3-border-bottom w3-padding w3-margin w3-round"
-    >
-        <div ng-show="user_attempts.length == 0">
-            <p class="margin-center w3-padding-64 w3-padding-left w3-padding-right fg-antimony w3-opacity">
-                nothing here yet
-            </p>
-        </div>
-        <div>
-            <div ng-repeat="attempt in user_attempts" class="w3-col m3 w3-margin w3-display-container bd-thin bd-naple">
-                <a class="" href="/quizz/quizzes/{{ attempt.quizz.id }}/attempts/{{ attempt.id }}/remarks/" class="w3-row">
-                    <img
-                        hover-class=""
-                        class="w3-circle inline"
-                        height="100"
-                        style="margin-right: -70px; z-index: 5;"
-                        src="/quizz/profiles/quizzes/{{ attempt.quizz.id }}.png"
-                    />
-                    <img
-                        hover-class=""
-                        class="w3-circle inline"
-                        height="100"
-                        style="margin-left: -70px; z-index: -5;"
-                        src="/profile/{{ attempt.author.sbook.id }}.png"
-                    />
-                </a>
-                <span class="w3-padding-small w3-display-topright w3-margin-right w3-round-large bg-naple">
-                    <img ng-show="attempt.remarked" src="/static/svg/solid/circle-check.svg" class="text-fit" />
-                    <img ng-hide="attempt.remarked" src="/static/svg/solid/xmark.svg" class="text-fit" />
-                </span>
+            <div
+                id="attempted-quizzes-list"
+                class="w3-display-container bg-a1 w3-border-bottom w3-padding w3-margin w3-round"
+            >
+                <div ng-show="user_attempts.length == 0">
+                    <p class="margin-center w3-padding-64 w3-padding-left w3-padding-right fg-antimony w3-opacity">
+                        nothing here yet
+                    </p>
+                </div>
+                <div>
+                <div ng-repeat="attempt in user_attempts" class="w3-col m3 w3-margin w3-display-container bd-thin bd-naple">
+                    <a class="" href="/quizz/quizzes/{{ attempt.quizz.id }}/attempts/{{ attempt.id }}/remarks/" class="w3-row">
+                        <img
+                            hover-class=""
+                            class="w3-circle inline"
+                            height="100"
+                            style="margin-right: -70px; z-index: 5;"
+                            src="/quizz/profiles/quizzes/{{ attempt.quizz.id }}.png"
+                        />
+                        <img
+                            hover-class=""
+                            class="w3-circle inline"
+                            height="100"
+                            style="margin-left: -70px; z-index: -5;"
+                            src="/profile/{{ attempt.author.sbook.id }}.png"
+                        />
+                    </a>
+                    <span class="w3-padding-small w3-display-topright w3-margin-right w3-round-large bg-naple">
+                        <img ng-show="attempt.remarked" src="/static/svg/solid/circle-check.svg" class="text-fit" />
+                        <img ng-hide="attempt.remarked" src="/static/svg/solid/xmark.svg" class="text-fit" />
+                    </span>
+                </div>
+                <div id="attempted-quizzes-list" class="w3-row w3-margin w3-round bg-a1">
+                    <a
+                        href="/quizz/browse"
+                        view-class="jump"
+                        class="w3-text-white bg-rainbow w3-button w3-white w3-round-xxlarge w3-margin w3-center hexa w3-border-0"
+                    >
+                        browse quizzes
+                    </a>
+                </div>
             </div>
-            <div id="attempted-quizzes-list" class="w3-row w3-margin w3-round bg-a1">
-                <a
-                    href="/quizz/browse"
-                    view-class="jump"
-                    class="w3-text-white bg-rainbow w3-button w3-white w3-round-xxlarge w3-margin w3-center hexa w3-border-0"
-                >
-                    browse quizzes
-                </a>
-            </div>
-        </div>
         <div class="w3-container w3-margin-bottom w3-round">
             <button ng-click="jQuery('#quizzes-for-U').slideToggle();" class="w3-button w3-round bg-antimony10">
                 Quizzes for You

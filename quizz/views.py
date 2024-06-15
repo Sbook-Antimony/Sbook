@@ -34,8 +34,17 @@ def do_quizzes_json(req, user, userid):
         return JsonResponse({"ok": False, "quizzes": ()})
     else:
         return JsonResponse(
-            {"ok": True, "quizzes": tuple(quizz.js for quizz in ouser.quizzes)}
+            {"ok": True, "quizzes": tuple(
+                quizz.js for quizz in ouser.quizzes
+            )}
         )
+
+
+@check_login
+def do_user_stars_json(req, user):
+    return JsonResponse({
+        "ok": True,
+    })
 
 
 @check_login

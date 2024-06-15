@@ -192,6 +192,7 @@ class Quizz(sbook.accounts.ModelInter):
     @functools.cache
     def accessible_by(self, user):
         id = user.id
+        qid = QuizzUser.fromParent(user)
         if not self.model.is_private:
             return True
         elif id in map(lambda u: u.id, self.authors):

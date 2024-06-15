@@ -33,6 +33,62 @@
             class="raw-markdown w3-container w3-round w3-large"
         ></p>
     </div>
+    <div class="w3-container w3-margin-bottom round-n-5">
+        <h3 class="w3-pale-green">Quizzes</h3>
+        <div
+            class="w3-display-container w3-border-bottom w3-padding w3-margin w3-round bg-a1"
+        >
+            <div ng-show="user_quizzes.length == 0">
+                <p class="margin-center w3-padding-64 w3-padding-left w3-padding-right fg-antimony w3-opacity">
+                    Oh, I do not have any Quiz to present you seems.
+                </p>
+            </div>
+            <div ng-repeat="quizz in user_quizzes" class="w3-display-container">
+                <a class="" style="max-height: 100px!important;" href="/quizz/quizzes/{{ quizz.id }}/preview">
+                    <img
+                        hover-class="zoom-2"
+                        height="100"
+                        class="w3-circle inline w3-margin-right w3-left"
+                        src="/quizz/profiles/quizzes/{{ quizz.id }}.png"
+                    />
+                    <div class="inline" style="width: 80%; height: 100px;">
+                        <h4 class="w3-large">{{ quizz.title }}</h4>
+                        <p class="fg-antimony w3-small w3-justify w3-block raw-markdown">
+                            {{ quizz.description }}
+                        </p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="w3-container w3-margin-bottom round-n-5">
+        <h3 class="w3-pale-green">Starred quizzes</h3>
+        <div
+            class="w3-display-container w3-border-bottom w3-padding w3-margin w3-round bg-a1"
+        >
+            <div ng-show="user_quizzes.length == 0">
+                <p class="margin-center w3-padding-64 w3-padding-left w3-padding-right fg-antimony w3-opacity">
+                    Oh, I do not have any starred Quiz to present you seems.
+                </p>
+            </div>
+            <div ng-repeat="quizz in user_starred_quizzes" class="w3-display-container">
+                <a class="" style="max-height: 100px!important;" href="/quizz/quizzes/{{ quizz.id }}/preview">
+                    <img
+                        hover-class="zoom-2"
+                        height="100"
+                        class="w3-circle inline w3-margin-right w3-left"
+                        src="/quizz/profiles/quizzes/{{ quizz.id }}.png"
+                    />
+                    <div class="inline" style="width: 80%; height: 100px;">
+                        <h4 class="w3-large">{{ quizz.title }}</h4>
+                        <p class="fg-antimony w3-small w3-justify w3-block raw-markdown">
+                            {{ quizz.description }}
+                        </p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
 {% endblock 'center' %}
 {% block 'right' %}
     <script>
@@ -40,11 +96,11 @@
         app.controller('{{ ng_app_name }}Ctrl', function($scope, $http) {
             $scope.user_quizzes = [];
             $scope.user_attempts = [];
-            User.get_current($http, function(user) {
-                window.user = $scope.user = user;
-            });
-            $scope.get_quizzes = function() {
-                if(!$scope.user) return setTimeout($scope.get_quizzes, 1000);
+            $scope.user_starred_quizzes = [];
+            QuizzUser.get_current($http, function(user) {
+                window.quizz_user = $scope.quizz_user = user;
+                window.user = $scope.user = user.sbook;
+                $scope.user_starred_quizzes = quizz_user.stars;
                 $http.get(`/quizz/users/${$scope.user.id}/quizzes.json`).then(function(res) {
                     if(res.status == 200 && res.data.ok) {
                         $scope.user_quizzes = res.data.quizzes;
@@ -52,9 +108,6 @@
                         setTimeout($scope.get_quizzes, 1000);
                     }
                 });
-            }
-            $scope.get_attempts = function() {
-                if(!$scope.user) return setTimeout($scope.get_attempts, 1000);
                 $http.get(`/quizz/users/${$scope.user.id}/attempts.json`).then(function(res) {
                     if(res.status == 200 && res.data.ok) {
                         $scope.user_attempts = res.data.attempts;
@@ -62,12 +115,7 @@
                         setTimeout($scope.get_attempts, 1000);
                     }
                 });
-            }
-            window.update = function update() {
-                $scope.get_quizzes();
-                $scope.get_attempts();
-            }
-            setInterval(update, 1000*60);
+            });
         });
     </script>
 {% endblock 'right' %}
