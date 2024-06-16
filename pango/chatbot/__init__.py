@@ -22,7 +22,7 @@ class MultiFunctionCall:
         return string.split(":")[0]
 
     def call(self, string, session_id):
-        name, args = string.split(":")
+        name, *args = string.split(":")
 
         name = name.strip()
         s = ":".join(args)
