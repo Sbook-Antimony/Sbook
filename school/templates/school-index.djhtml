@@ -1,1 +1,31 @@
 {% extends "school-main.djhtml" %}
+
+{% block 'center' %}
+  <h2 class="bg-naple w3-container">
+    Your schools
+  </h2>
+  <div>
+    {% for school in user.schools %}
+      <div school-prof class="round-n-10">
+        <h1 class="w3-pale-blue">{{ school.model.name }}</h1>
+        <div>
+          <div class="w3-col m2">
+            <h6 class="bg-antimony10">What's new</h6>
+            <div>
+              hmmm, I don't know.
+            </div>
+          </div>
+          <div class="w3-col m2">
+            {{ school.model.description }}
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <div class="padding-64">
+        <p class="w3-opacity fg-antimony w3-large">
+          No school here yet
+        </p>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}
