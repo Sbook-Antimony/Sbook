@@ -295,7 +295,7 @@ def check_login(func, redirect=True):
         req = args[0]
         if not isinstance(req, HttpRequest):
             req = args[1]
-        uid = req.session.get("user-id", 6)
+        uid = req.session.get("user-id")
         try:
             user = QuizzUser.from_id(uid)
         except sbook.accounts.User.DoesNotExistError:
