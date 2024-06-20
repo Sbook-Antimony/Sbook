@@ -122,7 +122,7 @@ class signin(View):
                 )
             else:
                 req.session["user-id"] = user.id
-                return HttpResponseRedirect("/")
+                return HttpResponseRedirect(req.GET.get("redirect", "/"))
 
 
 class signup(View):
