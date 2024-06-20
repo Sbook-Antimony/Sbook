@@ -57,10 +57,11 @@ def check_login(func, redirect=True):
         req = args[0]
         if not isinstance(req, django.http.HttpRequest):
             req = args[1]
-        uid = req.session.get("user-id", 6)
+        uid = req.session.get("user-id")
         try:
+            assert uid is not None
             user = User.from_id(uid)
-        except User.DoesNotExistError:
+        except (User.DoesNotExistError, AssertionError):
             if not redirect:
                 return func(user=None, *args, **kw)
             return HttpResponseRedirect("/signin")
