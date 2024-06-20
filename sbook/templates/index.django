@@ -23,7 +23,7 @@
             }
             @media all and (orientation: portrait)
             {
-
+                
             }
             body
             {
@@ -211,6 +211,7 @@
             </header>
         </div>
         <div id="first-part">
+
             <div view-class="w3-animate-opacity !w3-animate-fading" onviewbg="#1143" class="first-part-item" id="first-part-note">
                 <h2>
                     Notes
@@ -229,7 +230,7 @@
             </div>
             <div view-class="w3-animate-opacity !w3-animate-fading" onviewbg="#4353" class="first-part-item" id="first-part-question">
                 <h2>
-                    question
+                    quizz
                 </h2>
                 <p>
                     Write, Edit, Create and respond to exams and tests to submit or get them marked by teachers
