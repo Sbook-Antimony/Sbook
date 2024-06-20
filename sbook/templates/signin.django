@@ -8,7 +8,7 @@
 
 {% block 'center' %}
 
-    <form action="/signin/" ng-app="signin" ng-controller="signinCtrl" method="post" class="bg-clear fg-antimony w3-round-xlarge w3-padding w3-margin ">
+    <form id="signin" action="/signin/" ng-app="signin" ng-controller="signinCtrl" method="post" class="bg-clear fg-antimony w3-round-xlarge w3-padding w3-margin ">
         {% if errors %}
             <div style="transition: 0.5s;" class="w3-animate-opacity w3-margin w3-padding w3-display-container w3-red w3-round-large margin-center w3-panel">
                 <div class="w3-margin-small w3-monospace w3-display-topright w3-circle" onclick="this.parentElement.style.display = 'none';">x</div>
@@ -19,13 +19,11 @@
         <p class="bg-antimony10 fg-antimony w3-padding w3-margin w3-center w3-round-large">signup</p>
         <div class="w3-padding w3-margin bg-antimony10 w3-round-xlarge fg-antimony">
             <label for="email">email:</label>
-            <input ng-change="checkEmail()" ng-keyup="checkEmail()" oninput="checkEmail()" ng-input="checkEmail()" ng-model="email" type="email" name="email" class="bg-red-invalid fg-antimony w3-padding-small w3-border-0 w3-margin bg-naple50  w3-round-large" />
+            <input ng-change="checkEmail()" ng-keyup="checkEmail()" oninput="checkEmail()" ng-input="checkEmail()" ng-model="email" type="email" name="email" class="w3-input bg-red-invalid fg-antimony w3-padding-small w3-border-0 w3-margin bg-naple50  w3-round-large" />
             <div ng-show="emailError" ng-bind="emailError" class="w3-panel w3-red w3-margin w3-round-large">
             </div>
-        </div>
-        <div class="w3-padding w3-margin fg-antimony bg-antimony10 w3-round-xlarge">
             <label for="password">password:</label>
-            <input ng-model="password" type="password" name="password" class="fg-antimony w3-border-0 w3-padding-small w3-margin bg-naple50  w3-round-large" />
+            <input ng-model="password" type="password" name="password" class="w3-input fg-antimony w3-border-0 w3-padding-small w3-margin bg-naple50  w3-round-large" />
             <div ng-show="passwordError" ng-bind="passwordError" class="w3-panel w3-red w3-margin w3-round-large">
             </div>
         </div>
@@ -38,6 +36,7 @@
             const app = angular.module("signin", []);
             app.controller("signinCtrl", function($scope) {
                 $scope.emailError = false;
+                
                 window.checkEmail = $scope.checkEmail = function() {
                     $.getJSON("/signin/u-email-check.json", { "email": $scope.email }, function(data) {
                         $scope.emailError = data;
@@ -51,6 +50,11 @@
                         $scope.passwordError = data;
                     });
                 }*/
+                try {
+                    document.forms.signin.action += location.search;
+                } catch(e) {
+                    console.error(e);
+                }
             });
         </script>
     </form>
