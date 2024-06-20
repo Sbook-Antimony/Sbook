@@ -2,28 +2,31 @@
 
 {% block 'center' %}
   <h2 class="bg-naple w3-container">
-    Your schools
+    Your classrooms
   </h2>
   <div>
-    {% for school in user.schools %}
-      <div school-prof class="round-n-10">
-        <h1 class="w3-pale-blue">{{ school.model.name }}</h1>
+    {% for classroom in user.classroom %}
+      <div class-prof class="round-n-10">
+        <h1 class="w3-pale-blue">
+            <img src="/school/profile/classroom/{{ classroom.id }}.png" class="w3-circle text-fit" />
+            {{ classroom.model.name }}
+        </h1>
         <div>
-          <div class="w3-col m2">
+          <div class="w3-col m5">
             <h6 class="bg-antimony10">What's new</h6>
             <div>
               hmmm, I don't know.
             </div>
           </div>
-          <div class="w3-col m2">
-            {{ school.model.description }}
+          <div class="w3-col m5">
+            {{ classroom.model.description }}
           </div>
         </div>
       </div>
     {% empty %}
       <div class="padding-64">
         <p class="w3-opacity fg-antimony w3-large">
-          No school here yet
+          No classroom here yet
         </p>
       </div>
     {% endfor %}
