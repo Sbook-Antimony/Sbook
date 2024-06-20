@@ -59,12 +59,16 @@ def check_login(func, redirect=True):
             req = args[1]
         uid = req.session.get("user-id")
         try:
+            url = req.get_full_path()
+        except:
+            url = "/"
+        try:
             assert uid is not None
             user = User.from_id(uid)
         except (User.DoesNotExistError, AssertionError):
             if not redirect:
                 return func(user=None, *args, **kw)
-            return HttpResponseRedirect("/signin")
+            return HttpResponseRedirect("/signin?redirect=" + url)
         else:
             return func(user=user, *args, **kw)
 
