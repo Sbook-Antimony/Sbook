@@ -1,6 +1,14 @@
 {% extends 'main.django' %}
 
 {% block 'left' %}
+    <div class="landscape w3-container margin-center">
+        <a href="/note/" class="w3-red w3-round w3-padding-32 w3-margin w3-large">
+            Notes
+        </a>
+        <a href="/school/" class="w3-green w3-round w3-padding-32 w3-margin w3-large">
+            Schools
+        </a>
+    </div>
     <dialog id="uploadImageDialog" class="w3-round-large w3-border-0 bkd-antimony50 w3-container">
         <form
             action="/profile.png/upload/"
@@ -74,6 +82,14 @@
 {% endblock %}
 
 {% block 'right' %}
+    <div class="landscape w3-container margin-center">
+        <a href="/quizz/" class="w3-blue w3-round w3-padding-32 w3-margin w3-large">
+            Quizzes
+        </a>
+        <a href="/chatty/" class="bg-naple m5 w3-round w3-padding-32 w3-margin w3-large">
+            Chatty
+        </a>
+    </div>
     <script>
         const app = angular.module('{{ ng_app_name }}', ['ngRoute', 'ngAnimate']);
         app.controller('{{ ng_app_name }}Ctrl', async function($scope, $http) {
@@ -111,8 +127,11 @@
                 </span>
                 <a class="w3-arial w3-xxlarge w3-margin">{{ user.name }}</span>
             </div>
-            <p ng-bind="user.bio" class="w3-medium w3-justify w3-container raw-markdown" id="bio-view"></p>
-            <p class="w3-container margin-center w3-row">
+            <div class="round-n-5 w3-container w3-border bd-antimony">
+                <h3 class="w3-border-bottom bd-antimony w3-pale-green">Your bio</h3>
+                <div ng-bind="user.bio" class="w3-medium w3-justify w3-container raw-markdown" id="bio-view"></div>
+            </div>
+            <p class="portrait w3-container margin-center w3-row">
                 <a href="/note/" class="w3-red w3-col m5 w3-round w3-padding-32 w3-margin w3-large">
                     Notes
                 </a>
