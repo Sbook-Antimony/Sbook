@@ -297,8 +297,9 @@ def check_login(func, redirect=True):
             req = args[1]
         uid = req.session.get("user-id")
         try:
+            assert uid is not None
             user = QuizzUser.from_id(uid)
-        except sbook.accounts.User.DoesNotExistError:
+        except (sbook.accounts.User.DoesNotExistError, AssertionError):
             if not redirect:
                 return func(user=None, *args, **kw)
             return HttpResponseRedirect("/signin/")
