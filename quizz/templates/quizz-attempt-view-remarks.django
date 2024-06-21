@@ -41,7 +41,7 @@
         app.controller('{{ ng_app_name }}Ctrl', function($scope) {
             $scope.score = {{ attempt.model.score }};
 
-            let canv = $("#scoreCanv")[0];
+            let canv = jQuery("#scoreCanv")[0];
             let ctx = canv.getContext('2d');
             let height = 150;
             ctx.font = height + "px arial";

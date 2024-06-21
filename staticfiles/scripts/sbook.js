@@ -38,8 +38,7 @@ class User extends ModelInter {
         });
     }
     get_classrooms_iter($http, callback) {
-        let classrooms = [];
-        for(let classroomid of this.data.classrooms) {
+        for(let classroomid of this.classrooms) {
             Classroom.get(classroomid, $http, function(classroom) {
                 callback(classroom);
             });
@@ -134,6 +133,25 @@ class Classroom extends ModelInter {
     constructor(data) {
         super(data);
         this.profile = `/school/classroom/profile/${this.id}.png`;
+        this.url = `/school/classroom/${this.id}`
+    }
+    is_admin(user) {
+        for(let admin of this.admins) {
+            if(admin.id == user.id) return true;
+        }
+        return false;
+    }
+    is_teacher(user) {
+        for(let teacher of this.teachers) {
+            if(teacher.id == user.id) return true;
+        }
+        return false;
+    }
+    is_students(user) {
+        for(let students of this.studentss) {
+            if(students.id == user.id) return true;
+        }
+        return false;
     }
 }
 
@@ -262,27 +280,27 @@ function flashMessage(stat, text) {
     });
 }
 
-
-setInterval(function() {
-    for(let elt of document.getElementsByClassName('raw-markdown')) {
-        if(!elt.innerHTML) {
-            continue;
+jQuery(function() {
+    setInterval(function() {
+        for(let elt of document.getElementsByClassName('raw-markdown')) {
+            if(!elt.textContent.trim()) {
+                continue;
+            }
+            jQuery.ajax({
+                url: '/markdown/',
+                success: function(data) {
+                    console.log(data);
+                    if(data.ok) {
+                        elt.innerHTML = data.html;
+                        elt.classList.remove('raw-markdown');
+                    }
+                },
+                type: 'GET',
+                data: {
+                    md: btoa(elt.innerHTML.trim()),
+                },
+                dataType: 'JSON',
+            });
         }
-        jQuery.ajax({
-            url: '/markdown/',
-            success: function(data) {
-                console.log(data);
-                if(data.ok) {
-                    elt.innerHTML = data.html;
-                    elt.classList.remove('raw-markdown');
-                }
-            },
-            type: 'GET',
-            data: {
-                md: btoa(elt.innerHTML.trim()),
-            },
-            dataType: 'JSON',
-        });
-    }
-}, 200);
-
+    }, 1000);
+});

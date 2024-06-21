@@ -25,6 +25,7 @@ class Classroom(sbook.accounts.ModelInter):
     @functools.cached_property
     def js(self: "Classroom") -> dict[str]:
         return {
+            "id": self.id,
             "name": self.model.name,
             "description": self.model.description,
             "code_of_conduct": self.model.code_of_conduct,

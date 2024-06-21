@@ -1,6 +1,7 @@
 setInterval(function() {
     for(let element of  jQuery("[hover-class]")) {
         let classes = element.getAttribute("hover-class");
+        if(!classes || classes == "false") continue;
         element.setAttribute("hover-class", false);
 
         cls = classes.split(" ");

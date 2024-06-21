@@ -216,6 +216,19 @@ class User(ModelInter):
             raise note.accounts.NoteUser.DoesNotExistError()
         return note.accounts.NoteUser(cha[0])
 
+    @functools.cached_property
+    def classrooms(self):
+        from school.accounts import Classroom
+        return tuple(
+            map(
+                Classroom,
+                set(
+                    [clsrm for clsrm in self.model.teaches_classrooms.all()]
+                    + [clsrm for clsrm in self.model.teached_classrooms.all()]
+                    + [clsrm for clsrm in self.model.admins_classrooms.all()]
+                ),
+            ),
+        )
 
 class Classifier(ModelInter):
     def js(self):

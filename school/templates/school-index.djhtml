@@ -1,34 +1,68 @@
 {% extends "school-main.djhtml" %}
 
 {% block 'center' %}
-  <h2 class="bg-naple w3-container">
-    Your classrooms
-  </h2>
-  <div>
-    {% for classroom in user.classroom %}
-      <div class-prof class="round-n-10">
+  {% verbatim %}
+    <h2 class="bg-naple w3-container">
+      Your classrooms <a href="/school/classroom/browse" title="browse"></a>
+    </h2>
+    <div class="">
+      <div ng-repeat="classroom in classrooms" class-prof class="round-n-10 w3-margin">
         <h1 class="w3-pale-blue">
-            <img src="/school/profile/classroom/{{ classroom.id }}.png" class="w3-circle text-fit" />
-            {{ classroom.model.name }}
+            <img src="{{ classroom.profile }}" height="100" class="w3-circle text-fit" />
+            <a href="{{ classroom.url }}" class="w3-button" title="goto {{ classroom.name }}">
+              {{ classroom.name }}
+            </a>
+            <span class="landscape" ng-show="classroom.is_admin(user)">
+              <a class="w3-button" class="" href="{{ classroom.url }}/settings" title="">
+                <i class="fas fa-cog fa-pulse" title="settings"></i>
+              </a>
+              <a class="w3-button" href="{{ classroom.url }}/user" title="">
+                <i class="fas fa-users" title="manage"></i>
+              </a>
+            </span>
+            <div class="portrait" ng-show="classroom.is_admin(user)">
+              <a class="w3-button" class="" href="{{ classroom.url }}/settings" title="">
+                <i class="fas fa-cog fa-pulse" title="settings"></i>
+              </a>
+              <a class="w3-button" href="{{ classroom.url }}/settings" title="">
+                <i class="fas fa-user" title="manage"></i>
+              </a>
+            </div>
         </h1>
-        <div>
-          <div class="w3-col m5">
+        <div class="w3-border-pale-blue w3-row w3-border">
+          <div class="w3-col m5 round-n-10">
             <h6 class="bg-antimony10">What's new</h6>
-            <div>
+            <div class="bd-antimony10 bd-thin padding-40">
               hmmm, I don't know.
             </div>
           </div>
-          <div class="w3-col m5">
-            {{ classroom.model.description }}
+          <div class="w3-col m5 raw-markdown w3-justify w3-padding">
+            {{ classroom.description }}
           </div>
         </div>
       </div>
-    {% empty %}
-      <div class="padding-64">
+      <div ng-show="classrooms.length == 0" class="padding-64 bg-antimony10">
         <p class="w3-opacity fg-antimony w3-large">
-          No classroom here yet
+          No classroom here yet, <a href="/school/classroom/browse">browse classrooms</a>
         </p>
       </div>
-    {% endfor %}
-  </div>
+    </div>
+  {% endverbatim %}
+
+{% endblock %}
+
+{% block 'footer' %}
+  <script>
+    const app = angular.module("{{ ng_app_name }}", []);
+    app.controller("{{ ng_app_name }}Ctrl", function($scope, $http) {
+      window.$scope = $scope;
+      $scope.classrooms = [];
+      User.get_current($http, function(user) {
+        window.user = $scope.user = user;
+        user.get_classrooms_iter($http, function(classroom) {
+          $scope.classrooms.push(classroom);
+        })
+      });
+    })
+  </script>
 {% endblock %}

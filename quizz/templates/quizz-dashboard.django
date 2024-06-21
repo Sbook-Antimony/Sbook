@@ -23,19 +23,23 @@
                         nothing here yet
                     </p>
                 </div>
-                <div ng-repeat="quizz in user_quizzes" class="w3-display-container">
-                    <a class="" style="max-height: 100px!important;" href="/quizz/quizzes/{{ quizz.id }}/preview">
-                        <img
-                            hover-class="zoom-2"
-                            height="100"
-                            class="w3-circle inline w3-margin-right w3-left"
-                            src="/quizz/profiles/quizzes/{{ quizz.id }}.png"
-                        />
-                        <div class="inline" style="width: 80%; height: 100px;">
-                            <h4 class="w3-large">{{ quizz.title }}</h4>
-                            <p class="fg-antimony w3-small w3-justify w3-block raw-markdown">
+                <div ng-repeat="quizz in user_quizzes" class="w3-border-bottom bd-antimony10 w3-display-container">
+                    <a class="w3-padding" style="max-height: 100px!important;" href="/quizz/quizzes/{{ quizz.id }}/preview">
+                        <div>
+                            <img
+                                hover-class="zoom-2"
+                                height="100"
+                                class="w3-circle inline w3-margin-right"
+                                src="/quizz/profiles/quizzes/{{ quizz.id }}.png"
+                            />
+                            <h4 class="inline w3-large">{{ quizz.title }}</h4>
+                        </div>
+                        <div class="padding-0" style="width: 80%; height: 100px; overflow-y: hidden;">
+                            <div class="margin-0 fg-antimony w3-small w3-justify raw-markdown">
                                 {{ quizz.description }}
-                            </p>
+                                <div hidden style="position: absolute; bottom: 10px; left: 0; width: 100%; height: 40px; background-image: linear-gradient(to bottom, #0000, transparent);">
+                                </div>
+                            </div>
                         </div>
                     </a>
                     <span class="w3-padding-small w3-display-topright w3-round-large bg-naple">
@@ -69,7 +73,7 @@
                     </p>
                 </div>
                 <div>
-                <div ng-repeat="attempt in user_attempts" class="w3-col m3 w3-margin w3-display-container bd-thin bd-naple">
+                <div ng-repeat="attempt in user_attempts" class="w3-col m3 w3-margin w3-display-container">
                     <a class="" href="/quizz/quizzes/{{ attempt.quizz.id }}/attempts/{{ attempt.id }}/remarks/" class="w3-row">
                         <img
                             hover-class=""
@@ -107,21 +111,25 @@
             </button>
             <div
                 id="quizzes-for-U"
-                class="w3-display-container w3-border-bottom w3-padding w3-margin w3-round bg-a1"
+                class="w3-display-container w3-border-bottom w3-padding w3-margin"
             >
-                <div ng-repeat="quizz in all_quizzes" class="w3-display-container">
-                    <a class="" style="max-height: 100px!important;" href="/quizz/quizzes/{{ quizz.id }}/preview">
-                        <img
-                            hover-class="zoom-2"
-                            height="100"
-                            class="w3-circle inline w3-margin-right w3-left"
-                            src="/quizz/profiles/quizzes/{{ quizz.id }}.png"
-                        />
-                        <div class="inline" style="width: 80%; height: 100px;">
-                            <h4 class="w3-large">{{ quizz.title }}</h4>
-                            <p class="fg-antimony w3-small w3-justify w3-block raw-markdown">
+                <div ng-repeat="quizz in all_quizzes" class="w3-border-bottom bd-antimony10 w3-display-container">
+                    <a class="w3-padding" style="max-height: 100px!important;" href="/quizz/quizzes/{{ quizz.id }}/preview">
+                        <div>
+                            <img
+                                hover-class="zoom-2"
+                                height="100"
+                                class="w3-circle inline w3-margin-right"
+                                src="/quizz/profiles/quizzes/{{ quizz.id }}.png"
+                            />
+                            <h4 class="inline w3-large">{{ quizz.title }}</h4>
+                        </div>
+                        <div class="padding-0" style="width: 80%; height: 100px; overflow-y: hidden;">
+                            <div class="margin-0 fg-antimony w3-small w3-justify raw-markdown">
                                 {{ quizz.description }}
-                            </p>
+                                <div hidden style="position: absolute; bottom: 10px; left: 0; width: 100%; height: 40px; background-image: linear-gradient(to bottom, #0000, transparent);">
+                                </div>
+                            </div>
                         </div>
                     </a>
                 </div>

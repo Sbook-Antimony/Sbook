@@ -15,6 +15,7 @@ def do_index(req, user):
         "school-index.djhtml",
         {
             "user": user,
+            "ng_app_name": "classroom",
         },
     )
 

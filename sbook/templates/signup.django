@@ -41,6 +41,7 @@
         <script>
             const app = angular.module("signup", []);
             app.controller("signupCtrl", function($scope) {
+                Pango.hide();
                 $scope.emailError = false;
                 window.checkEmail = $scope.checkEmail = function() {
                     $.getJSON("/signup/u-email-check.json", { "email": $scope.email }, function(data) {

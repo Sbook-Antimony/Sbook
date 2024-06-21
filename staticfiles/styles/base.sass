@@ -16,20 +16,23 @@ img.text-fit
 .block
   display: block !important
 
+.inline-block
+  display: inline-block !important
+
 
 @for $i from 0 through 64
   .padding-#{$i}
     padding:
-      top: #{$i}!important
-      bottom: #{$i}!important
-      left: #{$i}!important
-      right: #{$i}!important
+      top: #{$i}px!important
+      bottom: #{$i}px!important
+      left: #{$i}px!important
+      right: #{$i}px!important
   .margin-#{$i}
     margin:
-      top: #{$i}!important
-      bottom: #{$i}!important
-      left: #{$i}!important
-      right: #{$i}!important
+      top: #{$i}px!important
+      bottom: #{$i}px!important
+      left: #{$i}px!important
+      right: #{$i}px!important
 
 .bg-clear
   background-color: rgba(7, 7, 7, 0)
@@ -108,6 +111,16 @@ img.text-fit
 .bd-antimony,
 .bd-antimony-hover:hover
   border-color: #4c4f4d!important
+
+
+.bd-antimony10,
+.bd-antimony10-hover:hover
+  border-color: #4c4f4d17!important
+
+
+.bd-antimony50,
+.bd-antimony50-hover:hover
+  border-color: #4c4f4d77!important
 
 .bg-antimony,
 .bg-antimony-hover:hover
@@ -480,35 +493,75 @@ header
   z-index: 20!important
 
 
-
+/* Tooltips */
 .tooltip
   position: relative
   display: inline-block
   border-bottom: 1px dotted black /* If you want dots under the hoverable text */
 
-
-/* Tooltip text */
 .tooltip > .tooltip-text
-  visibility: hidden
-  max-width: 500px
-  background-color: $antimony
-  color: #fff
-  text-align: center
-  padding: 5px 0
-  border-radius: 6px
-
-  /* Position the tooltip text - see examples below! */
+  /*visibility: hidden*/
+  height: 0px
+  transition: 0.1s
+  max-height: 500px
+  text-align: justify
+  overflow-y: auto
   position: absolute
   z-index: 1
+  width: 100%
+
+@media all and (min-width: 700px)
+  .tooltip:hover > .tooltip-text
+    width: 500px
+    height: 300px
+@media all and (max-width: 700px)
+  .tooltip:hover > .tooltip-text
+    width: fit-content
+    height: 300px
 
 
-/* Show the tooltip text when you mouse over the tooltip container */
 .tooltip:hover .tooltip-text
   visibility: visible
 
-@media all and (orientation: portrait)
+@media all and (max-width: 700px)
   .landscape
     display: none
-@media all and (orientation: landscape)
+@media all and (min-width: 700px)
   .portrait
     display: none
+
+
+#pango-btn
+  z-index: 20
+  width: 50px
+  height: 50px
+  position: fixed
+  bottom: 10px
+  right: 10px
+  border-radius: 50%
+  background-image: url('/media/pango/pango-computer.png'), linear-gradient(to right, #aa999922, #aa999955)
+  background-size: 50px
+  background-position: center
+  background-repeat: no-repeat
+  backdrop-filter: blur(5px)
+
+#pango-chat
+  border: 0.5px lightgrey solid
+  max-width: 500px
+  position: fixed
+  bottom: 50px
+  right: 50px
+  border-radius: 25px
+  background-color: white
+#pango-chats
+  max-height: 450px
+  overflow-y: auto
+  overflow-anchor: bottom
+#pango-chats > div
+  margin: 0
+  padding: 3px
+#pango-chats > div > div
+  max-width: 80%
+#pango-chats > div > div > p
+  margin: 0
+  padding: 0

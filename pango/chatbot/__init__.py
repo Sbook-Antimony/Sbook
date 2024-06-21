@@ -774,7 +774,7 @@ class Chat(object):
     def __api_handler(self, api_name, method_name, data={}):
         if api_name not in self._api or method_name not in self._api[api_name]:
             raise RuntimeError(
-                "Invalid method name '%s' for api '%s' ", (method_name, api_name)
+                "Invalid method name '%s' for api '%s' " % (method_name, api_name)
             )
         api_params = dict(self._api[api_name][method_name])
         if "auth" in self._api[api_name]:
@@ -921,6 +921,10 @@ class Chat(object):
         self.attr[session_id]["match"] = match
         self.attr[session_id]["pmatch"] = parent_match
         response, condition = response
+        print(r"\\([\[\]{}%:])",
+            r"\1",
+            response, condition, session_id
+            )
         return re.sub(
             r"\\([\[\]{}%:])",
             r"\1",

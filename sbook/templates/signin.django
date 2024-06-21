@@ -35,6 +35,7 @@
         <script>
             const app = angular.module("signin", []);
             app.controller("signinCtrl", function($scope) {
+                Pango.hide();
                 $scope.emailError = false;
                 
                 window.checkEmail = $scope.checkEmail = function() {

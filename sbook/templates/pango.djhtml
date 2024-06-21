@@ -1,49 +1,5 @@
 {% verbatim %}
     <div id="pango-container">
-        <style>
-            #pango-btn
-            {
-                z-index: 20;
-                width: 50px;
-                height: 50px;
-                position: fixed;
-                bottom: 10px;
-                right: 10px;
-                border-radius: 50%;
-                background-image:
-                    url('/media/pango/pango-computer.png'),
-                    linear-gradient(to right, #aa999922, #aa999955);
-                background-size: 50px;
-                background-position: center;
-                background-repeat: no-repeat;
-                backdrop-filter: blur(5px);
-            }
-            #pango-chat
-            {
-                border: 0.5px lightgrey solid;
-                max-width: 500px;
-                position: fixed;
-                bottom: 50px;
-                right: 50px;
-                border-radius: 25px;
-                background-color: white;
-                £
-            #pango-chats
-            {
-                max-height: 500px;
-                overflow-y: auto;
-                overflow-anchor: bottom;
-            }
-            #pango-chats p
-            {
-                margin: 0;
-                padding: 3px;
-            }
-            #pango-chats > div > div
-            {
-                max-width: 80%;
-            }
-        </style>
         <div id="pango-btn" class="w3-button" onclick="Pango.togglePanel()">
         </div>
         <div id="pango-chat">
@@ -135,6 +91,9 @@
                             }
                         }
                     });
+                }
+                static hide() {
+                    jQuery("#pango-btn").hide();
                 }
             }
             Pango.open = false;

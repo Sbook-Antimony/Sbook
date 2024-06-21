@@ -1,18 +1,19 @@
 {% block %}
-    {% client %}(How can (I|we) call you|What is your name|who are you|How (do you|can you|are) (call you|called)){% endclient %}
+    {% client %}(How can (I|we) call you|What is your name|who are you|How (do you|can you|are)? (call you|called)){% endclient %}
     {% response %}My name is Pango, the Pangolin!{% endresponse %}
     {% response %}Pango am I!{% endresponse %}
-    {% response %}Call me @user:pango{% endresponse %}
+    {% response %}Call me @user:pango;{% endresponse %}
 {% endblock %}
 
 {% block %}
-    {% client %}(What is|Who is|Tell me) ?(about|more|more about)?( on)?Sbook.*{% endclient %}
+    {% client %}(What(?: is)?|Who is|Tell me) ?(about|more|more about)? ?(on)?Sbook.*{% endclient %}
     {% response %}Sbook, is a web platform offering e-learnig facilities, including
-- [Notes](/note/)
-- [Quizzes](/quizz/)
-- [Classrooms](/school/)
 
-The wanted users like you {% call you %} To have acces to education
+- Notes
+- Quizzes
+- Classrooms
+
+The wanted users like you {% call you:%0 %} To have acces to education
 even in some... not so good circumstances.{% endresponse %}
 {% endblock %}
 
@@ -27,7 +28,7 @@ even in some... not so good circumstances.{% endresponse %}
 {% endblock %}
 
 {% block %}
-    {% client %}(greetings|welcome|Hy|Hello|Good \w+).*{% endclient %}
+    {% client %}(greetings|welcome|Hy|Hello|Good \w+(?: pango)).*{% endclient %}
     {% response %}{greetings:%1} {% call you:%0 %}{% endresponse %}
     {% response %}Yeah how are you {% call you:%0 %}{% endresponse %}
     {% response %}
@@ -35,10 +36,16 @@ even in some... not so good circumstances.{% endresponse %}
 {% endblock %}
 
 {% block %}
-    {% client %}How(?: are)?(?: ?you)?{% endclient %}
+    {% client %}(How are you|and you){% endclient %}
     {% response %}Fine, of course!{% call you:%0 %}{% endresponse %}
     {% response %}Fine am I.{% endresponse %}
     {% response %}_Fine_ and You, how are you {% call you:%0 %}?{% endresponse %}
+{% endblock %}
+
+{% block %}
+    {% client %}.*How is (.+){% endclient %}
+    {% response %}Fine, of course!{% call you:%1 %}{% endresponse %}
+    {% response %}{subject:%1}? I don't know...{% endresponse %}
 {% endblock %}
 
 {% block %}
