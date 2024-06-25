@@ -106,7 +106,7 @@ class Event(models.Model):
         "msg": "message",
         "c:a": "account creation",
         "m:a": "account modification",
-    }
+    }.items()
     event_type = models.CharField(
         max_length=8,
         choices=EVENT_TYPES,
