@@ -130,6 +130,18 @@ class Classroom extends ModelInter {
             }
         });
     }
+    static all($http, callback) {
+        $http.get(`/school/classrooms.json`).then(function(res) {
+            let data = res.data;
+            if(data.ok) {
+                callback(
+                    data.classrooms.map((d) => new Classroom(d)),
+                );
+            } else {
+                callback(null);
+            }
+        });
+    }
     constructor(data) {
         super(data);
         this.profile = `/school/classroom/profile/${this.id}.png`;

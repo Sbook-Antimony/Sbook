@@ -49,3 +49,23 @@ def do_classroom_profile(req, user, clsid):
         return HttpResponseNotFound()
     else:
         return HttpResponse(classroom.profile_asBytes)
+
+
+@check_login
+def do_all_classrooms(req, user):
+    return JsonResponse({
+        'ok': True,
+        'classrooms': tuple(map(lambda c: c.js , Classroom.all())),
+    })
+
+
+@check_login
+def do_classroom_browse(req, user):
+    return render(
+        req,
+        "school-browse.djhtml",
+        {
+            'ng_app_name': 'browse',
+            'user': user,
+        }
+    )

@@ -48,6 +48,7 @@
       </div>
     </div>
   {% endverbatim %}
+  <a class="w3-btn padding-5 w3-padding colory-border1 w3-round-xlarge" href="/school/classroom/browse" title="">browse</a>
 
 {% endblock %}
 

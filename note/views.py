@@ -28,7 +28,7 @@ def do_index(req, user):
                 "user": user,
                 "hasNotes": user.hasNotes,
                 "hasBookmarks": user.hasBookmarks,
-                "user_name": user.sbookAccount.name,
+                "user_name": user.sbookAccount.model.name,
             },
         )
     )
@@ -38,9 +38,10 @@ def do_index(req, user):
 def note_profile(req, user, noteid):
     try:
         note = Note.from_id(noteid)
-    except NoteDoesNotExistError:
+    except Note.DoesNotExistError:
         return HttpResponseNotFound()
     else:
+        print("-" * 50, note.profile_path)
         return HttpResponse(note.profile_asBytes, "img/png")
 
 
@@ -146,7 +147,7 @@ def browse_notes(req, user):
     from_ = int(req.GET.get("from", "0"))
     to_ = int(req.GET.get("to", from_ + 30))
 
-    notes = map(Note, models.Note.objects.order_by("stars")[from_:to_])
+    notes = tuple(map(Note, models.Note.objects.order_by("stars")[from_:to_]))
 
     return render(
         req,

@@ -9,11 +9,11 @@ from django.http import HttpResponseRedirect
 from sbook.settings import BASE_DIR as DIR
 
 import profile_images
-import sbook.accounts
+import sbook.accounts as sbook
 import sbook.models
 
 from . import models
-from sbook.accounts import ModelInter
+from sbook.accounts import ModelInter, User
 
 NOTES = DIR / "notes"
 
@@ -28,30 +28,18 @@ class BookmarkDoesExistError(ValueError):
     pass
 
 
-class Bookmark:
-    model: models.NoteUser
+class Bookmark(ModelInter):
+    model: models.NoteUser = models.Bookmark
 
-    @classmethod
-    def from_id(cls, id):
-        try:
-            found = models.Bookmark.objects.get(id=id)
-        except (models.Bookmark.DoesNotExist, IndexError) as e:
-            raise BookmarkNotExistError() from e
-        else:
-            return found
+    class DoesNotExistError(ValueError):
+        pass
 
-    def __init__(self, model=None):
-        if model is None:
-            raise BookmarkDoesNotExistError()
-        self.model = model
+    class DoesExistError(ValueError):
+        pass
 
     @functools.cached_property
     def stars(self):
         return self.model.stars
-
-    @functools.cached_property
-    def id(self):
-        return self.model.id
 
     @functools.cached_property
     def note(self):
@@ -62,23 +50,22 @@ class Bookmark:
         return self.author
 
 
-class NoteUserDoesNotExistError(ValueError):
-    pass
+class NoteUser(ModelInter):
+    model: models.NoteUser = models.NoteUser
+    parent = User
 
+    class DoesNotExistError(ValueError):
+        pass
 
-class NoteUserDoesExistError(ValueError):
-    pass
-
-
-class NoteUser:
-    model: models.NoteUser
+    class DoesExistError(ValueError):
+        pass
 
     @classmethod
     def from_id(cls, id):
         try:
             found = sbook.models.User.objects.get(id=id).noteAccount.all()[0]
         except IndexError as e:
-            raise NoteUserDoesNotExistError() from e
+            raise NoteUser.DoesNotExistError() from e
         else:
             return cls(found)
 
@@ -87,7 +74,7 @@ class NoteUser:
         try:
             found = models.NoteUser.objects.get(id=id)
         except models.NoteUser.DoesNotExist as e:
-            raise NoteUserDoesNotExistError() from e
+            raise NoteUser.DoesNotExistError() from e
         else:
             return cls(found)
 
@@ -97,13 +84,17 @@ class NoteUser:
             obj = models.NoteUser(sbookAccount=sbook.model)
             obj.save()
         except Exception as e:
-            raise NoteUserDoesExistError() from e
+            raise NoteUser.DoesExistError() from e
         else:
             return cls(obj)
 
+    @classmethod
+    def fromParent(cls, parent):
+        return cls.get(sbookAccount__id=parent.id)
+
     def __init__(self, model=None):
         if model is None:
-            raise ChattyUserDoesNotExistError()
+            raise NoteUser.DoesNotExistError()
         self.model = model
 
     @functools.cached_property
@@ -122,15 +113,11 @@ class NoteUser:
 
     @functools.cached_property
     def id(self):
-        return self.sbookAccount.id
-
-    @functools.cached_property
-    def chatty_id(self):
-        return self.model.id
+        return self.sbookAccount.model.id
 
     @functools.cached_property
     def name(self):
-        return self.sbookAccount.name
+        return self.sbookAccount.model.name
 
     @functools.cached_property
     def bookmarks(self):
@@ -150,40 +137,14 @@ class NoteUser:
         return len(self.notes) > 0
 
 
-class NoteDoesNotExistError(ValueError):
-    pass
+class Note(ModelInter):
+    model = models.Note
 
+    class DoesNotExistError(ValueError):
+        pass
 
-class NoteDoesExistError(ValueError):
-    pass
-
-
-class Note:
-    @classmethod
-    def from_id(cls, id):
-        try:
-            found = models.Note.objects.get(id=id)
-        except models.Note.DoesNotExist as e:
-            raise NoteDoesNotExistError() from e
-        else:
-            return cls(found)
-
-    @classmethod
-    def create(cls, title, author):
-        model = models.Note(
-            title=title,
-            redactors=[author],
-        )
-
-    def __init__(self, model=None):
-        if model is None:
-            raise NoteDoesNotExistError()
-        self.model = model
-        self.directory = NOTES / str(model.id)
-
-    @functools.cached_property
-    def id(self):
-        return self.model.id
+    class DoesExistError(ValueError):
+        pass
 
     @functools.cached_property
     def title(self):
@@ -210,20 +171,9 @@ class Note:
         return self.model.description
 
     @functools.cached_property
-    def profile(self):
-        return Image.open(
-            self.profile_path,
-        )
-
-    @functools.cached_property
     def profile_path(self):
-        return self.directory / "profile.png"
-
-    @functools.cached_property
-    def profile_asBytes(self):
-        buffer = io.BytesIO()
-        self.profile.save(buffer, format="PNG")
-        return buffer.getvalue()
+        print(dir(self.model.profile))
+        return self.model.profile.path
 
     @property
     def js(self):
@@ -241,39 +191,6 @@ class Note:
     @property
     def json(self, indent=4):
         return json.dumps(self.js, indent=indent)
-
-
-def check_login(func, redirect=True):
-    if isinstance(func, bool):
-        return functools.partial(
-            check_login,
-            redirect=func,
-        )
-
-    @functools.wraps(func)
-    def wrapper(*args, **kw):
-        req = args[0]
-        if not isinstance(req, HttpRequest):
-            req = args[1]
-        if "user-id" in req.session:
-            try:
-                user = NoteUser.from_id(req.session.get("user-id", -1))
-            except sbook.accounts.UserDoesNotExistError:
-                if not redirect:
-                    return func(user=None, *args, **kw)
-                return HttpResponseRedirect("/signin/")
-            except NoteUserDoesNotExistError:
-                user = NoteUser.create_from_sbook(
-                    sbook.accounts.User.from_id(req.session.get("user-id")),
-                )
-
-            return func(user=user, *args, **kw)
-        else:
-            if not redirect:
-                return func(user=None, *args, **kw)
-            return HttpResponseRedirect("/signin")
-
-    return wrapper
 
 
 class ShortNote(ModelInter):
@@ -312,3 +229,32 @@ class ShortNote(ModelInter):
             "content": self.model.content,
             "author": self.author.js,
         }
+
+
+def check_login(func, redirect=True):
+    if isinstance(func, bool):
+        return functools.partial(
+            check_login,
+            redirect=func,
+        )
+
+    @functools.wraps(func)
+    def wrapper(*args, **kw):
+        req = args[0]
+        if not isinstance(req, HttpRequest):
+            req = args[1]
+        uid = req.session.get("user-id")
+        try:
+            assert uid is not None
+            user = NoteUser.from_id(uid)
+        except (Note.DoesNotExistError, User.DoesNotExistError, AssertionError):
+            if not redirect:
+                return func(user=None, *args, **kw)
+            return HttpResponseRedirect("/signin/")
+        except NoteUser.DoesNotExistError:
+            user = NoteUser.create_from_sbook(
+                sbook.accounts.User.from_id(req.session.get("user-id")),
+            )
+        return func(user=user, *args, **kw)
+
+    return wrapper

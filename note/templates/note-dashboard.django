@@ -21,7 +21,7 @@
             <div id="note-list" class="margin-center">
                 {% for note in user.notes %}
                     <div class="w3-justify w3-container w3-padding-small w3-round">
-                        <img hover-class="!w3-animate-zoom" width="75" class="w3-circle w3-left w3-margin-right" src="/note/notes/{{ note.id }}/profile.png" />
+                        <img hover-class="!w3-animate-zoom" width="75" class="w3-circle w3-left w3-margin-right" src="/note/profile/note/{{ note.id }}.png" />
                         <span class="">
                             <h4 class="w3-large">{{ note.title }}</h4>
                             <p class="fg-antimony w3-small">

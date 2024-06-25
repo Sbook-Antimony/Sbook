@@ -19,19 +19,24 @@
         <div class="w3-padding w3-margin bg-antimony10 w3-round-xlarge fg-antimony">
             <label for="email">email:</label>
             <input ng-change="checkEmail()" ng-keyup="checkEmail()" oninput="checkEmail()" ng-input="checkEmail()" ng-model="email" type="email" name="email" class="bg-red-invalid fg-antimony w3-padding-small w3-border-0 w3-margin bg-naple50  w3-round-large" />
-            <div ng-show="emailError" ng-bind="emailError" class="w3-panel w3-red w3-margin w3-round-large">
+            <div ng-show="emailError && email"ng-bind="emailError" class="w3-panel w3-red w3-margin w3-round-large">
             </div>
-        </div>
-        <div class="w3-padding w3-margin bg-antimony10 w3-round-xlarge fg-antimony">
+        <hr />
             <label for="name">name:</label>
             <input type="text" name="name" class="bg-red-invalid fg-antimony w3-padding-small w3-border-0 w3-margin bg-naple50  w3-round-large" />
-
-        </div>
-        <div class="w3-padding w3-margin fg-antimony bg-antimony10 w3-round-xlarge">
+        <hr />
             <label for="password">password:</label>
             <input ng-change="checkPassword()" ng-keyup="checkPassword()" oninput="checkPassword()" ng-input="checkPassword()" ng-model="password" type="password" name="password" class="fg-antimony w3-border-0 w3-padding-small w3-margin bg-naple50  w3-round-large" />
-            <div ng-show="passwordError" ng-bind="passwordError" class="w3-panel w3-red w3-margin w3-round-large">
+            <div ng-show="passwordError && password" ng-bind="passwordError" class="w3-panel w3-red w3-margin w3-round-large">
             </div>
+        </div>
+        <div class="w3-padding w3-margin fg-antimony bg-antimony10 w3-round-xlarge">
+            teacher
+            <label class="slider round">
+              <input name="is_student" type="checkbox" ng-model="is_student" />
+              <span></span>
+            </label>
+            student
         </div>
         <div>
             {% include 'captcha.django' with captcha_name='signupcaptcha' %}
@@ -43,6 +48,7 @@
             app.controller("signupCtrl", function($scope) {
                 Pango.hide();
                 $scope.emailError = false;
+                $scope.is_student = true;
                 window.checkEmail = $scope.checkEmail = function() {
                     $.getJSON("/signup/u-email-check.json", { "email": $scope.email }, function(data) {
                         $scope.emailError = data;

@@ -5,7 +5,7 @@ from . import short_notes
 
 urlpatterns = [
     path("", views.do_index),
-    path("notes/<int:noteid>/profile.png", views.note_profile),
+    path("profile/note/<int:noteid>.png", views.note_profile),
     path("notes/upload", views.note_upload.as_view()),
     path("notes/browse", views.browse_notes),
     path("notes/json", views.browse_notes_json),

@@ -14,6 +14,12 @@ class User(models.Model):
         upload_to="profiles/user",
         default=profile_images.get_random_file,
     )
+    role = models.ForeignKey(
+        "school.UserRole",
+        related_name='users',
+        default=1,
+        on_delete=models.CASCADE,
+    )
 
     def __str__(self):
         return f"{self.id}:{self.name}:{self.email}"
@@ -82,3 +88,28 @@ class Topic(models.Model):
 
     def __str__(self):
         return f"Topic({self.id}:{self.name})"
+
+
+class Event(models.Model):
+    EVENT_TYPES = {
+        "c:n": "note creation",
+        "m:n": "note editing",
+        "s:n": "note starring",
+        "d:n": "note deletion",
+        "vc:n": "note visibility change",
+        "c:q": "quizz creation",
+        "a:q": "quizz attempt",
+        "d:q": "quizz deletion",
+        "s:q": "quizz starring",
+        "c:c": "classroom creation",
+        "c:s": "school creation",
+        "msg": "message",
+        "c:a": "account creation",
+        "m:a": "account modification",
+    }
+    event_type = models.CharField(
+        max_length=32,
+        choices=EVENT_TYPES,
+        editable=False,
+    )
+    params = models.JSONField()

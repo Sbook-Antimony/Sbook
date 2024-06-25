@@ -6,7 +6,11 @@ from mdeditor.fields import MDTextField
 
 
 class UserRole(models.Model):
-    name = models.CharField(max_length=16)
+    ROLES = {
+        't': "teacher",
+        's': 'student',
+    }
+    name = models.CharField(max_length=2, choices=ROLES)
     profile = models.ImageField(
         upload_to="profiles/user-roles/",
         default=profile_images.get_random,
@@ -31,19 +35,23 @@ class Classroom(models.Model):
     levels = models.ManyToManyField(
         "sbook.Level",
         related_name="classrooms",
-        null=True,
+        blank=True,
     )
     courses = models.ManyToManyField(
         "sbook.Course",
         related_name="classrooms",
-        null=True,
+        blank=True,
     )
     series = models.ManyToManyField(
         "sbook.Serie",
         related_name="classrooms",
-        null=True,
+        blank=True,
     )
-    teachers = models.ManyToManyField(sbook.User, related_name="teaches_classrooms")
+    teachers = models.ManyToManyField(
+        sbook.User,
+        related_name="teaches_classrooms",
+
+    )
     students = models.ManyToManyField(sbook.User, related_name="teached_classrooms")
     admins = models.ManyToManyField(
         sbook.User,
@@ -63,27 +71,13 @@ class School(models.Model):
     description = MDTextField()
     name = models.CharField(max_length=64)
     hidden = models.BooleanField()
-    teachers = models.ManyToManyField(sbook.User, related_name="teaches_schools")
-    students = models.ManyToManyField(sbook.User, related_name="teached_schools")
+    teachers = models.ManyToManyField("sbook.User", related_name="teaches_schools")
+    students = models.ManyToManyField("sbook.User", related_name="teached_schools")
     admins = models.ManyToManyField(
-        sbook.User,
+        "sbook.User",
         related_name="admins_schools",
     )
     code_of_conduct = MDTextField()
 
     def __str__(self):
         return f"School({self.name!s})"
-
-
-class SchoolUser(models.Model):
-    sbook = models.ForeignKey(
-        sbook.User,
-        related_name="schoolAccount",
-        on_delete=models.CASCADE,
-    )
-    role = models.ForeignKey(
-        UserRole, on_delete=models.CASCADE, related_name="school_users"
-    )
-
-    def __str__(self):
-        return f"SchoolUser({self.sbook!s})"
