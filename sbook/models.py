@@ -108,7 +108,7 @@ class Event(models.Model):
         "m:a": "account modification",
     }
     event_type = models.CharField(
-        max_length=32,
+        max_length=8,
         choices=EVENT_TYPES,
         editable=False,
     )
