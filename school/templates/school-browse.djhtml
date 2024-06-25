@@ -1,0 +1,57 @@
+{% extends "school-main.djhtml" %}
+{% block 'center' %}
+    <div ng-repeat="classroom in classrooms" class-prof class="round-n-10 w3-margin">
+      <h1 class="w3-pale-blue">
+          <img src="{{ classroom.profile }}" height="100" class="w3-circle text-fit" />
+          <a href="{{ classroom.url }}" class="w3-button" title="goto {{ classroom.name }}">
+            {{ classroom.name }}
+          </a>
+          <button class='w3-button' ng-click="apply(classroom)">apply</button>
+          <span class="landscape" ng-show="classroom.is_admin(user)">
+            <a class="w3-button" class="" href="{{ classroom.url }}/settings" title="">
+              <i class="fas fa-cog fa-pulse" title="settings"></i>
+            </a>
+            <a class="w3-button" href="{{ classroom.url }}/user" title="">
+              <i class="fas fa-users" title="manage"></i>
+            </a>
+          </span>
+      </h1>
+      <div class="w3-border-pale-blue w3-row w3-border">
+        <div class="w3-col m5 round-n-10">
+          <h6 class="bg-antimony10">What's new</h6>
+          <div class="bd-antimony10 bd-thin padding-40">
+            hmmm, I don't know.
+          </div>
+        </div>
+        <div class="w3-col m5 raw-markdown w3-justify w3-padding">
+          {{ classroom.description }}
+        </div>
+      </div>
+    </div>
+    <div ng-show="classrooms.length == 0" class="padding-64 bg-antimony10">
+      <p class="w3-opacity fg-antimony w3-large">
+        No classroom here yet, <a href="/school/classroom/browse">browse classrooms</a>
+      </p>
+    </div>
+
+    <a href="/school/new" title="create school" class="w3-button backens-naple">
+      create
+      <i class="fas fa-arrow"></i>
+    </a>
+{% endblock %}
+
+{% block 'footer' %}
+    <script>
+      const app = angular.module("{{ ng_app_name }}", []);
+      app.controller("{{ ng_app_name }}Ctrl", function($scope, $http) {
+        window.$scope = $scope;
+        $scope.classrooms = [];
+        User.get_current($http, function(user) {
+          window.user = $scope.user = user;
+        });
+        Classroom.all($http, function(classrooms) {
+          $scope.classrooms = classrooms;
+        })
+      })
+    </script>
+{% endblock %}

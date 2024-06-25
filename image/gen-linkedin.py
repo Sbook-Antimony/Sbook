@@ -2,15 +2,16 @@ import random
 
 from PIL import Image
 
-w, h = size = (1000, 200)
+w, h = size = (2000, 1000)
 image = Image.new("RGB", size, "white")
 
 cache = []
-diff = 40
+diff = 100
 le = 3
 li = 20
 
 for y in range(h):
+    print(y, y / h * 100)
     for x in range(w):
         cache.append(random.randint(-diff // 2, diff // 2) + li)
         image.putpixel((x, y), (sum(cache) // len(cache),) * 3)
@@ -18,6 +19,7 @@ for y in range(h):
 
 
 for x in range(w):
+    print(x, x / w * 100)
     for y in range(h):
         cache.append(random.randint(-diff // 2, diff // 2) + li)
         pix = sum(cache) / len(cache)
@@ -27,4 +29,4 @@ for x in range(w):
         cache = cache[-le:]
 
 
-image.save("back-linkedin.png")
+image.save("back-gmail.png")
