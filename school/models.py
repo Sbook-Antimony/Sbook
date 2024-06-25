@@ -9,7 +9,7 @@ class UserRole(models.Model):
     ROLES = {
         't': "teacher",
         's': 'student',
-    }
+    }.items()
     name = models.CharField(max_length=2, choices=ROLES)
     profile = models.ImageField(
         upload_to="profiles/user-roles/",
