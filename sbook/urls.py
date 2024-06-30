@@ -53,6 +53,8 @@ urlpatterns = [
     path("users/<str:username>.json", views.do_username_json),
     path("user.json", views.do_current_user_json),
     path("db/", db),
+
+    path("google-signin", views.google_token_signin),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

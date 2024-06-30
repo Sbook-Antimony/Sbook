@@ -493,15 +493,17 @@ header
   z-index: 20!important
 
 
+
+
 /* Tooltips */
 .tooltip
-  position: relative
   display: inline-block
   border-bottom: 1px dotted black /* If you want dots under the hoverable text */
 
 .tooltip > .tooltip-text
   /*visibility: hidden*/
   height: 0px
+  display: none
   transition: 0.1s
   max-height: 500px
   text-align: justify
@@ -522,6 +524,9 @@ header
 
 .tooltip:hover .tooltip-text
   visibility: visible
+
+
+
 
 @media all and (max-width: 700px)
   .landscape

@@ -133,7 +133,6 @@ class NoteUser(ModelInter):
 
     @functools.cached_property
     def hasNotes(self):
-        print(self, "have notes", self.notes)
         return len(self.notes) > 0
 
 

@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en" class="bg-naple10">
+<html lang="en" class="bg-naple10" itemscope itemtype="http://schema.org/Article">
     <head>
         <link rel="icon" href="image/antimony.png" />
         <meta charset="utf-8" />
@@ -10,6 +10,69 @@
         <script src="/static/scripts/angular-route.min.js"></script>
         <script src="/static/scripts/jquery.js"></script>
         <script src="/static/scripts/jquery-toast.js"></script>
+        <!-- <meta name="google-signin-client_id" content="581342708913-qpjqffdmifi1m24pp6e1vjnmi9g5j6b8.apps.googleusercontent.com" />
+        <script src="https://apis.google.com/js/platform.js" async defer></script> -->
+        <script src="https://accounts.google.com/gsi/client" async defer></script>
+        <script src="https://apis.google.com/js/client:platform.js?onload=GoogleSigninLoadCallback" async defer></script>
+        <script>
+            function GoogleSigninLoadCallback() {
+                gapi.load('auth2', function() {
+                    auth2 = gapi.auth2.init({
+                      client_id: '581342708913-qpjqffdmifi1m24pp6e1vjnmi9g5j6b8.apps.googleusercontent.com',
+                    });
+                });
+            }
+          class GoogleSignin {
+            static start() {
+                gapi.load('auth2', function() {
+                    auth2 = gapi.auth2.init({
+                      client_id: '581342708913-qpjqffdmifi1m24pp6e1vjnmi9g5j6b8.apps.googleusercontent.com',
+                      // Scopes to request in addition to 'profile' and 'email'
+                      //scope: 'additional_scope'
+                    });
+                });
+            }
+            static signin(token) {
+                alert(token);
+                $.ajax({
+                  type: 'POST',
+                  url: '/google-token-signin.json',
+                  // Always include an `X-Requested-With` header in every AJAX request,
+                  // to protect against CSRF attacks.
+                  headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                  },
+                  contentType: 'application/octet-stream; charset=utf-8',
+                  processData: false,
+                  data: code,
+                  success: function(data) {
+                      if(data.ok) flashMessage("green", "Google signin successful");
+                      else return flashMessage("red", "Error logging you in:" + data.error);
+                      location.assign("/");
+                  },
+                  error: function() {
+                      flashMessage("red", "Unknown server error login you in.");
+                  },
+                });
+              try {
+                xhr.send('token=' + id_token);
+              } catch(e) {
+                  console.log(e);
+              }
+              var profile = googleUser.getBasicProfile();
+              console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+              console.log('Name: ' + profile.getName());
+              console.log('Image URL: ' + profile.getImageUrl());
+              console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+            }
+            static signout() {
+              var auth2 = gapi.auth2.getAuthInstance();
+              auth2.signOut().then(function () {
+                alert('User signed out.');
+              });
+            }
+          }
+        </script>
         <link rel="stylesheet" href="/static/styles/w3.css" />
         <link rel="stylesheet" href="/static/styles/styles.css" />
         <link rel="stylesheet" href="/static/styles/hexa.css" />
@@ -19,6 +82,8 @@
         <script src="/static/scripts/nightly.js"></script>
         <script src="/static/scripts/script.js"></script>
         <script src="/static/scripts/sbook.js"></script>
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+        <meta name="google-signin-client_id" content="87225012509-f3cvbj5h8te7v46rk195a576mmvpoo65.apps.googleusercontent.com">
         <script id='pixel-script-poptin' src='https://cdn.popt.in/pixel.js?id=dc6c96eab6da6' async='true'></script>
         {% include 'google-analytics.django' %}
         {% include 'fonts.django' %}

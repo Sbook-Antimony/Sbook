@@ -1,0 +1,39 @@
+<script>
+  jQuery('#signinButton').click(function() {
+    // signInCallback defined in step 6.
+    window.auth2.grantOfflineAccess().then(handleAuthResult);
+
+  });
+  function handleAuthResult(authResult) {
+    alert(authResult);
+    console.log(authResult);
+    if (authResult['code']) {
+
+        // Hide the sign-in button now that the user is authorized, for example:
+        $('#signinButton').attr('style', 'display: none');
+
+        // Send the code to the server
+        GoogleSignin.signin(authResult['code']);
+      } else {
+        flashMessage("red", "Unknown front-end error logging you.")
+      }
+  };
+</script>
+------------------------------------------------------------------------------
+<div id="g_id_onload"
+     data-client_id="581342708913-qpjqffdmifi1m24pp6e1vjnmi9g5j6b8.apps.googleusercontent.com"
+     data-context="signin"
+     data-ux_mode="popup"
+     data-login_uri="/google-signin"
+     data-auto_select="true"
+     data-itp_support="true">
+</div>
+
+<div class="g_id_signin"
+     data-type="standard"
+     data-shape="pill"
+     data-theme="filled_black"
+     data-text="continue_with"
+     data-size="large"
+     data-logo_alignment="left">
+</div>

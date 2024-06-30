@@ -1,3 +1,5 @@
+from google.oauth2 import id_token
+from google.auth.transport import requests
 from django.shortcuts import render
 from django.http import (
     HttpResponse,
@@ -323,3 +325,54 @@ def pango_query(req, user):
             "response": res,
         }
     )
+
+
+def __google_token_signin(req):
+    # from https://developers.google.com/identity/sign-in/web/backend-auth
+    """
+    {
+     // These six fields are included in all Google ID Tokens.
+     "iss": "https://accounts.google.com",
+     "sub": "110169484474386276334",
+     "azp": "    .apps.googleusercontent.com",
+     "aud": "    .apps.googleusercontent.com",
+     "iat": "1433978353",
+     "exp": "1433981953",
+
+     // These seven fields are only included when the user has granted the "profile" and
+     // "email" OAuth scopes to the application.
+     "email": "testuser@gmail.com",
+     "email_verified": "true",
+     "name" : "Test User",
+     "picture": "https://lh4.googleusercontent.com/-kYgzyAWpZzJ/ABCDEFGHI/AAAJKLMNOP/tIXL9Ir44LE/s99-c/photo.jpg",
+     "given_name": "Test",
+     "family_name": "User",
+     "locale": "en"
+    }
+    """
+    try:
+        token = req.POST.get("token")
+        print("TOKEN:------------------\n", token, "\n")
+        if token is None:
+            raise ValueError("Invalid request token")
+        idinfo = id_token.verify_oauth2_token(
+            token,
+            requests.Request(),
+            settings.CLIENT_ID
+        )
+        print("TOKEN:------------------\n", idinfo, "\n")
+
+        if idinfo['hd'] not in settings.ALLOWED_HOSTS:
+            raise ValueError('Wrong domain name.')
+        userid = idinfo['sub']
+        return JsonResponse({
+            'ok': True,
+        })
+    except ValueError as e:
+        return JsonResponse({
+            'ok': False,
+            'error': str(e),
+        })
+
+def google_token_signin(req):
+    pass

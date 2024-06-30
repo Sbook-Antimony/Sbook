@@ -13,7 +13,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-iecure-f2dqc0b$z(7tw-ziq%z2nqx&3l8+d$rd2ko(%fgg_i=jt411-8"
-
+CLIENT_ID = "581342708913-qpjqffdmifi1m24pp6e1vjnmi9g5j6b8.apps.googleusercontent.com"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 

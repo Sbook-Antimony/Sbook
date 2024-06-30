@@ -16,6 +16,10 @@ img.text-fit {
   display: block !important;
 }
 
+.inline-block {
+  display: inline-block !important;
+}
+
 .padding-0 {
   padding-top: 0px !important;
   padding-bottom: 0px !important;
@@ -2266,23 +2270,35 @@ header {
 
 /* Tooltips */
 .tooltip {
-  position: relative;
   display: inline-block;
   border-bottom: 1px dotted black;
 }
 
 .tooltip > .tooltip-text {
-  visibility: hidden;
-  max-width: 500px;
-  background-color: rgb(76, 79, 77);
-  color: #fff;
-  text-align: center;
-  padding: 5px 0;
-  border-radius: 6px;
+  /*visibility: hidden*/
+  height: 0px;
+  display: none;
+  transition: 0.1s;
+  max-height: 500px;
+  text-align: justify;
+  overflow-y: auto;
   position: absolute;
   z-index: 1;
+  width: 100%;
 }
 
+@media all and (min-width: 700px) {
+  .tooltip:hover > .tooltip-text {
+    width: 500px;
+    height: 300px;
+  }
+}
+@media all and (max-width: 700px) {
+  .tooltip:hover > .tooltip-text {
+    width: fit-content;
+    height: 300px;
+  }
+}
 .tooltip:hover .tooltip-text {
   visibility: visible;
 }

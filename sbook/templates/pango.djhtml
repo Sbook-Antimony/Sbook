@@ -34,7 +34,7 @@
                     let p = document.createElement("div");
                     p.innerHTML = text;
                     container.appendChild(p);
-                    p.classList.add(..."margin-0 padding-5 w3-padding-8 w3-round-xlarge raw-markdown".split(" "));
+                    p.classList.add(..."margin-0 padding-5 w3-small w3-padding-8 w3-round-xlarge raw-markdown".split(" "));
                     if(author == "user") p.classList.add(..."w3-left w3-pale-red".split(" "))
                     else p.classList.add(..."w3-right w3-pale-blue".split(" "));
                     if(author == "pango") {
