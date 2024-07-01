@@ -1,0 +1,147 @@
+@import base
+
+$plain: rgba(127, 127, 127, 0.0)
+$base : $naple
+$base5: mix($base, $plain, 50%)
+$base4: mix($base, $plain, 35%)
+$base3: mix($base, $plain, 25%)
+$base2: mix($base, $plain, 20%)
+$base1: mix($base, $plain, 10%)
+$base0: mix($base, $plain, 5% )
+
+.backens-a0
+    background:
+        image:  linear-gradient(to right, rgba($base0, 0), rgba($base0, 1)), url("/image/back-dark-dotty.png")
+.backens-a1
+    background:
+        image:  linear-gradient(to right, rgba($base1, 0), rgba($base1, 1)), url("/image/back-dark-dotty.png")
+.backens-a2
+    background:
+        image:  linear-gradient(to right, rgba($base2, 0), rgba($base2, 1)), url("/image/back-dark-dotty.png")
+.backens-a3
+    background:
+        image:  linear-gradient(to right, rgba($base3, 0), rgba($base3, 1)), url("/image/back-dark-dotty.png")
+.backens-a4
+    background:
+        image:  linear-gradient(to right, rgba($base4, 0), rgba($base4, 1)), url("/image/back-dark-dotty.png")
+.backens-a5
+    background:
+        image:  linear-gradient(to right, rgba($base5, 0), rgba($base5, 1)), url("/image/back-dark-dotty.png")
+
+
+#header-back-blurred-div
+  @extend #header-back-blurred-div
+
+body
+  display: flex
+  flex-direction: row
+  justify-content: center
+  align-items: center
+  align-content: space-between
+  margin-top: 50px!important
+  width: 100% !important
+  flex-wrap: wrap
+  padding: 0
+  background-image: url('/image/back-lighter-dashy.png')
+  & > #left
+    margin: 0
+    padding: 0
+    order: 1
+    flex-grow: 0
+    justify-content: left
+    display: block
+    height: 100%
+  & > #left > .bar
+    border:
+      right:
+        width: 2px
+        color: $antimony
+        style: solid
+  & > #center
+    margin: auto
+    max-width: 700px
+    width: 100%
+    order: 2
+    flex-grow: 8
+    justify-content: center
+    text-align: center
+    padding: auto
+    display: block
+  & > #right
+    margin: 0
+    padding: 0
+    order: 3
+    flex-grow: 0
+    justify-content: right
+    display: block
+    height: 100%
+
+// @import styles
+
+.bg-a0
+  background-color: $base0
+
+.bg-a1
+  background-color: $base1
+
+.bg-a2
+  background-color: $base2
+
+.bg-a3
+  background-color: $base3
+
+.bg-a4
+  background-color: $base4
+
+.bg-a5
+  background-color: $base5
+
+.bg-a
+  background-color: $base
+
+
+.bd-a0
+  border-color: $base0
+
+.bd-a1
+  border-color: $base1
+
+.bd-a2
+  border-color: $base2
+
+.bd-a3
+  border-color: $base3
+
+.bd-a4
+  border-color: $base4
+
+.bd-a5
+  border-color: $base5
+
+.bd-a
+  border-color: $base
+
+
+.bg-rainbow
+  $enlightning: 20%
+  background: linear-gradient(-45deg, lighten($base, $enlightning), lighten(complement($base), $enlightning))
+  color: white
+
+
+a
+  text-decoration: none
+
+
+.round5-eq-contents
+  border-radius: 5px
+  padding: 0 0 0 0 !important
+  & > *:first-child
+    border-radius: 5px 5px 0 0
+    margin: 0
+  & > *:last-child
+    border-radius: 0 0 5px 5px
+    margin: 0
+
+div.markdown
+  display: inline
+
